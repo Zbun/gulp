@@ -3,5 +3,5 @@
 
 ##包罗万象，更新
 * 主要HTML、CSS
-* 次要JavaScript
+* 第二主要JavaScript
 
