@@ -16,7 +16,6 @@
         <div class="e1">
             <p id='{{id}}'>{{ message?message:'default string' }}
             </p>
-            <p>haha</p>
             <input type="text" v-model="message">
             <p>
                 <button v-on:click="reverseMessage">Reverse Message</button>
@@ -30,15 +29,28 @@
             </ul>
         </div>
     </div>
+
+
     <div id="app2">
-        <input type="text" v-model='newTodo' v-on:keyup.enter='addNewTodo'>
+    <h3>事件及过滤  v-on、v-bind</h3>
+        <input type="text" v-model='newTodo' @keyup.enter='addNewTodo'>
         <ul>
             <li v-for="todo in todos">
-                <span>{{todo.text}}</span>
+            <a :href="url">Google</a>
+                <span>{{todo.text|uppercase}}</span>
                 <button v-on:click="removeTodo($index)">X</button>
             </li>
         </ul>
         <p v-if="greeting">Hello</p>
+    </div>
+    <div id='computed'>
+        <h3>计算属性 :computed</h3>
+        <p>a={{a}},b={{b}}</p>
+        <p><input type="text" v-model='firstName'><input type="text" v-model='lastName'> fullName: <span contenteditable>{{fullName}}</span></p>
+    </div>
+
+    <div id="style">
+        <h3>class和style</h3>
     </div>
     <script src="/src/scripts/lib/vue.js"></script>
     <script>
@@ -70,10 +82,10 @@
         }
     })
 
-
-    new Vue({
+    var vm2=new Vue({
         el: '#app2',
         data: {
+            url:'http://www.google.com',
             newTodo: '',
             todos: [{
                 text: 'todosssss'
@@ -93,8 +105,41 @@
             removeTodo: function(index) {
                 this.todos.splice(index, 1);
             }
+        },
+        computed:{
+            b:function(){
+                return this.a+1
+            }
         }
     })
+    var vmComputed=new Vue({
+        el:'#computed',
+        data:{
+            a:1,
+            firstName:'Steven',
+            lastName:'Jobs'
+        },
+        computed:{
+            b:function(){
+                return this.a+1
+            },
+            // fullName:function(){
+            //     return this.firstName+' '+this.lastName
+            // }
+            // 存储器式写法
+            fullName:{
+                get:function(){
+                    return this.firstName+' '+this.lastName
+                },
+                set:function(val){
+                    var name=val.split(' ');
+                    this.firstName=name[0],this.lastName=name[1]
+                }
+            }
+        }
+    })
+
+
     </script>
 </body>
 
