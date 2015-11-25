@@ -164,10 +164,6 @@ textarea {
   padding: 3px;
   -webkit-tap-highlight-color: transparent;
 }
-input[type=text]:focus, input[type=tel]:focus, input[type=submit]:focus, input[type=password]:focus, button:focus,
-textarea:focus {
-  outline: 0 !important;
-}
 input[type=text]:focus:invalid, input[type=tel]:focus:invalid, input[type=submit]:focus:invalid, input[type=password]:focus:invalid, button:focus:invalid,
 textarea:focus:invalid {
   background: #FFF1F1;
@@ -175,9 +171,7 @@ textarea:focus:invalid {
 }
 
 select {
-  padding: 3px;
   border: 1px solid #ddd;
-  outline: 0;
 }
 
 input[type=checkbox], input[type=radio] {
@@ -196,9 +190,6 @@ input[type=checkbox], input[type=radio] {
   vertical-align: middle;
   border-radius: 4px;
   cursor: pointer;
-}
-.btn:focus {
-  outline: 0;
 }
 .btn:hover {
   background: #f2f2f2;
@@ -220,14 +211,9 @@ input[type=checkbox], input[type=radio] {
   font-size: 18px;
 }
 
-.disabled, .btn.disabled {
-  color: #999 !important;
+.disabled {
+  opacity: .7;
   pointer-events: none;
-}
-
-.btn.disabled {
-  background: #eee !important;
-  border-color: rgba(0, 0, 0, 0.3) !important;
 }
 
 .clearfix:after {
@@ -410,7 +396,8 @@ body {
   max-width: 800px;
   padding: 20px;
   margin: 0 auto;
-  background: #35AF9E;
+  background: #39BFAD;
+  background: #66BAB7 url(/src/images/ashes.png);
   color: #fff;
 }
 
@@ -418,6 +405,17 @@ h3 {
   margin: 8px 0;
   padding-top: 10px;
   border-top: 1px dashed #fff;
+}
+
+ol {
+  list-style: decimal inside;
+}
+ol li h4 {
+  padding: 5px 0;
+  margin: 5px 0;
+}
+ol li ol {
+  margin-left: 1em;
 }
 
 /*# sourceMappingURL=vue.css.map */

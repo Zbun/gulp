@@ -399,18 +399,13 @@ textarea {
     border:1px solid #ddd;
     padding: 3px;
     @include wthc(rgba(0,0,0,0));
-    &:focus {
-        outline: 0!important;
-    }
     &:focus:invalid{
         background:#FFF1F1;
         border-color: #f00;
     }
 }
 select{
-    padding: 3px;
     border:1px solid #ddd;
-    outline: 0;
 }
 input[type=checkbox],input[type=radio]{
     vertical-align: -2px;
@@ -427,9 +422,6 @@ input[type=checkbox],input[type=radio]{
     vertical-align: middle;
     border-radius: 4px;
     cursor: pointer;
-    &:focus{
-        outline: 0;
-    }
     &:hover{
         background:#f2f2f2;
     }
@@ -451,15 +443,9 @@ input[type=checkbox],input[type=radio]{
 }
 
 .disabled {
-    color: #999!important;
+    opacity: .7;
     pointer-events: none;
 }
-.btn.disabled{
-    background:#eee!important;
-    border-color: rgba(0,0,0,.3)!important;
-    @extend .disabled;
-}
-
 .clearfix:after {
     display: table;
     content: ""; 

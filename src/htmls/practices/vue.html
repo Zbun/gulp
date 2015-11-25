@@ -7,12 +7,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0">
     <link rel="stylesheet" href="/src/styles/vue.css">
+    <script src="/src/scripts/lib/vue.js"></script>
 </head>
 
 <body>
     <header id="header">
         <h1>Vue.js</h1></header>
-    <div id="app">
+    <div id="app" class=row>
         <div class="e1">
             <p id='{{id}}'>{{ message?message:'default string' }}
             </p>
@@ -28,119 +29,357 @@
                 </li>
             </ul>
         </div>
+        <script>
+        var data = {
+            id: 'data1',
+            message: 'Hello Vue.js!',
+            todos: [{
+                text: 'Learn javaScript'
+            }, {
+                text: 'Learn Vue.js'
+            }],
+        }
+        var vm1 = new Vue({
+            el: '#app',
+            data: data,
+            methods: {
+                reverseMessage: function() {
+                    this.message = this.message.split('').reverse().join('')
+                }
+            },
+            created: function() {
+                console.log('data is ', this.message)
+            }
+        })
+
+        vm1.$watch('message', function(newVal, oldVal) {
+            if (newVal == 'new') {
+                console.log('change')
+            }
+        })
+        </script>
     </div>
-
-
-    <div id="app2">
-    <h3>事件及过滤  v-on、v-bind</h3>
+    <div id="app2" class=row>
+        <h3>事件及过滤  v-on、v-bind</h3>
         <input type="text" v-model='newTodo' @keyup.enter='addNewTodo'>
         <ul>
             <li v-for="todo in todos">
-            <a :href="url">Google</a>
+                <a :href="url">Google</a>
                 <span>{{todo.text|uppercase}}</span>
                 <button v-on:click="removeTodo($index)">X</button>
             </li>
         </ul>
         <p v-if="greeting">Hello</p>
+        <script>
+        var vm2 = new Vue({
+            el: '#app2',
+            data: {
+                url: 'http://www.google.com',
+                newTodo: '',
+                todos: [{
+                    text: 'todosssss'
+                }],
+                greeting: true
+            },
+            methods: {
+                addNewTodo: function() {
+                    var text = this.newTodo.trim();
+                    if (text) {
+                        this.todos.push({
+                            text: text
+                        });
+                        this.newTodo = ''
+                    }
+                },
+                removeTodo: function(index) {
+                    this.todos.splice(index, 1);
+                }
+            },
+            computed: {
+                b: function() {
+                    return this.a + 1
+                }
+            }
+        })
+        </script>
     </div>
-    <div id='computed'>
+    <div id='computed' class=row>
         <h3>计算属性 :computed</h3>
         <p>a={{a}},b={{b}}</p>
-        <p><input type="text" v-model='firstName'><input type="text" v-model='lastName'> fullName: <span contenteditable>{{fullName}}</span></p>
-    </div>
-
-    <div id="style">
-        <h3>class和style</h3>
-    </div>
-    <script src="/src/scripts/lib/vue.js"></script>
-    <script>
-    var data = {
-        id:'data1',
-        message: 'Hello Vue.js!',
-        todos: [{
-            text: 'Learn javaScript'
-        }, {
-            text: 'Learn Vue.js'
-        }],
-    }
-    var vm1 = new Vue({
-        el: '#app',
-        data: data,
-        methods: {
-            reverseMessage: function() {
-                this.message = this.message.split('').reverse().join('')
-            }
-        },
-        created: function() {
-            console.log('data is ',this.message)
-        }
-    })
-
-    vm1.$watch('message',function(newVal,oldVal){
-        if(newVal=='new'){
-            console.log('change')
-        }
-    })
-
-    var vm2=new Vue({
-        el: '#app2',
-        data: {
-            url:'http://www.google.com',
-            newTodo: '',
-            todos: [{
-                text: 'todosssss'
-            }],
-            greeting: true
-        },
-        methods: {
-            addNewTodo: function() {
-                var text = this.newTodo.trim();
-                if (text) {
-                    this.todos.push({
-                        text: text
-                    });
-                    this.newTodo = ''
-                }
+        <p>
+            <input type="text" v-model='firstName'>
+            <input type="text" v-model='lastName'> fullName: <span contenteditable>{{fullName}}</span></p>
+        <script>
+        var vmComputed = new Vue({
+            el: '#computed',
+            data: {
+                a: 1,
+                firstName: 'Steven',
+                lastName: 'Jobs'
             },
-            removeTodo: function(index) {
-                this.todos.splice(index, 1);
-            }
-        },
-        computed:{
-            b:function(){
-                return this.a+1
-            }
-        }
-    })
-    var vmComputed=new Vue({
-        el:'#computed',
-        data:{
-            a:1,
-            firstName:'Steven',
-            lastName:'Jobs'
-        },
-        computed:{
-            b:function(){
-                return this.a+1
-            },
-            // fullName:function(){
-            //     return this.firstName+' '+this.lastName
-            // }
-            // 存储器式写法
-            fullName:{
-                get:function(){
-                    return this.firstName+' '+this.lastName
+            computed: {
+                b: function() {
+                    return this.a + 1
                 },
-                set:function(val){
-                    var name=val.split(' ');
-                    this.firstName=name[0],this.lastName=name[1]
+                // fullName:function(){
+                //     return this.firstName+' '+this.lastName
+                // }
+                // 存储器式写法
+                fullName: {
+                    get: function() {
+                        return this.firstName + ' ' + this.lastName
+                    },
+                    set: function(val) {
+                        var name = val.split(' ');
+                        this.firstName = name[0], this.lastName = name[1]
+                    }
                 }
             }
+        })
+        </script>
+    </div>
+    <div id="style" class=row>
+        <style>
+        .class-b {
+            color: green;
         }
-    })
+        
+        .class-a {
+            color: blue;
+        }
+        </style>
+        <h3>class和style</h3>
+        <div class="static row" v-bind:class="{'class-a':isA,'class-b':isB}">v-bind:class 对象语法
+            <button @click="switchClass">切Class</button>
+        </div>
+        <div v-bind:class='[isA?classA:"",classB]'>数组式写法
+            <button v-on:click='switchClass'>切类</button>
+        </div>
+        <div v-bind:style="{color:activeColor,fontSize:fontSize+'px',background:'#fff'}">内联对象语法</div>
+        <div v-bind:style="styleObjectA">内联样式对象</div>
+        <div v-bind:style="[styleObjectA,styleObjectB]">内联样式数组写法</div>
+        <script>
+        new Vue({
+            el: '#style',
+            data: {
+                isA: true,
+                isB: false,
+                classA: 'class-a',
+                classB: 'class-b',
+                activeColor: 'red',
+                fontSize: 17,
+                styleObjectA: {
+                    color: 'orange',
+                    fontSize: '19px',
+                },
+                styleObjectB: {
+                    background: "antiquewhite"
+                }
+            },
+            methods: {
+                switchClass: function() {
+                    this.isA = !this.isA;
+                }
+            }
+        })
+        </script>
+    </div>
+    <div id="conditionRender" class=row>
+        <h3>条件渲染</h3>
+        <h4 v-if="ok">Yes</h4>
+        <h4 v-else>No</h4>
+        <template v-if="templateShow">
+            <h1>多个元素渲染，用template，此时不支持v-show写法</h1>
+            <p>Paragraph 1</p>
+        </template>
+        <script>
+        new Vue({
+            el: '#conditionRender',
+            data: {
+                ok: false,
+                show: true,
+                templateShow: true
+            }
+        })
+        </script>
+    </div>
+    <div id="listRender" class=row>
+        <h3>列表渲染</h3>
+        <ol>
+            <li>
+                <h4>v-for</h4>
+                <ul>
+                    <li v-for='(index,item) in items'>
+                        {{index}} {{item.message}}
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <h4>template v-for</h4>
+                <ul>
+                    <template v-for="item in items">
+                        <li>
+                            {{parentMessage}} - {{$index}} - {{item.message}}
+                        </li>
+                        <li>Extra {{$index}}</li>
+                    </template>
+                </ul>
+            </li>
+            <li>
+                <h4><span>对象v-for</span></h4>
+                <ul>
+                    <li v-for="value in object">
+                        {{$key}} : {{value}}
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <h4>值域 v-for</h4>
+                <p><span v-for="n in 10">{{n}}</span></p>
+            </li>
+        </ol>
+        <script>
+        new Vue({
+            el: '#listRender',
+            data: {
+                parentMessage: 'Parent',
+                items: [{
+                    message: 'Foo'
+                }, {
+                    message: 'Bar'
+                }],
+                object: {
+                    FirstName: 'Bill',
+                    LastName: 'Gates',
+                    Age: '60'
+                }
+            }
+        })
+        </script>
+    </div>
+    <div id="percent" class=row>
+        <h3>百分比</h3>
+        <input type="text" v-model='p1' v-on.focus="p1v">
+        <input type="text" v-model='p2' value='{{p2}}' @.focus="p2v" v-bind:disabled='p2baned'>
+        <input type="text" v-model='p3' v-bind:disabled="p3baned">
+        <script>
+        new Vue({
+            el: '#percent',
+            data: {
+                p1: 0
+            },
+            computed: {
+                p2baned: function() {
+                    if (this.p1 == 0) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                },
+                p3baned: function() {
+                    if (this.p1==0||this.p2 == 0) {
+                        return true
+                    } else {
+                        return false
+                    }
+                }
+            },
+            methods: {
+                p1v:function(e){
+                    if(e.target.value==0){
+                        this.p2=0;
+                    }
+                },
+                p2v:function(e){
+                    if(e.target.value==0){
+                        this.p3=0;
+                    }
+                }
+            }
+        })
+        </script>
+    </div>
 
+    <div id="events" class=row>
+        <h3>方法处理器</h3>
+        <ol>
+            <li>
+                <h4>方法处理器</h4>
+                <div><button v-on:click='greet'>Greet</button></div>
+            </li>
+            <li>
+                <h4>内联语句处理器</h4>
+                <div><button v-on:click="say('hi')">say Hi</button>
+                <button v-on:click="say('what')">say What</button></div>
+            </li>
+            <li>
+                <h4>事件修饰符（.prevent 与 .stop）</h4>
+                <div><span v-on:click="bubble"><a href="javascript:;" v-on:click='noBubble'>冒</a></span></div>
+                <div><span v-on:click="bubble"><a href="javascript:;" v-on:click.stop='noBubble'>不冒</a> </span><span>可连写为v-on:click.stop.prevent</span></div>
+            </li>
+            <li>
+                <h4>按键修饰符</h4>
+                <div>
+                    <input type="text" @keyup.enter='enter'>
+                    <span>按键别名：enter,tab,delete,esc,space,up,down,left,right</span>
+                </div>
+            </li>
+        </ol>
+        <script>
+            new Vue({
+                el:'#events',
+                data:{
+                    name:'ZZZ'
+                },
+                methods:{
+                    greet:function(event){
+                        alert('Hello '+this.name+'!');
+                        alert(event.target.nodeType)
+                    },
+                    say:function(msg){
+                        alert(msg);
+                    },
+                    bubble:function(){
+                        alert('Outer')
+                    },
+                    noBubble:function(){
+                        alert('inner')
+                    },
+                    enter:function(e){
+                        e.target.value && alert(e.target.value)
+                    }
+                }
+            })
+        </script>
+    </div>
 
-    </script>
+    <div id="form-binding" class=row>
+        <h3>表单控件绑定</h3>
+        <ol>
+            <li><h4>基础用法</h4>
+            <ol>
+                <li><h5>checkbox</h5>
+                <input type="checkbox" id='checkbox' v-model='checked'>
+                <label for="checkbox">{{checked}}</label>
+                <div><h5>多个checkbox</h5>
+                <label><input type="checkbox" id='jack' value='Jack' v-model='checkdName'>Jack</label>
+                <label><input type="checkbox" id='mike' value='Mike' v-model='checkdName'>Mike</label>
+                <p>Checked names: {{checkedName|json}}</p>
+                </div>
+                </li>
+            </ol>
+            </li>
+        </ol>
+        <script>
+        new Vue({
+            el:'#form-binding',
+            data:{
+               checked:false,
+               checkdName:[]
+            }
+        })
+        </script>
+    </div>
 </body>
 
 </html>
