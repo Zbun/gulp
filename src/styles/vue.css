@@ -10,10 +10,6 @@ hr {
   display: table;
 }
 
-.table-border tr th, .table-border tr td {
-  border: 1px solid #ddd;
-}
-
 * {
   box-sizing: border-box;
 }
@@ -396,26 +392,90 @@ body {
   max-width: 800px;
   padding: 20px;
   margin: 0 auto;
-  background: #39BFAD;
+  color: #333;
+  font: 14px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif;
   background: #66BAB7 url(/src/images/ashes.png);
   color: #fff;
+  counter-reset: rows;
 }
 
 h3 {
-  margin: 8px 0;
   padding-top: 10px;
   border-top: 1px dashed #fff;
+  text-shadow: 1px 1px #34939C;
 }
 
-ol {
-  list-style: decimal inside;
+.row {
+  counter-increment: rows;
 }
-ol li h4 {
-  padding: 5px 0;
-  margin: 5px 0;
+.row > h3 {
+  color: #0C5D59;
 }
-ol li ol {
+.row > h3:before {
+  content: counter(rows) ". ";
+}
+.row > ol {
   margin-left: 1em;
+  counter-reset: lists;
+}
+.row > ol > li {
+  counter-increment: lists;
+}
+.row > ol > li h4 {
+  padding: 5px 0;
+  text-shadow: 1px 1px #34939C;
+}
+.row > ol > li h4:before {
+  content: counter(rows) "." counter(lists) ". ";
+}
+.row > ol > li ol {
+  margin-left: 1em;
+  counter-reset: listsIn;
+}
+.row > ol > li ol li h5 {
+  counter-increment: listsIn;
+}
+.row > ol > li ol li h5:before {
+  content: counter(rows) "." counter(lists) "." counter(listsIn) ". ";
+}
+
+.prize {
+  position: relative;
+  height: 100px;
+  width: 100px;
+  overflow: hidden;
+}
+.prize .item {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 100px;
+  transform: translate(-50%, -50%);
+  background: darkcyan;
+  background: transparent;
+}
+.prize .item:nth-child(1) {
+  transform: translate(-50%, -50%) rotate(-60deg);
+  z-index: 1;
+}
+.prize .item:nth-child(2) {
+  transform: translate(-50%, -50%) rotate(-120deg);
+  z-index: 2;
+}
+.prize .item:nth-child(3) {
+  transform: translate(-50%, -50%) rotate(-180deg);
+  z-index: 3;
+}
+.prize .item:nth-child(4) {
+  transform: translate(-50%, -50%) rotate(-240deg);
+  z-index: 4;
+}
+.prize .item:nth-child(5) {
+  transform: translate(-50%, -50%) rotate(-300deg);
+  z-index: 5;
+}
+.prize .item:nth-child(odd) {
+  background: slategray;
 }
 
 /*# sourceMappingURL=vue.css.map */

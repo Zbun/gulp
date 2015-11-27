@@ -133,13 +133,6 @@ hr{
     width: 100%;
     display: table;
 }
-.table-border{
-    tr{
-        th,td{
-            border:1px solid #ddd;
-        }
-    }
-}
 @mixin header{
         height: 44px;
         line-height: 44px;
@@ -583,13 +576,13 @@ html {
 $color:#333!default;
 $mobile-def-font:15px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif!default;
 
-$def-font:14px/1.5 'Microsoft Yahei','Helvetica Neue',Helvetica,Arial,sans-serif;
+$def-font:14px/1.5 'Helvetica Neue',Helvetica,Arial,sans-serif;
 
-%basePC{
+@mixin basePC{
     color: $color;
     font: $def-font;
 }
-%baseMobile{
+@mixin baseMobile{
     color: $color;
     font:$mobile-def-font;
 }

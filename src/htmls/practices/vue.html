@@ -12,23 +12,34 @@
 
 <body>
     <header id="header">
-        <h1>Vue.js</h1></header>
+        <h1>Vue.js 相关例子</h1></header>
     <div id="app" class=row>
-        <div class="e1">
-            <p id='{{id}}'>{{ message?message:'default string' }}
-            </p>
-            <input type="text" v-model="message">
-            <p>
-                <button v-on:click="reverseMessage">Reverse Message</button>
-            </p>
-        </div>
-        <div class="e2">
-            <ul>
-                <li v-for="todo in todos">
-                    {{ todo.text | capitalize }}
-                </li>
-            </ul>
-        </div>
+        <h3>Hello World</h3>
+        <ol>
+            <li>
+                <h4>
+                双向绑定及处理用户输入、表达式
+            </h4>
+                <div class="e1">
+                    <p id='{{id}}'>{{ message?message:'default string' }}
+                    </p>
+                    <input type="text" v-model="message">
+                    <p>
+                        <button v-on:click="reverseMessage">Reverse Message</button>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <h4>渲染列表、过滤器、$watch</h4>
+                <div class="e2">
+                    <ul>
+                        <li v-for="todo in todos">
+                            {{ todo.text | capitalize }}
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        </ol>
         <script>
         var data = {
             id: 'data1',
@@ -60,7 +71,7 @@
         </script>
     </div>
     <div id="app2" class=row>
-        <h3>事件及过滤  v-on、v-bind</h3>
+        <h3>指令:参数.修饰符及过滤  v-on、v-bind 缩写</h3>
         <input type="text" v-model='newTodo' @keyup.enter='addNewTodo'>
         <ul>
             <li v-for="todo in todos">
@@ -124,7 +135,7 @@
                 // fullName:function(){
                 //     return this.firstName+' '+this.lastName
                 // }
-                // 存储器式写法
+                // 存取器式写法
                 fullName: {
                     get: function() {
                         return this.firstName + ' ' + this.lastName
@@ -149,15 +160,29 @@
         }
         </style>
         <h3>class和style</h3>
-        <div class="static row" v-bind:class="{'class-a':isA,'class-b':isB}">v-bind:class 对象语法
-            <button @click="switchClass">切Class</button>
-        </div>
-        <div v-bind:class='[isA?classA:"",classB]'>数组式写法
-            <button v-on:click='switchClass'>切类</button>
-        </div>
-        <div v-bind:style="{color:activeColor,fontSize:fontSize+'px',background:'#fff'}">内联对象语法</div>
-        <div v-bind:style="styleObjectA">内联样式对象</div>
-        <div v-bind:style="[styleObjectA,styleObjectB]">内联样式数组写法</div>
+        <ol>
+            <li>
+                <h4>对象语法</h4>
+                <div class="static" v-bind:class="{'class-a':isA,'class-b':isB}">v-bind:class
+                    <button @click="switchClass">切Class</button>
+                </div>
+            </li>
+            <li>
+                <h4>
+                    数组式写法</h4>
+                <div v-bind:class='[isA?classA:"",classB]'>数组式写法
+                    <button v-on:click='switchClass'>切类</button>
+                </div>
+            </li>
+            <li>
+                <h4>
+                    内联语法
+                </h4>
+                <div v-bind:style="{color:activeColor,fontSize:fontSize+'px',background:'#fff'}">内联对象语法</div>
+                <div v-bind:style="styleObjectA">内联样式对象</div>
+                <div v-bind:style="[styleObjectA,styleObjectB]">内联样式数组写法</div>
+            </li>
+        </ol>
         <script>
         new Vue({
             el: '#style',
@@ -169,11 +194,11 @@
                 activeColor: 'red',
                 fontSize: 17,
                 styleObjectA: {
-                    color: 'orange',
+                    color: 'cyan',
                     fontSize: '19px',
                 },
                 styleObjectB: {
-                    background: "antiquewhite"
+                    background: "darkcyan"
                 }
             },
             methods: {
@@ -257,7 +282,7 @@
         })
         </script>
     </div>
-    <div id="percent" class=row>
+    <!--     <div id="percent" class=row>
         <h3>百分比</h3>
         <input type="text" v-model='p1' v-on.focus="p1v">
         <input type="text" v-model='p2' value='{{p2}}' @.focus="p2v" v-bind:disabled='p2baned'>
@@ -298,19 +323,22 @@
             }
         })
         </script>
-    </div>
-
+    </div> -->
     <div id="events" class=row>
         <h3>方法处理器</h3>
         <ol>
             <li>
                 <h4>方法处理器</h4>
-                <div><button v-on:click='greet'>Greet</button></div>
+                <div>
+                    <button v-on:click='greet'>Greet</button>
+                </div>
             </li>
             <li>
                 <h4>内联语句处理器</h4>
-                <div><button v-on:click="say('hi')">say Hi</button>
-                <button v-on:click="say('what')">say What</button></div>
+                <div>
+                    <button v-on:click="say('hi')">say Hi</button>
+                    <button v-on:click="say('what')">say What</button>
+                </div>
             </li>
             <li>
                 <h4>事件修饰符（.prevent 与 .stop）</h4>
@@ -326,60 +354,94 @@
             </li>
         </ol>
         <script>
-            new Vue({
-                el:'#events',
-                data:{
-                    name:'ZZZ'
-                },
-                methods:{
-                    greet:function(event){
-                        alert('Hello '+this.name+'!');
-                        alert(event.target.nodeType)
-                    },
-                    say:function(msg){
-                        alert(msg);
-                    },
-                    bubble:function(){
-                        alert('Outer')
-                    },
-                    noBubble:function(){
-                        alert('inner')
-                    },
-                    enter:function(e){
-                        e.target.value && alert(e.target.value)
-                    }
-                }
-            })
-        </script>
-    </div>
-
-    <div id="form-binding" class=row>
-        <h3>表单控件绑定</h3>
-        <ol>
-            <li><h4>基础用法</h4>
-            <ol>
-                <li><h5>checkbox</h5>
-                <input type="checkbox" id='checkbox' v-model='checked'>
-                <label for="checkbox">{{checked}}</label>
-                <div><h5>多个checkbox</h5>
-                <label><input type="checkbox" id='jack' value='Jack' v-model='checkdName'>Jack</label>
-                <label><input type="checkbox" id='mike' value='Mike' v-model='checkdName'>Mike</label>
-                <p>Checked names: {{checkedName|json}}</p>
-                </div>
-                </li>
-            </ol>
-            </li>
-        </ol>
-        <script>
         new Vue({
-            el:'#form-binding',
-            data:{
-               checked:false,
-               checkdName:[]
+            el: '#events',
+            data: {
+                name: 'ZZZ'
+            },
+            methods: {
+                greet: function(event) {
+                    alert('Hello ' + this.name + '!');
+                    alert(event.target.nodeType)
+                },
+                say: function(msg) {
+                    alert(msg);
+                },
+                bubble: function() {
+                    alert('Outer')
+                },
+                noBubble: function() {
+                    alert('inner')
+                },
+                enter: function(e) {
+                    e.target.value && alert(e.target.value)
+                }
             }
         })
         </script>
     </div>
+    <div id="form-binding" class=row>
+        <h3>表单控件绑定</h3>
+        <ol>
+            <li>
+                <h4>基础用法</h4>
+                <ol>
+                    <li>
+                        <h5>checkbox</h5>
+                        <input type="checkbox" id='checkbox' v-model='checked'>
+                        <label for="checkbox">{{checked}}</label>
+                        <h5>多个checkbox</h5>
+                        <label>
+                            <input type="checkbox" id='jack' value='Jack' v-model='checkedName'>Jack</label>
+                        <label>
+                            <input type="checkbox" id='mike' value='Mike' v-model='checkedName'>Mike</label>
+                        <p>Checked names: {{checkedName|json}}</p>
+                        <h5>
+                            Radio
+                        </h5>
+                        <label><input type="radio" id='one' value='One' v-model='picked' checked>One</label>
+                        <label><input type="radio" id='two' value='Two' v-model='picked'>Two</label>
+                        <p>Picked: {{picked}} <input type="hidden" id='picked' v-model='picked'></p>
+                        <h5>Select</h5><select v-model='selected'><option selected>A</option><option>B</option>
+                        <option>C</option></select><span>Selected: {{selected}}</span>
+                        <div><b>动态选项，用v-for 渲染</b><select v-model='dynamicSelected'><option v-for='option in options' v-bind:value="option.value">{{option.text}}</option></select>
+                         selected: {{dynamicSelected}}</div>
+                         <h5>值绑定</h5>
+                    </li>
+                </ol>
+            </li>
+        </ol>
+        <script>
+        new Vue({
+            el: '#form-binding',
+            data: {
+                checked: false,
+                checkedName: [],
+                picked:'',
+                selected:'',
+                dynamicSelected:'A',
+                options:[
+                {text:'one',value:'A'},
+                {text:'Two',value:'B'},
+                {text:'Three',value:'C'}]
+            }
+        })
+        </script>
+    </div>
+<div id="transition">
+    <h3>过渡</h3>
+</div>
+    <div class="prize">
+        <span class="item">-</span>
+        <span class="item">|</span>
+        <span class="item">-</span>
+        <span class="item">|</span>
+        <span class="item">-</span>
+        <span class="item">|</span>
+    </div>
+    <footer id="footer">
+        <div class="matrix"></div>
+    </footer>
 </body>
 
 </html>

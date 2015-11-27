@@ -66,7 +66,7 @@ gulp.task('watch',function(){
 
 gulp.task("browser-sync",function(){
    browserSync({
-      files:["**/*.html","**/*.css","**/*.js",'!**.less','!**.coffee'],
+      files:["**/*.html","**/*.css","**/*.js",'!**.less','!**.coffee','!**.SCSS'],
       server:{
          baseDir:"./"
       }
