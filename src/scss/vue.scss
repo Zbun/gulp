@@ -32,7 +32,7 @@ counter-increment: rows;
 			padding: 5px 0;
 			text-shadow:1px 1px #34939C;
 			&:before{
-				content:counter(rows)'.'counter(lists) '. ';
+				content:counter(rows)'-'counter(lists) '. ';
 			}
 		}
 		ol{
@@ -42,7 +42,7 @@ counter-increment: rows;
 				h5{
 					counter-increment: listsIn;
 					&:before{
-						content:counter(rows)'.'counter(lists)'.'counter(listsIn)'. ';
+						content:counter(rows)'-'counter(lists)'-'counter(listsIn)'. ';
 					}
 				}
 			}
@@ -74,4 +74,13 @@ counter-increment: rows;
 			background:slategray;
 		}
 	}
+}
+
+.drop-down{
+	@include drop-down;
+}
+select{
+	//-webkit-appearance:none;
+	width:calc(300px - 5em)!important;
+	width:100px;
 }

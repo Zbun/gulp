@@ -24,100 +24,6 @@ hr {
   padding: 0 10px;
 }
 
-.arrow:not(.drop-down) {
-  position: relative;
-  padding-right: 12px;
-}
-.arrow:not(.drop-down):after {
-  position: absolute;
-  top: 50%;
-  right: 2px;
-  width: 11px;
-  height: 11px;
-  content: '';
-  box-shadow: 1px 1px  #bbb;
-  -webkit-transform: rotate(-45deg) translate(0, -50%);
-  transform: rotate(-45deg) translate(0, -50%);
-}
-
-.drop-down {
-  position: relative;
-  overflow: visible !important;
-}
-.drop-down input[type=text] {
-  border: 0 !important;
-  cursor: pointer;
-}
-.drop-down .title {
-  padding-right: 20px;
-}
-.drop-down .content {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 100%;
-  background: #fff;
-  line-height: 2.5;
-  margin-top: 1px;
-  -webkit-transform-origin: top;
-  transform-origin: top;
-  -webkit-transition: all 0.3s;
-  transition: all 0.3s;
-  -webkit-transform: rotateX(90deg);
-  transform: rotateX(90deg);
-  z-index: -1;
-  opacity: 0;
-}
-.drop-down .content li {
-  position: relative;
-  padding: 10px;
-}
-.drop-down .content li.on:after {
-  position: absolute;
-  right: 14px;
-  top: 50%;
-  width: 1em;
-  line-height: 1;
-  content: "\f00c";
-  font-family: fontawesome;
-  font-size: 1em;
-  font-style: italic;
-  color: #080;
-  padding: 2px;
-  -webkit-border-radius: 100%;
-  border-radius: 100%;
-  -webkit-transform: translate(0, -50%);
-  transform: translate(0, -50%);
-}
-.drop-down:after {
-  position: absolute;
-  top: 50%;
-  right: 10px;
-  width: 11px;
-  height: 11px;
-  content: '';
-  margin-top: -2px;
-  box-shadow: 1px 1px  #ccc;
-  -webkit-transition: all 0.3s;
-  transition: all 0.3s;
-  -webkit-transform: rotate(-45deg) translate(0, -50%);
-  transform: rotate(-45deg) translate(0, -50%);
-}
-
-.drop-down.expanded:after {
-  right: 12px;
-  margin-top: -5px;
-  -webkit-transform: rotate(45deg) translate(0, -50%);
-  transform: rotate(45deg) translate(0, -50%);
-  box-shadow: 1px 1px #888;
-}
-.drop-down.expanded .content {
-  opacity: 1;
-  z-index: 1;
-  -webkit-transform: rotateX(0);
-  transform: rotateX(0);
-}
-
 .required-mark:before {
   content: '*';
   color: #f00;
@@ -322,10 +228,6 @@ img {
   background: #33b456;
 }
 
-mark {
-  background: #ff5;
-}
-
 html {
   min-height: 100%;
   font-size: 100%;
@@ -333,37 +235,6 @@ html {
 
 a {
   text-decoration: none;
-}
-
-.loading {
-  position: relative;
-  text-align: center;
-  pointer-events: none;
-}
-.loading > * {
-  opacity: 0;
-}
-.loading:before, .loading:after {
-  content: '\6570\636E\52A0\8F7D\4E2D';
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  margin-left: -3em;
-  color: #888;
-  -webkit-transform: translateY(-50%);
-  transform: translateY(-50%);
-}
-.loading:after {
-  content: '...';
-  width: 1em;
-  margin-left: 2em;
-  -webkit-animation: loading 1.5s infinite;
-  animation: loading 1.5s infinite;
-}
-
-.loadmore {
-  padding: 10px;
-  color: #666;
 }
 
 @-webkit-keyframes loading {
@@ -426,7 +297,7 @@ h3 {
   text-shadow: 1px 1px #34939C;
 }
 .row > ol > li h4:before {
-  content: counter(rows) "." counter(lists) ". ";
+  content: counter(rows) "-" counter(lists) ". ";
 }
 .row > ol > li ol {
   margin-left: 1em;
@@ -436,7 +307,7 @@ h3 {
   counter-increment: listsIn;
 }
 .row > ol > li ol li h5:before {
-  content: counter(rows) "." counter(lists) "." counter(listsIn) ". ";
+  content: counter(rows) "-" counter(lists) "-" counter(listsIn) ". ";
 }
 
 .prize {
@@ -476,6 +347,82 @@ h3 {
 }
 .prize .item:nth-child(odd) {
   background: slategray;
+}
+
+.drop-down {
+  position: relative;
+  overflow: visible !important;
+}
+.drop-down input[type=text] {
+  border: 0 !important;
+  cursor: pointer;
+}
+.drop-down .title {
+  padding-right: 20px;
+}
+.drop-down .content {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  background: #fff;
+  -webkit-transform-origin: top;
+  transform-origin: top;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  -webkit-transform: rotateX(90deg);
+  transform: rotateX(90deg);
+  z-index: -1;
+  opacity: 0;
+}
+.drop-down .content li {
+  position: relative;
+}
+.drop-down .content li.on:after {
+  content: '';
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  width: .5em;
+  height: .5em;
+  padding: 2px;
+  background: #0BD480;
+  -webkit-border-radius: 100%;
+  border-radius: 100%;
+  -webkit-transform: translate(0, -50%);
+  transform: translate(0, -50%);
+}
+.drop-down:after {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  width: 11px;
+  height: 11px;
+  content: '';
+  margin-top: -2px;
+  box-shadow: 1px 1px  #ccc;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  -webkit-transform: rotate(-45deg) translate(0, -50%);
+  transform: rotate(-45deg) translate(0, -50%);
+}
+.drop-down.expanded:after {
+  right: 12px;
+  margin-top: -5px;
+  -webkit-transform: rotate(45deg) translate(0, -50%);
+  transform: rotate(45deg) translate(0, -50%);
+  box-shadow: 1px 1px #888;
+}
+.drop-down.expanded .content {
+  opacity: 1;
+  z-index: 1;
+  -webkit-transform: rotateX(0);
+  transform: rotateX(0);
+}
+
+select {
+  width: calc(300px - 5em) !important;
+  width: 100px;
 }
 
 /*# sourceMappingURL=vue.css.map */

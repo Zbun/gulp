@@ -11,6 +11,11 @@
 </head>
 
 <body>
+<header>
+    <a href="" class="logo"></a>
+    <nav class="nav"><a href="">首页</a></nav>
+    <section class="operate"><a href="">关于</a></section>
+</header>
     <header id="header">
         <h1>Vue.js 相关例子</h1></header>
     <div id="app" class=row>
@@ -59,7 +64,7 @@
                 }
             },
             created: function() {
-                console.log('data is ', this.message)
+                console.log(this.message)
             }
         })
 
@@ -428,9 +433,107 @@
         })
         </script>
     </div>
-<div id="transition">
+<div id="transition" class='row'>
     <h3>过渡</h3>
 </div>
+<div id="component" class="row">
+    <h3>组件</h3>
+    <ol>
+        <li>
+            <h4>
+                使用组件
+            </h4>
+            <ol>
+                <li>
+                    <h5>注册及组件选项</h5> 
+                    <div>
+                        <my-component></my-component>
+                    </div>
+                </li>
+                <li>
+                    <h5>is 特性</h5>
+
+                </li>
+            </ol>
+               
+        </li>
+        <li>
+            <h4>Props</h4>
+            <ol>
+                <li>
+                    <h5>
+                        使用Props 传递数据
+                    </h5>
+                    <child msg='hello'></child>
+                    <script>
+                        Vue.component('child',{
+        props:['msg'],
+        template:'<span>{{msg}}</span>'
+    })
+                    </script>
+                </li>
+                <li>
+                    <h5>
+                        camelCase vs. kebab-case.HTML特性不区分大小写。名字形式为camelCase的prop用作特性时，需要转换为kebab-case(知横线隔开)
+                    </h5>
+                    <camel-msg my-message='camel message'></camel-msg>
+                    <script>
+                    Vue.component('camel-msg',{
+                        props:['myMessage'],
+                        template:'<span>camelMsg: {{myMessage}}</span>'
+                    })
+                    </script>
+                </li>
+                <li>
+                    <h5>
+                        动态绑定 Props
+                    </h5>
+                    <div id='dynamic-props'>
+                        <input type="text" v-model='parentMsg'>
+                        <dynamic-props v-bind:my-message='parentMsg'></dynamic-props>
+                    </div>
+                    <script>
+                    Vue.component('dynamic-props',{
+                        props:['myMessage'],
+                        template:'<span>dynamic: {{myMessage}}</span>'
+                    })
+                    new Vue({
+                        el:'#dynamic-props',
+                        data:{
+                            parentMsg:'default'
+                        }
+                    })
+                    </script>
+                </li>
+                <li>
+                    <h5>
+                        字面量语法 vs. 动态语法
+                    </h5>
+                </li>
+                <li>
+                    <h5>
+                        Prop 绑定类型
+                    </h5>
+                    
+                </li>
+            </ol>
+        </li>
+    </ol>
+    <script>
+    var myComponent=Vue.extend({
+        data:function(){
+            return {custom:'hashchangea'}
+        },
+        template:'<div>A {{custom}} component</div>'
+    })
+    Vue.component('my-component',myComponent);
+    new Vue({
+        el:'#component',
+        data:{
+        }
+    })
+    </script> 
+</div><p><select name="" id="city"></select><select name="" id=""></select><select name="" id="downtown"></select></p><p><select name="" id="city2"></select><select name="" id=""></select><select name="" id="downtown"></select></p>
     <div class="prize">
         <span class="item">-</span>
         <span class="item">|</span>
@@ -441,7 +544,20 @@
     </div>
     <footer id="footer">
         <div class="matrix"></div>
+        <div class="drop-down expanded">
+            <div class="title">我是标题</div>
+            <ul class="content">
+                <li class=on><a href="javascript:;" class="block">呵呵</a></li>
+            </ul>
+        </div>
     </footer>
+   
+    <script src="/src/scripts/lib/jquery-1.11.3.js"></script>
+    <script src="/src/scripts/area.js"></script>
+    <script>
+    $('#city').cityList();
+    $('#city2').cityList();
+    </script>
 </body>
 
 </html>

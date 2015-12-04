@@ -142,11 +142,11 @@ hr{
         }
         .goback{
             @extend %goback;
-        }
-        .goback+.title{
-            padding-left: 36px;
+            &+.title{
+                padding-left: 45px;
             &.text-center{
                 padding-left: 0;
+            }
             }
         }
 }
@@ -191,8 +191,9 @@ hr{
     padding: 0 10px;
 }
 
-.arrow:not(.drop-down){
-    position: relative;
+@mixin arrow{
+    &:not(.drop-down){
+         position: relative;
         padding-right: 12px;
         &:after{
             position: absolute;top: 50%;
@@ -204,8 +205,9 @@ hr{
             @include trf(rotate(-45deg) translate(0,-50%));
         }
     }
+    }
 
-.drop-down{
+@mixin drop-down{
     position: relative;
     overflow: visible!important;
     input[type=text]{
@@ -221,8 +223,6 @@ hr{
         right: 0;
         top: 100%;
         background:#fff;
-        line-height: 2.5;
-        margin-top: 1px;
         -webkit-transform-origin: top;
         transform-origin: top;
         @include trans(all .3s);
@@ -231,21 +231,17 @@ hr{
         opacity: 0;
         li{
             position: relative;
-            padding: 10px;
             &.on{
                 &:after{
+                    content: '';
                     position: absolute;
                     right: 14px;
                     top: 50%;
-                    width: 1em;
-                    line-height: 1;
-                    content: "\f00c";
-                    font-family: fontawesome;
-                    font-size: 1em;
-                    font-style: italic;
-                    color: #080;
-                    //background:#f55;
+                    width: .5em;
+                    height: .5em;
                     padding: 2px;
+                    background:#0BD480;
+                    //background:#f55;
                     @include br(100%);
                     @include trf(translate(0,-50%));
                 }
@@ -263,9 +259,9 @@ hr{
             @include trans(all .3s);
             @include trf(rotate(-45deg) translate(0,-50%));
     }
-}
-.drop-down.expanded{
-    &:after{
+
+    &.expanded{
+         &:after{
         right: 12px;
         margin-top: -5px;
         @include trf(rotate(45deg) translate(0,-50%));
@@ -275,6 +271,7 @@ hr{
         opacity: 1;
         z-index: 1;
         @include trf(rotateX(0));
+    }
     }
 }
 
@@ -566,9 +563,6 @@ $color-btn-ok-color:#fff;
     }
 }
 
-mark{
-    background:#ff5;
-}
 html {
     min-height: 100%;
     font-size: 100%;
@@ -608,7 +602,7 @@ $color-anchor-active:#e11;
         }
 }
 
-.loading{
+@mixin loading{
     position: relative;
     text-align: center;
     pointer-events:none;
@@ -631,7 +625,7 @@ $color-anchor-active:#e11;
         @include am(loading 1.5s  infinite);
     }
 }
-.loadmore{
+@mixin loadmore{
     padding: 10px;
     color: #666;
 }
