@@ -10,7 +10,7 @@ hr {
   display: table;
 }
 
-* {
+*, :before, :after {
   box-sizing: border-box;
 }
 

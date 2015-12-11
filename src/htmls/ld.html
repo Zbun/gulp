@@ -31,12 +31,14 @@
     label {
         font-style: normal;
         font-weight: 400;
-    } 
-    .clearfix:after{
-    	content: '';
-    	display: table;
-    	clear: both;
     }
+    
+    .clearfix:after {
+        content: '';
+        display: table;
+        clear: both;
+    }
+    
     .fl {
         float: left;
     }
@@ -44,40 +46,48 @@
     .fr {
         float: right;
     }
-    .text-center{
-    	text-align: center;
+    
+    .text-center {
+        text-align: center;
     }
-    a{
-    	color: #fff;
+    
+    a {
+        color: #fff;
     }
-    body{
-    	color:#fff;
-    	font:15px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif;
+    
+    body {
+        color: #fff;
+        font: 15px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif;
     }
-   
-    #header{
-    	background: #333;
+    
+    #header {
+        background: #333;
     }
+    
     .row {
-    	height: 900px;
+        height: 900px;
         background-repeat: no-repeat;
         -webkit-background-size: cover;
         background-size: cover;
     }
-    #header .logo{
-		display: inline-block;
-		width: 80px;
-		height: 80px;
-		background: url(/logo.jpg) no-repeat 50%;
-		text-indent: -200%;
-		overflow: hidden;
+    
+    #header .logo {
+        display: inline-block;
+        width: 80px;
+        height: 80px;
+        background: url(/logo.jpg) no-repeat 50%;
+        text-indent: -200%;
+        overflow: hidden;
     }
-    #header .nav{
-    	display: inline-block;
+    
+    #header .nav {
+        display: inline-block;
     }
-    #header .meta{
-    	margin-top: 65px;
+    
+    #header .meta {
+        margin-top: 65px;
     }
+    
     .one {
         position: relative;
         background-image: url('tlwlr.jpg');
@@ -98,16 +108,24 @@
         top: 50%;
         left: 50%;
         padding: 30px;
-        border-top:4px solid #fcc;
-        background: rgba(39,40,50,.5);
+        border-top: 4px solid #fcc;
+        background: rgba(39, 40, 50, .5);
         -webkit-transform: translate(-50%, -50%);
         -moz-transform: translate(-50%, -50%);
         -ms-transform: translate(-50%, -50%);
         -o-transform: translate(-50%, -50%);
         transform: translate(-50%, -50%);
+        border-radius: 5px;
     }
-    .two{
-    	background: #fcc;
+    
+    .one .tip span+span:before{
+        content:'•';
+        margin: 20px;
+        color: #ff0
+    }
+
+    .two {
+        background: #fcc;
     }
     </style>
 </head>
@@ -125,20 +143,34 @@
     </header>
     <div class="main">
         <article class="one row text-center">
+            <div class="title">
+                <h1>啊哈上门养车</h1>
+                <p class="slogan">什么什么</p>
+            </div>
             <section class="content">
                 <h2>请选择要保养的车型</h2>
                 <h4><span>热门搜索品牌</span>
-                <a href="javascript:;">大从</a>
-                <a href="javascript:;">大从</a>
-                <a href="javascript:;">大从</a>
-                <a href="javascript:;">大从</a>
-                <a href="javascript:;">大从</a>
-                <a href="javascript:;">大从</a>
+                <a href="javascript:;">大众</a>
+                <a href="javascript:;">大众</a>
+                <a href="javascript:;">大众</a>
+                <a href="javascript:;">大众</a>
+                <a href="javascript:;">大众</a>
+                <a href="javascript:;">大众</a>
                 </h4>
             </section>
+            <section class="tip"><span>随</span>
+                <span>时</span>
+                <span>随</span>
+                <span>地</span>
+                <span>养</span>
+                <span>车</span></section>
         </article>
-        <article class="two row"><section class="content"></section></article>
-        <article class="three row"><section class="content"></section></article>
+        <article class="two row">
+            <section class="content"></section>
+        </article>
+        <article class="three row">
+            <section class="content"></section>
+        </article>
     </div>
     <footer id="footer"></footer>
 </body>

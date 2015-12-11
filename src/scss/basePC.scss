@@ -571,35 +571,23 @@ $mobile-def-font:15px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif!default
 
 $def-font:14px/1.5 'Helvetica Neue',Helvetica,Arial,sans-serif;
 
-@mixin basePC{
+body{
     color: $color;
     font: $def-font;
 }
-@mixin baseMobile{
-    color: $color;
-    font:$mobile-def-font;
-}
 
-a{
-    text-decoration: none;
-}
 $color-anchor:#08A1EF;
 $color-anchor-visited:#609;
 $color-anchor-hover:#de2c3b;
 $color-anchor-active:#e11;
-@mixin PCanchor{
+a{
         color:$color-anchor;
+        text-decoration: none;
         &:hover{
             text-decoration: underline;
         }
 }
 
-@mixin mobileAnchor{
-        color:#333;
-        &:visited,&:hover,&:active{
-            color: #333;
-        }
-}
 
 @mixin loading{
     position: relative;

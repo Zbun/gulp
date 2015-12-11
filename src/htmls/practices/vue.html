@@ -516,6 +516,32 @@
                     </h5>
                     
                 </li>
+                <li>
+                    <h5>Prop 验证</h5>
+                    <ol>
+                        <li>
+                            <div id="verify">
+                                <input type="text" v-model='val'><span v-bind:pro-a='val'>{{val}}</span>
+                            </div>
+                            <script>
+                            Vue.component('verify',{
+                                props:{
+                                    proA:{
+                                        type:Number,
+                                        required:true
+                                    }
+                                }
+                            })
+                            new Vue({
+                                el:'#verify',
+                                data:{
+                                    val:'s'
+                                }
+                            })
+                            </script>
+                        </li>
+                    </ol>
+                </li>
             </ol>
         </li>
     </ol>
