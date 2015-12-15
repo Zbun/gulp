@@ -1,24 +1,3 @@
-(function(){
-	$=function(ele,context){
-
-		var curNode=context||window.document,eleList=[];
-		var sPrivate='zlb HELLO';
-		eleList.push(curNode.querySelector(ele));
-		return eleList
-
-	}
-	$.fn=$.prototype={
-	addClass:function(cn){alert(this);
-		eL=this[0];
-		alert(el);
-		
-		this.classList.add(cn);
-		return this.extend;
-	}
-
-}
-})()
-
 
 //一些验证方法
 ;var validator = {
@@ -176,7 +155,7 @@ function popup(opts) {
 //加载动画
 var waiting = {
     _getDiv: function(arg) {
-        var w = document.querySelector('.waiting'),content=arg||'';
+        var w = document.querySelector('.waiting'),content=arg||'数据加载中，请稍等';
         if (!w) {
             var div = document.createElement('div');
             div.innerHTML='<span class=content>'+content+'</span>'
@@ -184,6 +163,9 @@ var waiting = {
             w = div;
             //$div.appendTo('body');
             document.body.appendChild(w);
+        }
+        else{
+            w.querySelector('.content').textContent=content;
         }
         return w;
     },
