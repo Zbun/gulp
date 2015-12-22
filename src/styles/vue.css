@@ -512,7 +512,7 @@ input[type=radio] {
 }
 
 .disabled {
-  opacity: .5;
+  opacity: 0.35;
   pointer-events: none;
 }
 
@@ -835,11 +835,15 @@ button, a {
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
 }
-.waiting .content:after {
+.waiting .content .elipsis {
   position: absolute;
-  content: '...';
-  -webkit-animation: loading 1.5s infinite;
-  animation: loading 1.5s infinite;
+  width: .25em;
+  overflow: hidden;
+  white-space: nowrap;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  -webkit-animation: loading 1.5s steps(3) infinite;
+  animation: loading 1.5s steps(3) infinite;
 }
 
 @-webkit-keyframes am-wait {
@@ -862,31 +866,13 @@ button, a {
 }
 
 @-webkit-keyframes loading {
-  0%,
-    40% {
-    content: ".";
-  }
-  41%,
-    66% {
-    content: "..";
-  }
-  70%,
-    100% {
-    content: "...";
+  100% {
+    width: 1em;
   }
 }
 @keyframes loading {
-  0%,
-    40% {
-    content: ".";
-  }
-  41%,
-    66% {
-    content: "..";
-  }
-  70%,
-    100% {
-    content: "...";
+  100% {
+    width: 1em;
   }
 }
 body {

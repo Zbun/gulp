@@ -53,14 +53,17 @@
 function popup(opts) {
     var opt = {
         title: '',
-        content: '',
-        cancelVal: '',
-        okVal: '',
-        callback: '',
-        mask: true,
-        theme: '',
-        time: 0,
-        cancelCallback: ''
+        content: '',                //内容
+        cancelVal: '',              //取消文本
+        okVal: '',                  //确认文本
+        callback: '',               //确认回调
+        cancelCallback: '',         //取消回调
+        mask: true,                 //是否遮罩
+        theme: '',                  //主题：dark、iOS
+        time: 0,                    //自动关闭倒计时
+        beforeShow:'',              //弹窗前执行事件
+        afterShow:'',
+        closeCallback:''            //关闭后执行
     }
     $.extend(opt, opts);
 
@@ -69,9 +72,12 @@ function popup(opts) {
         okVal = opt.okVal,
         callback = opt.callback,
         mask = opt.mask;
-    var time = opt.time,
+    var time = parseInt(opt.time),
         cancelVal = opt.cancelVal,
-        cancelCallback = opt.cancelCallback;
+        cancelCallback = opt.cancelCallback,
+        beforeShow=opt.beforeShow,
+        afterShow=opt.afterShow,
+        closeCallback=opt.closeCallback;
 
     if (opt.theme == 'dark') {
         mask = false;
@@ -90,9 +96,9 @@ function popup(opts) {
     div.className = className;
     //var $div = $(div);
     var html = '<div class="wrapper">' + (title ? ('<h3 class="title">' + title + '</h3>') : '') + '<a href="javascript:;" class="close"></a>' + (content ? ('<div class="content">' + content + '</div>') : '') + ((okVal || cancelVal) ? ('<div class="btns">' + (cancelVal ? ('<span class="btn-wrapper"><a href="javascript:;" class="cancel btn btn-danger">' + cancelVal + '</a></span>') : '') + (okVal ? ('<span class="btn-wrapper"><a href="javascript:;" class="btn btn-warning ok">' + okVal + '</a></span>') : '')) : '') + '</div></div>';
-    div.innerHTML=html;
+    div.innerHTML = html;
 
-    function _remove(){
+    function _remove() {
         div.parentNode.removeChild(div);
     }
 
@@ -104,23 +110,32 @@ function popup(opts) {
     //     $div.remove();
     // })
 
-    div.addEventListener('click', function(e){
-        var e=e||window.event,cl=e.target.classList;
-        if(cl.contains('close')||cl.contains('cancel')){
-            typeof cancelCallback == 'function' && cancelCallback();
+    function _isFunction(obj){
+        return typeof obj=='function'?true:false;
+    }
+
+    div.addEventListener('click', function(e) {
+        var e = e || window.event,
+            cl = e.target.classList;
+        if (cl.contains('close') || cl.contains('cancel')) {
+            _isFunction(cancelCallback) && cancelCallback();
             _remove();
-        }
-        else if(cl.contains('ok')){
-            typeof callback == 'function' && callback();
+        } else if (cl.contains('ok')) {
+            isFcuntion(callback) && callback();
             _remove();
         }
     })
-
-   // $div.appendTo('body');
     document.body.appendChild(div);
+    _isFunction(beforeShow) && beforeShow();
+
+    //自动关闭执行事件
+    function _autoClose(){
+        _remove();
+        _isFunction(closeCallback) && closeCallback();
+    }
 
     if (time > 0) {
-        setTimeout(_remove, time);
+        setTimeout(_autoClose, time);
     }
 }
 // popup({
@@ -155,30 +170,57 @@ function popup(opts) {
 //加载动画
 var waiting = {
     _getDiv: function(arg) {
-        var w = document.querySelector('.waiting'),content=arg||'数据加载中，请稍等';
+        var w = document.querySelector('.waiting'),
+            content = arg || '数据加载中，请稍等';
         if (!w) {
             var div = document.createElement('div');
-            div.innerHTML='<span class=content>'+content+'</span>'
             div.className = 'waiting';
             w = div;
-            //$div.appendTo('body');
             document.body.appendChild(w);
         }
-        else{
-            w.querySelector('.content').textContent=content;
-        }
+        w.innerHTML='<span class=content>' + content + '<span class="elipsis">...</span></span>';
         return w;
     },
     show: function(arg) {
-        this._getDiv(arg).style.display='block';
+        this._getDiv(arg).style.display = 'block';
     },
     hide: function() {
-        this._getDiv().style.display='none';
+        this._getDiv().style.display = 'none';
     },
     remove: function() {
         document.body.removeChild(this._getDiv());
     }
 };
+//HTML5 上传简单实现
+;(function($) {
+    $.fn.upload = function(opts) {
+        var def = {
+            url: '',
+            type: 'POST',
+            dataType: 'JSON',
+            callback: function() {}
+        };
+
+        var opt = $.extend(true, def, opts);
+
+        this.on('change', function() {
+            var file = this.files[0];
+            var formData = new FormData();
+            formData.append('filename', file);
+            $.ajax({
+                url: opt.url,
+                type: opt.type,
+                dataType: opt.dataType,
+                data: formData,
+                processData: false, //告诉jQuery不要去处理发送的数据
+                contentType: false, //告诉jQuery不要支设置Content-Type请求头
+                success: opt.callback
+            })
+            $(this).replaceWith($(this).clone(true));
+        })
+        return this;
+    }
+})($);
 
 
 

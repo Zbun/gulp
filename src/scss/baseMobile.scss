@@ -449,7 +449,7 @@ $color-btn-warning-bg:#f98800;
 }
 
 .disabled {
-    opacity: .5;
+    opacity: 0.35;
     pointer-events: none;
 }
 
@@ -872,10 +872,13 @@ a {
         color: #eee;
         text-shadow: 1px 1px 1px #333;
         @include trf-tsl(-50%, -50%);
-        &:after {
+        .elipsis {
             position: absolute;
-            content: '...';
-            @include am(loading 1.5s infinite);
+            width: .25em;
+            overflow: hidden;
+            white-space: nowrap;
+            @include trans(all .3s);
+            @include am(loading 1.5s steps(3) infinite);
         }
     }
 }
@@ -893,38 +896,19 @@ a {
     }
 }
 
-
 .loadmore {
     padding: 10px;
     color: #666;
 }
 
 @-webkit-keyframes loading {
-    0%,
-    40% {
-        content: '.'
-    }
-    41%,
-    66% {
-        content: '..'
-    }
-    70%,
     100% {
-        content: '...'
+        width: 1em;
     }
 }
 
 @keyframes loading {
-    0%,
-    40% {
-        content: '.'
-    }
-    41%,
-    66% {
-        content: '..'
-    }
-    70%,
     100% {
-        content: '...'
+        width: 1em;
     }
 }
