@@ -14,12 +14,27 @@
 	.main h1{
 		text-shadow: 1px 1px 3px #105820;
 	}
+	.word{
+		-webkit-transform-style: preserve-3d;
+		-moz-transform-style: preserve-3d;
+		-ms-transform-style: preserve-3d;
+		transform-style: preserve-3d;
+		perspective:500px;
+	}
 	</style>
 </head>
 <body>
 	<div class="main">
 		<h1>我是一个大标题</h1>
 	</div>
+
+	<div class="word">
+		<div class=wrapper><div class="w1">垂绥饮清露</div>
+				<div class="w2">流响出疏桐</div>
+				<div class="w3">居高声自运</div>
+				<div class="w4">非是藉秋风</div></div>
+	</div>
+
 	<script src="../../scripts/lib/lodash/lodash.min.js"></script>
 	<script>
 	var users=[{user:'Barney',age:36},{user:'Bill',age:60},{user:'Albert',age:103}];
