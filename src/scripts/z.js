@@ -191,20 +191,20 @@ var waiting = {
         document.body.removeChild(this._getDiv());
     }
 };
-//HTML5 上传简单实现
+//HTML5 上传简单实现，jQuery插件版
 ;
-(function($) {
-    $.fn.upload = function(opts) {
+(function ($) {
+    $.fn.upload = function (opts) {
         var def = {
             url: '',
             type: 'POST',
             dataType: 'JSON',
-            callback: function() {}
+            callback: function () { }
         };
 
         var opt = $.extend(true, def, opts);
 
-        this.on('change', function() {
+        this.on('change', function () {
             var file = this.files[0];
             var formData = new FormData();
             formData.append('filename', file);
@@ -246,7 +246,7 @@ function html5Upload() {
             //FormData上传
             if (window.FormData) {
                 if (typeof beforeUpload == 'function') {
-                    isReady = beforeUpload(obj.value);
+                    isReady = beforeUpload(obj);
                 }    
                 if (isReady) {
                     var formData = new FormData();
