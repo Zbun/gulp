@@ -48,182 +48,55 @@ var validator = {
     }
 };
 
+//HTML5 上传简单实现，jQuery插件版
+// ;
+// (function ($) {
+//     $.fn.upload = function (opts) {
+//         var def = {
+//             url: '',
+//             type: 'POST',
+//             dataType: 'JSON',
+//             callback: function () { }
+//         };
 
-//简单弹窗，可改主题有：{theme:'dark'},{thmes:'iOS'}
-function popup(opts) {
-    var opt = {
-        title: '',
-        content: '', //内容
-        cancelVal: '', //取消文本
-        okVal: '', //确认文本
-        callback: '', //确认回调
-        cancelCallback: '', //取消回调
-        mask: true, //是否遮罩
-        theme: '', //主题：dark、iOS
-        time: 0, //自动关闭倒计时
-        beforeShow: '', //弹窗前执行事件
-        afterShow: '',
-        closeCallback: '' //关闭后执行
-    }
-    $.extend(opt, opts);
+//         var opt = $.extend(true, def, opts);
 
-    var title = opt.title,
-        content = opt.content,
-        okVal = opt.okVal,
-        callback = opt.callback,
-        mask = opt.mask;
-    var time = parseInt(opt.time),
-        cancelVal = opt.cancelVal,
-        cancelCallback = opt.cancelCallback,
-        beforeShow = opt.beforeShow,
-        afterShow = opt.afterShow,
-        closeCallback = opt.closeCallback;
-
-    if (opt.theme == 'dark') {
-        mask = false;
-    } else if (/iOS|iPhone|Apple/i.test(opt.theme)) {
-        mask = false;
-        opt.theme = 'iOS';
-    }
-
-    var div = document.createElement('div'),
-        className = 'popup ' + opt.theme.toLowerCase();
-
-    if (!mask) {
-        className += ' nomask';
-    }
-
-    div.className = className;
-    //var $div = $(div);
-    var html = '<div class="wrapper">' + (title ? ('<h3 class="title">' + title + '</h3>') : '') + '<a href="javascript:;" class="close"></a>' + (content ? ('<div class="content">' + content + '</div>') : '') + ((okVal || cancelVal) ? ('<div class="btns">' + (cancelVal ? ('<span class="btn-wrapper"><a href="javascript:;" class="cancel btn btn-danger">' + cancelVal + '</a></span>') : '') + (okVal ? ('<span class="btn-wrapper"><a href="javascript:;" class="btn btn-warning ok">' + okVal + '</a></span>') : '')) : '') + '</div></div>';
-    div.innerHTML = html;
-
-    function _remove() {
-        div.parentNode.removeChild(div);
-    }
-
-    // $div.html(html).on('click', '.close,.cancel', function() {
-    //     typeof cancelCallback == 'function' && cancelCallback();
-    //     $div.remove();
-    // }).on('click', '.ok', function() {
-    //     typeof callback == 'function' && callback();
-    //     $div.remove();
-    // })
-
-    function _isFunction(obj) {
-        return typeof obj == 'function' ? true : false;
-    }
-
-    div.addEventListener('click', function(e) {
-        var e = e || window.event,
-            cl = e.target.classList;
-        if (cl.contains('close') || cl.contains('cancel')) {
-            _isFunction(cancelCallback) && cancelCallback();
-            _remove();
-        } else if (cl.contains('ok')) {
-            isFcuntion(callback) && callback();
-            _remove();
-        }
-    })
-    document.body.appendChild(div);
-    _isFunction(beforeShow) && beforeShow();
-
-    //自动关闭执行事件
-    function _autoClose() {
-        _remove();
-        _isFunction(closeCallback) && closeCallback();
-    }
-
-    if (time > 0) {
-        setTimeout(_autoClose, time);
-    }
-}
-// popup({
-//     content: '呵呵呵 ',
-//     okVal: '我是确定',
-//     theme: 'ios',
-//     cancelVal: '我是取消',
-//     callback: function() {
-//         popup({
-//             content: '很黑',
-//             theme: 'dark',
-//             okVal: '我弹',
-//             callback: function() {
-//                 popup({
-//                     content: '我是后一次弹了',
-//                 })
-//             }
+//         this.on('change', function () {
+//             var file = this.files[0];
+//             var formData = new FormData();
+//             formData.append('filename', file);
+//             $.ajax({
+//                 url: opt.url,
+//                 type: opt.type,
+//                 dataType: opt.dataType,
+//                 data: formData,
+//                 processData: false, //告诉jQuery不要去处理发送的数据
+//                 contentType: false, //告诉jQuery不要支设置Content-Type请求头
+//                 success: opt.callback
+//             })
+//             $(this).replaceWith($(this).clone(true));
 //         })
+//         return this;
+//     }
+// })($);
+
+//HTML5 FormData 上传，用法，作用在input[type=file]上
+// html5Upload({
+//     obj:$('#id')[0],
+//     beforeUpload:function(){
+//         if(...){
+//             return false;
+//         }
+//         return true;
+//     },
+//     callback:function(data){
+//         console.log(data);
+//     },
+//     errorCallback:function(){
+//         alert('服务器错误');
 //     }
 // })
-
-
-// popup({
-//     okVal: '确定',
-//     cancelVal: '取消',
-//     callback: function() {
-//         alert('haha')
-//     },
-//     content: '您帮TA用力砍了一刀，砍掉了<span class="text-danger">19.96</span>元，当前价格为<span class="text-danger">1933.44</span>元'
-// })
-
-//加载动画
-var waiting = {
-    _getDiv: function(arg) {
-        var w = document.querySelector('.waiting'),
-            content = arg || '数据加载中，请稍等';
-        if (!w) {
-            var div = document.createElement('div');
-            div.className = 'waiting';
-            w = div;
-            document.body.appendChild(w);
-        }
-        w.innerHTML = '<span class=content>' + content + '<span class="elipsis">...</span></span>';
-        return w;
-    },
-    show: function(arg) {
-        this._getDiv(arg).style.display = 'block';
-    },
-    hide: function() {
-        this._getDiv().style.display = 'none';
-    },
-    remove: function() {
-        document.body.removeChild(this._getDiv());
-    }
-};
-//HTML5 上传简单实现，jQuery插件版
-;
-(function ($) {
-    $.fn.upload = function (opts) {
-        var def = {
-            url: '',
-            type: 'POST',
-            dataType: 'JSON',
-            callback: function () { }
-        };
-
-        var opt = $.extend(true, def, opts);
-
-        this.on('change', function () {
-            var file = this.files[0];
-            var formData = new FormData();
-            formData.append('filename', file);
-            $.ajax({
-                url: opt.url,
-                type: opt.type,
-                dataType: opt.dataType,
-                data: formData,
-                processData: false, //告诉jQuery不要去处理发送的数据
-                contentType: false, //告诉jQuery不要支设置Content-Type请求头
-                success: opt.callback
-            })
-            $(this).replaceWith($(this).clone(true));
-        })
-        return this;
-    }
-})($);
-
-//HTML5 FormData 上传
+//HTML5 上传
 function html5Upload() {
     var arg = arguments[0];
     var obj = arg.obj;                               //作用于上传按钮对象
@@ -290,5 +163,166 @@ function html5Upload() {
                 }
             }
         })
+    }
+}
+
+//加载等待提示，pcWaiting.show()、waiting.remove(),电脑端等待，没有提示文字
+var PCwaiting = {
+    _getDiv: function (arg) {
+        var w = document.querySelector('.PCwaiting');
+        
+        if (!w) {
+            var div = document.createElement('div');
+            div.className = 'PCwaiting';
+            w = div;
+            var style = document.createElement('style');
+            style.innerHTML = ".PCwaiting{position:fixed;top:0;bottom:0;left:0;right:0;background:rgba(0,0,0,.5);z-index:1000}.PCwaiting:after {content: ''; position: absolute; top: 50%; left: 50%; width: 3px; height: 3px; margin-top: -2px; margin-left: -2px; text-align: center; -webkit-border-radius: 100%; border-radius: 100%; box-shadow:0 0 3px; -webkit-transition: all, 0.3s, linear; transition: all, 0.3s, linear; -webkit-animation: am-wait 1.2s linear infinite; animation: am-wait 1.2s linear infinite;box-shadow:0 -10px 0 1px #eee, 10px 0px #eee, 0 10px #eee, -10px 0 #eee, -7px -7px 0 0.5px #eee, 7px -7px 0 0.5px #eee, 7px 7px #eee, -7px 7px #eee }@-webkit-keyframes am-wait {100% {-webkit-transform: rotate(1turn);transform: rotate(1turn);}}@keyframes am-wait {100% {-webkit-transform: rotate(1turn);transform: rotate(1turn);}";
+            w.appendChild(style);
+            document.body.appendChild(w);
+        }
+        return w;
+    },
+    show: function (arg) {
+        this._getDiv(arg).style.display = 'block';
+    },
+    hide: function () {
+        this._getDiv().style.display = 'none';
+    },
+    remove: function () {
+        document.body.removeChild(this._getDiv());
+    }
+};
+
+//手机端等待遮罩，与PC端只用一个即可（可加提示文字）
+var mobileWaiting={
+    _getDiv: function(arg) {
+        var w = document.querySelector('.mobileWaiting'),
+            content = arg || '数据加载中，请稍等';
+        if (!w) {
+            var div = document.createElement('div');
+            div.className = 'mobileWaiting';
+            w = div;
+            var style=document.createElement('style');
+            style.innerText='.mobileWaiting {position: fixed;top: 0;bottom: 0;left: 0;right: 0;color:#fff;background-color: rgba(0, 0, 0, 0.5);z-index: 100;}.mobileWaiting .content {padding: 10px 0;position: absolute;top: 50%;left: 50%; margin-top: -30px; font-size: 16px; color: #eee; text-shadow: 1px 1px 1px #333; -webkit-transform: translate(-50%, -50%); transform: translate(-50%, -50%);}.mobileWaiting .elipsis {position: absolute; width: .25em; overflow: hidden; white-space: nowrap; -webkit-transition: all 0.3s; transition: all 0.3s; -webkit-animation: loading 1.5s steps(3) infinite; animation: loading 1.5s steps(3) infinite; }@-webkit-keyframes loading {  100% {width: 1em; } } @keyframes loading {100% {width: 1em; } }}';
+            w.appendChild(style);
+            w.innerHTML+='<span class=content><span class="body"></span><span class="elipsis">...</span></span>';
+            document.body.appendChild(w);
+        }
+        w.querySelector('.body').innerHTML=content;
+        return w;
+    },
+    show: function(arg) {
+        this._getDiv(arg).style.display = 'block';
+    },
+    hide: function() {
+        this._getDiv().style.display = 'none';
+    },
+    remove: function() {
+        document.body.removeChild(this._getDiv());
+    }
+}
+
+
+function popup(opts) {
+    var opt = {
+        title: opts.title||'',
+        content: opts.content||'',                  //内容
+        cancelVal: opts.cancelVal||'',              //取消文本
+        okVal: opts.okVal||'',                      //确认文本
+        callback: opts.callback||'',                //确认回调
+        cancelCallback: opts.cancelCallback||'',    //取消回调
+        mask: !!opts.mask||true,                    //是否遮罩
+        theme: opts.theme||'',                        //主题：dark、iOS
+        time: opts.time||0,                         //自动关闭倒计时
+        beforeShow: opts.beforeShow||'',            //弹窗前执行事件
+        afterShow: opts.afterShow||'',
+        closeCallback: opts.closeCallback||''       //关闭后执行
+    }
+    //$.extend(opt, opts);
+var style=document.createElement('style');
+style.innerText='.popup .btns{margin: 10px 0; text-align: center; font-size: 0; }.popup .btns .btn{padding:12px 4px;line-height:1;}'+
+'.popup .btns .btn-wrapper {display: inline-block; width: 50%; padding: 5px; }'+
+'.popup .btns .btn{width: 100%; font-size: 18px; }'+
+'.popup{  position: fixed; top: 0; bottom: 0; left: 0; right: 0; background-color: rgba(0, 0, 0, 0.5); z-index: 100; }'+
+'.popup.nomask{ background: transparent; }'+
+'.popup .wrapper { position: absolute; top: 50%; left: 0; right: 0; padding: 25px; margin: 0 10px; background: #fff; opacity: 0; -webkit-transition: all, 0.3s; transition: all, 0.3s; -webkit-transform: translate(0, -50%); transform: translate(0, -50%); -webkit-animation: popup-show 0.3s ease-in forwards; animation: popup-show 0.3s ease-in forwards; }'+
+'.popup .wrapper .close {  position: absolute; right: -8px; top: -8px; padding: 15px; line-height: 1; background: #fff; -webkit-border-radius: 50%; -moz-border-radius: 50%; border-radius: 50%; }'
++".popup .wrapper .close:before,.popup .wrapper .close:after {  content: ''; position: absolute; left: 50%; top: 5px; bottom: 5px; width: 1px; background: #FA8803; -webkit-transform: rotate(45deg); transform: rotate(45deg); }"+
+'.popup .wrapper .close:after{ -webkit-transform: rotate(-45deg); transform: rotate(-45deg); }'+
+'.popup .content {padding: 10px 0; }'+
+'.popup .btns{margin: 0;}.popup.dark .btn{color:#fff}'+
+'.popup.dark .wrapper, .popup.ios .wrapper{  left: 12%; right: 12%; padding: 5px; margin-top: -10px; text-align: center; background: rgba(0, 0, 0, 0.7); color: #fff; -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px; }'
++'.popup.dark .wrapper .close, .popup.ios .wrapper .close {display: none; }'+
+'.popup.dark .wrapper .btns,.popup.ios .wrapper .btns{display: -webkit-box; display: -webkit-flex; display: flex; margin: 0 -5px; }'+
+'.popup.dark .wrapper .btns .btn-wrapper, .popup.ios .wrapper .btns .btn-wrapper{display: block; margin-bottom: -5px; border-top: 1px solid rgba(255, 255, 255, 0.5); padding: 0; overflow: hidden; -webkit-box-flex: 1; -webkit-box-flex: 1; -webkit-flex: 1; flex: 1; }'
++'.popup.dark .wrapper .btns .btn-wrapper .btn, .popup.ios .wrapper .btns .btn-wrapper .btn {border: 0; margin:-1px 0;background-color: transparent; -webkit-border-radius: 0; -moz-border-radius: 0; border-radius: 0; }'
++'.popup.dark .wrapper .btns .btn-wrapper + .btn-wrapper,  .popup.ios .wrapper .btns .btn-wrapper + .btn-wrapper {border-left: 1px solid rgba(255, 255, 255, 0.5);}'
++'.popup.ios .wrapper {  background: rgba(255, 255, 255, 0.85); color: #333;border:1px solid #ddd; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; }'
++'.popup.ios .wrapper .btns .btn-wrapper {border-color: #e0e0e0; }'
++'.popup.ios .wrapper .btns .btn-wrapper .btn {color: #333; }.popup.ios .wrapper .btns .btn-wrapper .btn.ok{color: #4891DC;}'+
+'.popup.ios .wrapper .btns .btn-wrapper + .btn-wrapper {border-color: #e0e0e0; }'+
+'@-webkit-keyframes popup-show { 100% {-webkit-transform: translate(0, -60%); transform: translate(0, -60%); opacity: 1; } } @keyframes popup-show {100% {-webkit-transform: translate(0, -60%); transform: translate(0, -60%); opacity: 1; } }';
+    var title = opt.title,
+        content = opt.content,
+        okVal = opt.okVal,
+        callback = opt.callback,
+        mask = opt.mask;
+    var time = parseInt(opt.time),
+        cancelVal = opt.cancelVal,
+        cancelCallback = opt.cancelCallback,
+        beforeShow = opt.beforeShow,
+        afterShow = opt.afterShow,
+        closeCallback = opt.closeCallback;
+
+    if (opt.theme == 'dark') {
+        mask = false;
+    } else if (/iOS|iPhone|Apple/i.test(opt.theme)) {
+        mask = false;
+        opt.theme = 'iOS';
+    }
+
+    var div = document.createElement('div'),
+        className = 'popup ' + opt.theme.toLowerCase();
+
+    if (!mask) {
+        className += ' nomask';
+    }
+
+    div.className = className;
+    //var $div = $(div);
+    div.appendChild(style);
+    var html = '<div class="wrapper">' + (title ? ('<h3 class="title">' + title + '</h3>') : '') + '<a href="javascript:;" class="close"></a>' + (content ? ('<div class="content">' + content + '</div>') : '') + ((okVal || cancelVal) ? ('<div class="btns">' + (cancelVal ? ('<span class="btn-wrapper"><a href="javascript:;" class="cancel btn btn-danger">' + cancelVal + '</a></span>') : '') + (okVal ? ('<span class="btn-wrapper"><a href="javascript:;" class="btn btn-warning ok">' + okVal + '</a></span>') : '')) : '') + '</div></div>';
+    div.innerHTML += html;
+
+    function _remove() {
+        div.parentNode.removeChild(div);
+    }
+
+    function _isFunction(obj) {
+        return typeof obj == 'function' ? true : false;
+    }
+
+    div.addEventListener('click', function(e) {
+        var e = e || window.event,
+            cl = e.target.classList;
+        if (cl.contains('close') || cl.contains('cancel')) {
+            _isFunction(cancelCallback) && cancelCallback();
+            _remove();
+        } else if (cl.contains('ok')) {
+            _isFunction(callback) && callback();
+            _remove();
+        }
+    })
+    document.body.appendChild(div);
+    _isFunction(beforeShow) && beforeShow();
+
+    //自动关闭执行事件
+    function _autoClose() {
+        _remove();
+        _isFunction(closeCallback) && closeCallback();
+    }
+
+    if (time > 0) {
+        setTimeout(_autoClose, time);
     }
 }
