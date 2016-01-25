@@ -1,3 +1,52 @@
+//HTML5 上传简单实现，jQuery插件版
+// ;
+// (function ($) {
+//     $.fn.upload = function (opts) {
+//         var def = {
+//             url: '',
+//             type: 'POST',
+//             dataType: 'JSON',
+//             callback: function () { }
+//         };
+
+//         var opt = $.extend(true, def, opts);
+
+//         this.on('change', function () {
+//             var file = this.files[0];
+//             var formData = new FormData();
+//             formData.append('filename', file);
+//             $.ajax({
+//                 url: opt.url,
+//                 type: opt.type,
+//                 dataType: opt.dataType,
+//                 data: formData,
+//                 processData: false, //告诉jQuery不要去处理发送的数据
+//                 contentType: false, //告诉jQuery不要支设置Content-Type请求头
+//                 success: opt.callback
+//             })
+//             $(this).replaceWith($(this).clone(true));
+//         })
+//         return this;
+//     }
+// })($);
+
+//HTML5 FormData 上传
+// html5Upload({
+//     obj:$('#id')[0],
+//     beforeUpload:function(){
+//         if(...){
+//             return false;
+//         }
+//         return true;
+//     },
+//     callback:function(data){
+//         console.log(data);
+//     },
+//     errorCallback:function(){
+//         alert('服务器错误');
+//     }
+// })
+
 //一些验证方法
 ;
 var validator = {
@@ -48,54 +97,6 @@ var validator = {
     }
 };
 
-//HTML5 上传简单实现，jQuery插件版
-// ;
-// (function ($) {
-//     $.fn.upload = function (opts) {
-//         var def = {
-//             url: '',
-//             type: 'POST',
-//             dataType: 'JSON',
-//             callback: function () { }
-//         };
-
-//         var opt = $.extend(true, def, opts);
-
-//         this.on('change', function () {
-//             var file = this.files[0];
-//             var formData = new FormData();
-//             formData.append('filename', file);
-//             $.ajax({
-//                 url: opt.url,
-//                 type: opt.type,
-//                 dataType: opt.dataType,
-//                 data: formData,
-//                 processData: false, //告诉jQuery不要去处理发送的数据
-//                 contentType: false, //告诉jQuery不要支设置Content-Type请求头
-//                 success: opt.callback
-//             })
-//             $(this).replaceWith($(this).clone(true));
-//         })
-//         return this;
-//     }
-// })($);
-
-//HTML5 FormData 上传，用法，作用在input[type=file]上
-// html5Upload({
-//     obj:$('#id')[0],
-//     beforeUpload:function(){
-//         if(...){
-//             return false;
-//         }
-//         return true;
-//     },
-//     callback:function(data){
-//         console.log(data);
-//     },
-//     errorCallback:function(){
-//         alert('服务器错误');
-//     }
-// })
 //HTML5 上传
 function html5Upload() {
     var arg = arguments[0];
@@ -242,25 +243,26 @@ function popup(opts) {
 var style=document.createElement('style');
 style.innerText='.popup .btns{margin: 10px 0; text-align: center; font-size: 0; }.popup .btns .btn{padding:12px 4px;line-height:1;}'+
 '.popup .btns .btn-wrapper {display: inline-block; width: 50%; padding: 5px; }'+
-'.popup .btns .btn{width: 100%; font-size: 18px; }'+
+'.popup .btns .btn{width: 100%; font-size: 16px; }'+
 '.popup{  position: fixed; top: 0; bottom: 0; left: 0; right: 0; background-color: rgba(0, 0, 0, 0.5); z-index: 100; }'+
 '.popup.nomask{ background: transparent; }'+
-'.popup .wrapper { position: absolute; top: 50%; left: 0; right: 0; padding: 25px; margin: 0 10px; background: #fff; opacity: 0; -webkit-transition: all, 0.3s; transition: all, 0.3s; -webkit-transform: translate(0, -50%); transform: translate(0, -50%); -webkit-animation: popup-show 0.3s ease-in forwards; animation: popup-show 0.3s ease-in forwards; }'+
+'.popup .wrapper { position: absolute; top: 50%; left: 0; right: 0; padding: 25px; margin: 0 10px; background: #fff; opacity: 0; -webkit-transition: all, 0.1s; transition: all, 0.1s; -webkit-transform: translate(0, -50%); transform: translate(0, -50%); -webkit-animation: popup-show 0.3s ease-in forwards; animation: popup-show 0.3s ease-in forwards; }'+
+'.popup .wrapper .title{font-size:16px;font-weight:400;margin-top:10px;}'+
 '.popup .wrapper .close {  position: absolute; right: -8px; top: -8px; padding: 15px; line-height: 1; background: #fff; -webkit-border-radius: 50%; -moz-border-radius: 50%; border-radius: 50%; }'
 +".popup .wrapper .close:before,.popup .wrapper .close:after {  content: ''; position: absolute; left: 50%; top: 5px; bottom: 5px; width: 1px; background: #FA8803; -webkit-transform: rotate(45deg); transform: rotate(45deg); }"+
 '.popup .wrapper .close:after{ -webkit-transform: rotate(-45deg); transform: rotate(-45deg); }'+
-'.popup .content {padding: 10px 0; }'+
+'.popup .content {padding: 10px 0; margin-bottom:5px;}.popup.weixin .wrapper .content{padding:10px 15px;text-align:left;color:#888;}'+
 '.popup .btns{margin: 0;}.popup.dark .btn{color:#fff}'+
-'.popup.dark .wrapper, .popup.ios .wrapper{  left: 12%; right: 12%; padding: 5px; margin-top: -10px; text-align: center; background: rgba(0, 0, 0, 0.7); color: #fff; -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px; }'
-+'.popup.dark .wrapper .close, .popup.ios .wrapper .close {display: none; }'+
-'.popup.dark .wrapper .btns,.popup.ios .wrapper .btns{display: -webkit-box; display: -webkit-flex; display: flex; margin: 0 -5px; }'+
-'.popup.dark .wrapper .btns .btn-wrapper, .popup.ios .wrapper .btns .btn-wrapper{display: block; margin-bottom: -5px; border-top: 1px solid rgba(255, 255, 255, 0.5); padding: 0; overflow: hidden; -webkit-box-flex: 1; -webkit-box-flex: 1; -webkit-flex: 1; flex: 1; }'
-+'.popup.dark .wrapper .btns .btn-wrapper .btn, .popup.ios .wrapper .btns .btn-wrapper .btn {border: 0; margin:-1px 0;background-color: transparent; -webkit-border-radius: 0; -moz-border-radius: 0; border-radius: 0; }'
-+'.popup.dark .wrapper .btns .btn-wrapper + .btn-wrapper,  .popup.ios .wrapper .btns .btn-wrapper + .btn-wrapper {border-left: 1px solid rgba(255, 255, 255, 0.5);}'
-+'.popup.ios .wrapper {  background: rgba(255, 255, 255, 0.95); color: #333; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; }'
-+'.popup.ios .wrapper .btns .btn-wrapper {border-color: #e2e2e2; }'
-+'.popup.ios .wrapper .btns .btn-wrapper .btn {color: #333; }.popup.ios .wrapper .btns .btn-wrapper .btn.ok{color: #4891DC;}'+
-'.popup.ios .wrapper .btns .btn-wrapper + .btn-wrapper {border-color: #e2e2e2; }'+
+'.popup.dark .wrapper, .popup.ios .wrapper,.popup.weixin .wrapper{  left: 7%; right: 7%; padding: 5px; padding-bottom:0;margin-top: -10px; text-align: center; background: rgba(0, 0, 0, 0.7); color: #fff; -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px; }'
++'.popup.dark .wrapper .close, .popup.ios .wrapper .close,.popup.weixin .wrapper .close {display: none; }'+
+'.popup.dark .wrapper .btns,.popup.ios .wrapper .btns,.popup.weixin .wrapper .btns{display: -webkit-box; display: -webkit-flex; display: flex; margin: 0 -5px; }'+
+'.popup.dark .wrapper .btns .btn-wrapper, .popup.ios .wrapper .btns .btn-wrapper,.popup.weixin .wrapper .btns .btn-wrapper{display: block; border-top: 1px solid rgba(255, 255, 255, 0.5); padding: 0; overflow: hidden; -webkit-box-flex: 1; -webkit-box-flex: 1; -webkit-flex: 1; flex: 1; }'
++'.popup.dark .wrapper .btns .btn-wrapper .btn, .popup.ios .wrapper .btns .btn-wrapper .btn,.popup.weixin .wrapper .btns .btn-wrapper .btn  {border: 0; margin: 0;background-color: transparent; -webkit-border-radius: 0; -moz-border-radius: 0; border-radius: 0; }'
++'.popup.dark .wrapper .btns .btn-wrapper + .btn-wrapper,  .popup.ios .wrapper .btns .btn-wrapper + .btn-wrapper,.popup.weixin .wrapper .btns .btn-wrapper + .btn-wrapper {border-left: 1px solid rgba(255, 255, 255, 0.5);}'
++'.popup.ios .wrapper,.popup.weixin .wrapper {background: #fff; color: #333; -webkit-border-radius: 4px; border-radius: 4px; }'
++'.popup.ios .wrapper .btns .btn-wrapper,.popup.weixin .wrapper .btns .btn-wrapper {border-color: #e2e2e2; }'
++'.popup.ios .wrapper .btns .btn-wrapper .btn,.popup.weixin .wrapper .btns .btn-wrapper .btn {color: #333; }.popup.ios .wrapper .btns .btn-wrapper .btn.ok{color: #4891DC;}.popup.weixin .wrapper .btns .btn-wrapper .btn.ok{color:#0BB20C}'+
+'.popup.ios .wrapper .btns .btn-wrapper + .btn-wrapper,.popup.weixin .wrapper .btns .btn-wrapper + .btn-wrapper {border-color: #e2e2e2; }'+
 '@-webkit-keyframes popup-show { 100% { opacity: 1; } } @keyframes popup-show {100% {opacity: 1; } }';
     var title = opt.title,
         content = opt.content,
@@ -326,4 +328,37 @@ style.innerText='.popup .btns{margin: 10px 0; text-align: center; font-size: 0; 
     if (time > 0) {
         setTimeout(_autoClose, time);
     }
+    return div;
 }
+
+var KnetService = {
+    keyCode: {
+        ENTER: 13, ESC: 27, END: 35, HOME: 36,
+        SHIFT: 16, TAB: 9,
+        LEFT: 37, RIGHT: 39, UP: 38, DOWN: 40,
+        DELETE: 46, BACKSPACE: 8
+    },
+    statusCode: { ok: 200, failed: 300, error: 500, timeout: 301 },
+    ajaxDone: function (json) {
+        if (json.statusCode === undefined && json.message === undefined) {
+            popup({content:json,theme:'dark',time:2000});
+        }
+        if (json.statusCode == KnetService.statusCode.failed) {
+            if (json.message) popup({content:json.message,theme:'dark',okVal:'确定'});
+        } else if (json.statusCode == KnetService.statusCode.timeout) {
+          
+        } else {
+            if (json.message) popup({content:json.message,theme:'dark',time:2000});
+        };
+    },
+    jsonEval: function (data) {
+        try {
+            if ($.type(data) == 'string')
+                return eval('(' + data + ')');
+            else return data;
+        } catch (e) {
+            return {};
+        }
+    }
+}
+
