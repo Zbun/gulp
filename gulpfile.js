@@ -69,7 +69,7 @@ gulp.task("browser-sync",function(){
       files:["**/*.html","**/*.css","**/*.js",'!**.less','!**.coffee','!**.SCSS'],
       server:{
          baseDir:"./"
-      }
-      // ,port:2015
+      },
+      port:2015
    });
 });

@@ -109,22 +109,6 @@ $color-btn-warning:#f00;
     vertical-align: middle;
 }
 
-@mixin w25 {
-    width: 25%;
-}
-
-@mixin w33 {
-    width: 100%/3;
-}
-
-@mixin w50 {
-    width: 50%;
-}
-
-@mixin w75 {
-    width: 75px;
-}
-
 @mixin wthc($c: rgba(0, 0, 0, .1)) {
     -webkit-tap-highlight-color: $c;
 }
