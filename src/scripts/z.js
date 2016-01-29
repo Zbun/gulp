@@ -167,17 +167,17 @@ function html5Upload() {
     }
 }
 
-//加载等待提示，pcWaiting.show()、waiting.remove(),电脑端等待，没有提示文字
-var PCwaiting = {
+//加载等待提示，justWaiting.show()、waiting.remove(),电脑端等待，没有提示文字
+var justWaiting = {
     _getDiv: function(arg) {
-        var w = document.querySelector('.PCwaiting');
+        var w = document.querySelector('.justWaiting');
 
         if (!w) {
             var div = document.createElement('div');
-            div.className = 'PCwaiting';
+            div.className = 'justWaiting';
             w = div;
             var style = document.createElement('style');
-            style.innerHTML = ".PCwaiting{position:fixed;top:0;bottom:0;left:0;right:0;background:rgba(0,0,0,.5);z-index:1000}.PCwaiting:after {content: ''; position: absolute; top: 50%; left: 50%; width: 3px; height: 3px; margin-top: -2px; margin-left: -2px; text-align: center; -webkit-border-radius: 100%; border-radius: 100%; box-shadow:0 0 3px; -webkit-transition: all, 0.3s, linear; transition: all, 0.3s, linear; -webkit-animation: am-wait 1.2s linear infinite; animation: am-wait 1.2s linear infinite;box-shadow:0 -10px 0 1px #eee, 10px 0px #eee, 0 10px #eee, -10px 0 #eee, -7px -7px 0 0.5px #eee, 7px -7px 0 0.5px #eee, 7px 7px #eee, -7px 7px #eee }@-webkit-keyframes am-wait {100% {-webkit-transform: rotate(1turn);transform: rotate(1turn);}}@keyframes am-wait {100% {-webkit-transform: rotate(1turn);transform: rotate(1turn);}";
+            style.innerHTML = ".justWaiting{position:fixed;top:0;bottom:0;left:0;right:0;background:rgba(0,0,0,.5);z-index:1000}.justWaiting:after {content: ''; position: absolute; top: 50%; left: 50%; width: 3px; height: 3px; margin-top: -2px; margin-left: -2px; text-align: center; -webkit-border-radius: 100%; border-radius: 100%; box-shadow:0 0 3px; -webkit-transition: all, 0.3s, linear; transition: all, 0.3s, linear; -webkit-animation: am-wait 1.2s linear infinite; animation: am-wait 1.2s linear infinite;box-shadow:0 -10px 0 1px #eee, 10px 0px #eee, 0 10px #eee, -10px 0 #eee, -7px -7px 0 0.5px #eee, 7px -7px 0 0.5px #eee, 7px 7px #eee, -7px 7px #eee }@-webkit-keyframes am-wait {100% {-webkit-transform: rotate(1turn);transform: rotate(1turn);}}@keyframes am-wait {100% {-webkit-transform: rotate(1turn);transform: rotate(1turn);}";
             w.appendChild(style);
             document.body.appendChild(w);
         }
@@ -194,17 +194,17 @@ var PCwaiting = {
     }
 };
 
-//手机端等待遮罩，与PC端只用一个即可（可加提示文字）
-var mobileWaiting = {
+//带文字等待遮罩，与PC端只用一个即可（可加提示文字）,textWaiting.show("你好");textWaiting.hide();
+var textWaiting = {
     _getDiv: function(arg) {
-        var w = document.querySelector('.mobileWaiting'),
+        var w = document.querySelector('.textWaiting'),
             content = arg || '数据加载中，请稍等';
         if (!w) {
             var div = document.createElement('div');
-            div.className = 'mobileWaiting';
+            div.className = 'textWaiting';
             w = div;
             var style = document.createElement('style');
-            style.innerText = '.mobileWaiting {position: fixed;top: 0;bottom: 0;left: 0;right: 0;color:#fff;background-color: rgba(0, 0, 0, 0.5);z-index: 100;}.mobileWaiting .content {padding: 10px 0;position: absolute;top: 50%;left: 50%; margin-top: -30px; font-size: 16px; color: #eee; text-shadow: 1px 1px 1px #333; -webkit-transform: translate(-50%, -50%); transform: translate(-50%, -50%);}.mobileWaiting .elipsis {position: absolute; width: .25em; overflow: hidden; white-space: nowrap; -webkit-transition: all 0.3s; transition: all 0.3s; -webkit-animation: loading 1.5s steps(3) infinite; animation: loading 1.5s steps(3) infinite; }@-webkit-keyframes loading {  100% {width: 1em; } } @keyframes loading {100% {width: 1em; } }}';
+            style.innerText = '.textWaiting {position: fixed;top: 0;bottom: 0;left: 0;right: 0;color:#fff;background-color: rgba(0, 0, 0, 0.5);z-index: 100;}.textWaiting .content {padding: 10px 0;position: absolute;top: 50%;left: 50%; margin-top: -30px; font-size: 16px; color: #eee; text-shadow: 1px 1px 1px #333; -webkit-transform: translate(-50%, -50%); transform: translate(-50%, -50%);}.textWaiting .elipsis {position: absolute; width: .25em; overflow: hidden; white-space: nowrap; -webkit-transition: all 0.3s; transition: all 0.3s; -webkit-animation: loading 1.5s steps(3) infinite; animation: loading 1.5s steps(3) infinite; }@-webkit-keyframes loading {  100% {width: 1em; } } @keyframes loading {100% {width: 1em; } }}';
             w.appendChild(style);
             w.innerHTML += '<span class=content><span class="body"></span><span class="elipsis">...</span></span>';
             document.body.appendChild(w);
@@ -223,21 +223,21 @@ var mobileWaiting = {
     }
 }
 
-
+//手机端弹窗，可选中题有theme:'ios'||'dark'||'weixin'
 function popup(opts) {
     var opt = {
             title: opts.title || '',
-            content: opts.content || '', //内容
-            cancelVal: opts.cancelVal || '', //取消文本
-            okVal: opts.okVal || '', //确认文本
-            callback: opts.callback || '', //确认回调
-            cancelCallback: opts.cancelCallback || '', //取消回调
-            mask: !!opts.mask || true, //是否遮罩
-            theme: opts.theme || '', //主题：dark、iOS
-            time: opts.time || 0, //自动关闭倒计时
-            beforeShow: opts.beforeShow || '', //弹窗前执行事件
+            content: opts.content || '',                //内容
+            cancelVal: opts.cancelVal || '',            //取消文本
+            okVal: opts.okVal || '',                    //确认文本
+            callback: opts.callback || '',              //确认回调
+            cancelCallback: opts.cancelCallback || '',  //取消回调
+            mask: !!opts.mask || true,                  //是否遮罩
+            theme: opts.theme || '',                    //主题：dark、iOS、weixin
+            time: opts.time || 0,                       //自动关闭倒计时
+            beforeShow: opts.beforeShow || '',          //弹窗前执行事件
             afterShow: opts.afterShow || '',
-            closeCallback: opts.closeCallback || '' //关闭后执行
+            closeCallback: opts.closeCallback || ''     //关闭后执行
         }
         //$.extend(opt, opts);
     var style = document.createElement('style');
