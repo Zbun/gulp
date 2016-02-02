@@ -368,7 +368,7 @@ $color-radio:#08a1f1;
 .switcher{
     position: relative;
     display: inline-block;
-    width: 28px;
+    width: 26px;
     height: 26px;
     &:before{
         content: '';
@@ -409,7 +409,7 @@ $color-radio:#08a1f1;
         }
         &:after{
             //left: 1rem;
-            @include trf-tsl(1rem,0);
+            @include trf-tsl(10px,0);
             background:$color-radio;
             border-color: $color-radio;
             box-shadow: 0 2px 1px #ddd;
