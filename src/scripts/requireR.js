@@ -5,7 +5,7 @@ requirejs.config({
 	}
 });
 require(['waiting'],function(waiting){
-			//waiting.justWaiting.show();
+			waiting.justWaiting.show('half');
 		});
 require(['jquery'],function($){
 	$('body').css('background','#ffc');

@@ -566,35 +566,35 @@ $color-btn-warning-bg:#F98700;
 $color-btn-default:#eee;
 $color-btn-disabled:#ccc;
 
-.btn-default{
+.btn.default{
     background:$color-btn-default;
     border-color: #ddd;
     color: #333;
 }
-.btn-primary {
+.btn.primary {
     color: #fff;
     background: $color-btn-primary;
     border-color: darken($color-btn-primary, 5%);
 }
 
-.btn-ok {
+.btn.ok {
     color: #fff;
     background: $color-btn-ok-bg;
     border-color: $color-btn-ok-bg;
 }
 
-.btn-warning{
+.btn.warning{
     color: #fff;
     background:$color-btn-warning-bg;
     border-color:$color-btn-warning-bg;
 }
-.btn-danger{
+.btn.danger{
     color: #fff;
     background:$color-btn-danger-bg;
     border-color: $color-btn-danger-bg;
 }
 
-.btn-disabled{
+.btn.disabled{
     color: #fff;
     background:$color-btn-disabled;
     border-color: $color-btn-disabled;
@@ -611,7 +611,7 @@ $color-btn-disabled:#ccc;
     border: 0;
 }
 .disabled {
-    opacity: 0.5;
+    opacity: 0.65;
     pointer-events: none;
 }
 
@@ -663,37 +663,37 @@ $bg-warning:#fcf8e3!default;
 $color-bg-waring:#8a6d3b!default;
 $bg-danger:#f2dede!default;
 $color-bg-danger:#a94442!default;
-.bg-default {
+.bg.default {
     background-color: $bg-default;
     color: $color-bg-default;
     border: 1px solid darken($bg-default, 10%);
 }
 
-.bg-primary {
+.bg.primary {
     background-color: $bg-primary;
     color: $color-bg-primary;
     border: 1px solid darken($bg-primary, 10%);
 }
 
-.bg-ok {
+.bg.ok {
     background-color: $bg-ok;
     color: $color-bg-ok;
     border: 1px solid darken($bg-ok, 10%);
 }
 
-.bg-info {
+.bg.info {
     background-color: $bg-info;
     color: $color-bg-info;
     border: 1px solid darken($bg-info, 10%);
 }
 
-.bg-warning {
+.bg.warning {
     background-color: $bg-info;
     color: $color-bg-info;
     border: 1px solid darken($bg-info, 10%);
 }
 
-.bg-danger {
+.bg.danger {
     background-color: $bg-danger;
     color: $color-bg-danger;
     border: 1px solid darken($bg-danger, 10%);
@@ -729,7 +729,7 @@ $color-danger:#ed1d18;
     color: $color-ok;
 }
 
-.text-waring {
+.text-warning {
     color: $color-warning;
 }
 

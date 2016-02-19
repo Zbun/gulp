@@ -432,9 +432,13 @@ input[type=checkbox],input[type=radio]{
     font-size: 18px;
 }
 
+$cursor-disabled:'not-allowed'!default;
 .disabled {
     opacity: .7;
     pointer-events: none;
+    &.btn{
+        cursor: $cursor-disabled;
+    }
 }
 .clearfix:after {
     display: table;

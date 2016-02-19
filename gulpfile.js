@@ -9,7 +9,8 @@ var gulp = require('gulp'),
     rename=require('gulp-rename'),
     runsequence=require('run-sequence'),
     sourcemaps=require("gulp-sourcemaps"),
-    uglify = require('gulp-uglify');
+    uglify = require('gulp-uglify'),
+    rev=require('gulp-rev');
 
 gulp.task('clean',function(cb){
 	del(['build/css','build/scripts'],cb)

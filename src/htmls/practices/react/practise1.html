@@ -10,6 +10,8 @@
     <script src="../../../scripts/react/JSXTransformer.js"></script>
     <!-- 	<script src="../../../scripts/react/browser.min.js"></script>
  -->
+ <script src="../../../scripts/lib/jquery-1.11.3.js"></script>
+ <script src="../../../scripts/lib/jquery.typer.js"></script>
     <style>
     body {
         /*background: #233;*/
@@ -32,6 +34,11 @@
 </head>
 
 <body>
+<h3 data-typer-targets='Hello World'></h3>
+<script>
+	//$('h3').typer()
+</script>
+
     <article class="main">
         <section class="row">
             <h3 class='title'>普通模板渲染:</h3>
@@ -46,22 +53,28 @@
         <section class="row">
             <h3 class="title">混写，变量转数组</h3>
             <div class="content">
-                <div class="arr"></div>
+                <div id="arr"></div>
                 <script type="text/jsx">
-                    var arr=['hello','here is',123,"Z's blog"]; React.render(
+                     var arr=['hello','here is',123,"Z's blog"]; React.render(
                     <ul>{arr.filter(function(v){ return typeof v==='string' }).map(function(v){ return
                         <li>{v}</li>
-                        })}</ul>,document.getElementById('arr'))
+                        })}</ul>,document.getElementById('arr')) 
+
+
+var obj1={name:{Gates:'Bill',Jobs:'Steven'},job:'CEO'};
+	React.render(<ul>{for(var i in obj1){return <li>{obj1[i]}</li>}}</ul>,document.getElementById('arr'))
+
                 </script>
             </div>
         </section>
     </article>
     <article class="row">
-        <canvas id='canvas1' width=500 height=50>
+        <canvas id='canvas1' width=500 height=500>
             Update your browser to enjoy canvas!
         </canvas>
         <script>
-        var ctx = document.getElementById('canvas1').getContext('2d');
+        var canvas1=document.getElementById('canvas1');
+        var ctx = canvas1.getContext('2d');
 
        // ctx.beginPath();
         // ctx.strokeStyle='blue';
@@ -149,6 +162,27 @@
         // interval=setInterval(drawInAnimation,150);
         // 
         //
+        //画白色点动画
+         var posX=20,posY=100;
+        setInterval(function(){
+        	ctx.fillStyle='black';ctx.fillRect(0,0,canvas1.width,canvas1.height);
+        	posX+=1;posY+=0.25;
+        	ctx.beginPath();ctx.fillStyle='white';ctx.arc(posX,posY,10,0,Math.PI*2,true);
+        	if(posX>canvas1.width){
+        		posX=20;
+        		posY=100;
+        	}
+        	ctx.closePath();ctx.fill();
+        },30);
+        
+        var vx=10,vy=-10,gravity=1;
+        setInterval(function(){
+        	posX+=vx;posY+=vy;
+        	if(posY>canvas1.height*0.75){
+        		vy*=-0.6;vx*=0.75;posY=canvas1.height*0.75;
+        	}
+        	vy+=gravity;
+        },50)
         </script>
     </article>
     <article class="row">
@@ -160,7 +194,7 @@
     		<ellipse cx="100" cy="20" rx="67" ry="12" stroke="white" fill="black" stroke-width="0.5"></ellipse>
     		<!-- Hat End -->
 
-    		<ellipse cx="53" cy="70" rx="25" ry="25" stroke="black" fill="gray" stroke-width="2"></ellipse>
+    		<ellipse cx="55" cy="70" rx="25" ry="25" stroke="black" fill="gray" stroke-width="2"></ellipse>
     		<ellipse cx="145" cy="70" rx="25" ry="25" stroke="black" fill="gray" stroke-width="2"></ellipse>
 
 			<!-- Face -->
