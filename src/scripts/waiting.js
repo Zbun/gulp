@@ -65,5 +65,9 @@
      else{
         window.justWaiting=justWaiting;
         window.textWaiting=textWaiting;
+        // export default {
+        //     justWaiting:justWaiting,
+        //     textWaiting:textWaiting,
+        // }
      }
 })();

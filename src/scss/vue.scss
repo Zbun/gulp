@@ -1,5 +1,5 @@
-@import "baseSCSS";
-@import "baseMobile";
+@import "base/baseSCSS";
+@import "base/baseMobile";
 body{
 	max-width: 800px;
 	padding: 20px;
@@ -8,6 +8,8 @@ body{
 	background:#66BAB7 url(/src/images/ashes.png) ;
 	color: #fff;
 	counter-reset: rows;
+	color: #f00;
+
 }
 h3{
 	padding-top: 10px;
