@@ -2,6 +2,7 @@
 @import "base/baseMobile";
 body{
 	max-width: 800px;
+	
 	padding: 20px;
 	margin: 0 auto;
 	@include basePC;

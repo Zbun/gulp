@@ -88,8 +88,7 @@ gulp.task('coffee',function(){
    .pipe(gulp.dest('./dist/scripts'))
 });
 
-gulp.task('sass',function(e){
-  console.log(e);
+gulp.task('sass',function(){
     return gulp.src('./src/scss/*.scss')
     .pipe(sass({outputStyle:'compressed'}).on('error',sass.logError))
     .pipe(gulp.dest('./dist/css'))
@@ -126,7 +125,7 @@ gulp.task("browserSync",['rev','sass'],function(){
       },
       port:2016
    });
-   gulp.watch('./src/scss/*.scss',['sass']);
+   gulp.watch('./src/scss/**/*.scss',['sass']);
    //gulp.watch('./src/scripts/**/*.js', ['rev']);
    //gulp.watch('./src/css/**/*.css','rev')
 });
