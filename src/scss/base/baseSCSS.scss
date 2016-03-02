@@ -1,32 +1,75 @@
 @charset "utf-8";
-$color-highlight-primary:#08a7ec!default;
-$border-radius:4px!default;
-$color:#333!default;
+$border-radius:3px!default;
 $font-size:14px!default;
 $line-height: (20/14)!default;
-$font-family:'Helvetica Neue',Helvetica,Arial,sans-serif!default;
-$mobile-def-font:15px "Helvetica Neue", Helvetica, Arial, sans-serif!default;
+$font-family:'Helvetica Neue',
+Helvetica,
+Arial,
+sans-serif!default;
+$mobile-def-font:15px "Helvetica Neue",
+Helvetica,
+Arial,
+sans-serif!default;
 
-@mixin am($content...) {
+/*colors areas basis*/
+
+$color:#333!default;
+$color-muted:#aaa!default;
+$color-default:#333!default;
+$color-primary:#08a7ec!default;
+$color-info:#1fb5ac!default;
+$color-ok:#4DCD70!default;
+$color-warning:#ff9402!default;
+$color-danger:#fb6361!default;
+$color-btn-default:#e8e8e8!default;
+$color-border:#e0e0e0!default;
+//Table area color
+$color-table-thead:$color-btn-default!default;
+$color-table-tr-hover:#F5F6FA!default;
+$color-table-border:$color-border!default;
+//Anchor area color
+$color-anchor:#098fc9!default;
+$color-anchor-visited:#609!default;
+$color-anchor-hover:#08a7ec!default;
+$color-anchor-active:$color-danger!default;
+//Text with background area color
+$color-bg-default:#eee!default;
+$color-bg-default-text:#555!default;
+$color-bg-primary:#fff2ec!default;
+$color-bg-primary-text:#a94442!default;
+$color-bg-ok:#dff0d8!default;
+$color-bg-ok-text:#3c763d!default;
+$color-bg-info:#effffe!default;
+$color-bg-info-text:#1fb5ac!default;
+$color-bg-warning:#fcf8e3!default;
+$color-bg-warning-text:#8a6d3b!default;
+$color-bg-danger:#fff6f3!default;
+$color-bg-danger-text:#fb6362!default;
+
+//Text size
+$size-text-big:14px;
+$size-text-bigger:16px;
+
+@mixin anim($content...) {
     -webkit-animation: $content;
     animation: $content;
 }
 
-@mixin br($r: 4px) {
+@mixin borderRadius($r: 4px) {
     -webkit-border-radius: $r;
     border-radius: $r;
 }
 
-@mixin bs($content...) {
+@mixin boxShadow($content...) {
     -webkit-box-shadow: $content;
     box-shadow: $content;
 }
 
-@mixin dis-tc{
+@mixin disTableCell {
     display: table-cell;
 }
 
-@mixin dis-flex{
+@mixin disFlex {
     display: -webkit-box;
     display: -webkit-flex;
     display: flex;
@@ -43,7 +86,7 @@ $mobile-def-font:15px "Helvetica Neue", Helvetica, Arial, sans-serif!default;
 }
 
 @mixin flex-center() {
-    display:-webkit-flex;
+    display: -webkit-flex;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -51,7 +94,7 @@ $mobile-def-font:15px "Helvetica Neue", Helvetica, Arial, sans-serif!default;
 
 @mixin flex($r: 1) {
     display: block;
-    -webkit-box-flex:$r;
+    -webkit-box-flex: $r;
     -webkit-flex: $r;
     flex: $r;
 }
@@ -63,90 +106,75 @@ $mobile-def-font:15px "Helvetica Neue", Helvetica, Arial, sans-serif!default;
     overflow: hidden;
 }
 
-@mixin trf($var){
+@mixin trf($var) {
     -webkit-transform: $var;
     transform: $var;
 }
 
-@mixin trf-tsl($x: 0, $y: -50%) {
+@mixin trfRranslate($x: 0, $y: -50%) {
     -webkit-transform: translate($x, $y);
     transform: translate($x, $y);
 }
 
-@mixin trf-scl($r: .8) {
+@mixin trfScale($r: .8) {
     -webkit-transform: scale($r);
     transform: scale($r);
 }
 
-@mixin trf-rot($x: 0) {
+@mixin trfRotate($x: 0) {
     -webkit-transform: rotate($x);
     transform: rotate($x);
 }
-@mixin trf-rotX($x: 0) {
+
+@mixin trfRotateX($x: 0) {
     -webkit-transform: rotateX($x);
     transform: rotateX($x);
 }
-@mixin trf-rotY($y:0){
+
+@mixin trfRotateY($y:0) {
     -webkit-transform: rotateY($y);
     transform: rotateY($y);
 }
+
 @mixin trans($args...) {
     -webkit-transition: $args;
     transition: $args;
 }
 
-@mixin trans-trf($time: .3s, $tf: linear) {
+@mixin transTransform($time: .3s, $tf: linear) {
     -webkit-transtion: -webkit-transform $time $tf;
     transition: transform $time $tf;
 }
 
-@mixin thc($c: rgba(0, 0, 0, 0.1)) {
+@mixin tapHighlightColor($c: rgba(0, 0, 0, 0.1)) {
     -webkit-tap-highlight-color: $c;
 }
 
-@mixin usn {
+@mixin userSelectNone {
     -webkit-user-select: none;
     user-select: none;
 }
 
-@mixin vm {
+@mixin verticalMiddle {
     @include dis-tc;
     vertical-align: middle;
 }
 
-@mixin w25 {
-    width: 25%;
-}
-@mixin w33{
-    width: 100%/3;
-}
-@mixin w50{
-    width: 50%;
-}
-@mixin w75{
-    width: 75px;
-}
-
-@mixin wthc($c: rgba(0, 0, 0, .1)) {
-    -webkit-tap-highlight-color: $c;
-}
-
-@mixin wost {
+@mixin overflowScrollTouch {
     -webkit-overflow-scroll: touch;
 }
 
-@mixin wusn{
-    -webkit-user-select:none;
-}
-hr{
+hr {
     height: 1px;
     margin: 10px auto;
     border: 0;
-    background:#ddd;
+    background: #ddd;
 }
 
-*,:before,:after{
-    box-sizing:border-box;
+*,
+:before,
+:after {
+    box-sizing: border-box;
 }
 
 h1,
@@ -159,7 +187,8 @@ ul,
 ol,
 dl,
 dt,
-dd ,body{
+dd,
+body {
     margin: 0;
     padding: 0;
 }
@@ -177,73 +206,94 @@ label {
 }
 
 $color-input-border:#e0e0e0!default;
-$color-input-focus-border:#08a7ec!default;
-$color-input-invalid:#fb6362!default;
-input[type=search],input[type=text],input[type=tel],input[type=submit],input[type=password],input[type=number],input[type=date],input[type=color],button,
-textarea,select {
+$color-input-focus-border:$color-primary!default;
+$color-input-invalid:$color-danger!default;
+input[type=search],
+input[type=text],
+input[type=tel],
+input[type=submit],
+input[type=password],
+input[type=number],
+input[type=date],
+input[type=color],
+input[type=time],
+button,
+textarea,
+select {
     font-size: $font-size;
-    -webkit-appearance:none;
-    border:1px solid $color-input-border;
+    -webkit-appearance: none;
+    border: 1px solid $color-input-border;
     padding: 4px;
     vertical-align: middle;
     -webkit-border-radius: $border-radius;
     -moz-border-radius: $border-radius;
     border-radius: $border-radius;
-    @include wthc(rgba(0,0,0,0));
-    &:focus{
-        border-color:$color-input-focus-border;
+    @include tapHighlightColor(rgba(0, 0, 0, 0));
+    &:focus {
+        border-color: $color-input-focus-border;
         outline: 0;
-        &:invalid{
-        background:#FFF1F1;
-        border-color: $color-input-invalid;
+        &:invalid {
+            background: #FFF1F1;
+            border-color: $color-input-invalid;
+        }
     }
+    &:active {
+        box-shadow: inset 0 1px 3px rgba(56, 56, 56, .2);
     }
-    &:active{
-        box-shadow: inset 0 1px 3px rgba(56,56,56,.2);
-    }
-    &.error{
+    &.error {
         border-color: $color-input-invalid;
     }
 }
-select{
-    -webkit-appearance:menulist;
+
+select {
+    -webkit-appearance: menulist;
 }
-input[type=checkbox],input[type=radio]{
+
+input[type=checkbox],
+input[type=radio] {
     vertical-align: -2px;
 }
 
 img {
-    border:0;
+    border: 0;
     max-width: 100%;
     max-height: 100%;
     vertical-align: middle;
 }
 
-.m5{
+.m5 {
     margin: 5px;
 }
-.mt5{
+
+.mt5 {
     margin-top: 5px;
 }
-.mb5{
+
+.mb5 {
     margin-bottom: 5px;
 }
-.ml5{
+
+.ml5 {
     margin-left: 5px;
 }
-.mr5{
+
+.mr5 {
     margin-right: 5px;
 }
-.p5{
+
+.p5 {
     padding: 5px;
 }
-.pl5{
+
+.pl5 {
     padding-left: 5px;
 }
-.pr5{
+
+.pr5 {
     padding-right: 5px;
 }
-.p10{
+
+.p10 {
     padding: 10px;
 }
 
@@ -254,34 +304,39 @@ img {
 .fr {
     float: right;
 }
-.row{
+
+.row {
     padding: 10px;
 }
+
 .clearfix:after {
     display: table;
-    content: ""; 
+    content: "";
     clear: both;
 }
 
-.block{
+.block {
     display: block;
     width: 100%;
 }
+
 .table {
     width: 100%;
     display: table;
-    .item{
+    >.item {
         display: table-cell;
     }
 }
-.required-mark{
-    &:before{
-        content:'*';
+
+.required-mark {
+    &:before {
+        content: '*';
         color: #f00;
         margin: 1px;
     }
 }
-.btn{
+
+.btn {
     display: inline-block;
     padding: 4px 12px;
     margin-bottom: 0;
@@ -296,10 +351,12 @@ img {
     -moz-border-radius: $border-radius;
     border-radius: $border-radius;
     cursor: pointer;
-    &:hover{
-        background:#f2f2f2;
+    text-decoration: none;
+    &:hover {
+        background: #f2f2f2;
     }
 }
+
 .btn.block {
     display: block;
     margin: 10px auto;
@@ -307,32 +364,56 @@ img {
     font-size: 18px;
 }
 
-$color-btn-default:#004D97!default;
-$color-btn-default-bg:#fff!default;
-$color-btn-primary:#fff;
-$color-btn-primary-bg:#08a7ec!default;
-$color-btn-info-bg:#1fb5ac!default;
-$color-btn-warning-bg:#ec0!default;
-$color-btn-danger-bg:#fb6361!default;
-$color-btn-ok-bg:#4DCD70!default;
-$color-btn-ok-color:#fff!default;
-
-@each $btn-each,$btn-color in (btn-default:$color-btn-default-bg,btn-info:$color-btn-info-bg,btn-primary:$color-btn-primary-bg,btn-ok:$color-btn-ok-bg,btn-danger:$color-btn-danger-bg){
-    .#{$btn-each}{
+$color-btn-default-bg:$color-btn-default!default;
+$color-btn-primary-bg:$color-primary!default;
+$color-btn-info-bg:$color-info!default;
+$color-btn-warning-bg:$color-warning!default;
+$color-btn-danger-bg:$color-danger!default;
+$color-btn-ok-bg:$color-ok!default;
+@each $btn-each,
+$btn-color in (btn-default:$color-btn-default-bg, btn-info:$color-btn-info-bg, btn-primary:$color-btn-primary-bg, btn-ok:$color-btn-ok-bg, btn-warning:$color-btn-warning-bg, btn-danger:$color-btn-danger-bg) {
+    .#{$btn-each} {
         color: #fff;
-        background:$btn-color;
-        border-color:darken($btn-color,4%);
-        &:hover{
-            background:darken($btn-color,5%);
+        background: $btn-color;
+        border-color: darken($btn-color, 4%);
+        &:hover {
+            background: darken($btn-color, 5%);
         }
     }
 }
 
-$cursor-disabled:'not-allowed'!default;
+button {
+    cursor: pointer;
+}
+
+.btn-default {
+    color: $color;
+}
+
+.btn-disabled {
+    @extend .disabled;
+    color: #999;
+    background: #eee;
+}
+
+@each $btn,
+$btn-color in (btn-info-o:$color-info) {
+    .#{$btn} {
+        color: $btn-color;
+        background: #fff;
+        border-color: darken($btn-color, 4%);
+        &:hover {
+            background: $color-info;
+            color: #fff;
+        }
+    }
+}
+
+$cursor-disabled:not-allowed!default;
 .disabled {
     opacity: .7;
     pointer-events: none;
-    &.btn{
+    &.btn {
         cursor: $cursor-disabled;
     }
 }
@@ -340,65 +421,62 @@ $cursor-disabled:'not-allowed'!default;
 .text-left {
     text-align: left;
 }
+
 .text-right {
     text-align: right;
 }
+
 .text-center {
     text-align: center;
 }
 
-$color-bg-default:#eee!default;
-$color-bg-default-text:#555!default;
-$color-bg-primary:#fff2ec!default;
-$color-bg-primary-text:#a94442!default;
-$color-bg-ok:#dff0d8!default;
-$color-bg-ok-text:#3c763d!default;
-$color-bg-info:#effffe!default;
-$color-bg-info-text:#1fb5ac!default;
-$color-bg-warning:#fcf8e3!default;
-$color-bg-warning-text:#8a6d3b!default;
-$color-bg-danger:#fff6f3!default;
-$color-bg-danger-text:#fb6362!default;
-
-@each $bg,$bg-color,$bg-text-color in(bg-default,$color-bg-default,$color-bg-default-text),
-(bg-primary,$color-bg-primary,$color-bg-primary-text),
-(bg-ok,$color-bg-ok,$color-bg-ok-text),
-(bg-info,$color-bg-info,$color-bg-info-text),
-(bg-warning,$color-bg-warning,$color-bg-warning-text),
-(bg-danger,$color-bg-danger,$color-bg-danger-text){
-    .#{$bg}{
-    background-color: $bg-color;
-    color:$bg-text-color;
-    border:1px solid darken($bg-color,10%);
+@each $bg,
+$bg-color,
+$bg-text-color in(bg-default, $color-bg-default, $color-bg-default-text),
+(bg-primary, $color-bg-primary, $color-bg-primary-text),
+(bg-ok, $color-bg-ok, $color-bg-ok-text),
+(bg-info, $color-bg-info, $color-bg-info-text),
+(bg-warning, $color-bg-warning, $color-bg-warning-text),
+(bg-danger, $color-bg-danger, $color-bg-danger-text) {
+    .#{$bg} {
+        border: 1px solid darken($bg-color, 10%);
+        background-color: $bg-color;
+        color: $bg-text-color;
     }
 }
 
-$color-muted:#aaa!default;
-$color-default:#333!default;
-$color-info:#08A1F1!default;
-$color-ok:#338C35!default;
-$color-warning:#ec0!default;
-$color-danger:#fb6362!default;
-.text-muted{
+.bg {
+    -webkit-border-radius: $border-radius;
+    -moz-border-radius: $border-radius;
+    border-radius: $border-radius;
+}
+
+.text-muted {
     color: $color-muted;
 }
-.text-muted.tips{
+
+.text-muted.tips {
     font-size: 13px;
 }
-.text-primary{
-    color:$color-default;
+
+.text-primary {
+    color: $color-primary;
 }
-.text-info{
-    color:$color-info;
+
+.text-info {
+    color: $color-info;
 }
-.text-ok{
+
+.text-ok {
     color: $color-ok;
 }
-.text-waring{
-    color:$color-warning;
+
+.text-warning {
+    color: $color-warning;
 }
-.text-danger{
-    color:$color-danger;
+
+.text-danger {
+    color: $color-danger;
 }
 
 html {
@@ -406,54 +484,57 @@ html {
     font-size: 100%;
 }
 
-@mixin basePC{
+@mixin basePC {
     color: $color;
     font-size: $font-size;
     font-family: $font-family;
     line-height: $line-height;
 }
-@mixin baseMobile{
+
+@mixin baseMobile {
     color: $color;
-    font:$mobile-def-font;
+    font: $mobile-def-font;
     line-height: (24/15);
 }
-@mixin pcBody{
+
+@mixin pcBody {
     @include basePC;
     word-break: break-all;
 }
 
-a{
+a {
     text-decoration: none;
 }
-$color-anchor:#08A1EF!default;
-$color-anchor-visited:#609!default;
-$color-anchor-hover:#08a7ec!default;
-$color-anchor-active:#fb6362!default;
-@mixin PCanchor{
-        color:$color-anchor;
-        &:hover{
-            text-decoration: underline;
-        }
+
+@mixin PCanchor {
+    color: $color-anchor;
+    &:hover {
+        text-decoration: underline;
+    }
 }
 
-@mixin mobileAnchor{
-        color:#333;
-        &:visited,&:hover,&:active{
-            color: #333;
-        }
-        @at-root button,&{
+@mixin mobileAnchor {
+    color: #333;
+    &:visited,
+    &:hover,
+    &:active {
+        color: #333;
+    }
+    @at-root button,
+    & {
         @include wthc();
     }
 }
 
-@mixin loading{
+@mixin loading {
     position: relative;
     text-align: center;
-    pointer-events:none;
-    >*{
+    pointer-events: none;
+    >* {
         opacity: 0;
     }
-    &:before,&:after{
+    &:before,
+    &:after {
         content: '\6570\636E\52A0\8F7D\4E2D';
         position: absolute;
         left: 50%;
@@ -462,25 +543,45 @@ $color-anchor-active:#fb6362!default;
         color: #888;
         @include trf(translateY(-50%));
     }
-    &:after{
+    &:after {
         content: '...';
         width: 1em;
         margin-left: 2em;
-        @include am(loading 1.5s  infinite);
+        @include am(loading 1.5s infinite);
     }
 }
-@mixin loadmore{
+
+@mixin loadmore {
     padding: 10px;
     color: #666;
 }
+
 @-webkit-keyframes loading {
-    0%,40%{content: '.'}
-    41%,66%{content:'..'}
-    70%,100%{content:'...'}
+    0%,
+    40% {
+        content: '.'
+    }
+    41%,
+    66% {
+        content: '..'
+    }
+    70%,
+    100% {
+        content: '...'
+    }
 }
 
 @keyframes loading {
-    0%,40%{content: '.'}
-    41%,66%{content:'..'}
-    70%,100%{content:'...'}
+    0%,
+    40% {
+        content: '.'
+    }
+    41%,
+    66% {
+        content: '..'
+    }
+    70%,
+    100% {
+        content: '...'
+    }
 }
