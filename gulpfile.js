@@ -89,7 +89,7 @@ gulp.task('coffee',function(){
 });
 
 gulp.task('sass',function(){
-    return gulp.src('./src/scss/*.scss')
+    return gulp.src('./scss/*.scss')
     .pipe(sass({outputStyle:'compressed'}).on('error',sass.logError))
     .pipe(gulp.dest('./dist/css'))
 
@@ -103,9 +103,9 @@ gulp.task('sass',function(){
 //监视文件变化，执行相关任务
 gulp.task('watch',function(){
    gulp.watch("**.coffee",['coffee']);
-   gulp.watch('./src/scripts/**/*.js', ['rev']);
-   gulp.watch('./src/css/**/*.css','rev');
-   gulp.watch('.src/scss/*.scss','sass');
+   gulp.watch('./scripts/**/*.js', ['rev']);
+   gulp.watch('./css/**/*.css','rev');
+   gulp.watch('/scss/*.scss','sass');
 });
 
 gulp.task('webpack',function(callback){
@@ -119,13 +119,13 @@ gulp.task('webpack',function(callback){
 //根据文件类型变动，自动刷新浏览器
 gulp.task("browserSync",['rev','sass'],function(){
    browserSync({
-      files:["**/*.html","**/*.css","**/*.js",'!**.less','!**.coffee','!**.SCSS'],
+      files:["**/*.html","**/*.css","**/*.js",'!**.less','!**.coffee','!**.SCSS','!node_modules/**.*'],
       server:{
          baseDir:"./"
       },
       port:2016
    });
-   gulp.watch('./src/scss/**/*.scss',['sass']);
+   gulp.watch('./scss/**/*.scss',['sass']);
    //gulp.watch('./src/scripts/**/*.js', ['rev']);
    //gulp.watch('./src/css/**/*.css','rev')
 });

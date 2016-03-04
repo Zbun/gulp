@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
+    <title>展</title>
+    <link rel="stylesheet" href="../dist/fonts/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../dist/CSS/mall.css">
+</head>
+
+<body>
+    <article class="main">
+        <section class="body">
+            <div class="row">
+                <h2 class="content-title">按钮篇:</h2>
+                <div class="btn-group mt5">
+                    <div class="fr search-field">
+                        <button class="btn-search icon-search"><i class="fa fa-search"></i></button>
+                        <input type="search" class='ipt-search kw' required>
+                    </div>
+                    <button class="btn">普通</button>
+                    <button class="btn btn-default">默认</button>
+                    <button class="btn btn-primary">首选</button>
+                    <button class="btn btn-info">信息</button>
+                    <button class="btn btn-warning">警示</button>
+                    <button class="btn btn-danger">危险</button>
+                    <button class="btn btn-disabled">不可用</button>
+                    <button class="btn btn-info-o">信息-透明</button>
+                    <br>
+                    <button class="btn big btn-info">大信息</button>
+                    <button class="btn btn-primary bigger">更大首选</button>
+                </div>
+                <hr>
+            </div>
+            <div class="row">
+                <h2 class="content-title">输入区:</h2>
+                <div class="input-area mt5">
+                    <input type="search">
+                    <input type="text" class='error'>
+                    <input type="number">
+                    <input type="color">
+                    <input type="date">
+                    <input type="time">
+                    <input type="text" required>
+                    <select name="" id="">
+                        <option value="">下拉</option>
+                        <option value="">下拉</option>
+                        <option value="">下拉</option>
+                    </select>
+                    <br>
+                    <textarea name="" id="" cols="30" rows="3"></textarea>
+                </div>
+                <hr>
+            </div>
+            <div class="row">
+                <h2 class="content-title">文本色：</h2>
+                <div class="text-area">
+                    <h3 class="p10 text-info">信息类</h3>
+                    <h4 class="p5 text-warning">警示类</h4>
+                    <h2 class="p5 text-danger">危险</h2>
+                </div>
+                <hr>
+            </div>
+            <div class="row">
+                <h2 class="content-title">背景区：</h2>
+                <div class="bg-area">
+                    <h3 class="bg bg-info p10 text-center">信息类</h3>
+                    <h3 class="bg bg-warning p10 text-center mt5">警示类</h3>
+                    <h3 class="bg bg-danger p10 text-center mt5">危险类</h3>
+                </div>
+                <hr>
+            </div>
+            <div class="row">
+                <h2 class="content-title">分页:</h2>
+                <div id="pagination" class="text-center">
+                    <ul class="pagination">
+                        <li class="first disabled"><a href="javascript:;">首页</a></li>
+                        <li class="prev disabled"><a href="javascript:;">&lt;</a></li>
+                        <li class="page active"><a href="javascript:;">1</a></li>
+                        <li class="page"><a href="javascript:;">2</a></li>
+                        <li class="page"><a href="javascript:;">3</a></li>
+                        <li class="page"><a href="javascript:;">4</a></li>
+                        <li class="page"><a href="javascript:;">5</a></li>
+                        <li class="page"><a href="javascript:;">6</a></li>
+                        <li class="page"><a href="javascript:;">7</a></li>
+                        <li class="next"><a href="javascript:;">&gt;</a></li>
+                        <li class="last"><a href="javascript:;">末页</a></li>
+                    </ul>
+                </div>
+                <hr>
+            </div>
+            <div class="row">
+                <h2 class="content-title">进度</h2>
+                <section class="progress col5">
+                    <dl class="item">
+                        <dt class="bar">
+                        </dt>
+                        <dd class="tips">
+                            买家下单
+                        </dd>
+                    </dl>
+                    <dl class="item now">
+                        <dt class="bar">
+                        </dt>
+                        <dd class="tips">
+                            买家付款
+                        </dd>
+                    </dl>
+                    <dl class="item">
+                        <dt class="bar">
+                        </dt>
+                        <dd class="tips">
+                            发货
+                        </dd>
+                    </dl>
+                    <dl class="item">
+                        <dt class="bar">
+                        </dt>
+                        <dd class="tips">
+                            确认收货
+                        </dd>
+                    </dl>
+                    <dl class="item">
+                        <dt class="bar">
+                        </dt>
+                        <dd class="tips">
+                            评价
+                        </dd>
+                    </dl>
+                </section>
+                <section class="progress col3">
+                    <p class="item">
+                        <span class="bar">
+                        </span>
+                        <span class="tips">
+                            买家下单
+                        </span>
+                    </p>
+                    <p class="item now">
+                        <span class="bar">
+                        </span>
+                        <span class="tips">
+                            买家付款
+                        </span>
+                    </p>
+                    <p class="item">
+                        <span class="bar">
+                        </span>
+                        <span class="tips">
+                            完成
+                        </span>
+                    </p>
+                </section>
+                <hr>
+            </div>
+            <div class="row">
+                <h2 class="content-title">信息展示带按钮</h2>
+                <div class="info-list">
+                    <section class="item info-warning">
+                        <header class="title">
+                            <b>当前订单状态：</b>
+                            <b class="text-warning">待发货</b>
+                            <span class='tag'><button class="btn btn-warning">立即发货</button></span>
+                        </header>
+                        <div class="content col2">
+                            <dl class='item'>
+                                <dt class="title">订单号：</dt>
+                                <dd class='content'>9393933993200100019005</dd>
+                            </dl>
+                            <dl class='item'>
+                                <dt class="title">订单类型：</dt>
+                                <dd class="content">商城/秒杀</dd>
+                            </dl>
+                            <dl class='item'>
+                                <dt class="title">下单时间：</dt>
+                                <dd class="content">2016-01-01</dd>
+                            </dl>
+                            <dl class='item'>
+                                <dt class="title">付款时间：</dt>
+                                <dd class="content">2016-01-01 18：00：02</dd>
+                            </dl>
+                            <dl class='item'>
+                                <dt class="title">发货时间：</dt>
+                                <dd class="content">2016-01-02 10：00</dd>
+                            </dl>
+                            <dl class='item'>
+                                <dt class="title">完成/取消时间：</dt>
+                                <dd class="content">2016-01-05 19：00</dd>
+                            </dl>
+                            <dl class='item'>
+                                <dt class="title">订单积分：</dt>
+                                <dd class="content">153454544</dd>
+                            </dl>
+                        </div>
+                    </section>
+                    <section class="item">
+                        <header class="title">
+                            <b>收货信息/自提信息</b>
+                            <span class='tag'>运单号：<sub class="text-danger font-biggest">92656444646445</sub></span>
+                            <span class="tag">申通</span>
+                            <a href="javascript:;" class="tag">查看物流信息</a>
+                        </header>
+                        <div class="content">
+                            <dl class='item'>
+                                <dt class="title">收货人：</dt>
+                                <dd class='content'>呆呵呵呆</dd>
+                            </dl>
+                            <dl class='item'>
+                                <dt class="title">电话：</dt>
+                                <dd class="content">13803800138</dd>
+                            </dl>
+                            <dl class='item'>
+                                <dt class="title">收货地址：</dt>
+                                <dd class="content">永和国际2708</dd>
+                            </dl>
+                            <dl class='item'>
+                                <dt class="title">买家留言：</dt>
+                                <dd class="content">请发顺丰，谢谢</dd>
+                            </dl>
+                            <dl class='item'>
+                                <dt class="title">发票信息：</dt>
+                                <dd class="content">北龙中网科技有限公司</dd>
+                            </dl>
+                        </div>
+                    </section>
+                    <section class="item">
+                        <header class="title">
+                            <b>商品信息</b>
+                        </header>
+                        <div class='info-product'>
+                            <table class="table text-center">
+                                <thead>
+                                    <tr>
+                                        <td>名称</td>
+                                        <td>型号</td>
+                                        <td>原价（元）</td>
+                                        <td>购买价（元）</td>
+                                        <td>数量</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>APPLEAPPLEAPPLEAPPLEAPPLEAPPLEAPPLE</td>
+                                        <td>iOS1000</td>
+                                        <td>6666.66</td>
+                                        <td><b class='text-danger'>5555.55</b></td>
+                                        <td>2</td>
+                                    </tr>
+                                    <tr>
+                                        <td>APPLEAPPLEAPPLEAPPLEAPPLEAPPLEAPPLE</td>
+                                        <td>iOS1000</td>
+                                        <td>6666.66</td>
+                                        <td><b class='text-danger'>5555.55</b></td>
+                                        <td>2</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                </div>
+                <hr>
+            </div>
+        </section>
+    </article>
+</body>
+
+</html>
