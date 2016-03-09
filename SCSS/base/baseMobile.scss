@@ -1,23 +1,80 @@
-@import 'baseSCSS';
+@import '_variables.scss';
+@import 'baseSCSS.scss';
+
+$line-height: (20/12);
+$btn-line-height:26px;
+$btn-big-font-size:16px;
+$btn-big-line-height:34px;
+$btn-bigger-font-size:18px;
+$btn-bigger-line-height:38px;
+$color-table-anchor:#0990ca;
+
+input[type=search],
+input[type=text],
+input[type=tel],
+input[type=submit],
+input[type=password],
+input[type=number],
+input[type=date],
+input[type=color],
+input[type=time],
+button,
+textarea,
+select {
+    line-height: 22px;
+    font-size: $font-size;
+    &:active {
+        box-shadow: none;
+    }
+}
+
+.btn {
+    margin-right: 8px;
+    &.big {
+        padding: 0 1.5em;
+        font-size: $btn-big-font-size;
+        line-height: $btn-big-line-height;
+    }
+    &.bigger {
+        padding: 0 1.75em;
+        font-size: $btn-bigger-font-size;
+        line-height: $btn-bigger-line-height;
+    }
+}
+
+select {
+    height: 32px;
+    padding: 0 4px;
+}
+
+a{
+
+}
+.text-muted {
+    color: $color-muted-mobile;
+}
+
 .row {
     margin-bottom: 10px;
     padding: 0 10px;
-    .negative-row{
+    .negative-row {
         padding-left: 10px;
         padding-right: 10px;
         margin: 0 -10px;
-        &.block{
+        &.block {
             width: auto;
         }
     }
 }
 
-.dis-flex{
+.dis-flex {
     @include dis-flex;
-    .item{
+    >.item {
         @include flex;
+        margin: 0;
     }
 }
+
 .arrow {
     &:not(.dropdown) {
         position: relative;
@@ -30,7 +87,7 @@
             height: 11px;
             margin-top: -1px;
             content: '';
-            box-shadow: 1px 1px #bbb;
+            box-shadow: 2px 2px #bbb;
             @include trf(rotate(-45deg) translate(0, -50%));
         }
     }
@@ -78,7 +135,7 @@
                     padding: 2px;
                     background: #0BD480;
                     //background:#f55;
-                    @include br(100%);
+                    @include border-radius(100%);
                     @include trf(translate(0, -50%));
                 }
             }
@@ -120,7 +177,7 @@
             left: 10px;
             pointer-events: none;
             z-index: 50;
-            @include trf-tsl(0,-50%);
+            @include trf-translate(0, -50%);
         }
         input[type=text],
         input[type=tel],
@@ -138,114 +195,112 @@
                 text-align: right;
             }
         }
-
-       &.notag{
-        input[type=text],
-        input[type=tel],
-        input[type=number],
-        input[teyp=date] {
-            padding-left: 0;
-            &::-webkit-input-placeholder{
-                text-align: left;
+        &.notag {
+            input[type=text],
+            input[type=tel],
+            input[type=number],
+            input[teyp=date] {
+                padding-left: 0;
+                &::-webkit-input-placeholder {
+                    text-align: left;
+                }
             }
         }
-    } 
     }
-    
 }
 
 $color-radio:#08a1f1;
-.radio{
+.radio {
     position: relative;
     display: inline-block;
     width: 20px;
     height: 20px;
-    &:before,&:after{
-        content:'';
+    &:before,
+    &:after {
+        content: '';
         position: absolute;
         top: 0;
         left: 0;
         right: 0;
         bottom: 0;
-        border:1px solid #ccc;
+        border: 1px solid #ccc;
         -webkit-border-radius: 100%;
         -moz-border-radius: 100%;
         border-radius: 100%;
     }
-    &:after{
+    &:after {
         top: 5px;
         right: 5px;
         left: 5px;
         bottom: 5px;
-        border:0;
+        border: 0;
     }
-    &.on{
-        &:after{
-            background:$color-radio;
+    &.on {
+        &:after {
+            background: $color-radio;
         }
     }
-    &.check.on{
-    &:before{
-        background:#f55;
-        border-color: #f55;
-    }
-    &:after{
-        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-        content: '\2713';
-        line-height: 1;
-        font-size: 12px;
-        color: #fff;
-        background:transparent;
-    }
+    &.check.on {
+        &:before {
+            background: #f55;
+            border-color: #f55;
+        }
+        &:after {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            content: '\2713';
+            line-height: 1;
+            font-size: 12px;
+            color: #fff;
+            background: transparent;
+        }
     }
 }
 
-.switcher{
+.switcher {
     position: relative;
     display: inline-block;
     width: 26px;
     height: 26px;
-    &:before{
+    &:before {
         content: '';
         position: absolute;
         top: 7px;
         bottom: 7px;
         left: 0;
         right: 0;
-        border:1px solid #ccc;
-        background:#eee;
+        border: 1px solid #ccc;
+        background: #eee;
         -webkit-border-radius: 8px;
-    -moz-border-radius: 8px;
-    border-radius: 8px;
-    @include trans(.3s);
+        -moz-border-radius: 8px;
+        border-radius: 8px;
+        @include trans(.3s);
     }
-    &:after{
+    &:after {
         content: '';
-    position: absolute;
-    left: 0;
-    top: 5px;
-    width: 16px;
-    height: 16px;
-    -webkit-border-radius: 100%;
-    -moz-border-radius: 100%;
-    border-radius: 100%;
-    @include trans(.5s);
+        position: absolute;
+        left: 0;
+        top: 5px;
+        width: 16px;
+        height: 16px;
+        -webkit-border-radius: 100%;
+        -moz-border-radius: 100%;
+        border-radius: 100%;
+        @include trans(.5s);
     }
-    &:after{
-        background:#eee;
-        border:1px solid #ccc;
+    &:after {
+        background: #eee;
+        border: 1px solid #ccc;
         @include trans(all .3s linear);
     }
-    &.on{
-        &:before{
-        background:lighten($color-radio,30%);
-        border-color: lighten($color-radio,30%);
-
+    &.on {
+        &:before {
+            background: lighten($color-radio, 30%);
+            border-color: lighten($color-radio, 30%);
         }
-        &:after{
+        &:after {
             //left: 1rem;
-            @include trf-tsl(10px,0);
-            background:$color-radio;
+            @include trf-translate(10px, 0);
+            background: $color-radio;
             border-color: $color-radio;
             box-shadow: 0 2px 1px #ddd;
         }
@@ -254,8 +309,9 @@ $color-radio:#08a1f1;
 
 body {
     color: $color;
-    font: $mobile-def-font;
-    word-break:break-all;
+    font: $font-family-mobile;
+    line-height: $line-height-mobile;
+    word-break: break-all;
 }
 
 @mixin header {
@@ -279,8 +335,19 @@ body {
         position: fixed;
         width: 100%;
         z-index: 3;
-        ~.main{
+        ~.main {
             padding-top: 44px;
+        }
+    }
+    .action{
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        >.item{
+            display: inline-block;
+            padding-right: 10px;
+            text-align: center;
         }
     }
 }
@@ -299,11 +366,15 @@ body {
         border-width: 2px 0 0 2px;
         @include trf(translate(0, 1px) rotate(-45deg));
     }
+    &:active {
+        background: rgba(0, 0, 0, .1);
+    }
 }
 
 @mixin footer {
     height: 50px;
     line-height: 50px;
+    background:#fff;
     &.fixed {
         position: fixed;
         bottom: 0;
@@ -322,6 +393,9 @@ body {
             display: flex;
             align-items: center;
         }
+        ~.main{
+            margin-bottom: 60px;
+        }
     }
 }
 
@@ -329,9 +403,6 @@ $color-anchor:#333;
 a {
     color: $color-anchor;
     text-decoration: none;
-    @at-root button,&{
-        @include wthc();
-    }
 }
 
 .loading {
@@ -343,27 +414,94 @@ a {
 }
 
 @-webkit-keyframes loading {
-
     100% {
         width: 1em;
     }
 }
 
 @keyframes loading {
-
     100% {
         width: 1em;
     }
-
 }
 
-.am-scale-b{
-    @include trans(.3s,linear);
-    @include am(am-scale-b .3s);
+.am-scale-b {
+    @include trans(.3s, linear);
+    @include anim(am-scale-b .3s);
 }
+
 @-webkit-keyframes am-scale-b {
-    50% { @include trf-scl(1.2) }
+    50% {
+        @include trf-scale(1.2)
+    }
 }
+
 @keyframes am-scale-b {
-    50% { @include trf-scl(1.2) }
+    50% {
+        @include trf-scale(1.2)
+    }
+}
+
+.pic-list {
+    overflow: hidden;
+    >.item {
+        display: block;
+        padding: 10px 0;
+        border-bottom: 1px solid $color-border;
+        .inner {
+            position: relative;
+            overflow: hidden;
+            >img {
+                float: left;
+                margin-right: 10px;
+                width: 60px;
+                height: 60px;
+            }
+            >.content {
+                overflow: hidden;
+                >.title {
+                    font-weight: 400;
+                    font-size: 13px;
+                    @include mul-line(2);
+                }
+                .emphasize{
+                    font-size: 16px;
+                }
+            }
+        }
+    }
+}
+
+.swiper{
+    overflow: hidden;
+    >.item{
+        white-space: nowrap;
+        font-size: 0;
+        >.inner{
+            display: inline-block;
+            width: 100%;
+            img{
+                height: 160px;
+                width: 100%;
+            }
+        }
+    }
+}
+
+.set{
+    overflow: hidden;
+    >.name{
+        float: left;
+        line-height: 32px;
+    }
+    >.content{
+    overflow: hidden;
+    >.item{
+        margin-bottom: 8px;
+        &.on{
+            color: $color-danger;
+            border-color:$color-danger;
+        }
+    }
+    }
 }

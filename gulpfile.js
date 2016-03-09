@@ -20,25 +20,25 @@ var webpackConfig=require('./webpack.config.js');
 
 //清理文件
 gulp.task('clean',function(cb){
-	del(['build/css','build/scripts'],cb)
+	del(['build/css','build/scripts'],cb);
 });
 
 //构建
 gulp.task('build',['minify','minifycss','sass'],function(){
-   console.log("Good Job!")
+   console.log("Good Job!");
 });
 
 //默认启动任务
 gulp.task("default",['browserSync'],function(){
 	// gulp.start('minify','minifycss')
-   console.log("Enjoy!")
+   console.log("Enjoy!");
 });
 
 //文件添加版本号，在HTML中写入**.js?rev=@hash
 gulp.task('rev',function(){
-  gulp.src('./src/htmls/practices/react/practise1.html')
+  gulp.src('./src/htmls/pc/*.html')
   .pipe(revAppend())
-  .pipe(gulp.dest('./src/htmls/practices/react/2'))
+  .pipe(gulp.dest('./dist/htmls/pc/'));
 })
 
 gulp.task("greet",function(){
@@ -65,7 +65,7 @@ gulp.task('minify',function(){
                 exclude:['tasks'],
                 ignoreFiles:['.combo.js','-min.js']
         }))
-        .pipe(gulp.dest('./dist/scripts'))
+        .pipe(gulp.dest('./dist/scripts'));
 })
 
 gulp.task("minifycss",function(){
@@ -76,7 +76,7 @@ gulp.task('concat',function(){
    gulp.src('./scripts/*.js')
    .pipe(uglify())
    .pipe(concat('site.js'))
-   .pipe(gulp.dest('./dist/scripts'))
+   .pipe(gulp.dest('./dist/scripts'));
 });
 
 /*预处理系列*/
@@ -85,20 +85,20 @@ gulp.task('coffee',function(){
    .pipe(sourcemaps.init())
    .pipe(coffee({bare:true}).on('error',gutil.log))
    .pipe(sourcemaps.write('../maps'))
-   .pipe(gulp.dest('./dist/scripts'))
+   .pipe(gulp.dest('./dist/scripts'));
 });
 
 gulp.task('sass',function(){
     return gulp.src('./scss/*.scss')
     .pipe(sass({outputStyle:'compressed'}).on('error',sass.logError))
-    .pipe(gulp.dest('./dist/css'))
+    .pipe(gulp.dest('./dist/css'));
 
   //以下为传给browseSync用
   // return gulp.src("app/scss/*.scss")
   //       .pipe(sass())
   //       .pipe(gulp.dest("app/css"))
   //       .pipe(browserSync.stream());
-})
+});
 
 //监视文件变化，执行相关任务
 gulp.task('watch',function(){
@@ -117,7 +117,7 @@ gulp.task('webpack',function(callback){
 })
 
 //根据文件类型变动，自动刷新浏览器
-gulp.task("browserSync",['rev','sass'],function(){
+gulp.task("browserSync",['sass'],function(){
    browserSync({
       files:["**/*.html","**/*.css","**/*.js",'!**.less','!**.coffee','!**.SCSS','!node_modules/**.*'],
       server:{

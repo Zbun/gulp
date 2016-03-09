@@ -36,12 +36,9 @@
 }
 
 @mixin flex-center() {
-    display:-webkit-box;
     display: -webkit-flex;
     display: flex;
     justify-content: center;
-    -webkit-box-align:center;
-    -webkit-align-item:center;
     align-items: center;
 }
 
@@ -121,7 +118,7 @@ hr {
     height: 1px;
     margin: 10px auto;
     border: 0;
-    background: $color-border;
+    background: #ddd;
 }
 
 *,
@@ -209,7 +206,6 @@ input[type=radio] {
 
 img {
     border: 0;
-    height: auto;
     max-width: 100%;
     max-height: 100%;
     vertical-align: middle;
@@ -313,7 +309,7 @@ img {
     -moz-border-radius: $border-radius;
     border-radius: $border-radius;
     cursor: pointer;
-    text-decoration: none!important;
+    text-decoration: none;
     &:hover {
         background: $color-btn-hover;
     }
@@ -333,16 +329,12 @@ $color-btn-warning-bg:$color-warning!default;
 $color-btn-danger-bg:$color-danger!default;
 $color-btn-ok-bg:$color-ok!default;
 @each $btn-each,
-$btn-color in (btn-info:$color-btn-info-bg, btn-primary:$color-btn-primary-bg, btn-ok:$color-btn-ok-bg, btn-warning:$color-btn-warning-bg, btn-danger:$color-btn-danger-bg) {
+$btn-color in (btn-default:$color-btn-default-bg, btn-info:$color-btn-info-bg, btn-primary:$color-btn-primary-bg, btn-ok:$color-btn-ok-bg, btn-warning:$color-btn-warning-bg, btn-danger:$color-btn-danger-bg) {
     .#{$btn-each} {
         color: #fff;
         background: $btn-color;
         border-color: darken($btn-color, 4%);
-        &:visited{
-            color: #fff;
-        }
         &:hover {
-            color: #fff;
             background: darken($btn-color, 4%);
         }
     }
@@ -354,11 +346,6 @@ button {
 
 .btn-default {
     color: $color;
-    background:$color-btn-hover;
-    border-color:$color-border;
-    &:hover{
-        background: darken($color-btn-hover,4%);
-    }
 }
 
 .btn-disabled {
@@ -369,16 +356,13 @@ button {
 }
 
 @each $btn,
-$btn-color in (btn-primary-o:$color-primary,btn-info-o:$color-info,btn-warning-o:$color-warning,btn-danger-o:$color-danger) {
+$btn-color in (btn-info-o:$color-info) {
     .#{$btn} {
         color: $btn-color;
         background: #fff;
         border-color: darken($btn-color, 4%);
-        &:visited{
-            color: $btn-color;
-        }
         &:hover {
-            background: $btn-color;
+            background: $color-info;
             color: #fff;
         }
     }
@@ -414,9 +398,11 @@ $cursor-disabled:not-allowed!default;
 }
 .font-bigger{
     font-size: $size-font-bigger;
+    line-height: 2;
 }
 .font-biggest{
     font-size:$size-font-biggest;
+    line-height: 2;
 }
 @each $bg,
 $bg-color,
@@ -467,88 +453,6 @@ $bg-text-color in(bg-default, $color-bg-default, $color-bg-default-text),
     color: $color-danger;
 }
 
-.tag-group{
-    .tag{
-        padding: 0 6px;
-        margin-right: 4px;
-        border:1px solid $color-border;
-        font-size: 12px;
-        white-space: nowrap;
-        -webkit-border-radius: $border-radius;
-        -moz-border-radius: $border-radius;
-        border-radius: $border-radius;
-}
-}
-
-@each $tag,$tag-color in(tag-warning:$color-warning,tag-danger:$color-danger,tag-info:$color-info){
-    .tag-group .#{$tag}{
-        background: $tag-color;
-        color: #fff;
-        border-color: darken($tag-color,4%);
-    }
-}
-
-@each $tag,$tag-color in(tag-warning-o:$color-warning,tag-danger-o:$color-danger,tag-info-o:$color-info){
-    .tag-group .#{$tag}{
-        background:#fff;
-        color: $tag-color;
-        border-color: $tag-color;
-    }
-}
-.label-switcher-horizontal{
-    // border-bottom: 1px solid $color-border;
-    white-space: nowrap;
-    font-size: 0;
-    overflow-y: hidden;
-    >.item{
-        display: inline-block;
-        position: relative;
-        padding: 0 10px;
-        line-height: 44px;
-        font-size: $font-size;
-        cursor: pointer;
-        text-decoration: none;
-        &:active{
-            background:rgba(0,0,0,.1);
-        }
-        &:before{
-            content:'';
-            position: absolute;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            height: 1px;
-            background:$color-border;
-            border-bottom: 1px solid transparent;
-        }
-        &.on{
-            color: $color-primary;
-            &:before{
-            border-bottom: 2px solid $color-primary;
-            }
-            &.multi{
-                &:after{
-                    border-color: $color-primary;
-                }
-            }
-        }
-        &.multi{
-            padding-right: 20px;
-            &:after{
-                content: '';
-                position: absolute;
-                top: 50%;
-                right: 10px;
-                width: 7px;
-                height: 7px;
-                border: 2px solid #666;
-                border-width: 0 1px 1px 0;
-                @include trf(translate(0,-50%) rotate(45deg));
-            }
-        }
-    }
-}
-
 html {
     min-height: 100%;
     font-size: 100%;
@@ -563,8 +467,8 @@ html {
 
 @mixin baseMobile {
     color: $color;
-    font-family: $font-family-mobile;
-    line-height: $line-height-mobile;
+    font: $mobile-def-font;
+    line-height: (24/15);
 }
 
 @mixin pcBody {
@@ -574,7 +478,6 @@ html {
 
 a {
     text-decoration: none;
-    @include tap-highlight-color(rgba(0,0,0,0));
 }
 
 @mixin PCanchor {
@@ -618,7 +521,7 @@ a {
         content: '...';
         width: 1em;
         margin-left: 2em;
-        @include anim(loading 1.5s infinite);
+        @include am(loading 1.5s infinite);
     }
 }
 

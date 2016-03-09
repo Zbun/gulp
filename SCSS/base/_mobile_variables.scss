@@ -1,22 +1,23 @@
 $border-radius:3px!default;
-$font-size:14px!default;
-$line-height: (20/14)!default;
-$font-family:'Microsoft Yahei','Helvetica Neue',
+$line-height: 1.6;
+$font-family:'Helvetica Neue',
+Helvetica,
+Arial,
+sans-serif!default;
+$mobile-def-font:15px "Helvetica Neue",
 Helvetica,
 Arial,
 sans-serif!default;
 
 /*colors areas basis*/
-
 $color:#333!default;
-$color-muted:#aaa!default;
+$color-muted:#999!default;
 $color-default:#333!default;
 $color-primary:#08a7ec!default;
 $color-info:#1fb5ac!default;
 $color-ok:#4DCD70!default;
 $color-warning:#ff9402!default;
 $color-danger:#fb6361!default;
-$color-btn:#fff!default;
 $color-btn-default:#fff!default;
 $color-btn-hover:#e8e8e8!default;
 $color-border:#e0e0e0!default;
@@ -44,10 +45,16 @@ $color-bg-danger:#fff6f3!default;
 $color-bg-danger-text:#fb6362!default;
 
 //Text size
-$size-font-small:12px;
-$size-font-big:14px;
+$size-font-default:14px!default;
+$size-font-title:17px!default;
+
+$size-font-btn-mini:14px!default;
+$size-font-btn-block:18px!default;
+
+$size-font-small:13px;
+$size-font-big:16px;
 $size-font-bigger:18px;
-$size-font-biggest:20px;
+$size-font-biggest:34px;
 
 //Height
 $height-input:32px;
@@ -57,24 +64,3 @@ $height-table-tbody:44px;
 
 //progress
 $progress-bg:#e8e8e8;
-
-//Mobile End
-
-//Mobile
-$font-family-mobile:15px "Helvetica Neue",
-Helvetica,
-Arial,
-sans-serif!default;
-$line-height-mobile:1.6!default;
-
-$size-font-btn-mini-mobile:14px!default;
-$size-font-btn-block-mobile:18px!default;
-
-$size-font-small-mobile:13px!default;
-$size-font-big-mobile:16px!default;
-$size-font-bigger-mobile:18px!default;
-$size-font-biggest-mobile:34px!default;
-
-$size-font-title-mobile:17px!default;
-
-$color-muted-mobile:#999!default;
