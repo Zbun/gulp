@@ -22,14 +22,24 @@ button,
 textarea,
 select {
     line-height: 22px;
-    font-size: $font-size;
+    //font-size: $font-size;
     &:active {
         box-shadow: none;
     }
 }
-
+a,label,.dropdown {
+    text-decoration: none;
+    @include tap-highlight-color(rgba(0, 0, 0, 0));
+}
+.btns{
+    line-height: 32px;
+}
 .btn {
-    margin-right: 8px;
+    padding: 0 10px;
+    line-height: 32px;
+    +.btn{
+        margin-left: 5px;
+    }
     &.big {
         padding: 0 1.5em;
         font-size: $btn-big-font-size;
@@ -40,16 +50,25 @@ select {
         font-size: $btn-bigger-font-size;
         line-height: $btn-bigger-line-height;
     }
-}
+    &:hover{
 
+    }
+}
+.btn.block{
+    line-height: 40px;
+}
+.tags{
+    >.tag{
+        &+.tag{
+            margin-left: 2px;
+        }
+    }
+}
 select {
     height: 32px;
     padding: 0 4px;
 }
 
-a{
-
-}
 .text-muted {
     color: $color-muted-mobile;
 }
@@ -64,14 +83,6 @@ a{
         &.block {
             width: auto;
         }
-    }
-}
-
-.dis-flex {
-    @include dis-flex;
-    >.item {
-        @include flex;
-        margin: 0;
     }
 }
 
@@ -111,6 +122,8 @@ a{
         left: 0;
         right: 0;
         top: 100%;
+        max-height: 500px;
+        overflow-x: hidden;
         background: #fff;
         -webkit-transform-origin: top;
         transform-origin: top;
@@ -118,47 +131,32 @@ a{
         @include trf(rotateX(90deg));
         z-index: -1;
         opacity: 0;
+        will-change:transform;
         -webkit-transform-style: preserve-3d;
         -moz-transform-style: preserve-3d;
         -ms-transform-style: preserve-3d;
         transform-style: preserve-3d;
-        li {
-            position: relative;
-            &.on {
-                &:after {
-                    content: '';
-                    position: absolute;
-                    right: 14px;
-                    top: 50%;
-                    width: .5em;
-                    height: .5em;
-                    padding: 2px;
-                    background: #0BD480;
-                    //background:#f55;
-                    @include border-radius(100%);
-                    @include trf(translate(0, -50%));
-                }
-            }
-        }
     }
     &:after {
         position: absolute;
         top: 50%;
-        right: 10px;
+        right: 16px;
         width: 11px;
         height: 11px;
+        margin-top: -6px;
         content: '';
-        margin-top: -2px;
-        box-shadow: 1px 1px #ccc;
-        @include trans(all .3s);
-        @include trf(rotate(-45deg) translate(0, -50%));
+        box-shadow: 1px 1px #999;
+        z-index: 10;
+        pointer-events:none;
+        //@include trans(all .3s);
+        //@include trf-origin(center);
+        @include trf(rotate(45deg) translate(0, -50%));
     }
     &.on {
         &:after {
-            right: 12px;
-            margin-top: -5px;
-            @include trf(rotate(45deg) translate(0, -50%));
-            box-shadow: 1px 1px #888;
+           // @include trf(rotate(-135deg) translate(0, -50%));
+           margin-top: 0;
+           box-shadow: -1px -1px #999; 
         }
         .content {
             opacity: 1;
@@ -169,31 +167,35 @@ a{
 }
 
 .inputs {
+    line-height: 43px;
     .item {
         position: relative;
+        border-bottom: 1px solid $color-border;
+        @include dis-flex();
+        @include flex-center();
         .tag {
-            position: absolute;
-            top: 50%;
-            left: 10px;
-            pointer-events: none;
-            z-index: 50;
-            @include trf-translate(0, -50%);
+            // position: absolute;
+            // top: 50%;
+            // left: 2px;
+            // pointer-events: none;
+            // z-index: 50;
+            // @include trf-translate(0, -50%);
         }
         input[type=text],
         input[type=tel],
         input[type=number],
-        input[teyp=date] {
-            width: 100%;
-            padding: 0 0 0 6em;
+        input[teyp=date],select {
+            padding: 0;
             border: 0;
-            text-align: right;
             outline: 0;
-            &:focus {
-                text-align: left;
-            }
+            @include flex(1);
             &::-webkit-input-placeholder {
                 text-align: right;
             }
+        }
+        select{
+            height: 40px;
+            -webkit-appearance:none;
         }
         &.notag {
             input[type=text],
@@ -205,53 +207,6 @@ a{
                     text-align: left;
                 }
             }
-        }
-    }
-}
-
-$color-radio:#08a1f1;
-.radio {
-    position: relative;
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    &:before,
-    &:after {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        border: 1px solid #ccc;
-        -webkit-border-radius: 100%;
-        -moz-border-radius: 100%;
-        border-radius: 100%;
-    }
-    &:after {
-        top: 5px;
-        right: 5px;
-        left: 5px;
-        bottom: 5px;
-        border: 0;
-    }
-    &.on {
-        &:after {
-            background: $color-radio;
-        }
-    }
-    &.check.on {
-        &:before {
-            background: #f55;
-            border-color: #f55;
-        }
-        &:after {
-            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-            content: '\2713';
-            line-height: 1;
-            font-size: 12px;
-            color: #fff;
-            background: transparent;
         }
     }
 }
@@ -268,7 +223,7 @@ $color-radio:#08a1f1;
         bottom: 7px;
         left: 0;
         right: 0;
-        border: 1px solid #ccc;
+        border: 1px solid $color-border;
         background: #eee;
         -webkit-border-radius: 8px;
         -moz-border-radius: 8px;
@@ -289,19 +244,19 @@ $color-radio:#08a1f1;
     }
     &:after {
         background: #eee;
-        border: 1px solid #ccc;
+        border: 1px solid $color-border;
         @include trans(all .3s linear);
     }
     &.on {
         &:before {
-            background: lighten($color-radio, 30%);
-            border-color: lighten($color-radio, 30%);
+            background: lighten($color-primary, 30%);
+            border-color: lighten($color-primary, 30%);
         }
         &:after {
             //left: 1rem;
             @include trf-translate(10px, 0);
-            background: $color-radio;
-            border-color: $color-radio;
+            background: $color-primary;
+            border-color: $color-primary;
             box-shadow: 0 2px 1px #ddd;
         }
     }
@@ -319,7 +274,7 @@ body {
     line-height: 44px;
     padding: 0 10px;
     .title {
-        font-size: 20px;
+        font-size: 18px;
         font-weight: 400;
     }
     .goback {
@@ -375,10 +330,12 @@ body {
     height: 50px;
     line-height: 50px;
     background:#fff;
+    font-size: $size-font-bigger-mobile;
     &.fixed {
         position: fixed;
         bottom: 0;
         width: 100%;
+        z-index: 5;
         .operate {
             position: absolute;
             right: 0;
@@ -396,6 +353,20 @@ body {
         ~.main{
             margin-bottom: 60px;
         }
+    }
+    .btn{
+        position: relative;
+        height: 100%;
+        min-width: 7em;
+        text-align: center;
+        margin: 0;
+        padding: 0 2em;
+        border: 0;
+        font-size: $size-font-big-mobile;
+        -webkit-border-radius: 0;
+        -moz-border-radius: 0;
+        border-radius: 0;
+        z-index: 5;
     }
 }
 
@@ -451,11 +422,11 @@ a {
         .inner {
             position: relative;
             overflow: hidden;
-            >img {
+            img {
                 float: left;
-                margin-right: 10px;
-                width: 60px;
-                height: 60px;
+                padding-right: 10px;
+                width: 72px;
+                height: 62px;
             }
             >.content {
                 overflow: hidden;
@@ -472,6 +443,32 @@ a {
     }
 }
 
+.info-list{
+    background:#e8e8e8;
+    >.item{
+        background:#fff;
+        margin-top: 8px;
+        border: 1px solid $color-border;
+        border-width: 1px 0;
+        &:first-child{
+            margin-top: 0;
+            border-top: 0;
+        }
+        >.title{
+            padding: 5px 10px 3px 10px;
+            border-bottom: 1px solid $color-border;
+            font-size: 13px;
+            color: #999;
+            font-weight: 400;
+        }
+        >.content{
+            padding: 10px;
+        }
+    }
+}
+
+
+//图片轮播区
 .swiper{
     overflow: hidden;
     >.item{
@@ -480,6 +477,7 @@ a {
         >.inner{
             display: inline-block;
             width: 100%;
+            text-align: center;
             img{
                 height: 160px;
                 width: 100%;
@@ -504,4 +502,11 @@ a {
         }
     }
     }
+}
+.data-empty{
+    position: fixed;
+    left: 50%;
+    top: 30%;
+    width: 80%;
+    @include trf-translate(-50%,0);
 }
