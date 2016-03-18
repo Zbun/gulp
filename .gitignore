@@ -6,7 +6,6 @@
 /android_bundle*.tar.gz
 /node_*.tar.gz
 /mongo_*.tar.gz
-/dist
 \#*\#
 .\#*
 .idea

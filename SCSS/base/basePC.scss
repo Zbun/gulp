@@ -38,9 +38,6 @@ select {
     line-height: $btn-line-height;
     padding-top: 0;
     padding-bottom: 0;
-    +.btn{
-        margin-left: 8px;
-    }
     &.big {
         padding: 0 1.5em;
         font-size: $btn-big-font-size;
@@ -55,7 +52,7 @@ select {
 
 select {
     height: 32px;
-    padding: 0 4px;
+    padding: 4px;
 }
 
 a {
@@ -323,7 +320,10 @@ a {
             margin-left: -30px;
             font-size: 16px;
             padding-top: 1px;
+            border: 0;
             border-left: 1px solid $color-border;
+            background:$color-table-thead;
+            white-space: nowrap;
             -webkit-border-radius: 0;
             -moz-border-radius: 0;
             border-radius: 0;
@@ -337,12 +337,8 @@ a {
         &.text-search {
             width: auto;
             padding: 0 1em;
-            border: 0;
-            border-left: 1px solid $color-border;
             color: $color;
-            background:$color-table-thead;
             font-size: $font-size;
-            white-space: nowrap;
             &+.ipt-search {
                 min-width: 250px;
                 padding-right: 3.5em;
@@ -551,3 +547,6 @@ input.ipt-s {
         }
     }
 }
+
+
+@import '_compat';

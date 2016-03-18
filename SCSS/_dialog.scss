@@ -35,6 +35,7 @@
                 position: absolute;
                 right: 6px;
                 top: 5px;
+                top: 3px\0;
                 padding: 3px 6px;
                 border: 0;
                 font-size: 24px;
@@ -47,7 +48,9 @@
                 &:active{
                   box-shadow: none;
                   top: 6px;
-                  right: 5px;
+                  right: 5px;   //唉，IE依然有兼容性
+                  top:3px\0;
+                  right:6px\0;
                 }
             }
         }
@@ -88,7 +91,9 @@
             }
         }
         &.mini,&.mini-tips {
-            .ui-dialog-header,
+            .ui-dialog-header{
+                background-color: transparent;
+            }
             .ui-dialog-title {
                 height: 36px;
                 background: transparent;
