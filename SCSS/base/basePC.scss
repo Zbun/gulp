@@ -298,7 +298,7 @@ a {
 
 .table-list{
     >.table{
-        margin-bottom: 20px;
+        margin-bottom: 16px;
     }
 }
 .search-field {
@@ -391,7 +391,7 @@ a {
     >.side {
         &+.body {
             border-left: 1px solid $color-border;
-            @include anim(to-right-show .2s);
+            //@include anim(fadeInRight .2s);
         }
     }
 }

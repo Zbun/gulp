@@ -293,6 +293,7 @@ style.innerText='.popup .btns{margin: 10px 0; text-align: center; font-size: 0; 
     var div = document.createElement('div'),
         className = 'popup ' + opt.theme.toLowerCase();
 
+        console.log(mask);
     if (!mask) {
         className += ' nomask';
     }
