@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
     <title>订单详情</title>
     <meta name="keywords" content="北龙中网易企赢网上商城">
-    <link rel="stylesheet" href="../../fonts/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../iconfonts/style.css">
     <link rel="stylesheet" href="../../CSS/mall_admin.css">
 </head>
 
@@ -148,7 +148,7 @@
             </dl>
         </div>
         <article class="body">
-            <section class="progress col5">
+            <section class="progress">
                 <p class="item">
                     <span class="bar">
                     </span>
@@ -532,6 +532,28 @@
             </section>
         </article>
     </div>
+    <div class="attach">
+        <div class="item">
+            <a href="javascript:history.go(-1);" class="" title="返回">&larr;</a>
+        </div>
+    </div>
+    <div class='scrollToTop' style='position: fixed;right: 1px;bottom: 30px;border:1px solid #e0e0e0;text-align: center;opacity: 0;z-index: 20;-webkit-transition:.2s;transition:.2s;'>
+        <div class="item">
+            <span class="icon"></span>
+            <a href='javascript:window.scrollTo(0,0);' class="text" title="返回顶部" style="display: inline-block;width: 28px;padding: 3px;background: #fff;text-decoration: none;">返回顶部</a>
+        </div>
+        <script>
+        window.addEventListener('scroll', function() {
+            var scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+            if (scrollTop > 300) {
+                document.querySelector('.scrollToTop').style.opacity = 1;
+            } else {
+                document.querySelector('.scrollToTop').style.opacity = 0;
+            }
+        })
+        </script>
+    </div>
+
     <script src="../../scripts/lib/jquery-1.11.3.js"></script>
     <script src="../../scripts/lib/artdialog/dist/dialog-plus-min.js"></script>
     <script>
@@ -568,7 +590,7 @@
     //下拉显示内容及标签切换
     $('.arrow-down').on('click', '.arrow-down-title', function() {
         var $t = $(this);
-        $(this).closest('.arrow-down').children('.arrow-down-content').show();
+        $(this).closest('.arrow-down').children('.arrow-down-content').show().focus();
     }).on('click', '.arrow-down-title .icon', function() {
         var $t = $(this);
         $t.closest('.arrow-down').children('.arrow-down-content').toggle();

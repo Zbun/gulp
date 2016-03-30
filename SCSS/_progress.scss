@@ -1,13 +1,13 @@
 @import 'base/_variables';
 .progress {
+    @include dis-flex;
     position: relative;
     padding: 60px 0;
     margin: 0 120px;
     counter-reset: steps;
     >.item {
         position: relative;
-        float: left;
-        width: 100%;
+        @include flex();
         counter-increment: steps;
         transition: .2s;
         transform-origin: left;

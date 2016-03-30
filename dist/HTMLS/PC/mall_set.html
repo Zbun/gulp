@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
     <title>商城设置-中网易企赢</title>
     <meta name="keywords" content="北龙中网易企赢网上商城">
-    <link rel="stylesheet" href="../../fonts/css/font-awesome.min.css">
+     <link rel="stylesheet" href="../../iconfonts/style.css">
     <link rel="stylesheet" href="../../CSS/mall_admin.css">
 </head>
 
@@ -99,29 +99,40 @@
                             <dl class="item">
                                 <dt class="name text-left">积分券抵扣：</dt>
                                 <dd class="content">
-                                    <label class="mr10"><input type="radio" name="pay-way-score" id="" checked>启用</label>
-                                    <label class="ml10"><input type="radio" name="pay-way-score" id="">禁用</label>
+                                    <label class="mr10">
+                                        <input type="radio" name="pay-way-score" id="" checked>启用</label>
+                                    <label class="ml10">
+                                        <input type="radio" name="pay-way-score" id="">禁用</label>
                                     <span class="ml5 text-muted">（开启后，用户可以使用领取优惠券，抵扣订单金额）</span>
                                 </dd>
-                            </dl> <dl class="item">
+                            </dl>
+                            <dl class="item">
                                 <dt class="name text-left">储值卡支付：</dt>
                                 <dd class="content">
-                                    <label class="mr10"><input type="radio" name="pay-way-card" id="" checked>启用</label>
-                                    <label class="ml10"><input type="radio" name="pay-way-card" id="">禁用</label>
+                                    <label class="mr10">
+                                        <input type="radio" name="pay-way-card" id="" checked>启用</label>
+                                    <label class="ml10">
+                                        <input type="radio" name="pay-way-card" id="">禁用</label>
                                     <span class="ml5 text-muted">（开启后，用户可以预存储值卡金额支付订单）</span>
                                 </dd>
-                            </dl><dl class="item">
+                            </dl>
+                            <dl class="item">
                                 <dt class="name text-left">线下支付：</dt>
                                 <dd class="content">
-                                    <label class="mr10"><input type="radio" name="pay-way-offline" id="" checked>启用</label>
-                                    <label class="ml10"><input type="radio" name="pay-way-offline" id="">禁用</label>
+                                    <label class="mr10">
+                                        <input type="radio" name="pay-way-offline" id="" checked>启用</label>
+                                    <label class="ml10">
+                                        <input type="radio" name="pay-way-offline" id="">禁用</label>
                                     <span class="ml5 text-muted">（开启后，提交订单时支持货到付款）</span>
                                 </dd>
-                            </dl><dl class="item">
+                            </dl>
+                            <dl class="item">
                                 <dt class="name text-left">提供发票：</dt>
                                 <dd class="content">
-                                    <label class="mr10"><input type="radio" name="pay-way-invoice" id="" checked>启用</label>
-                                    <label class="ml10"><input type="radio" name="pay-way-invoice" id="">禁用</label>
+                                    <label class="mr10">
+                                        <input type="radio" name="pay-way-invoice" id="" checked>启用</label>
+                                    <label class="ml10">
+                                        <input type="radio" name="pay-way-invoice" id="">禁用</label>
                                     <span class="ml5 text-muted">（开启后，提交订单时可选择开据个人或单位发票）</span>
                                 </dd>
                             </dl>
@@ -140,30 +151,59 @@
                             <dl class="item">
                                 <dt class="name text-left">商家包邮：</dt>
                                 <dd class="content">
-                                    <label class="mr10"><input type="radio" name="express-way" id="" checked>启用</label>
-                                    <label class="ml10"><input type="radio" name="express-way" id="">禁用</label>
+                                    <label class="mr10">
+                                        <input type="radio" name="express-way" id="" checked>启用</label>
+                                    <label class="ml10">
+                                        <input type="radio" name="express-way" id="">禁用</label>
                                     <span class="ml5 text-muted">（开启后，商城所有订单免收运费）</span>
                                 </dd>
                             </dl>
                         </div>
-                        <table>
+                        <table id='carriage' class="carriage">
                             <tr>
-                                <td><span class="mr10">订单商品总金额条件</span></td>
+                                <td><span class="mr10">订单商品总金额条件<span class="text-muted">（最大9999999）</span></span>
+                                </td>
                                 <td><span class="ml10">收取运费</span></td>
                                 <td><span class="ml10">操作</span></td>
                             </tr>
-                            <tr>
-                                <td><input type="text" class="ipt-s" value=0 readonly> < 商品金额 <= <input type="text" class="ipt-s mr10 mt5 mb5" value=10></td>
-                                <td><input type="text" class="ipt-s ml10 mr10" value=20></td>
-                                <td><p class="ml10"><a href="javascript:;">删除</a></p></td>
-                            </tr><tr>
-                                <td><input type="text" class="ipt-s" value=10> < 商品金额 <= <input type="text" class="ipt-s mr10 mt5 mb5" value=100></td>
-                                <td><input type="text" class="ipt-s ml10" value=10></td>
-                                <td><p class="ml10 mt5"><a href="javascript:;">删除</a></p></td>
-                            </tr><tr>
-                                <td><input type="text" class="ipt-s" value=100> < 商品金额 <= <input type="text" class="ipt-s mr10 mt5" value="无穷大"></td>
-                                <td><input type="text" class="ipt-s ml10 mt5" value=0></td>
-                                <td><p class="ml10 mt5"><a href="javascript:;">删除</a></p></td>
+                            <tr class="rule" data-rule=0>
+                                <td>
+                                    <input type="text" class="price-start ipt-s" value=0 readonly>
+                                    <span>< 商品金额 <=</span>
+                                    <input type="text" class="price-end ipt-s mr10 mt5 mb5" value=10>
+                                </td>
+                                <td>
+                                    <input type="text" class="detail ipt-s ml10 mr10" value=15>
+                                </td>
+                                <td>
+                                    <p class="ml10"></p>
+                                </td>
+                            </tr>
+                            <tr class="rule" data-rule=1>
+                                <td>
+                                    <input type="text" class="price-start ipt-s" value=10 readonly>
+                                    <span>< 商品金额 <=</span>
+                                    <input type="text" class="price-end ipt-s mr10 mt5 mb5" value=100>
+                                </td>
+                                <td>
+                                    <input type="text" class="detail ipt-s ml10" value=10>
+                                </td>
+                                <td>
+                                    <p class="ml10 mt5"><a class="del" href="javascript:;">删除</a></p>
+                                </td>
+                            </tr>
+                            <tr class="rule" data-rule=2>
+                                <td>
+                                    <input type="text" class="price-start ipt-s" value=100 readonly>
+                                    <span>< 商品金额 <=</span>
+                                    <input type="text" class="price-end ipt-s mr10 mt5" placeholder="无穷大">
+                                </td>
+                                <td>
+                                    <input type="text" class="detail ipt-s ml10 mt5" value=0>
+                                </td>
+                                <td>
+                                    <p class="ml10 mt5"><a class="del" href="javascript:;">删除</a></p>
+                                </td>
                             </tr>
                         </table>
                         <div class="action-field">
@@ -174,6 +214,101 @@
             </article>
         </div>
     </div>
+    <script src="../../scripts/lib/jquery-2.2.1.min.js"></script>
+    <script>
+    //运费规则设置
+    //
+    (function() {
+        var validator = {
+            _reg: {
+                empty: /^\s*$/,
+                phone: /^1\d{10}$/,
+                email: /^\w+[\w-+.]*@[\w-]+(\.[\w-])+$/,
+                moneyFormat: /^\d+(\.\d{1,2})?$/,
+                integer: /^\d+$/,
+                illegal: /[<>]/,
+                percent: /^0$|^[1-9]\d?$|^100$/
+            },
+            _check: function(pattern) {
+                return function(arg) {
+                    return pattern.test(arg);
+                }
+            },
+            isEmpty: function(arg) {
+                var l = arguments.length;
+                for (i = 0; i < l; i++) {
+                    if (this._check(this._reg.empty)(arguments[i]))
+                        return true;
+                }
+                return false;
+            },
+            isNotPhone: function(arg) {
+                return !this._check(this._reg.phone)(arg);
+            },
+            isNotEmail: function(arg) {
+                return !this._check(this._reg.email)(arg);
+            },
+            isNotMoneyFormat: function(arg) {
+                return !this._check(this._reg.moneyFormat)(arg);
+            },
+            isNotInteger: function(arg) {
+                return !this._check(this._reg.integer)(arg);
+            },
+            isIllegal: function(arg) {
+                return this._check(this._reg.illegal)(arg);
+            },
+            isNotPercent: function(arg) {
+                var l = arguments.length;
+                for (i = 0; i < l; i++) {
+                    if (!this._check(this._reg.percent)(arguments[i]))
+                        return true;
+                }
+                return false;
+            }
+        };
+
+        //运费规则
+        var priceMax = 999999;
+        var strRule=  '<tr class="rule" data-rule=2><td><input type="text" class="price-start ipt-s" value=$priceStart readonly><span> < 商品金额 <= </span><input type="text" class="price-end ipt-s mr10 mt5" placeholder="无穷大"></td><td><input type="text" class="detail ipt-s ml10 mt5" value=10></td><td><p class="ml10 mt5"><a class="del" href="javascript:;">删除</a></p></td></tr>';
+        $('#carriage').on('blur', '.price-end', function() {
+            var $t = $(this),$parent=$t.closest('.rule'),
+                priceEnd = parseFloat($t.val().trim());
+            if (validator.isEmpty($t.val())) {
+                $t.val('');
+            } else {
+                var priceStart = parseFloat($t.closest('.rule').find('.price-start').val().trim());
+                if (!(!validator.isNotMoneyFormat($t.val().trim()) && priceEnd >= 0 && priceEnd > priceStart && priceEnd < priceMax)) {
+                    $t.addClass('error');
+                    return false;
+                }
+                else{
+                    if(!$parent.next('.rule').length){
+                        $parent.after(strRule.replace('$priceStart',priceEnd));
+                    }
+                    else{
+                        $parent.next('.rule').find('.price-end').blur()
+                    }
+                }
+            }
+            $t.removeClass('error');
+        }).on('click','.rule:not(:last-child) .del',function(){
+            var $t=$(this),$parent=$t.closest('.rule');
+            $parent.next('.rule').find('.price-start').val($parent.prev('.rule').find('.price-end').val().trim());
+            $parent.remove();
+        }).on('keyup','.price-end',function(){
+            var $t=$(this),$parent=$t.closest('.rule');
+            $parent.next('.rule').find('.price-start').val($t.val().trim());
+        }).on('blur','.detail',function(){
+            var $t=$(this);
+            if(validator.isNotMoneyFormat($t.val().trim())){
+                $t.addClass('error');
+                return false;
+            }
+            $t.removeClass('error');
+        })
+
+    })();
+    </script>
 </body>
 
 </html>

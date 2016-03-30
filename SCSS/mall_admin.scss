@@ -6,6 +6,7 @@
 @import '_set';
 @import '_validation';
 @import '_zTree';
+@import 'base/iconfont';
 body {
     min-width: 1080px;
     background: #F0F0F0;
@@ -29,9 +30,11 @@ body {
             font-size: 12px;
         }
         i.fa-plus {
-            color: $color-primary;
-            padding: 1px 3px;
+            padding: 1px;
+            margin-left: 5px;
             border: 1px solid $color-primary;
+            color: $color-primary;
+            font-size: 13px;
             -webkit-border-radius: 100%;
             -moz-border-radius: 100%;
             border-radius: 100%;
@@ -119,15 +122,16 @@ body {
                 width: 74px;
                 height: 74px;
             }
+            a{
+                cursor:text;
+            }
             .prod-name {
                 max-height: 44px;
                 overflow: hidden;
                 a {
                     @include mul-line(2);
                     color: $color;
-                    &:hover {
-                        color: $color-anchor;
-                    }
+                    text-decoration: none;
                 }
             }
             .prod-spec{
@@ -234,6 +238,15 @@ body {
     }
 }
 
+.carriage{
+    .rule{
+        &:last-child{
+            .del{
+                display: none;
+            }
+        }
+    }
+}
 
 .info-express {
     overflow: visible!important;

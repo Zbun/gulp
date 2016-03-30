@@ -29,7 +29,7 @@ input[type=color],
 input[type=time],
 button,
 textarea,
-select {
+select,.com-input {
     line-height: 22px;
     font-size: $font-size;
 }
@@ -118,7 +118,8 @@ a {
         // @include trans(opacity .1s);
         .icon {
             padding: 2px;
-            color: $color-anchor;
+            font-size: 13px;
+            color: $color-anchor-hover;
             &:hover {
                 color: $color-primary;
             }
@@ -322,7 +323,7 @@ a {
             bottom: 1px;
             margin-left: -30px;
             font-size: 16px;
-            padding-top: 1px;
+            padding-top: 3px;
             border: 0;
             border-left: 1px solid $color-border;
             background: $color-table-thead;
@@ -400,7 +401,7 @@ a {
 
 .info-list {
     >.item {
-        margin-top: 20px;
+        margin-top: 16px;
         border: 1px solid $color-border;
         -webkit-border-radius: $border-radius;
         -moz-border-radius: $border-radius;
@@ -648,34 +649,32 @@ input.ipt-s {
     }
 }
 
-// .dropdown-search{
-//     position: relative;
-//     z-index: 10;
-//     &-title{
-//     }
-//     &-content{
-//         position: absolute;
-//         top: 100%;
-//         max-height: 100px;
-//         overflow-x: hidden;
-//         margin-top: -1px;
-//         border: 1px solid $color-border;
-//         background:#fff;
-//         -webkit-border-radius: 0 0 $border-radius $border-radius;
-//         -moz-border-radius: 0 0 $border-radius $border-radius;
-//         border-radius: 0 0 $border-radius $border-radius;
-//         >.item{
-//             display: block;
-//             margin-top: -1px;
-//             padding: 8px;
-//             border-top: 1px solid $color-border;
-//             line-height: 1.5;
-//             &:hover{
-//                 background:#eee;
-//             }
-//         }
-//     }
-// }
+.attach{
+    position: fixed;
+    width: 30px;
+    bottom: 118px;
+    right: 0;
+    text-align: center;
+    >.item{
+        a{
+            display: block;
+            position: relative;
+            line-height: 30px;
+            text-decoration: none;
+            &:before{
+                content: '';
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                @include trf-translate(-50%,-50%);
+                width: 0;
+                height: 0;
+                
+            }
+        }
+    }
+}
+
 .popup-html {
     display: none!important;
     position: absolute !important;

@@ -29,11 +29,14 @@ select {
 
 a,
 label,
-.dropdown {
+.dropdown,
+.btn {
     text-decoration: none;
     @include tap-highlight-color(rgba(0, 0, 0, 0));
 }
-
+pre{
+    white-space: normal;
+}
 .btns {
     line-height: 32px;
 }
@@ -43,6 +46,12 @@ label,
     line-height: 32px;
     +.btn {
         margin-left: 5px;
+    }
+    &:hover{
+        background:#fff;
+    }
+    &:active{
+        background:$color-btn-hover;
     }
     &.big {
         padding: 0 1.5em;
@@ -54,11 +63,57 @@ label,
         font-size: $btn-bigger-font-size;
         line-height: $btn-bigger-line-height;
     }
-    &:hover {}
 }
 
 .btn.block {
     line-height: 40px;
+}
+
+
+@each $btn-each,
+$btn-color in (btn-info:$color-info, btn-primary:$color-primary, btn-ok:$color-ok, btn-warning:$color-warning, btn-danger:$color-danger) {
+    .#{$btn-each} {
+        color: #fff;
+        background: $btn-color;
+        border-color: darken($btn-color, 4%);
+        &:visited {
+            color: #fff;
+        }
+        &:hover{
+            background:$btn-color;
+        }
+        &:active {
+            color: #fff;
+            background: darken($btn-color, 4%);
+        }
+    }
+}
+.btn-default {
+    color: $color;
+    background: $color-btn-hover;
+    border-color: $color-border;
+    &:hover {
+        background: darken($color-btn-hover, 4%);
+    }
+}
+
+@each $btn,
+$btn-color in (btn-primary-o:$color-primary, btn-info-o:$color-info, btn-warning-o:$color-warning, btn-danger-o:$color-danger) {
+    .#{$btn} {
+        color: $btn-color;
+        background: #fff;
+        border-color: darken($btn-color, 4%);
+        &:visited {
+            color: $btn-color;
+        }
+        &:hover{
+            background: #fff;
+        }
+        &:active {
+            background: $btn-color;
+            color: #fff;
+        }
+    }
 }
 
 .tags {
@@ -256,7 +311,7 @@ body {
         bottom: 0;
         >.item {
             display: inline-block;
-            padding-right: 10px;
+            padding-right: 8px;
             text-align: center;
         }
     }
@@ -329,6 +384,47 @@ $color-anchor:#333;
 a {
     color: $color-anchor;
     text-decoration: none;
+}
+
+.tips-action {
+    padding: 10px;
+    margin: 20px 0;
+    text-align: center;
+    .tips-title{
+        font-size: 20px;
+        font-weight: 400;
+    }
+    .tips-text {
+        color: $color-muted-mobile;
+    }
+    .icon {
+        display: inline-block;
+        width: 1.8em;
+        margin: 10px;
+        font-family: icomoon;
+        font-size: 44px;
+        line-height: 1.8;
+        background: $color-primary;
+        color: #fff;
+        -webkit-border-radius: 100%;
+        -moz-border-radius: 100%;
+        border-radius: 100%;
+    }
+    &.tips-ok{
+        .icon{
+            background:$color-ok;
+        }
+    }
+    &.tips-warning{
+        .icon{
+        background:$color-warning;
+        }
+    }
+    &.tips-danger{
+        .icon{
+            background:$color-danger;
+        }
+    }
 }
 
 .loading {

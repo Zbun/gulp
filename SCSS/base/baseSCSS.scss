@@ -56,7 +56,7 @@ input[type=color],
 input[type=time],
 button,
 textarea,
-select,.ui-input {
+select,.com-input {
     border: 1px solid $color-input-border;
     padding: 4px;
     font-size: inherit;
@@ -85,7 +85,7 @@ input[readonly] {
     background:#eee;
     &:focus,
     &:active {
-        border-color: $color-border!important;
+        border-color: $color-border;
     }
 }
 
@@ -284,14 +284,13 @@ img {
     }
 }
 
-$color-btn-default-bg:$color-btn-default!default;
-$color-btn-primary-bg:$color-primary!default;
-$color-btn-info-bg:$color-info!default;
-$color-btn-warning-bg:$color-warning!default;
-$color-btn-danger-bg:$color-danger!default;
-$color-btn-ok-bg:$color-ok!default;
+button {
+    cursor: pointer;
+}
+
+
 @each $btn-each,
-$btn-color in (btn-info:$color-btn-info-bg, btn-primary:$color-btn-primary-bg, btn-ok:$color-btn-ok-bg, btn-warning:$color-btn-warning-bg, btn-danger:$color-btn-danger-bg) {
+$btn-color in (btn-info:$color-info, btn-primary:$color-primary, btn-ok:$color-ok, btn-warning:$color-warning, btn-danger:$color-danger) {
     .#{$btn-each} {
         color: #fff;
         background: $btn-color;
@@ -305,11 +304,6 @@ $btn-color in (btn-info:$color-btn-info-bg, btn-primary:$color-btn-primary-bg, b
         }
     }
 }
-
-button {
-    cursor: pointer;
-}
-
 .btn-default {
     color: $color;
     background: $color-btn-hover;
@@ -317,13 +311,6 @@ button {
     &:hover {
         background: darken($color-btn-hover, 4%);
     }
-}
-
-.btn-disabled {
-    @extend .disabled;
-    color: #888;
-    background: #eee;
-    border-color: #e0e0e0;
 }
 
 @each $btn,
@@ -340,6 +327,12 @@ $btn-color in (btn-primary-o:$color-primary, btn-info-o:$color-info, btn-warning
             color: #fff;
         }
     }
+}
+.btn-disabled {
+    @extend .disabled;
+    color: #888;
+    background: #eee;
+    border-color: #e0e0e0;
 }
 
 $cursor-disabled:not-allowed!default;

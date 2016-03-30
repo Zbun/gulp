@@ -1,4 +1,5 @@
 @import 'base/baseMobile';
+@import 'base/iconfont';
 #header {
     @include header;
     background: $color-primary;
@@ -6,7 +7,26 @@
     .action {
         >.item {
             color: #fff;
-            font-size: 20px;
+            font-size: 18px;
+            .fa-share-alt{
+            	font-size: 16px;
+            }
+        }
+        .cart {
+            position: relative;
+            sup {
+                position: absolute;
+                top: 6px;
+                right: 3px;
+                min-width: 14px;
+                padding: 1px 2px;
+                font-size: 12px;
+                line-height: 1;
+                background: $color-danger;
+                -webkit-border-radius: 100%;
+                -moz-border-radius: 100%;
+                border-radius: 100%;
+            }
         }
     }
 }
@@ -64,28 +84,29 @@
     }
 }
 
-.order-cat{
-	border-bottom: 1px solid $color-border;
-	.tab-switcher-horizontal{
-		>.item{
-			padding: 5px 2em;
-			margin-bottom: -3px;
-		}
-	}
+.order-cat {
+    border-bottom: 1px solid $color-border;
+    .tab-switcher-horizontal {
+        >.item {
+            padding: 5px 2em;
+            margin-bottom: -3px;
+        }
+    }
 }
 
 .pic-list {
     >.item {
         >.inner {
             >.content {
-                .price ,.spec{
+                .price,
+                .spec {
                     position: absolute;
                     bottom: -6px;
                 }
-                .spec{
-                	right: 10px;
-                	left: 72px;
-                	bottom: -2px;
+                .spec {
+                    right: 10px;
+                    left: 72px;
+                    bottom: -2px;
                 }
             }
         }
@@ -93,49 +114,49 @@
 }
 
 .cart {
-	.pic-list{
-		>.item{
-			.inner{
-				img{
-					width: 90px;
-					height: 80px;
-				}
-				.del{
-					padding: 7px 10px;
-					line-height: 1;
-				}
-				.content{
-					.specification{
-						margin-top: 2px;
-					}
-				}
-			}
-		}
-	}
+    .pic-list {
+        >.item {
+            .inner {
+                img {
+                    width: 90px;
+                    height: 80px;
+                }
+                .del {
+                    padding: 7px 10px;
+                    line-height: 1;
+                }
+                .content {
+                    .specification {
+                        margin-top: 2px;
+                    }
+                }
+            }
+        }
+    }
 }
 
-.order{
-	.pic-list{
-		>.item{
-			>.inner{
-				img{
-					width: 80px;
-					height: 70px;
-				}
-				>.content{
-					.spec{
-						left: 80px;
-					}
-				}
-			}
-		}
-	}
+.order {
+    .pic-list {
+        >.item {
+            >.inner {
+                img {
+                    width: 80px;
+                    height: 70px;
+                }
+                >.content {
+                    .spec {
+                        left: 80px;
+                    }
+                }
+            }
+        }
+    }
 }
 
 .count {
-	>.name{
-		line-height: 28px;
-	}
+    >.name {
+        line-height: 28px;
+    }
     >.content {
         line-height: 30px;
     }
@@ -149,22 +170,26 @@
     border-radius: $border-radius;
     .minus,
     .add {
-        float: left;
+        position: relative;
         width: 1.2em;
-        border-right: 1px solid $color-border;
+        margin: -5px 0;
+        padding: 5px;
+        float: left;
         line-height: 26px;
         text-align: center;
         font-size: 24px;
+        z-index: 3;
     }
     .add {
-        border-left: 1px solid $color-border;
-        border-right: 0;
+        margin-left: 0;
+        padding: 5px;
     }
     .num {
         float: left;
         height: 26px;
-        max-width: 2.6em;
-        border: 0;
+        max-width: 3em;
+        border-width: 0 1px;
+        border-color: $color-border!important;
         text-align: center;
         -webkit-border-radius: 0;
         -moz-border-radius: 0;
@@ -188,14 +213,21 @@
             font-size: $size-font-biggest-mobile;
         }
     }
-    .option{
-    	.specification{
-    		.content{
-    			>.item{
-    				margin-right: 5px;
-    			}
-    		}
-    	}
+    .option {
+        .specification {
+            .content {
+                >.item {
+                    margin-left: 0;
+                    margin-right: 8px;
+                    padding: 5px 12px;
+                    line-height: 22px;
+                    white-space: normal;
+                    &:hover {
+                        background: #fff;
+                    }
+                }
+            }
+        }
     }
     >.about {
         >.title {
@@ -253,62 +285,63 @@
     }
 }
 
-.info-list{
-	>.item{
-		// box-shadow: 0 1px 3px #ddd;
-	}
-	.transport{
-		.express{
-		}
-	}
-	.pic-list{
-		>.item{
-			&:last-child{
-			border-bottom: 0;
-			}
-		}
-	}
-}
-.address{
-	.inputs{
-		>.item{
-			input{
-				 &::-webkit-input-placeholder {
-                text-align: left;
+.info-list {
+    >.item {
+        // box-shadow: 0 1px 3px #ddd;
+    }
+    .transport {
+        .express {}
+    }
+    .pic-list {
+        >.item {
+            &:last-child {
+                border-bottom: 0;
             }
-			}
-		}
-	}
+        }
+    }
 }
-.addresses{
-	&.dropdown{
-		background:#fff;
-		padding: 0 10px;
-		>.title{
-			padding: 10px;
-			padding-right: 20px;
-		}
-		>.content{
-			padding: 0 10px;
-			border-bottom: 1px solid $color-border;
-			>ul{
-				border-top: 1px solid $color-border;
-			}
-			li{
-				position: relative;
-				padding: 10px 0;
-				padding-left: 30px;
-				margin-top: -1px;
-				border-bottom: 1px solid $color-border;
-				.radio{
-					position: absolute;
-					left: 0;
-					top: 50%;
-					@include trf-translate(0,-50%);
-				}
-			}
-		}
-	}
+
+.address {
+    .inputs {
+        >.item {
+            input {
+                &::-webkit-input-placeholder {
+                    text-align: left;
+                }
+            }
+        }
+    }
+}
+
+.addresses {
+    &.dropdown {
+        background: #fff;
+        padding: 0 10px;
+        >.title {
+            padding: 10px;
+            padding-right: 20px;
+        }
+        >.content {
+            padding: 0 10px;
+            border-bottom: 1px solid $color-border;
+            >ul {
+                border-top: 1px solid $color-border;
+            }
+            li {
+                position: relative;
+                padding: 10px 0;
+                padding-left: 30px;
+                margin-top: -1px;
+                border-bottom: 1px solid $color-border;
+                .radio {
+                    position: absolute;
+                    left: 0;
+                    top: 50%;
+                    @include trf-translate(0, -50%);
+                }
+            }
+        }
+    }
 }
 
 // cover the swiper CSS
