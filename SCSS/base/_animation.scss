@@ -7,6 +7,24 @@ $transition-duration:.2s;
 	@include trans($transition-duration);
 }
 
+.anim-tf-linear{
+	-webkit-animation-timing-function: linear;
+	-moz-animation-timing-function: linear;
+	-o-animation-timing-function: linear;
+	animation-timing-function: linear;
+}
+.anim-tf-ease{
+	-webkit-animation-timing-function: ease;
+	-moz-animation-timing-function: ease;
+	-o-animation-timing-function: ease;
+	animation-timing-function: ease;
+}
+.anim-tf-ease-out{
+	-webkit-animation-timing-function: ease-out;
+	-moz-animation-timing-function: ease-out;
+	-o-animation-timing-function: ease-out;
+	animation-timing-function: ease-out;
+}
 @-webkit-keyframes fadeInRight {
     from { @include trf-translate(-10px,0);opacity:0.2; }
     to { opacity: 1;@include trf(none); }
@@ -16,14 +34,14 @@ $transition-duration:.2s;
     to { opacity: 1;@include trf(none); }
 }
 
-.pulseOne{
-	@include anim(pulseOne .3s);
+.pulse-one{
+	@include anim(pulse-one .5s linear);
 }
-@-webkit-keyframes pulseOne {
-	from { @include trf-scale(1.2) }
+@-webkit-keyframes pulse-one {
+	from { @include trf-scale(1.3) }
 	to { @include trf-scale(1) }
 }
 @keyframes pulseOne {
-	from { @include trf-scale(1.2) }
+	from { @include trf-scale(1.3) }
 	to { @include trf-scale(1) }
 }

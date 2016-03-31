@@ -110,7 +110,7 @@ function html5Upload() {
         obj.addEventListener('change', function () {
             //构造加载进度HTML
             var progressBg = document.createElement('div');
-            progressBg.style.cssText = 'position:fixed;left:50%;top:50%;padding:10px 40px 0;border:1px solid #666;box-shadow:inset 0 0 1px #fff;border-radius:4px;text-align:center;color:#fff;background:rgba(0,0,0,.5);z-index;123;transform:translate(-50%,-50%);'
+            progressBg.style.cssText = 'position:fixed;left:50%;top:50%;padding:10px 40px 0;border:1px solid #666;box-shadow:inset 0 0 1px #fff;border-radius:4px;text-align:center;color:#fff;background:rgba(0,0,0,.5);z-index:123;transform:translate(-50%,-50%);'
             var progressBarOuter = document.createElement('div');
             progressBarOuter.style.cssText = 'position:relative;height:6px;width:100px;border-radius:6px;border:1px solid #ddd;';
             var progressBarInner = document.createElement('span');

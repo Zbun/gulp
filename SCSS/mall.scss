@@ -1,5 +1,6 @@
 @import 'base/baseMobile';
-@import 'base/iconfont';
+@import 'base/_iconfont';
+@import '_swiper';
 #header {
     @include header;
     background: $color-primary;
@@ -7,25 +8,23 @@
     .action {
         >.item {
             color: #fff;
-            font-size: 18px;
-            .fa-share-alt{
-            	font-size: 16px;
-            }
+            font-size: 19px;
         }
         .cart {
             position: relative;
-            sup {
+            .num {
                 position: absolute;
-                top: 6px;
-                right: 3px;
-                min-width: 14px;
-                padding: 1px 2px;
-                font-size: 12px;
+                top: 5px;
+                right: 2px;
+                min-width: 12px;
+                padding: 1px 1px 0 1px;
+                font-size: 11px;
                 line-height: 1;
                 background: $color-danger;
-                -webkit-border-radius: 100%;
-                -moz-border-radius: 100%;
-                border-radius: 100%;
+                white-space: nowrap;
+                -webkit-border-radius: 99em;
+                -moz-border-radius: 99em;
+                border-radius: 99em;
             }
         }
     }
@@ -56,7 +55,7 @@
     top: 88px;
     bottom: 0;
     width: 80px;
-    padding-bottom: 10px;
+    padding: 0 5px 10px;
     border-right: 1px solid $color-border;
     display: none;
     background: #fff;
@@ -74,9 +73,7 @@
             white-space: nowrap;
             padding: 10px;
             max-width: 100%;
-            overflow: hidden;
-            -ms-text-overflow: ellipsis;
-            text-overflow: ellipsis;
+            overflow-y: hidden;
             &.on {
                 color: $color-primary;
             }
@@ -123,6 +120,7 @@
                 }
                 .del {
                     padding: 7px 10px;
+                    font-size: 15px;
                     line-height: 1;
                 }
                 .content {
@@ -318,8 +316,7 @@
         background: #fff;
         padding: 0 10px;
         >.title {
-            padding: 10px;
-            padding-right: 20px;
+            padding: 10px 20px 10px 0;
         }
         >.content {
             padding: 0 10px;

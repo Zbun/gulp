@@ -86,6 +86,8 @@ body {
             }
             &:hover {
                 border-color: darken($color-border, 10%);
+                // box-shadow: 0 0 5px #ccc;
+                // @include trans(.2s);
             }
             tbody{
                td{
@@ -150,6 +152,7 @@ body {
         }
         .info-contact{
             @extend .info-pay;
+            word-break:break-all;
         }
     }
 }
@@ -250,6 +253,8 @@ body {
 
 .info-express {
     overflow: visible!important;
+    padding-left: 7em;
+    white-space: nowrap;
     z-index: 10;
     .tab-switcher-vertical {
         position: absolute;
@@ -257,6 +262,17 @@ body {
         left: 7.5em;
         width: 250px;
     }
+    .field-validation-error{
+        height: 0;
+        margin-bottom: 20px;
+        margin-left: 6px;
+    }
+}
+
+//弹窗物流信息加最大高度
+.express-check{
+    max-height: 500px;
+    overflow-x: hidden;
 }
 
 //编辑器中输入框高度修正

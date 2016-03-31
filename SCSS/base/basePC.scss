@@ -366,7 +366,7 @@ a {
     }
     i {
         width: 20px;
-        font-size: 16px;
+        font-size: 17px;
         color: #bbb;
         pointer-events: none;
     }
@@ -528,6 +528,7 @@ input.ipt-s {
     background: #fff;
     overflow: hidden;
     opacity: .95;
+    white-space: normal;
     >.title {
         position: relative;
         margin-bottom: -2px;
@@ -627,7 +628,6 @@ input.ipt-s {
             top: 1px;
             bottom: 1px;
             width: 28px;
-            background: #eee;
             cursor: pointer;
             &:after {
                 content: '';
@@ -669,7 +669,7 @@ input.ipt-s {
                 @include trf-translate(-50%,-50%);
                 width: 0;
                 height: 0;
-                
+
             }
         }
     }

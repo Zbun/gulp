@@ -17,7 +17,7 @@
         <h1 class="title text-center">商品详情</h1>
         <div class="action">
             <a href="javascript:;" class="item"><i class="fa fa-share-alt"></i></a>
-        	<a href="javascript:;" class="item"><i class="fa fa-shopping-cart"></i></a>
+        	<a href="javascript:;" class="item cart"><i class="fa fa-shopping-cart"></i><sup class="num">1</sup></a>
           <a href="javascript:;" class="item"><i class="fa fa-user"></i></a>
         </div>
     </header>
@@ -105,6 +105,16 @@
     autoplay: 5000,//可选选项，自动滑动
     pagination:'.swiper-pagination'
 })
+
+
+    ;$('.add-cart').on('click',function(){
+      var $target=$('.cart').find('.num'),curNum=$target.text();
+      console.log(curNum);
+      $target.text(++curNum).addClass('pulse-one')
+      setTimeout(function(){
+        $('.cart').find('.num').removeClass('pulse-one');
+      },500);
+    });
     </script>
 </body>
 

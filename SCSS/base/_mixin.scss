@@ -55,6 +55,8 @@
     -webkit-box-orient: vertical;
     -webkit-line-clamp: $num;
     overflow: hidden;
+    -ms-word-break: break-all;
+    word-break: break-all;
 }
 
 @mixin trf($var) {
