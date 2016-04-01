@@ -10,6 +10,9 @@
             color: #fff;
             font-size: 19px;
         }
+        .fa-user{
+        	font-size: 21px;
+        }
         .cart {
             position: relative;
             .num {
@@ -208,7 +211,7 @@
             margin-top: 8px;
             vertical-align: -4px;
             line-height: 1;
-            font-size: $size-font-biggest-mobile;
+            font-size: 24px;
         }
     }
     .option {
@@ -217,8 +220,8 @@
                 >.item {
                     margin-left: 0;
                     margin-right: 8px;
-                    padding: 5px 12px;
-                    line-height: 22px;
+                    padding: 5px 10px;
+                    line-height: 14px;
                     white-space: normal;
                     &:hover {
                         background: #fff;
