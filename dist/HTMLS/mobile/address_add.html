@@ -56,6 +56,8 @@
                     <select name="" id="">
                         <option value="">请选择县</option>
                         <option value="">郑州</option>
+                        <option value="">洛阳</option>
+                        <option value="">新乡</option>
                     </select>
                 </li>
                 <li class="item">
@@ -76,7 +78,12 @@
         </div>
     </div>
     <script src="../../scripts/lib/zepto.min.js"></script>
-
+<script>
+  
+  $('select').on('change',function(){
+    console.log('change');
+  })
+</script>
 </body>
 
 </html>

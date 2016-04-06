@@ -1,17 +1,20 @@
 @charset "utf-8";
 @import "_variables";
 @import "_mixin";
-hr {
-    height: 1px;
-    margin: 10px auto;
-    border: 0;
-    background: $color-border;
-}
+@import "_btn";
+@import "_bg";
+@import "_text";
 
 *,
 :before,
 :after {
     box-sizing: border-box;
+}
+hr {
+    height: 1px;
+    margin: 10px auto;
+    border: 0;
+    background: $color-border;
 }
 
 h1,
@@ -247,184 +250,14 @@ img {
     visibility: hidden!important;
 }
 
-.btn {
-    display: inline-block;
-    padding: 4px 12px;
-    margin-bottom: 0;
-    border: 1px solid $color-border;
-    font-size: $font-size;
-    font-weight: 400;
-    background: $color-btn-default;
-    color: $color;
-    text-align: center;
-    white-space: nowrap;
-    -webkit-border-radius: $border-radius;
-    -moz-border-radius: $border-radius;
-    border-radius: $border-radius;
-    cursor: pointer;
-    text-decoration: none!important;
-    &:hover {
-        background: $color-btn-hover;
-        color: $color;
-    }
-    +.btn{
-        margin-left: 6px;
-    }
-    +.btn.block{
-        margin-left: 0;
-    }
-}
 
-.btn.block {
-    display: block;
-    margin: 10px auto;
-    font-size: 16px;
-    +.btn{
-        margin-left: 0;
-    }
-}
-
-button {
-    cursor: pointer;
-}
-
-
-@each $btn-each,
-$btn-color in (btn-info:$color-info, btn-primary:$color-primary, btn-ok:$color-ok, btn-warning:$color-warning, btn-danger:$color-danger) {
-    .#{$btn-each} {
-        color: #fff;
-        background: $btn-color;
-        border-color: darken($btn-color, 4%);
-        &:visited {
-            color: #fff;
-        }
-        &:hover {
-            color: #fff;
-            background: darken($btn-color, 4%);
-        }
-    }
-}
-.btn-default {
-    color: $color;
-    background: $color-btn-hover;
-    border-color: $color-border;
-    &:hover {
-        background: darken($color-btn-hover, 4%);
-    }
-}
-
-@each $btn,
-$btn-color in (btn-primary-o:$color-primary, btn-info-o:$color-info, btn-warning-o:$color-warning, btn-danger-o:$color-danger) {
-    .#{$btn} {
-        color: $btn-color;
-        background: #fff;
-        border-color: darken($btn-color, 4%);
-        &:visited {
-            color: $btn-color;
-        }
-        &:hover {
-            background: $btn-color;
-            color: #fff;
-        }
-    }
-}
-.btn-disabled {
-    @extend .disabled;
-    color: #888;
-    background: #eee;
-    border-color: #e0e0e0;
-}
 
 $cursor-disabled:not-allowed!default;
 .disabled {
     opacity: .7;
     pointer-events: none;
-    &.btn {
-        cursor: $cursor-disabled;
-    }
 }
 
-.text-left {
-    text-align: left !important;
-}
-
-.text-right {
-    text-align: right!important;
-}
-
-.text-center {
-    text-align: center;
-}
-
-.font-small {
-    font-size: $size-font-small;
-    line-height: 1;
-}
-
-.font-big {
-    font-size: $size-font-big;
-}
-
-.font-bigger {
-    font-size: $size-font-bigger;
-}
-
-.font-biggest {
-    font-size: $size-font-biggest;
-}
-
-@each $bg,
-$bg-color,
-$bg-text-color in(bg-default, $color-bg-default, $color-bg-default-text),
-(bg-primary, $color-bg-primary, $color-bg-primary-text),
-(bg-ok, $color-bg-ok, $color-bg-ok-text),
-(bg-info, $color-bg-info, $color-bg-info-text),
-(bg-warning, $color-bg-warning, $color-bg-warning-text),
-(bg-danger, $color-bg-danger, $color-bg-danger-text) {
-    .#{$bg} {
-        border: 1px solid darken($bg-color, 10%);
-        background-color: $bg-color;
-        color: $bg-text-color;
-    }
-}
-
-.bg {
-    -webkit-border-radius: $border-radius;
-    -moz-border-radius: $border-radius;
-    border-radius: $border-radius;
-}
-
-.text-default {
-    color: $color;
-}
-
-.text-muted {
-    color: $color-muted;
-}
-
-.text-muted.tips {
-    font-size: 13px;
-}
-
-.text-primary {
-    color: $color-primary;
-}
-
-.text-info {
-    color: $color-info;
-}
-
-.text-ok {
-    color: $color-ok;
-}
-
-.text-warning {
-    color: $color-warning;
-}
-
-.text-danger {
-    color: $color-danger;
-}
 
 .split {
     >.item {
@@ -435,40 +268,6 @@ $bg-text-color in(bg-default, $color-bg-default, $color-bg-default-text),
             display: block;
             overflow: hidden;
         }
-    }
-}
-
-.tags {
-    .tag {
-        padding: 0 6px;
-        border: 1px solid $color-border;
-        font-size: 12px;
-        white-space: nowrap;
-        -webkit-border-radius: $border-radius;
-        -moz-border-radius: $border-radius;
-        border-radius: $border-radius;
-        &+.tag{
-            margin-left: 4px;
-        }
-    }
-
-}
-
-@each $tag,
-$tag-color in(tag-warning:$color-warning, tag-danger:$color-danger, tag-info:$color-info) {
-    .tags .#{$tag} {
-        background: $tag-color;
-        color: #fff;
-        border-color: darken($tag-color, 4%);
-    }
-}
-
-@each $tag,
-$tag-color in(tag-warning-o:$color-warning, tag-danger-o:$color-danger, tag-info-o:$color-info) {
-    .tags .#{$tag} {
-        background: #fff;
-        color: $tag-color;
-        border-color: $tag-color;
     }
 }
 
@@ -501,144 +300,6 @@ $tag-color in(tag-warning-o:$color-warning, tag-danger-o:$color-danger, tag-info
             @include trf-rotateX(0);
         }
     }
-}
-
-//单选、多选样式
-.radio {
-    position: relative;
-    >input[type=radio] {
-        margin-right: 6px;
-        visibility: hidden;
-        &:checked {
-            ~.icon:before {
-                visibility: visible;
-            }
-        }
-    }
-    .icon {
-        position: absolute;
-        top: .5em;
-        left: 3px;
-        width: 1.2em;
-        height: 1.2em;
-        padding: 3px;
-        border: 1px solid $color-border;
-        background-color: #fff;
-        @include trf-translate(0, -50%);
-        -webkit-border-radius: 100%;
-        -moz-border-radius: 100%;
-        border-radius: 100%;
-        &:before{
-            content: '';
-            position: absolute;
-            left: 3px;
-            right: 3px;
-            top: 3px;
-            bottom: 3px;
-            background:$color-primary;
-            -webkit-border-radius: 100%;
-            -moz-border-radius: 100%;
-            border-radius: 100%;
-            visibility: hidden;
-        }
-    }
-}
-
-.checkbox {
-    position: relative;
-    .icon {
-        position: absolute;
-        left: 4px;
-        top: .05em;
-        width: 1em;
-        height: 1em;
-        border: 1px solid $color-border;
-        background:#fff;
-        &:before {
-            content: '';
-            position: absolute;
-            left: 1px;
-            top: 2px;
-            width: .8em;
-            height: 5px;
-            border: 2px solid $color-primary;
-            border-width: 0 0 2px 2px;
-            visibility: hidden;
-            @include trf(rotate(-45deg));
-        }
-    }
-    input[type=checkbox] {
-        margin-right: 6px;
-        visibility: hidden;
-        &:checked {
-            ~.icon:before {
-                visibility: visible;
-            }
-        }
-    }
-}
-
-.switcher {
-    position: relative;
-    input[type=checkbox] {
-        visibility: hidden;
-        &~.icon {
-        position: absolute;
-        left: 0;
-        top: 50%;
-        width: 26px;
-        height: 26px;
-        @include trf-translate(0,-50%);
-        &:before {
-            content: '';
-            position: absolute;
-            top: 7px;
-            bottom: 7px;
-            left: 0;
-            right: 0;
-            border: 1px solid $color-border;
-            background: #eee;
-            -webkit-border-radius: 8px;
-            -moz-border-radius: 8px;
-            border-radius: 8px;
-            @include trans(.3s);
-        }
-        &:after {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 5px;
-            width: 16px;
-            height: 16px;
-            -webkit-border-radius: 100%;
-            -moz-border-radius: 100%;
-            border-radius: 100%;
-            @include trans(.5s);
-        }
-        &:after {
-            background: #eee;
-            border: 1px solid $color-border;
-            @include trans(all .3s linear);
-        }
-       
-    }
-    &:checked{
-        &~.icon{
-            &:before {
-                background: lighten($color-primary, 30%);
-                border-color: lighten($color-primary, 30%);
-            }
-            &:after {
-                //left: 1rem;
-                @include trf-translate(10px, 0);
-                background: $color-primary;
-                border-color: $color-primary;
-                box-shadow: 0 2px 1px #ddd;
-            }
-        }
-    }
-    }
-    
 }
 
 .label-switcher-horizontal {

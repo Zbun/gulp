@@ -1,0 +1,35 @@
+@import '_variables.scss';
+@import '_mixin.scss';
+.tags {
+    .tag {
+        padding: 0 6px;
+        border: 1px solid $color-border;
+        font-size: 12px;
+        white-space: nowrap;
+        -webkit-border-radius: $border-radius;
+        -moz-border-radius: $border-radius;
+        border-radius: $border-radius;
+        &+.tag{
+            margin-left: 4px;
+        }
+    }
+
+}
+
+@each $tag,
+$tag-color in(tag-warning:$color-warning, tag-danger:$color-danger, tag-info:$color-info) {
+    .tags .#{$tag} {
+        background: $tag-color;
+        color: #fff;
+        border-color: darken($tag-color, 4%);
+    }
+}
+
+@each $tag,
+$tag-color in(tag-warning-o:$color-warning, tag-danger-o:$color-danger, tag-info-o:$color-info) {
+    .tags .#{$tag} {
+        background: #fff;
+        color: $tag-color;
+        border-color: $tag-color;
+    }
+}

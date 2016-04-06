@@ -1,0 +1,17 @@
+{
+  "name": "Z",
+  "description": "project bugoftime's bower json",
+  "main": "gulpfile.js",
+  "authors": [
+    "Z"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "bugoftime"
+  ],
+  "homepage": "https://github.com/Zbun/bugoftime",
+  "moduleType": [
+    "es6"
+  ],
+  "private": true
+}

@@ -5,9 +5,7 @@ $font-family:'Microsoft Yahei','Helvetica Neue',
 Helvetica,
 Arial,
 sans-serif!default;
-$font-icon:'yqy';
-
-/*colors areas basis*/
+$font-icon:yqy;
 
 $color:#333!default;
 $color-muted:#aaa!default;
@@ -65,7 +63,7 @@ $font-family-mobile:14px "Heiti SC","Helvetica Neue",
 Helvetica,
 Arial,
 sans-serif!default;
-$line-height-mobile:(24/14)!default;
+$line-height-mobile:1.6!default;
 
 $size-font-btn-mini-mobile:14px!default;
 $size-font-btn-block-mobile:18px!default;
@@ -78,3 +76,8 @@ $size-font-biggest-mobile:34px!default;
 $size-font-title-mobile:17px!default;
 
 $color-muted-mobile:#999!default;
+
+//z-index
+$z-index-header:100!default;
+$z-index-share:255!default;
+$z-index-popup:1000!default;

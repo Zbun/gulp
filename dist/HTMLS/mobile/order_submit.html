@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
     <title>提交订单-中网易企赢网上商城</title>
-     <link rel="stylesheet" href="../../iconfonts/style.css">
+    <link rel="stylesheet" href="../../iconfonts/style.css">
     <link rel="stylesheet" href="../../CSS/mall.css">
 </head>
 
@@ -117,7 +117,7 @@
                 <h3 class="title">
                     订单商品信息
                 </h3>
-                <div class="content">
+                <div class="content order">
                     <div class="pic-list" id='goodsShow'>
                         <a href="javascript:;" class="item">
                             <div class="inner"><img class="" src="" alt="商品图">
@@ -125,6 +125,7 @@
                                     <h3 class="title">
                                         Phillips100K让你无法区分现实与VR
                                     </h3>
+                                    <p class="text-muted font-small">小红</p>
                                     <div class="spec">
                                         <p class="fr">
                                             <span class="text-danger">￥998.09</span>
@@ -137,6 +138,9 @@
                                     </div>
                                 </div>
                             </div>
+                            <span class="action">
+                                删除
+                            </span>
                         </a>
                         <a href="javascript:;" class="item">
                             <div class="inner"><img class="" src="" alt="商品图">
@@ -144,6 +148,7 @@
                                     <h3 class="title">
                                         Phillips100K让你无法区分现实与VR，体现科技与现实的完美结合，现在只要998Phillips100K让你无法区分现实与VR，体现科技与现实的完美结合，现在只要998
                                     </h3>
+                                     <p class="text-muted font-small">小红</p>
                                     <div class="spec">
                                         <p class="fr">
                                             <span class="text-danger">￥998.09</span>
@@ -260,9 +265,11 @@
         </article>
     </div>
     <script src="../../scripts/lib/zepto.min.js"></script>
-
     <script src="../../scripts/common.js"></script>
     <script>
+
+    var preFix=['webkit'];
+
     //信息类型折叠与展开
     $('.folder-title').on('click', function() {
         $(this).closest('.folder').toggleClass('on');
@@ -278,16 +285,32 @@
         $t.find('input[type=radio]').prop('checked', true);
     })
 
-document.querySelector('#goodsShow').querySelector('.item').addEventListener('touchstart', function(e){
-        startX=e.touches[0].clientX;
-    })
+    document.querySelector('#goodsShow').querySelector('.item').addEventListener('touchstart', function(e) {
+        startX = e.touches[0].clientX;
+        trfX=getTransformValue(this.style.transform)||0;
+         // console.log('distanceBefore1: '+trfX);
+    });
 
-     document.querySelector('#goodsShow').querySelector('.item').addEventListener('touchmove', function(e){
-        console.log(startX);
-        // console.log(e.touches[0].clientX)
-        this.style.transform='translateX(-'+(e.touches[0].clientX-startX)+'px)';
-    })
+    document.querySelector('#goodsShow').querySelector('.item').addEventListener('touchmove', function(e) {
+        // e.preventDefault();
+         var distance=getTransformValue(this.style.transform)||0;
+         console.log('distanceBefore2: '+distance);
 
+       var translateLength=e.touches[0].clientX - startX;
+        this.style.webkitTransform = 'translateX(' + translateLength + 'px)';
+       console.log(translateLength);
+        if (translateLength<-60) {
+            this.style.webkitTransform = 'translateX(-80px)';
+        }
+        else if(translateLength>0){
+            this.style.webkitTransform = 'translateX('+distance+'px)';
+        }
+
+    });
+
+    function getTransformValue(str) {
+        if(str) return parseFloat(/(-?\d+)/.exec(str)[0]);
+    }
     </script>
 </body>
 

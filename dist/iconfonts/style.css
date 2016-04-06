@@ -1,10 +1,10 @@
 @font-face {
     font-family: 'yqy';
-    src:    url('fonts/yqy.eot?t0jtls');
-    src:    url('fonts/yqy.eot?t0jtls#iefix') format('embedded-opentype'),
-        url('fonts/yqy.ttf?t0jtls') format('truetype'),
-        url('fonts/yqy.woff?t0jtls') format('woff'),
-        url('fonts/yqy.svg?t0jtls#yqy') format('svg');
+    src:    url('fonts/yqy.eot?4ru0ws');
+    src:    url('fonts/yqy.eot?4ru0ws#iefix') format('embedded-opentype'),
+        url('fonts/yqy.ttf?4ru0ws') format('truetype'),
+        url('fonts/yqy.woff?4ru0ws') format('woff'),
+        url('fonts/yqy.svg?4ru0ws#yqy') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -353,5 +353,17 @@
 }
 .yqy-fenxiang1:before {
     content: "\e929";
+}
+.yqy-shoucang:before {
+    content: "\e900";
+}
+.yqy-zuojiantou:before {
+    content: "\e901";
+}
+.yqy-shoucang1:before {
+    content: "\e902";
+}
+.yqy-zuojiantou1:before {
+    content: "\e903";
 }
 

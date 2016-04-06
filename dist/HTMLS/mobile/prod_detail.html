@@ -13,11 +13,18 @@
 
 <body>
     <header id="header" class="fixed">
-        <a href="javascript:;" class="goback"></a>
+        <a href="javascript:history.back();" class="goback"></a>
+<!--         <script>
+          (function(){
+            if(!/https?/.test(document.referrer)){
+              document.querySelector('.goback').style.display='none';
+            }
+          })();
+        </script> -->
         <h1 class="title text-center">商品详情</h1>
         <div class="action">
             <a href="javascript:shareTips.show();" class="item"><i class="fa fa-share-alt"></i></a>
-        	<a href="javascript:;" class="item cart"><i class="fa fa-shopping-cart"></i><sup class="num">1</sup></a>
+        	<a href="cart.html" class="item cart"><i class="fa fa-shopping-cart"></i><sup class="num">1</sup></a>
           <a href="javascript:;" class="item"><i class="fa fa-user"></i></a>
         </div>
     </header>
@@ -53,7 +60,7 @@
             <section class="row option">
                    <dl class="set specification">
                        <dt class="name"><div class="text-muted">规格：</div></dt>
-                       <dd class="content"><em class="btn item on">参数1（默认）</em><em class="btn item">参数2</em><em class="btn item">参数3</em><em class="btn item">参数5</em></dd>
+                       <dd class="content"><em class="btn item on">参数1（默认）参数1（默认）参数1（默认）参数1（默认）参数1（默认）参数1（默认）参数1（默认）参数1（默认）参数1（默认）参数1（默认）</em><em class="btn item">参数2</em><em class="btn item">参数3</em><em class="btn item">参数5</em></dd>
                    </dl>
                    <dl class="set count">
                        <dt class="name"><div class="text-muted">数量：</div></dt>

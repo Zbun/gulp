@@ -19,10 +19,10 @@
     </header>
     <footer id="footer" class="fixed dis-flex">
         <div class="item text-center ml10 mr10">
-            <p class="ml10 mr10"><span>商品总价：</span>
+            <p class="ml10 mr10"><span>合计：</span>
                 <span class="text-danger">￥258.25</span></p>
         </div>
-        <button class="btn btn-danger">现在下单</button>
+        <button class="btn btn-danger goBuy">现在下单</button>
     </footer>
     <div class="main">
         <article class="row lists cart">
@@ -115,6 +115,13 @@
             <p>购物车是空的，快去采购商品吧</p>
         </div>
     </div>
+
+    <script src="../../scripts/common.js"></script>
+    <script>
+        document.querySelector('.goBuy').addEventListener('click', function(){
+            popup({content:"加入购物车成功",okVal:'确定',cancelVal:'取消'})
+        })
+    </script>
 </body>
 
 </html>

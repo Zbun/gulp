@@ -1,0 +1,23 @@
+@import '_variables';
+@import '_mixin';
+
+@each $bg,
+$bg-color,
+$bg-text-color in(bg-default, $color-bg-default, $color-bg-default-text),
+(bg-primary, $color-bg-primary, $color-bg-primary-text),
+(bg-ok, $color-bg-ok, $color-bg-ok-text),
+(bg-info, $color-bg-info, $color-bg-info-text),
+(bg-warning, $color-bg-warning, $color-bg-warning-text),
+(bg-danger, $color-bg-danger, $color-bg-danger-text) {
+    .#{$bg} {
+        border: 1px solid darken($bg-color, 10%);
+        background-color: $bg-color;
+        color: $bg-text-color;
+    }
+}
+
+.bg {
+    -webkit-border-radius: $border-radius;
+    -moz-border-radius: $border-radius;
+    border-radius: $border-radius;
+}

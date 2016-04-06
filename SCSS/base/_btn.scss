@@ -1,0 +1,93 @@
+@import '_variables';
+@import '_mixin';
+
+.btn {
+    display: inline-block;
+    padding: 4px 12px;
+    margin-bottom: 0;
+    border: 1px solid $color-border;
+    font-size: $font-size;
+    font-weight: 400;
+    background: $color-btn-default;
+    color: $color;
+    text-align: center;
+    white-space: nowrap;
+    -webkit-border-radius: $border-radius;
+    -moz-border-radius: $border-radius;
+    border-radius: $border-radius;
+    cursor: pointer;
+    text-decoration: none!important;
+    &:hover {
+        background: $color-btn-hover;
+        color: $color;
+    }
+    +.btn{
+        margin-left: 6px;
+    }
+    +.btn.block{
+        margin-left: 0;
+    }
+    .disabled{
+        cursor: not-allowed;
+    }
+}
+
+.btn.block {
+    display: block;
+    margin: 10px auto;
+    font-size: 16px;
+    +.btn{
+        margin-left: 0;
+    }
+}
+
+button {
+    cursor: pointer;
+}
+
+
+@each $btn-each,
+$btn-color in (btn-info:$color-info, btn-primary:$color-primary, btn-ok:$color-ok, btn-warning:$color-warning, btn-danger:$color-danger) {
+    .#{$btn-each} {
+        color: #fff;
+        background: $btn-color;
+        border-color: darken($btn-color, 4%);
+        &:visited {
+            color: #fff;
+        }
+        &:hover {
+            color: #fff;
+            background: darken($btn-color, 4%);
+        }
+    }
+}
+.btn-default {
+    color: $color;
+    background: $color-btn-hover;
+    border-color: $color-border;
+    &:hover {
+        background: darken($color-btn-hover, 4%);
+    }
+}
+
+@each $btn,
+$btn-color in (btn-primary-o:$color-primary, btn-info-o:$color-info, btn-warning-o:$color-warning, btn-danger-o:$color-danger) {
+    .#{$btn} {
+        color: $btn-color;
+        background: #fff;
+        border-color: darken($btn-color, 4%);
+        &:visited {
+            color: $btn-color;
+        }
+        &:hover {
+            background: $btn-color;
+            color: #fff;
+        }
+    }
+}
+.btn-disabled {
+    @extend .disabled;
+    color: #888;
+    background: #eee;
+    border-color: #e0e0e0;
+}
