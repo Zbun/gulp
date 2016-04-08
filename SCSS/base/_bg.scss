@@ -17,7 +17,7 @@ $bg-text-color in(bg-default, $color-bg-default, $color-bg-default-text),
 }
 
 .bg {
-    -webkit-border-radius: $border-radius;
-    -moz-border-radius: $border-radius;
-    border-radius: $border-radius;
+    font-size: 12px;
+    line-height: 1.2;
+    font-weight: 400;
 }

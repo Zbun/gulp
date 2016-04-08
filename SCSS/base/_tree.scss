@@ -47,9 +47,9 @@
         .icon {
             padding: 2px;
             font-size: 13px;
-            color: $color-anchor-hover;
+            color: $color-anchor;
             &:hover {
-                color: $color-primary;
+                color: $color-anchor-hover;
             }
         }
     }
@@ -91,7 +91,7 @@
             }
             &:before {
                 border-left-color: #888;
-                @include trf(rotate(90deg) translate(4px, 4px));
+                @include trf(rotate(90deg) translate(3px, 3px));
             }
         }
         &.active {

@@ -121,7 +121,7 @@
 }
 
 @mixin overflow-scroll-touch {
-    -webkit-overflow-scroll: touch;
+    -webkit-overflow-scrolling: touch;
 }
 
 @mixin basePC {

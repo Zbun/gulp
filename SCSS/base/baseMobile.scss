@@ -179,9 +179,6 @@ select {
         position: relative;
         padding-right: 20px;
         z-index: 1;
-
-
-        
     }
     .content {
         position: absolute;
@@ -202,6 +199,7 @@ select {
         -moz-transform-style: preserve-3d;
         -ms-transform-style: preserve-3d;
         transform-style: preserve-3d;
+        backface-visibility:hidden;
     }
     &:after {
         position: absolute;
@@ -253,7 +251,7 @@ select {
         input[type=tel],
         input[type=number],
         input[teyp=date],
-        select {
+        select,.com-ipt {
             padding: 0;
             border: 0;
             outline: 0;
@@ -286,8 +284,11 @@ body {
     font: $font-family-mobile;
     line-height: $line-height-mobile;
     word-break: break-all;
+    overflow-x: hidden;
 }
-
+.fixed{
+    @include trf(translateZ(0));
+}
 @mixin header {
     height: 44px;
     line-height: 44px;

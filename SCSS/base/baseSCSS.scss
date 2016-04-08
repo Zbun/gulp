@@ -219,7 +219,9 @@ img {
         display: table-cell;
     }
 }
-
+.main{
+    position: relative;
+}
 .required-mark {
     &:before {
         content: '*';
