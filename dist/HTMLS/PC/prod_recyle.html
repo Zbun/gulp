@@ -18,8 +18,8 @@
             </header>
             <section class="action row">
                 <div class="fr search-field">
-                    <button class="btn-search icon-search"><i class="fa fa-search"></i></button>
                     <input type="search" class='ipt-search kw' title='商品名称关键字' placeholder='输入商品名称'>
+                    <button class="btn-search icon-search"><i class="fa fa-search"></i></button>
                 </div>
                 <div class="btn-group">
                     <button class="btn btn-primary recover-batch">批量还原</button>
@@ -119,7 +119,7 @@
         </article>
     </div>
     <script src="../../scripts/lib/jquery-1.11.3.js"></script>
-    <script src="../../scripts/lib/jquery.twbsPagination.min.js"></script>
+    <script src="../../scripts/lib/jquery.twbsPagination.js"></script>
     <script src="../../scripts/lib/artdialog/dist/dialog-plus-min.js"></script>
     <script>
     $(function() {
@@ -131,9 +131,10 @@
         })
 
         //分页
-        $('#pagination').twbsPagination({
+       $('#pagination').twbsPagination({
             totalPages: 15,
             visiblePages: 7,
+            go:1,
             first: '首页',
             last: '末页',
             prev: '<',

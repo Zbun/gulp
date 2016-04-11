@@ -48,4 +48,28 @@
             }
         }
     }
+    .error{
+        border-color: $color-danger;
+    }
+    &.go{
+        @extend .pagination;
+        position: absolute;
+        margin-left: 50px;
+        input{
+            width: 4em;
+            text-align: center;
+        }
+        .btn{
+            margin-left: 4px;
+            padding: 0 8px;
+            -webkit-border-radius: $border-radius;
+            -moz-border-radius: $border-radius;
+            border-radius: $border-radius;
+            &:hover{
+                background:$color-primary;
+                color: #fff;
+                border-color: darken($color-primary,4%);
+            }
+        }
+    }
 }

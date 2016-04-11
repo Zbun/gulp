@@ -2,7 +2,6 @@
 @import 'baseSCSS';
 @import '_animation.scss';
 @import '_tag.scss';
-
 $font-size: 12px;
 $line-height: (20/12);
 $btn-line-height:26px;
@@ -31,7 +30,8 @@ input[type=color],
 input[type=time],
 button,
 textarea,
-select,.com-input {
+select,
+.com-input {
     line-height: 22px;
     font-size: $font-size;
 }
@@ -157,6 +157,28 @@ a {
     position: relative;
     .ipt-search {
         min-width: 16em;
+        padding-right: 36px;
+        &:hover {
+            &+.btn-search {
+                background: $color-table-tr-hover;
+            }
+        }
+        &:focus {
+            &+.btn-search {
+                border-left-color: $color-primary;
+            }
+        }
+        &.ipt-search-btn-text {
+            min-width: 250px;
+            padding-right: 3.5em;
+            &.col2 {
+                padding-right: 4.5em;
+            }
+            &.col3 {
+                min-width: 270px;
+                padding-right: 5.5em;
+            }
+        }
     }
     .btn-search {
         width: 32px;
@@ -175,33 +197,23 @@ a {
             padding-top: 3px;
             border: 0;
             border-left: 1px solid $color-border;
-            background: $color-table-thead;
+            background: #fff;
             white-space: nowrap;
-            -webkit-border-radius: 0;
-            -moz-border-radius: 0;
-            border-radius: 0;
-            &+.ipt-search {
-                padding-right: 36px;
-            }
+            -webkit-border-radius: 0 $border-radius $border-radius 0;
+            -moz-border-radius: 0 $border-radius $border-radius 0;
+            border-radius: 0 $border-radius $border-radius 0;
             &:focus {
                 border-color: $color-border;
             }
         }
-        &.text-search {
+        .fa-search{
+            font-weight: 700;
+        }
+        &.btn-search-text {
             width: auto;
             padding: 0 1em!important;
             color: $color;
             font-size: $font-size;
-            &+.ipt-search {
-                min-width: 250px;
-                padding-right: 3.5em;
-            }
-            &.col2+.ipt-search {
-                padding-right: 4.5em;
-            }
-            &.col3+.ipt-search {
-                padding-right: 5.5em;
-            }
         }
     }
 }
@@ -430,32 +442,32 @@ input.ipt-s {
     }
 }
 
-.tab-switcher-vertical{
+.tab-switcher-vertical {
     //@extend .tab-switcher;
-    >.title{
+    >.title {
         float: left;
         margin-bottom: 0;
         margin-right: -1px;
-        >.item{
+        >.item {
             display: block;
             border: 1px solid $color-border;
             border-width: 0 1px 1px 0;
-            &:last-child{
+            &:last-child {
                 border-bottom: 0;
                 border-right-width: 1px;
             }
-            &.on{
+            &.on {
                 border-bottom-color: $color-border;
                 border-right-color: #fff;
             }
         }
     }
-    >.content{
+    >.content {
         padding: 0 5px;
         border: 0;
         border-left: 1px solid $color-border;
-        >.item{
-            >.cell{
+        >.item {
+            >.cell {
                 min-width: auto;
                 padding: 2px 5px;
             }
@@ -492,33 +504,32 @@ input.ipt-s {
             }
         }
     }
-    >.arrow-down-content{
+    >.arrow-down-content {
         outline: 0;
         display: none;
     }
 }
 
-.attach{
+.attach {
     position: fixed;
     width: 30px;
     bottom: 118px;
     right: 0;
     text-align: center;
-    >.item{
-        a{
+    >.item {
+        a {
             display: block;
             position: relative;
             line-height: 30px;
             text-decoration: none;
-            &:before{
+            &:before {
                 content: '';
                 position: absolute;
                 left: 50%;
                 top: 50%;
-                @include trf-translate(-50%,-50%);
+                @include trf-translate(-50%, -50%);
                 width: 0;
                 height: 0;
-
             }
         }
     }

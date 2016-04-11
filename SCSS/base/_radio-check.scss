@@ -8,6 +8,7 @@
         visibility: hidden;
         &:checked {
             ~.icon:before {
+                @include trf-scale(1);
                 visibility: visible;
             }
         }
@@ -37,6 +38,8 @@
             -moz-border-radius: 100%;
             border-radius: 100%;
             visibility: hidden;
+            @include trans(.1s);
+            @include trf-scale(0);
         }
     }
 }
@@ -54,14 +57,16 @@
         &:before {
             content: '';
             position: absolute;
-            left: 1px;
-            top: 2px;
+            left: 2px;
+            top: 6px;
             width: .8em;
             height: 5px;
             border: 2px solid $color-primary;
             border-width: 0 0 2px 2px;
             visibility: hidden;
-            @include trf(rotate(-45deg));
+            @include trf-origin(left);
+            @include trans(.1s linear);
+            @include trf(rotateZ(-45deg) rotateY(90deg));
         }
     }
     input[type=checkbox] {
@@ -69,6 +74,7 @@
         visibility: hidden;
         &:checked {
             ~.icon:before {
+                @include trf(rotateZ(-45deg) rotateY(0));
                 visibility: visible;
             }
         }

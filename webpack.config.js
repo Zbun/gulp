@@ -13,12 +13,12 @@ module.exports = {
         }
       },
       { test: /\.less$/, loader: 'style-loader!css-loader!less-loader' }, // use ! to chain loaders
-      {test:/\.s[ac]ss$/,loaders:['style','css','sass']},
+      { test:/\.s[ac]ss$/,loaders:['style','css','sass']},
       { test: /\.css$/, loader: 'style-loader!css-loader' },
       { test: /\.(png|jpg)$/, loader: 'url-loader?limit=8192' } // inline base64 URLs for <=8k images, direct URLs for the rest
     ]
   },
   resolve:{
-    extensions:['.scss','.less','.js','.css','.json','','.coffee']
+    extensions:['.scss','.less','.js','.css','.json','.coffee']
   }
 };
