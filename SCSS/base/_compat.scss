@@ -16,3 +16,23 @@ select{
 .search-field .icon-search.btn-search{
 	padding-top: 7px\0;
 }
+@-moz-document url-prefix(){
+	.set{
+		>.item{
+			>.content{
+				float: left;
+			}
+			&:after{
+				content: '';
+				display: table;
+				clear: both;
+			}
+		}
+	}
+	.info-express{
+		padding-left: 0!important;
+		.tab-switcher-vertical{
+			left: 0!important;
+		}
+	}
+}

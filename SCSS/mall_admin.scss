@@ -9,9 +9,13 @@
 @import 'base/iconfont';
 body {
     min-width: 1080px;
+    padding: 0 30px;
     background: #F0F0F0;
 }
-
+.main{
+        max-width: 1200px;
+    margin: 30px auto;
+}
 .btn {
     padding: 0 1.25em;
     min-width: 4.5em;
@@ -67,9 +71,7 @@ body {
         }
         .filter-rule{
             .filter-rule-sequence{
-                .btn.on{
-                    @extend .btn-info-o;
-                }
+                
             }
         }
     }
@@ -138,6 +140,7 @@ body {
             }
             .prod-spec{
                 margin-top: 8px;
+                word-break:break-all;
             }
         }
         .info-pay {
@@ -254,7 +257,6 @@ body {
 .info-express {
     overflow: visible!important;
     padding-left: 7em;
-    white-space: nowrap;
     z-index: 10;
     .tab-switcher-vertical {
         position: absolute;

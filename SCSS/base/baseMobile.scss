@@ -263,6 +263,7 @@ select {
         select {
             height: 40px;
             -webkit-appearance: none;
+            background:transparent;
         }
         &.notag {
             input,
@@ -390,9 +391,8 @@ body {
     }
 }
 
-$color-anchor:#333;
 a {
-    color: $color-anchor;
+    color: #333;
     text-decoration: none;
 }
 
@@ -488,16 +488,20 @@ a {
             img {
                 float: left;
                 padding-right: 10px;
-                width: 70px;
-                height: 60px;
+                width: 80px;
+                height: 70px;
             }
             >.content {
                 overflow: hidden;
                 >.title {
-                    line-height: 1.5;
+                    line-height: 1.4;
                     font-weight: 400;
-                    font-size: 13px;
+                    font-size: 15px;
                     @include mul-line(2);
+                    +.text-muted{
+                        white-space: nowrap;
+                        overflow-y: hidden;
+                    }
                 }
                 .emphasize {
                     font-size: 16px;
@@ -519,9 +523,9 @@ a {
             border-top: 0;
         }
         >.title {
-            padding: 5px 10px 3px 10px;
+            padding: 5px 10px;
             border-bottom: 1px solid $color-border;
-            font-size: 13px;
+            font-size: 14px;
             color: #999;
             font-weight: 400;
         }

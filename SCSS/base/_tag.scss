@@ -33,3 +33,49 @@ $tag-color in(tag-warning-o:$color-warning, tag-danger-o:$color-danger, tag-info
         border-color: $tag-color;
     }
 }
+
+.tags-action {
+    // @extend .tags;
+    // display: inline-block;
+    .tag {
+        position: relative;
+        display: inline-block;
+        padding: 0 .8em;
+        line-height: 20px;
+        border-color: $color-info;
+        .icon{
+            display: inline-block;
+            position: relative;
+            top: 2px;
+            width: 1em;
+            height: 1em;
+            margin-left: .8em;
+            margin-right: -.6em;
+            line-height: 1;
+            text-align: center;
+            background:$color-info;
+            cursor: pointer;
+            color: #fff;
+            font-family: cursive;
+            &:before,&:after{
+                content: '';
+                position: absolute;
+                left: 2px;
+                right: 2px;
+                height: 2px;
+                background:#fff;
+                top: 50%;
+                margin-top: -1px;
+                @include trf-rotate(45deg);
+            }
+            &:after{
+                top: 3px;
+                bottom: 2px;
+                left: 50%;
+                width: 2px;
+                height: auto;
+                margin-left: -1px;
+            }
+        }
+    }
+}

@@ -45,6 +45,9 @@ select,
         padding: 0 1.5em;
         font-size: $btn-big-font-size;
         line-height: $btn-big-line-height;
+        +.btn.big{
+            margin-left: 8px;
+        }
     }
     &.bigger {
         padding: 0 1.75em;
@@ -95,6 +98,7 @@ a {
             border: 0;
             font-weight: 400;
             background: $color-table-thead;
+            color: $color-table-thead-th;
         }
     }
     .action-field {
@@ -155,6 +159,7 @@ a {
 
 .search-field {
     position: relative;
+    display: inline-block;
     .ipt-search {
         min-width: 16em;
         padding-right: 36px;
@@ -170,7 +175,7 @@ a {
         }
         &.ipt-search-btn-text {
             min-width: 250px;
-            padding-right: 3.5em;
+            padding-right: 4.3em;
             &.col2 {
                 padding-right: 4.5em;
             }
@@ -189,10 +194,9 @@ a {
         }
         &.icon-search {
             position: absolute;
-            right: 1px;
+            right: 2px;
             top: 1px;
             bottom: 1px;
-            margin-left: -30px;
             font-size: 16px;
             padding-top: 3px;
             border: 0;
@@ -241,7 +245,6 @@ a {
 }
 
 .main {
-    margin: 30px;
     border: 1px solid $color-border;
     background: #fff;
     >.body {
@@ -472,6 +475,14 @@ input.ipt-s {
                 padding: 2px 5px;
             }
         }
+    }
+}
+
+.data-empty{
+    .bg{
+        background:#fff;
+        border-color: #fff;
+        color: $color;
     }
 }
 

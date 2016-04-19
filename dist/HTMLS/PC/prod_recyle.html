@@ -134,13 +134,14 @@
        $('#pagination').twbsPagination({
             totalPages: 15,
             visiblePages: 7,
-            go:1,
-            first: '首页',
-            last: '末页',
+            goVal:'Go',
+            //sizeSelect:[5,10,15],
+            first: false,
+            last: false,
             prev: '<',
             next: '>',
             onPageClick: function(event, page) {
-                $('#page-content').text('Page ' + page);
+                //$('#page-content').text('Page ' + page);
             }
         });
 

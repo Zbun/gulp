@@ -20,7 +20,7 @@
             <ul class='tree' id="tree" v-cloak>
                 <li class='item' v-for='item in tree.child'>
                     <dl class='cell' data-id="{{item.id}}">
-                        <dt class="tree-title cat-title on">
+                        <dt class="tree-title cat-title on" title="{{item.child.length}}" v-bind-class="{'lonely':true}">
                             <p class='title-text'><span class='inner'>{{item.name}}</span></p>
                             <span class="action">
                             <i class="icon fa fa-plus add" title='添加'></i>
@@ -256,8 +256,9 @@
             }, ]
         }, {
             id: 123458,
-            name: '一级3-饭吃',
-            child: []
+            name: '没子类',
+            child: [],
+            className:'lonely',
         }, ],
     };
 
@@ -289,9 +290,21 @@
             //全选
         $('.data').find('table').on('change', '.chk-all', function() {
             $(this).closest('table').find(':checkbox').prop('checked', this.checked);
-        }).on('change', ':checkbox:not(".check-all")', function() {
-            !this.checked && $(this).closest('table').find('.chk-all').prop('checked', false);
-        })
+        }).on('change', ':checkbox:not(.chk-all)', function() {
+
+            var $data_Container=$(this).closest('table');
+
+            if(!this.checked) {
+                $data_Container.find('.chk-all').prop('checked', false);
+                return;
+            } 
+
+            var length_checkbox=$data_Container.find(':checkbox:not(".chk-all")').length,
+            length_checked=$data_Container.find(':checked').length;
+            if(length_checkbox==length_checked){
+                $data_Container.find('.chk-all').prop('checked',true);
+            }
+        });
 
         //分页
         $('#pagination').twbsPagination({

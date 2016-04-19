@@ -67,4 +67,9 @@
     		content: "\e917";
     	}
     }
+        &-user{
+        &:before{
+            content: "\e604";
+        }
+    }
 }

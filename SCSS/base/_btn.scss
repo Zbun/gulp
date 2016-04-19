@@ -1,11 +1,11 @@
 @import '_variables';
 @import '_mixin';
-
 .btn {
     display: inline-block;
     padding: 4px 12px;
     margin-bottom: 0;
     border: 1px solid $color-border;
+    font-family: $font-family;
     font-size: $font-size;
     font-weight: 400;
     background: $color-btn-default;
@@ -21,22 +21,26 @@
         background: $color-btn-hover;
         color: $color;
     }
-    +.btn{
+    +.btn {
         margin-left: 6px;
     }
-    +.btn.block{
+    +.btn.block {
         margin-left: 0;
     }
-    .disabled{
+    .disabled {
         cursor: not-allowed;
     }
+}
+
+.btn-align-ipt {
+    margin-top: 2px;
 }
 
 .btn.block {
     display: block;
     margin: 10px auto;
     font-size: 16px;
-    +.btn{
+    +.btn {
         margin-left: 0;
     }
 }
@@ -44,7 +48,6 @@
 button {
     cursor: pointer;
 }
-
 
 @each $btn-each,
 $btn-color in (btn-info:$color-info, btn-primary:$color-primary, btn-ok:$color-ok, btn-warning:$color-warning, btn-danger:$color-danger) {
@@ -61,6 +64,7 @@ $btn-color in (btn-info:$color-info, btn-primary:$color-primary, btn-ok:$color-o
         }
     }
 }
+
 .btn-default {
     color: $color;
     background: $color-btn-hover;
@@ -85,9 +89,44 @@ $btn-color in (btn-primary-o:$color-primary, btn-info-o:$color-info, btn-warning
         }
     }
 }
+
 .btn-disabled {
     @extend .disabled;
     color: #888;
     background: #eee;
     border-color: #e0e0e0;
+}
+
+.tab-btn {
+    font-size: 0;
+    >.item {
+        @extend .btn;
+        position: relative;
+        line-height: 20px!important;
+        color: $color-table-thead-th;
+        +.item {
+            margin-left: -1px;
+        }
+        -webkit-border-radius: 0;
+        -moz-border-radius: 0;
+        border-radius: 0;
+        &:first-child {
+            -webkit-border-radius: 3px 0 0 3px;
+            -moz-border-radius: 3px 0 0 3px;
+            border-radius: 3px 0 0 3px;
+        }
+        &:last-child {
+            -webkit-border-radius: 0 3px 3px 0;
+            -moz-border-radius: 0 3px 3px 0;
+            border-radius: 0 3px 3px 0;
+        }
+        &.on {
+            border-color: $color-primary;
+            color: $color-primary;
+            z-index: 5;
+            &:hover {
+                background: inherit;
+            }
+        }
+    }
 }

@@ -1,8 +1,7 @@
 @import 'base/_variables';
-
 .set {
     >.item {
-    	padding: 8px 0;
+        padding: 8px 0;
         line-height: $height-input;
         >.name {
             min-width: 6em;
@@ -16,13 +15,13 @@
             input[type=text] {
                 min-width: 250px;
             }
-            input.ipt-s{
-            	min-width: 100px;
+            input.ipt-s {
+                min-width: 100px;
             }
         }
     }
-    &.thin{
-        >.item{
+    &.thin {
+        >.item {
             line-height: 20px;
             padding: 5px 0;
         }

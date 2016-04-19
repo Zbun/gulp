@@ -110,7 +110,7 @@ function html5Upload() {
         obj.addEventListener('change', function () {
             //构造加载进度HTML
             var progressBg = document.createElement('div');
-            progressBg.style.cssText = 'position:fixed;left:50%;top:50%;padding:10px 40px 0;border:1px solid #666;box-shadow:inset 0 0 1px #fff;border-radius:4px;text-align:center;color:#fff;background:rgba(0,0,0,.5);z-index:123;transform:translate(-50%,-50%);'
+            progressBg.style.cssText = 'position:fixed;left:50%;top:50%;padding:10px 40px 0;border:1px solid #666;box-shadow:inset 0 0 1px #fff;border-radius:4px;text-align:center;color:#fff;background:rgba(0,0,0,.5);z-index:123;transform:translate(-50%,-50%);z-index:5;'
             var progressBarOuter = document.createElement('div');
             progressBarOuter.style.cssText = 'position:relative;height:6px;width:100px;border-radius:6px;border:1px solid #ddd;';
             var progressBarInner = document.createElement('span');
@@ -433,10 +433,29 @@ style.innerText='.popup .btns{margin: 10px 0; text-align: center; font-size: 0; 
             return;
         }
 
+        
+        // var selects=document.querySelectorAll('select'),lsel=selects.length;
+        // var regVersion=/version\/(\w*)/i;
+        // if(lsel>0){
+        //     if(regVersion.exec(navigator.userAgent)<9){
+        //         for(var i=0;i<lsel;i++){
+        //              selects[i].addEventListener('click', function(){
+        //                 _fixEles();
+        //                 var top = document.body.scrollTop || document.documentElement.scrollTop;
+        //      if(l>0){
+        //         for(var i=0;i<l;i++){
+        //              eles[i].style.cssText='position:absolute;-webkit-transform:translate3D(0,'+top+'px,0)';
+        //         }
+        //         return;
+        //      }
+        //             });
+        //         }
+        //     }
+        // }
+
         //没有输入，就不修了
         var inputs = document.querySelectorAll('input,textarea'),
             iptL = inputs.length;
-
         if(iptL<=0){
             return;
         }

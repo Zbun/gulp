@@ -1,11 +1,13 @@
 @import 'base/_variables';
-.pagination {
-	display: inline-block;
+.pagination,
+.page-go {
+    display: inline-block;
+    margin: 30px 0;
     >li {
         display: table-cell;
         >a {
             display: inline-block;
-        	position: relative;
+            position: relative;
             min-width: 32px;
             padding: 0 12px;
             margin-left: -1px;
@@ -28,48 +30,68 @@
                 border-radius: 0 $border-radius $border-radius 0;
             }
         }
-        &.active{
-        	>a{
-        		color: #fff;
-        		background:$color-primary;
-        		 border-color: #049fe1;
-        		 z-index: 5;
-        	}
+        >a:hover,
+        &.active>a {
+            color: #fff;
+            background: $color-primary;
+            border-color: #049fe1;
+            z-index: 5;
+        }
+        &.active {
+            >a {
+                z-index: 6;
+            }
         }
     }
     >.disabled {
         opacity: 1;
-    	pointer-events:auto;
-        >a {
+        pointer-events: auto;
+        >a:link {
             color: #ccc;
+            border-color: #e0e0e0;
             cursor: not-allowed;
-            &:hover{
-            	background:#fff;
+            &:hover {
+                background: #fff;
             }
         }
     }
-    .error{
+    .error {
         border-color: $color-danger;
     }
-    &.go{
-        @extend .pagination;
-        position: absolute;
-        margin-left: 50px;
-        input{
-            width: 4em;
-            text-align: center;
-        }
-        .btn{
-            margin-left: 4px;
-            padding: 0 8px;
-            -webkit-border-radius: $border-radius;
-            -moz-border-radius: $border-radius;
-            border-radius: $border-radius;
-            &:hover{
-                background:$color-primary;
-                color: #fff;
-                border-color: darken($color-primary,4%);
-            }
+}
+
+.page-go {
+    // position: absolute;
+    margin-left: 30px;
+    input {
+        width: 4em;
+        text-align: center;
+    }
+    .btn {
+        min-width: auto;
+        margin-left: 5px;
+        padding: 0 8px;
+        line-height: 30px;
+        cursor: pointer;
+        -webkit-border-radius: $border-radius!important;
+        -moz-border-radius: $border-radius!important;
+        border-radius: $border-radius!important;
+        &:hover {
+            background: $color-primary;
+            color: #fff;
+            border-color: darken($color-primary, 4%);
         }
     }
+}
+.page-size{
+     position: absolute;
+        -webkit-transform: translate(-110%);
+        -moz-transform: translate(-110%);
+        -ms-transform: translate(-110%);
+        -o-transform: translate(-110%);
+        transform: translate(-110%);
+        select{
+            margin-left: 5px;
+            margin-right: 20px;
+        }
 }

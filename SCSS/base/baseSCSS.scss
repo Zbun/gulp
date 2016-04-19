@@ -95,7 +95,12 @@ input[readonly] {
 input.ipt-s {
     width: 100px;
 }
-
+.align-ipt{
+    line-height: 32px;
+}
+.align-btn{
+    line-height: 28px;
+}
 select {
     -webkit-appearance: menulist;
 }
@@ -267,8 +272,8 @@ $cursor-disabled:not-allowed!default;
             float: left;
         }
         >.content {
-            display: block;
-            overflow: hidden;
+            display: table-cell;
+            width: 50000px;
         }
     }
 }

@@ -59,13 +59,29 @@
 
         this.$listContainer.addClass(this.options.paginationClass);
 
-        this.$go = $('<ul class="go"/>');
-
+        this.$go = $('<ul class="page-go"/>');
+        this.$sizeSelect=$('<div class="page-size">每页显示 </div>');
 
         if (tagName !== 'UL') {
+            var ss = this.options.sizeSelect;
+            if (ss instanceof Array) {
+                var ssLength = ss.length;
+                if (ssLength) {
+                    this.$sizeSelect.addClass(this.options.paginationClass);
+                    var $select = $('<select/>'),
+                        options = '';
+                    for (var i = 0; i < ssLength; i++) {
+                        options+='<option value="' + ss[i]+'">'+ss[i]+'</option>';
+                    }
+                    $select.html(options);
+                    this.$sizeSelect.append($select);
+                    this.$element.append(this.$sizeSelect);
+                }
+            }
+
             this.$element.append(this.$listContainer);
-            if (this.options.go) {
-                this.$go.addClass(this.options.paginationClass).append('<li><input type="text" /><a class="btn">Go</a></li>');
+            if (this.options.goVal) {
+                this.$go.addClass(this.options.paginationClass).html('<li><input type="text" /><a class="btn">' + this.options.goVal + '</a></li>');
                 this.$element.append(this.$go);
             }
         }
@@ -89,6 +105,9 @@
             this.$element.removeData('twbs-pagination');
             this.$element.off('page');
 
+            this.$element.find('input,.btn,select').each(function(){
+                $(this).off();
+            })
             return this;
         },
 
@@ -96,7 +115,9 @@
             if (page < 1) {
                 throw new Error('Page is incorrect.');
             }
-            if(page > this.options.totalPages) page=this.options.totalPages;
+            if (page > this.options.totalPages) {
+                page = this.options.totalPages;
+            }
 
             this.render(this.getPages(page));
             this.setupEvents();
@@ -233,6 +254,7 @@
 
         setupEvents: function() {
             var _this = this;
+
             this.$listContainer.find('li').each(function() {
                 var $this = $(this);
                 $this.off();
@@ -247,29 +269,43 @@
                 });
             });
 
-            if (this.options.go) {
-                this.$go.on('click','.btn' ,function() {
+            //Add jump method
+            if (this.options.goVal) {
+                _this.$go.find('input,.btn').each(function() {
+                    $(this).off();
+                });
+                this.$go.find('.btn').click(function() {
                     var $this = $(this);
-                    $this.off();
-                    var pageGo=parseInt($(this).closest('.go').find('input').val());
-                    if(pageGo>0){
-                        _this.show(pageGo)
+                    var pageGo = parseInt(_this.$go.find('input').val());
+                    if (pageGo > 0) {
+                        _this.show(pageGo);
+                        _this.$go.find('input').val(pageGo);
+                    } else {
+                        _this.$go.find('input').addClass('error').focus();
                     }
-                    else{
-                        $(this).closest('.go').find('input').addClass('error').focus();
-                    }
-                }).on('keydown','input',function(e){
-                    // 13==e.keyCode;
-                    var $this=$(this);
-                    $this.off();
+                });
+                this.$go.find('input').keydown(function(e) {
+                    var $this = $(this);
                     $this.removeClass('error');
-                    if(13==e.keyCode){
-                        $this.closest('.go').find('.btn').click();
+                    if (13 == e.keyCode) {
+                        _this.$go.find('.btn').click();
                     }
-                }).on('blur','input',function(){
-                    $this.off();
+                }).blur(function() {
                     $(this).removeClass('error');
                 })
+            };
+
+            if(this.options.sizeSelect instanceof Array){
+                var $ss=_this.$sizeSelect.find('select');
+                $ss.off();
+                $ss.change(function(){
+                    var options=_this.$element.data('twbs-pagination').options;
+                    console.log(_this.$element.data('twbs-pagination').options.pageSize);
+                    _this.destroy();
+
+
+             _this.$element.data('twbs-pagination', (new TwbsPagination(_this.$element, options)));
+                });
             };
         },
 
@@ -306,7 +342,7 @@
         prev: 'Previous',
         next: 'Next',
         last: 'Last',
-        go: false,
+        goVal: false,
         loop: false,
         onPageClick: null,
         paginationClass: 'pagination',
@@ -315,6 +351,7 @@
         lastClass: 'last',
         firstClass: 'first',
         pageClass: 'page',
+        pageSize:10,
         activeClass: 'active',
         disabledClass: 'disabled'
     };

@@ -47,6 +47,16 @@
     color: $color-danger;
 }
 
+
+.text-nowrap{
+    white-space: nowrap;
+}
+.text-ellipsis{
+    @extend .text-nowrap;
+    overflow: hidden;
+    -ms-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+}
 //size
 
 .font-small {

@@ -1,6 +1,23 @@
 @import 'base/baseMobile';
 @import 'base/_iconfont';
 @import '_swiper';
+
+@media screen and (min-width:800px) {
+	body,#header,#footer,.cat{
+	max-width: 640px;
+	margin: 0 auto;
+}
+.popup{
+	&.ios,&.dark,&.weixin{
+		.wrapper{
+			max-width: 600px;
+			margin: 0 auto;
+		}
+	}
+}
+}
+
+
 #header {
     @include header;
     background: $color-primary;
@@ -18,9 +35,9 @@
             .num {
                 position: absolute;
                 top: 7px;
-                right: 3px;
-                min-width: 1.2em;
-                padding: 1px 1px 0 1px;
+                right: 2px;
+                min-width: 1.1em;
+                padding: 0 1px;
                 font-size: xx-small;
                 line-height: 1;
                 background: $color-danger;
@@ -127,6 +144,9 @@
                     line-height: 1;
                 }
                 .content {
+                	>.title{
+                		font-size: 13px;
+                	}
                     .specification {
                         margin-top: 2px;
                     }
@@ -145,6 +165,9 @@
                     height: 70px;
                 }
                 >.content {
+                	>.title{
+                		font-size: 13px;
+                	}
                     .spec {
                         left: 80px;
                     }
@@ -262,9 +285,13 @@
             margin: 10px 0;
             >.item {
                 display: none;
+                overflow-y: hidden;
                 &.on {
                     display: block;
                 }
+            }
+            a{
+            	color: $color-anchor;
             }
             .comment {
                 >.cell {
@@ -296,7 +323,12 @@
         // box-shadow: 0 1px 3px #ddd;
     }
     .transport {
-        .express {}
+        .express {
+        	>.content{
+        	}
+        	.folder-title{
+        	}
+         }
     }
     .pic-list {
         >.item {
@@ -344,20 +376,6 @@
                     @include trf-translate(0, -50%);
                 }
             }
-        }
-    }
-}
-
-// cover the swiper CSS
-.swiper-container-horizontal {
-    >.swiper-pagination-bullets {
-        bottom: 2px;
-        .swiper-pagination-bullet {
-            background: #fff;
-            opacity: .5;
-        }
-        .swiper-pagination-bullet-active {
-            opacity: 1;
         }
     }
 }

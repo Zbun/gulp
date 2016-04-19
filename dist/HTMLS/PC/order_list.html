@@ -67,8 +67,11 @@
                         <span class="mr10">
                         排序规则
                         </span>
-                        <a href="javascript:;" class="btn on">下单时间</a>
-                        <a href="javascript:;" class="btn">支付时间</a>
+                        <span class="tab-btn">
+                            <a href="javascript:;" class="item on">下单时间</a>
+                        <a href="javascript:;" class="item">支付时间</a><a href="javascript:;" class="item">呵呵呵</a>
+                        </span>
+                        
                     </div>
                 </div>
             </section>
@@ -118,7 +121,7 @@
                                                 <p class="prod-name">
                                                     <a>超清100K超视膜无闪3D曲面超薄显示器超清100K超视膜无闪3D曲面超薄显示器超清100K超视膜无闪3D曲面超薄显示器超清100K超视膜无闪3D曲面超薄显示器</a>
                                                 </p>
-                                                <p class="prod-spec text-muted">【规格】10000寸超级全息</p>
+                                                <p class="prod-spec text-muted">【规格】ssssssssssssssdadfdfasdfadfssssssssssssssdadfdfasdfadfssssssssssssssdadfdfasdfadfssssssssssssssdadfdfasdfadfssssssssssssssdadfdfasdfadf</p>
                                             </div>
                                         </div>
                                     </div>
@@ -457,8 +460,8 @@
         });
 
         //搜索排序规则切换
-        $('.filter-rule-sequence').find('.btn').on('click', function() {
-            $(this).addClass('on').siblings('.btn').removeClass('on');
+        $('.tab-btn').find('.item').on('click', function() {
+            $(this).addClass('on').siblings().removeClass('on');
         });
 
         //固定表头

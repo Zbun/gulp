@@ -59,6 +59,36 @@
                         <option value="">洛阳</option>
                         <option value="">新乡</option>
                     </select>
+                </li><li class="item dropdown">
+                    <span class="tag">
+                           县：
+                       </span>
+                    <select name="" id="">
+                        <option value="">请选择县</option>
+                        <option value="">郑州</option>
+                        <option value="">洛阳</option>
+                        <option value="">新乡</option>
+                    </select>
+                </li><li class="item dropdown">
+                    <span class="tag">
+                           县：
+                       </span>
+                    <select name="" id="">
+                        <option value="">请选择县</option>
+                        <option value="">郑州</option>
+                        <option value="">洛阳</option>
+                        <option value="">新乡</option>
+                    </select>
+                </li><li class="item dropdown">
+                    <span class="tag">
+                           县：
+                       </span>
+                    <select name="" id="">
+                        <option value="">请选择县</option>
+                        <option value="">郑州</option>
+                        <option value="">洛阳</option>
+                        <option value="">新乡</option>
+                    </select>
                 </li>
                 <li class="item">
                     <span class="tag">
@@ -78,10 +108,16 @@
         </div>
     </div>
     <script src="../../scripts/lib/zepto.min.js"></script>
+    <script src="../../scripts/common.js"></script>
 <script>
-  
-  $('select').on('change',function(){
-    console.log('change');
+  fixFixed(document.querySelector('#header'));
+  $('.dropdown').on('click',function(e){
+    console.log('dropdown');
+  })
+  $('select').on('click',function(e){
+    e.stopPropagation();
+    e.preventDefault();
+    //alert(navigator.userAgent);
   })
 </script>
 </body>

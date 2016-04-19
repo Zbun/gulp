@@ -84,6 +84,11 @@
             transform-origin: center;
             @include trans(transform .3s);
         }
+        &.lonely{
+            &:before{
+                display: none;
+            }
+        }
         &.on {
             &+.tree-content {
                 height: auto;

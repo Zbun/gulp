@@ -17,7 +17,8 @@ $bg-text-color in(bg-default, $color-bg-default, $color-bg-default-text),
 }
 
 .bg {
+	padding: 0 10px;
+    line-height: 32px;
     font-size: 12px;
-    line-height: 1.2;
     font-weight: 400;
 }
