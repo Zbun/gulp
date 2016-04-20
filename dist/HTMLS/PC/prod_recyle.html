@@ -119,7 +119,7 @@
         </article>
     </div>
     <script src="../../scripts/lib/jquery-1.11.3.js"></script>
-    <script src="../../scripts/lib/jquery.twbsPagination.js"></script>
+    <script src="../../scripts/lib/jquery.twbsPagination.min.js"></script>
     <script src="../../scripts/lib/artdialog/dist/dialog-plus-min.js"></script>
     <script>
     $(function() {
@@ -134,9 +134,8 @@
        $('#pagination').twbsPagination({
             totalPages: 15,
             visiblePages: 7,
-            goVal:'Go',
             //sizeSelect:[5,10,15],
-            first: false,
+            first: '首页',
             last: false,
             prev: '<',
             next: '>',

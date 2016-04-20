@@ -3,9 +3,9 @@
 .page-go {
     display: inline-block;
     margin: 30px 0;
-    >li {
+    li {
         display: table-cell;
-        >a {
+        a {
             display: inline-block;
             position: relative;
             min-width: 32px;
@@ -38,17 +38,21 @@
             z-index: 5;
         }
         &.active {
+            pointer-events:none;
             >a {
                 z-index: 6;
             }
         }
     }
-    >.disabled {
+    .split{
+        padding: 0 10px;
+    }
+    .disabled {
         opacity: 1;
         pointer-events: auto;
-        >a:link {
-            color: #ccc;
-            border-color: #e0e0e0;
+        >a {
+            color: #ccc!important;
+            border-color: #e0e0e0!important;
             cursor: not-allowed;
             &:hover {
                 background: #fff;

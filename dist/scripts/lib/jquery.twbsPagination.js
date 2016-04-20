@@ -5,6 +5,8 @@
  * Copyright 2014-2015 Eugene Simakin <eugenesimakin@mail.ru>
  * Released under Apache 2.0 license
  * http://apache.org/licenses/LICENSE-2.0.html
+ * Modified by zlb 2016-04-20 
+ * Add goto page function and split the page
  */
 (function($, window, document, undefined) {
 
@@ -60,28 +62,12 @@
         this.$listContainer.addClass(this.options.paginationClass);
 
         this.$go = $('<ul class="page-go"/>');
-        this.$sizeSelect=$('<div class="page-size">每页显示 </div>');
+
 
         if (tagName !== 'UL') {
-            var ss = this.options.sizeSelect;
-            if (ss instanceof Array) {
-                var ssLength = ss.length;
-                if (ssLength) {
-                    this.$sizeSelect.addClass(this.options.paginationClass);
-                    var $select = $('<select/>'),
-                        options = '';
-                    for (var i = 0; i < ssLength; i++) {
-                        options+='<option value="' + ss[i]+'">'+ss[i]+'</option>';
-                    }
-                    $select.html(options);
-                    this.$sizeSelect.append($select);
-                    this.$element.append(this.$sizeSelect);
-                }
-            }
-
             this.$element.append(this.$listContainer);
             if (this.options.goVal) {
-                this.$go.addClass(this.options.paginationClass).html('<li><input type="text" /><a class="btn">' + this.options.goVal + '</a></li>');
+                this.$go.addClass(this.options.paginationClass).html('<li><input type="number" /><a class="btn">' + this.options.goVal + '</a></li>');
                 this.$element.append(this.$go);
             }
         }
@@ -112,13 +98,9 @@
         },
 
         show: function(page) {
-            if (page < 1) {
+            if (page < 1 || page > this.options.totalPages) {
                 throw new Error('Page is incorrect.');
             }
-            if (page > this.options.totalPages) {
-                page = this.options.totalPages;
-            }
-
             this.render(this.getPages(page));
             this.setupEvents();
 
@@ -129,28 +111,41 @@
 
         buildListItems: function(pages) {
             var listItems = [];
-
-            if (this.options.first) {
-                listItems.push(this.buildItem('first', 1));
-            }
+            var isSplitShow=this.options.totalPages>this.options.visiblePages;
+            // if (this.options.first) {
+            //     listItems.push(this.buildItem('first', 1));
+            // }
 
             if (this.options.prev) {
                 var prev = pages.currentPage > 1 ? pages.currentPage - 1 : this.options.loop ? this.options.totalPages : 1;
                 listItems.push(this.buildItem('prev', prev));
             }
 
-            for (var i = 0; i < pages.numeric.length; i++) {
+            listItems.push(this.buildItem('page', 1));
+
+             if(isSplitShow && pages.numeric[0]>1){
+                listItems.push(this.buildItem('split'),'');
+             }
+
+            for (var i = 1; i < pages.numeric.length-1; i++) {
                 listItems.push(this.buildItem('page', pages.numeric[i]));
             }
+
+            if(isSplitShow && pages.numeric[i]<this.options.totalPages){
+                 listItems.push(this.buildItem('split'),'');
+            }
+
+           this.options.totalPages>1 && listItems.push(this.buildItem('page',this.options.totalPages));
 
             if (this.options.next) {
                 var next = pages.currentPage < this.options.totalPages ? pages.currentPage + 1 : this.options.loop ? 1 : this.options.totalPages;
                 listItems.push(this.buildItem('next', next));
             }
 
-            if (this.options.last) {
-                listItems.push(this.buildItem('last', this.options.totalPages));
-            }
+            //项目规范，注释掉首尾页显示了，
+            // if (this.options.last) {
+            //     listItems.push(this.buildItem('last', this.options.totalPages));
+            // }
 
             return listItems;
         },
@@ -161,6 +156,10 @@
                 itemText = null;
 
             switch (type) {
+                case 'split':
+                    itemText=this.options.split;
+                    $itemContainer.addClass(this.options.splitClass);
+                    break;
                 case 'page':
                     itemText = page;
                     $itemContainer.addClass(this.options.pageClass);
@@ -187,7 +186,12 @@
 
             $itemContainer.data('page', page);
             $itemContainer.data('page-type', type);
-            $itemContainer.append($itemContent.attr('href', this.makeHref(page)).html(itemText));
+            if(type!=='split'){
+                 $itemContainer.append($itemContent.attr('href', this.makeHref(page)).html(itemText));
+            }
+            else{
+                $itemContainer.append(itemText);
+            }
 
             return $itemContainer;
         },
@@ -245,6 +249,8 @@
                     case 'next':
                         $this.toggleClass(_this.options.disabledClass, !_this.options.loop && pages.currentPage === _this.options.totalPages);
                         break;
+                    case 'split':
+                        break;
                     default:
                         break;
                 }
@@ -265,7 +271,8 @@
                 $this.click(function(evt) {
                     // Prevent click event if href is not set.
                     !_this.options.href && evt.preventDefault();
-                    _this.show(parseInt($this.data('page')));
+
+                   parseInt($this.data('page')) && _this.show(parseInt($this.data('page')));
                 });
             });
 
@@ -277,7 +284,7 @@
                 this.$go.find('.btn').click(function() {
                     var $this = $(this);
                     var pageGo = parseInt(_this.$go.find('input').val());
-                    if (pageGo > 0) {
+                    if (pageGo > 0 && pageGo<=_this.options.totalPages) {
                         _this.show(pageGo);
                         _this.$go.find('input').val(pageGo);
                     } else {
@@ -293,19 +300,6 @@
                 }).blur(function() {
                     $(this).removeClass('error');
                 })
-            };
-
-            if(this.options.sizeSelect instanceof Array){
-                var $ss=_this.$sizeSelect.find('select');
-                $ss.off();
-                $ss.change(function(){
-                    var options=_this.$element.data('twbs-pagination').options;
-                    console.log(_this.$element.data('twbs-pagination').options.pageSize);
-                    _this.destroy();
-
-
-             _this.$element.data('twbs-pagination', (new TwbsPagination(_this.$element, options)));
-                });
             };
         },
 
@@ -338,11 +332,11 @@
         initiateStartPageClick: true,
         href: false,
         hrefVariable: '{{number}}',
-        first: 'First',
-        prev: 'Previous',
+        first: false,
+        prev: false,
         next: 'Next',
-        last: 'Last',
-        goVal: false,
+        last: false,
+        goVal: 'Go',
         loop: false,
         onPageClick: null,
         paginationClass: 'pagination',
@@ -353,7 +347,9 @@
         pageClass: 'page',
         pageSize:10,
         activeClass: 'active',
-        disabledClass: 'disabled'
+        disabledClass: 'disabled',
+        split:'...',
+        splitClass:'split',
     };
 
     $.fn.twbsPagination.Constructor = TwbsPagination;
