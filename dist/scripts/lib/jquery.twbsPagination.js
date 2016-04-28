@@ -319,7 +319,14 @@
         var data = $this.data('twbs-pagination');
         var options = typeof option === 'object' && option;
 
-        if (!data) $this.data('twbs-pagination', (data = new TwbsPagination(this, options)));
+        if (!data) {
+            $this.data('twbs-pagination', (data = new TwbsPagination(this, options)));
+        }
+        else{
+            data.destroy();
+            var newOpts=$.extend({},data.options,options)
+            $this.data('twbs-pagination', (data = new TwbsPagination(this, newOpts)));
+        }
         if (typeof option === 'string') methodReturn = data[option].apply(data, args);
 
         return (methodReturn === undefined) ? $this : methodReturn;

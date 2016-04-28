@@ -22,7 +22,14 @@
     @include header;
     background: $color-primary;
     color: #fff;
+    .title{
+
+    }
+    .goback{
+        background:$color-primary;
+    }
     .action {
+        background:$color-primary;
         >.item {
             color: #fff;
             font-size: 19px;
@@ -284,6 +291,9 @@
         >.content {
             margin: 10px 0;
             >.item {
+                img{
+                    margin-bottom: 5px;
+                }
                 display: none;
                 overflow-y: hidden;
                 &.on {

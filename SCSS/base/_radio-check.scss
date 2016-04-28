@@ -45,13 +45,14 @@
 }
 
 .checkbox {
+    display: inline;
     position: relative;
     .icon {
         position: absolute;
         left: 4px;
         top: .05em;
-        width: 1em;
-        height: 1em;
+        width: 14px;
+        height: 14px;
         border: 1px solid $color-border;
         background:#fff;
         pointer-events:none;
@@ -60,22 +61,28 @@
             position: absolute;
             left: 1px;
             top: 2px;
-            width: .8em;
+            width: 11px;
             height: 5px;
             border: 2px solid $color-primary;
-            border-width: 0 0 2px 2px;
+            border-width: 0 0 1px 1px;
             visibility: hidden;
             @include trf(rotateZ(-45deg));
         }
     }
     input[type=checkbox] {
         position: relative;
-        margin-right: 5px;
+        margin: 0;
+        margin-right: 10px;
         visibility: hidden;
         z-index: 2;
         &:checked {
             ~.icon:before {
                 visibility: visible;
+            }
+        }
+        &[disabled]{
+            ~.icon:before{
+                border-color: $color-border;
             }
         }
     }

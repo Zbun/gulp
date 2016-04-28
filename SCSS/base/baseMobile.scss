@@ -263,7 +263,6 @@ select {
         select {
             height: 40px;
             -webkit-appearance: none;
-            background:transparent;
         }
         &.notag {
             input,
@@ -292,18 +291,24 @@ body {
 }
 @mixin header {
     height: 44px;
-    line-height: 44px;
     padding: 0 10px;
+    line-height: 44px;
     .title {
+        padding-right: 60px;
         font-size: 18px;
         font-weight: 400;
+        white-space: nowrap;
+        overflow-y: hidden;
+        &.text-center{
+            padding-left: 60px;
+        }
     }
     .goback {
         @extend %goback;
         &+.title {
-            padding-left: 45px;
+            padding-left: 36px;
             &.text-center {
-                padding-left: 0;
+                padding-left: 60px;
             }
         }
     }
@@ -391,8 +396,9 @@ body {
     }
 }
 
+$color-anchor:#333;
 a {
-    color: #333;
+    color: $color-anchor;
     text-decoration: none;
 }
 
@@ -488,20 +494,16 @@ a {
             img {
                 float: left;
                 padding-right: 10px;
-                width: 80px;
-                height: 70px;
+                width: 70px;
+                height: 60px;
             }
             >.content {
                 overflow: hidden;
                 >.title {
-                    line-height: 1.4;
+                    line-height: 1.5;
                     font-weight: 400;
-                    font-size: 15px;
+                    font-size: 13px;
                     @include mul-line(2);
-                    +.text-muted{
-                        white-space: nowrap;
-                        overflow-y: hidden;
-                    }
                 }
                 .emphasize {
                     font-size: 16px;
@@ -523,9 +525,9 @@ a {
             border-top: 0;
         }
         >.title {
-            padding: 5px 10px;
+            padding: 5px 10px 3px 10px;
             border-bottom: 1px solid $color-border;
-            font-size: 14px;
+            font-size: 13px;
             color: #999;
             font-weight: 400;
         }

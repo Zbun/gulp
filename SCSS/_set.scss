@@ -1,27 +1,31 @@
 @import 'base/_variables';
+
 .set {
     >.item {
-        padding: 8px 0;
+    	padding: 10px 0;
         line-height: $height-input;
-        >.name {
-            min-width: 6em;
+        >.title {
             float: left;
-            margin-right: 1.5em;
+            min-width: 6em;
+            margin-right: 1em;
+            font-weight: 400;
+            line-height: inherit;
             text-align: right;
         }
         >.content {
             position: relative;
             overflow: hidden;
-            input[type=text] {
-                min-width: 250px;
+            line-height: inherit;
+            .ipt-large {
+                min-width: 260px;
             }
-            input.ipt-s {
-                min-width: 100px;
+            .ipt-small{
+            	min-width: 100px;
             }
         }
     }
-    &.thin {
-        >.item {
+    &.thin{
+        >.item{
             line-height: 20px;
             padding: 5px 0;
         }

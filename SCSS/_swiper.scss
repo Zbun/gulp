@@ -1,5 +1,4 @@
 //图片轮播区
-@import 'base/_variables.scss';
 .swiper {
     overflow: hidden;
     >.item {
@@ -10,22 +9,8 @@
             width: 100%;
             text-align: center;
             img {
-                max-height: 300px;
+                width: 100%;
             }
-        }
-    }
-}
-// cover the swiper CSS
-.swiper-container-horizontal {
-    >.swiper-pagination-bullets {
-        bottom: 2px;
-        .swiper-pagination-bullet {
-            background: #bbb;
-            opacity: .5;
-        }
-        .swiper-pagination-bullet-active {
-            background:$color-warning;
-            opacity: 1;
         }
     }
 }

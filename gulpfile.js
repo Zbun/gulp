@@ -23,7 +23,8 @@ var opts={
   minRename:{
     suffix:'.min'
   },
-}
+};
+var cssStyles=['compressed','expanded'],cssStyle=cssStyles[1];
 
 //清理文件
 gulp.task('clean',function(cb){
@@ -95,9 +96,11 @@ gulp.task('coffee',function(){
    .pipe(gulp.dest(opts.destPath+'scripts'));
 });
 
+
+//outputStyle:compressed,expanded
 gulp.task('sass',function(){
     return gulp.src('./scss/*.scss')
-    .pipe(sass({outputStyle:'compressed'}).on('error',sass.logError))
+    .pipe(sass({outputStyle:cssStyle}).on('error',sass.logError))
     .pipe(gulp.dest(opts.destPath+'css'));
 
   //以下为传给browseSync用
@@ -130,7 +133,7 @@ gulp.task("browserSync",['sass'],function(){
       server:{
          baseDir:"./"
       },
-      port:2016
+      port:2015
    });
    gulp.watch('./scss/**/*.scss',['sass']);
    //gulp.watch('./src/scripts/**/*.js', ['rev']);

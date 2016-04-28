@@ -3,17 +3,14 @@
 .tags {
     .tag {
         padding: 0 6px;
+        margin-right: 4px;
         border: 1px solid $color-border;
         font-size: 12px;
         white-space: nowrap;
         -webkit-border-radius: $border-radius;
         -moz-border-radius: $border-radius;
         border-radius: $border-radius;
-        &+.tag{
-            margin-left: 4px;
-        }
     }
-
 }
 
 @each $tag,
@@ -35,12 +32,12 @@ $tag-color in(tag-warning-o:$color-warning, tag-danger-o:$color-danger, tag-info
 }
 
 .tags-action {
-    // @extend .tags;
+    //@extend .tags;
     // display: inline-block;
     .tag {
         position: relative;
         display: inline-block;
-        padding: 0 .8em;
+        padding: 0 .5em;
         line-height: 20px;
         border-color: $color-info;
         .icon{
@@ -49,8 +46,8 @@ $tag-color in(tag-warning-o:$color-warning, tag-danger-o:$color-danger, tag-info
             top: 2px;
             width: 1em;
             height: 1em;
-            margin-left: .8em;
-            margin-right: -.6em;
+            margin-left: .5em;
+            margin-right: -.1em;
             line-height: 1;
             text-align: center;
             background:$color-info;

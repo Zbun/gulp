@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
+    <link rel="stylesheet" href="../../iconfonts/style.css">
+    <link rel="stylesheet" href="../../CSS/member_admin.css">
+    <title>群发管理-中网易企赢</title>
+</head>
+
+<body>
+    <div class="wrapper limited">
+        <div class="main">
+            <article class="body group">
+                <header class="title">
+                    <h2 class="content-title">群发管理</h2>
+                </header>
+                <section class="mt10">
+                    <div class="tab-switcher-horizontal">
+                        <div class="title group-status ">
+                            <a href="javascript:;" class="item on">新建群发</a>
+                            <a href="javascript:;" class="item">群发记录</a>
+                        </div>
+                        <div class="content group-content">
+                            <div class="item new on">
+                                <div class="content-expanded content-large">
+                                    <div class="inner">
+                                        <div class="split align-ipt">
+                                            <dl class="item">
+                                                <dd class="fr">
+                                                    已选择对象
+                                                    <a href="javascript:;" class="p5 num-selected" data-dialog-title="已选粉丝列表" data-dialog-content="user-selected">123555</a>个
+                                                </dd>
+                                                <dt class="title mr10">
+                                                    群发对象
+                                                </dt>
+                                                <dd class="content group-obj-filter js-toggle-class-clear">
+                                                    <span class="title">
+                                               <button class="btn-tag btn-tag-primary item on">全部已关注对象</button>
+                                                <button class="btn-tag btn-tag-primary item filter-by-tag">按标签选择</button>
+                                                <a class="btn" href="search_advanced.html">高级查询</a> 
+                                                </span>
+                                                </dd>
+                                            </dl>
+                                            <dl class="item mt5 tag-select">
+                                                <dt class="title mr10">&#12288;&#12288;标签</dt>
+                                                <dd class="content">
+                                                    <div class="tags tags-action">
+                                                        <span class="tag"><span class="">标签1</span><i class="icon"></i></span>
+                                                        <span class="tag"><span class="">标签2</span><i class="icon"></i></span>
+                                                        <span class="tag"><span class="">标签3</span><i class="icon"></i></span>
+                                                        <span class="tag"><span class="">标签4</span><i class="icon"></i></span>
+                                                        <span class="tag"><span class="">标签5</span><i class="icon"></i></span>
+                                                    </div>
+                                                </dd>
+                                            </dl>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item log">
+                                <section class="mt10">
+                                    <div class="split align-ipt">
+                                        <div class="item row">
+                                            <div class="title mr10">类型</div>
+                                            <div class="content">
+                                                <select name="type" id="">
+                                                    <option value="all">全部</option>
+                                                    <option value="all">文字</option>
+                                                    <option value="all">图片</option>
+                                                </select>
+                                                <span class="ml10">
+                                                    <span class="date-field ml10">
+                                                        <input type="text" placeholder="开始时间">
+                                                        <i class="fa fa-calendar icon"></i>
+                                                    </span>
+                                                <span>--</span>
+                                                <span class="date-field">
+                                                        <input type="text" placeholder="结束时间">
+                                                        <i class="fa fa-calendar icon"></i>
+                                                    </span>
+                                                </span>
+                                                <button class="btn ml10">查询</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <table class='table text-center table-bordered table-hover table-radian mt10'>
+                                        <thead>
+                                            <tr>
+                                                <th>类型</th>
+                                                <th>发送时间</th>
+                                                <th class="text-left">发送内容</th>
+                                                <th>
+                                                    成功人数
+                                                </th>
+                                                <th>
+                                                    失败人数
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div>文字</div>
+                                                </td>
+                                                <td>
+                                                    <div class="timestamp text-nowrap">2016-01-01 12：01：02</div>
+                                                </td>
+                                                <td class="text-left">
+                                                    <div class='send-content text-ellipsis'><span class="type">[文字]</span> 元宵节活动活动
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="num text-ellipsis">35655789789</div>
+                                                </td>
+                                                <td>
+                                                    <div class="num text-ellipsis">933956</div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div>图片</div>
+                                                </td>
+                                                <td>
+                                                    <div class="timestamp text-nowrap">2016-01-01 12：01：02</div>
+                                                </td>
+                                                <td class="text-left">
+                                                    <div class='send-content text-ellipsis'><span class="type">[图片]</span> <a class="img" data-type="img" href="javascript:;">点击查看图片</a>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="num text-ellipsis">35655</div>
+                                                </td>
+                                                <td>
+                                                    <div class="num text-ellipsis">9956</div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div>图片</div>
+                                                </td>
+                                                <td>
+                                                    <div class="timestamp text-nowrap">2016-01-01 12：01：02</div>
+                                                </td>
+                                                <td class="text-left">
+                                                    <div class='send-content text-ellipsis'><span class="type">[语音]</span> <a class="img" data-type="img" href="javascript:;">点击播放语音</a>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="num text-ellipsis">35655</div>
+                                                </td>
+                                                <td>
+                                                    <div class="num text-ellipsis">9956</div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div>文字</div>
+                                                </td>
+                                                <td>
+                                                    <div class="timestamp text-nowrap">2016-01-01 12：01：02</div>
+                                                </td>
+                                                <td class="text-left">
+                                                    <div class='send-content text-ellipsis'><span class="type">[文字]</span> 元宵节活动活动元宵节活动活动元宵节活动活动元宵节活动活动元宵节活动活动元宵节活动活动元宵节活动活动元宵节活动活动元宵节活动活动元宵节活动活动元宵节活动活动元宵节活动活动元宵节活动活动元宵节活动活动
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="num text-ellipsis">35655</div>
+                                                </td>
+                                                <td>
+                                                    <div class="num text-ellipsis">9956</div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div id="page-content"></div>
+                                    <div id="pagination" class='text-center'></div>
+                                    <div class="data-empty">
+                                        <h3 class="bg text-center p10">
+                        暂时没有相关数据（视情况输出，表格部分全部不显示）
+                    </h3>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </article>
+        </div>
+    </div>
+    <div class="popup-html superhidden">
+        <div class="user-selected">
+            <div class="content user-selected-list">
+                <ul class="list clearfix">
+                    <li class="item split">
+                        <div class="inner item">
+                            <span class="img-wrapper avator title">
+                                                    <img src="../../images/t1_w600.jpg" alt="">
+                                                </span>
+                            <div class="content">
+                                <div class="clearfix text-ellipsis info">
+                                    <span class="fr area text-ellipsis">
+                                                            <span>中国</span>
+                                    <span>河南</span>
+                                    <span>郑州</span>
+                                    </span>
+                                    <span class="private">
+                                                            <span class="name">大夜叉大夜叉大夜叉大夜叉大夜叉大夜叉大夜叉大夜叉大夜叉大夜叉大夜叉大夜叉大夜叉大夜叉</span>
+                                    <span class="sex male" title="男"><i class="fa fa-user"></i>
+                                                            </span>
+                                    </span>
+                                </div>
+                                <p class="text-muted text-nowrap">
+                                    关注日期：2015-01-01
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="item split">
+                        <div class="inner item">
+                            <span class="img-wrapper avator title">
+                                                    <img src="../../images/t1_w600.jpg" alt="">
+                                                </span>
+                            <div class="content">
+                                <div class="clearfix text-ellipsis info">
+                                    <span class="fr area text-ellipsis">
+                                                        <span>中国</span>
+                                    <span>西藏维吾尔族自治区</span>
+                                    <span>郑州</span>
+                                    </span>
+                                    <span class="private"> <span class="name">精灵</span>
+                                    <span class="sex female" title="女"><i class="fa fa-user"></i>
+                                                        </span>
+                                    </span>
+                                </div>
+                                <p class="text-muted text-nowrap">
+                                    关注日期：2015-01-01
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="item split">
+                        <div class="inner item">
+                            <span class="img-wrapper avator title">
+                                                    <img src="../../images/t1_w600.jpg" alt="">
+                                                </span>
+                            <div class="content">
+                                <div class="clearfix text-ellipsis info">
+                                    <span class="fr area text-ellipsis">
+                                                        <span>中国</span>
+                                    <span>西藏维吾尔族自治区</span>
+                                    <span>郑州</span>
+                                    </span>
+                                    <span class="private"> <span class="name">长会员名长会员名</span>
+                                    <span class="sex female" title="女"><i class="fa fa-user"></i>
+                                                        </span>
+                                    </span>
+                                </div>
+                                <p class="text-muted text-nowrap">
+                                    关注日期：2015-01-01
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <div class="user-selected-pagination text-center"></div>
+            </div>
+        </div>
+    </div>
+    <script src="../../scripts/lib/jquery-1.11.3.js"></script>
+    <script src="../../scripts/lib/jquery.twbsPagination.js"></script>
+    <script src="../../scripts/lib/artdialog/dist/dialog-plus-min.js"></script>
+    <script>
+    //标签联动内容切换
+    $('.tab-switcher-horizontal').children('.title').children('.item').on('click', function() {
+        var $this = $(this),
+            index = $this.index();
+        $this.addClass('on').siblings('.item').removeClass('on').closest('.tab-switcher-horizontal').children('.content').children('.item').eq(index).addClass('on').siblings('.item').removeClass('on')
+    });
+
+    //小标签选择弹窗
+    $('[data-dialog-content]').on('click', function() {
+        $t = $(this), dialog_content = $t.data('dialogContent'),
+            dialog_title = $t.data('dialogTitle');
+        var d = dialog({
+            title: dialog_title,
+            onshow: function() {
+                //分页，后台来时删除库及本段代码
+                $('.user-selected-pagination').twbsPagination({
+                    totalPages: 15,
+                    visiblePages: 5,
+                    goVal: 'Go',
+                    first: '首页',
+                    last: '末页',
+                    prev: '<',
+                    next: '>',
+                    onPageClick: function(event, page) {
+                        $('#page-content').text('Page ' + page);
+                    }
+                });
+            },
+            cancel:function(){
+                // alert('h')
+            },
+            cancelDisplay:false
+        });
+        d.content($('.popup-html').find('.' + dialog_content).html()).showModal();
+    });
+
+    //小标签选中样式切换
+    $('body').on('click', '.js-toggle-class-clear>.title>.item', function() {
+        $(this).addClass('on').siblings('.item').removeClass('on').closest('.js-toggle-class').children('.content').children('.item').toggleClass('on');
+    });
+    </script>
+</body>
+
+</html>

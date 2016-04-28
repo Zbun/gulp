@@ -17,6 +17,7 @@ $color-table-anchor:#0990ca;
 
 body {
     @include pcBody;
+    background: $color-body-bg;
 }
 
 input[type=search],
@@ -31,9 +32,13 @@ input[type=time],
 button,
 textarea,
 select,
-.com-input {
+.com-ipt {
     line-height: 22px;
     font-size: $font-size;
+}
+
+::-webkit-input-placeholder {
+    font-family: $font-family;
 }
 
 .btn {
@@ -45,7 +50,7 @@ select,
         padding: 0 1.5em;
         font-size: $btn-big-font-size;
         line-height: $btn-big-line-height;
-        +.btn.big{
+        +.btn.big {
             margin-left: 8px;
         }
     }
@@ -73,35 +78,82 @@ a {
     }
 }
 
+.tips-top {
+    position: absolute;
+    left: 50%;
+    padding: 0 30px;
+    @include trf-translate(-50%, 0);
+    z-index: 5;
+    &-info {
+        @extend .bg-info;
+    }
+    &-warning {
+        @extend .bg-warning;
+    }
+    @-danger {
+        @extend .bg-danger;
+    }
+    @at-root .ui-dialog & {
+        margin-top: -20px;
+    }
+}
+
 .content-title {
     font-size: 16px;
     font-weight: 400;
+    line-height: inherit;
+}
+
+.content-expanded {
+    padding: 20px 30px 60px;
+}
+
+.content-large {
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.content-small {
+    padding-left: 130px;
+    padding-right: 130px;
 }
 
 @import '_tree.scss';
 .table {
-    td {
-        padding: 6px 4px;
-        line-height: 32px;
-        p {
-            line-height: 24px;
+    thead{
+        tr {
+            td,
+            th {
+                padding: 0 5px;
+                border: 0;
+                border-bottom: 1px solid $color-border;
+                line-height: 34px;
+                white-space: nowrap;
+                vertical-align: middle;
+            }
+            th {
+                border: 0;
+                font-weight: 400;
+                background: $color-table-thead;
+                color: $color-table-thead-th;
+            }
         }
     }
-    thead {
-        td,
-        th {
-            padding: 0 5px;
-            line-height: 34px;
-            white-space: nowrap;
-        }
-        th {
-            border: 0;
-            font-weight: 400;
-            background: $color-table-thead;
-            color: $color-table-thead-th;
+    tbody {
+        tr {
+            th,td {
+                padding: 6px 4px;
+                border: 0;
+                border-bottom: 1px solid $color-border;
+                line-height: 32px;
+                p {
+                    line-height: 24px;
+                }
+            }
         }
     }
     .action-field {
+        white-space: nowrap;
         .item {
             margin: 4px;
             padding: 2px 4px;
@@ -127,6 +179,18 @@ a {
 
 .table-bordered {
     border: 1px solid $color-table-border;
+    >thead,
+    >tbody {
+        >tr {
+            td {
+                border: 0;
+                border-top: 1px solid $color-table-border;
+            }
+            th {
+                border: 0;
+            }
+        }
+    }
     th,
     td {
         border-top: 1px solid $color-table-border;
@@ -161,7 +225,7 @@ a {
     position: relative;
     display: inline-block;
     .ipt-search {
-        min-width: 16em;
+        min-width: 280px;
         padding-right: 36px;
         &:hover {
             &+.btn-search {
@@ -175,7 +239,7 @@ a {
         }
         &.ipt-search-btn-text {
             min-width: 250px;
-            padding-right: 4.3em;
+            padding-right: 4.5em;
             &.col2 {
                 padding-right: 4.5em;
             }
@@ -194,7 +258,7 @@ a {
         }
         &.icon-search {
             position: absolute;
-            right: 2px;
+            right: 1px;
             top: 1px;
             bottom: 1px;
             font-size: 16px;
@@ -210,7 +274,7 @@ a {
                 border-color: $color-border;
             }
         }
-        .fa-search{
+        .fa-search {
             font-weight: 700;
         }
         &.btn-search-text {
@@ -224,12 +288,15 @@ a {
 
 .date-field {
     position: relative;
-    padding-right: 4px;
-    input {
+    margin-right: 4px;
+    >input {
+        width: 120px;
+        padding-right: 26px;
         margin-right: -28px;
-        padding-right: 28px;
     }
-    i {
+    .icon {
+        position: relative;
+        top: 1px;
         width: 20px;
         font-size: 17px;
         color: #bbb;
@@ -242,6 +309,18 @@ a {
     width: 200px;
     margin-right: -1px;
     border-right: 1px solid $color-border;
+}
+
+.wrapper {
+    padding: 0 30px;
+    &.limited {
+        max-width: 1260px;
+        margin: 0 auto;
+    }
+    .main {
+        margin: 30px 0;
+        padding: 10px;
+    }
 }
 
 .main {
@@ -478,9 +557,9 @@ input.ipt-s {
     }
 }
 
-.data-empty{
-    .bg{
-        background:#fff;
+.data-empty {
+    .bg {
+        background: #fff;
         border-color: #fff;
         color: $color;
     }
