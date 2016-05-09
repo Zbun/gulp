@@ -70,7 +70,7 @@
             width: 50%;
             >.inner {
                 padding: 14px;
-                margin: 4px 20px;
+                margin: 4px 15px;
                 border: 1px solid $color-border;
                 line-height: 25px;
                 @include trans(.2s);
@@ -170,3 +170,8 @@
     }
     
 }
+
+//提示文字
+.js-tip-rz,.js-tip-suc{position: absolute; top: -1px; left: 50%; border: 1px solid #FEE1D1; padding: 0 10px; height: 34px; width: 640px;color: #F06560; line-height: 32px; border-radius: 4px; z-index: 5;margin-left: -320px; text-align: center;background-color: #FFF5F3}
+.js-tip-rz .tip-rz-cont em{font-style: normal;
+    font-weight:bold;}

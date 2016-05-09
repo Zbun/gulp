@@ -118,24 +118,27 @@ gulp.task('watch',function(){
    gulp.watch('/scss/*.scss','sass');
 });
 
+//传给webpack用
 gulp.task('webpack',function(callback){
   var config=Object.create(webpackConfig);
   webpack(
     config,function(err,stats){
       callback();
     })
-})
+});
+// gulp.watch('app/src/**/*.js', ['webpack']);
 
 //根据文件类型变动，自动刷新浏览器
-gulp.task("browserSync",['sass'],function(){
+gulp.task("browserSync",['sass','webpack'],function(){
    browserSync({
-      files:["**/*.html","**/*.css","**/*.js",'!**.less','!**.coffee','!**.SCSS','!node_modules/**.*'],
+      files:["**/*.html","**/*.css","**/*.js",'!**.less','!**.coffee','!**.SCSS','!node_modules/**.*','!src/**.*'],
       server:{
          baseDir:"./"
       },
       port:2015
    });
    gulp.watch('./scss/**/*.scss',['sass']);
+   gulp.watch('./src/**/*.*',['webpack']);
    //gulp.watch('./src/scripts/**/*.js', ['rev']);
    //gulp.watch('./src/css/**/*.css','rev')
 });

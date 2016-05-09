@@ -2,6 +2,7 @@
 
 .set {
     >.item {
+        display: flex;
     	padding: 10px 0;
         line-height: $height-input;
         >.title {

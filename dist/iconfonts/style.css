@@ -1,10 +1,10 @@
 @font-face {
     font-family: 'yqy';
-    src:    url('fonts/yqy.eot?4ru0ws');
-    src:    url('fonts/yqy.eot?4ru0ws#iefix') format('embedded-opentype'),
-        url('fonts/yqy.ttf?4ru0ws') format('truetype'),
-        url('fonts/yqy.woff?4ru0ws') format('woff'),
-        url('fonts/yqy.svg?4ru0ws#yqy') format('svg');
+    src:    url('fonts/yqy.eot?4i2vfm');
+    src:    url('fonts/yqy.eot?4i2vfm#iefix') format('embedded-opentype'),
+        url('fonts/yqy.ttf?4i2vfm') format('truetype'),
+        url('fonts/yqy.woff?4i2vfm') format('woff'),
+        url('fonts/yqy.svg?4i2vfm#yqy') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -365,5 +365,32 @@
 }
 .yqy-zuojiantou1:before {
     content: "\e903";
+}
+.yqy-pinpai:before {
+    content: "\e904";
+}
+.yqy-mendianguanli:before {
+    content: "\e905";
+}
+.yqy-kehuguanli:before {
+    content: "\e906";
+}
+.yqy-erweima:before {
+    content: "\e907";
+}
+.yqy-kehu:before {
+    content: "\e908";
+}
+.yqy-jiangchi:before {
+    content: "\e909";
+}
+.yqy-kanjia:before {
+    content: "\e90a";
+}
+.yqy-miaosha:before {
+    content: "\e911";
+}
+.yqy-tuangou:before {
+    content: "\e913";
 }
 

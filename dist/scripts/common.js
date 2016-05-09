@@ -448,6 +448,41 @@ style.innerText='.popup .btns{margin: 10px 0; text-align: center; font-size: 0; 
     })();
 
 
+    //顶部提示框
+    function showTipsTop(content,target,time){
+    var div=document.createElement('div'),container='';
+    var cssText = 'position:absolute;left:25%;right:25%;top:0;padding:4px 30px;border:1px solid #ffd0c0;text-align:center;background:#fff6f3;color:#fb6362;line-height:2;z-index:5;';
+    div.innerHTML=content||'小提示';
+    div.classList.add('tips-top');
+    div.style.cssText=cssText;
+
+    if(target){
+        if(typeof target=='string'){
+            container=document.querySelector(target);
+        }
+        else if(target.nodeName){
+            container=target;
+        }
+        else{
+            container=target[0]
+        }
+    }
+    else{
+        container=document.body;
+    }
+
+    var tar=container;
+    tar.insertBefore(div,tar.firstChild);
+
+    var t=parseInt(time);
+    if(t){
+        setTimeout(function(){
+            tar.removeChild(div);
+        },t)
+    }
+
+}
+
     //修正iOS固定元素显示错乱，传入需要修正的元素
     function fixFixed(eles) {
         if(!eles||eles.length<=0){

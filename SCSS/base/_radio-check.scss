@@ -16,8 +16,8 @@
     }
     .icon {
         position: absolute;
-        top: .5em;
-        left: 3px;
+        top: .7em;
+        left: 5px;
         width: 1.2em;
         height: 1.2em;
         padding: 3px;
@@ -121,17 +121,13 @@
             top: 5px;
             width: 16px;
             height: 16px;
+            border: 1px solid $color-border;
+            background: #eee;
             -webkit-border-radius: 100%;
             -moz-border-radius: 100%;
             border-radius: 100%;
-            @include trans(.5s);
+            @include trans(.3s);
         }
-        &:after {
-            background: #eee;
-            border: 1px solid $color-border;
-            @include trans(all .3s linear);
-        }
-       
     }
     &:checked{
         &~.icon{

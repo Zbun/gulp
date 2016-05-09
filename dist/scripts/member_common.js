@@ -49,7 +49,7 @@ function uploadFileStyle2(url,file,callback,check) {
         member:{
             export:'/member/memberUser/toHighSearch.html',
             import:'/member/memberUser/import.html',
-            importFail:'/member/memberUser/importFail.html',
+            importFail:'importFail.html',
             download:'',
             errorDownload:'',
             delete:'/member/memberUser/deleteOfflineMember.html'
@@ -61,7 +61,7 @@ function uploadFileStyle2(url,file,callback,check) {
     $('#export_member').on('click', function () {
 //        // request发送请求
 //        jQuery('<form action="' + ctx +'/member/expert/csv.html' + window.location.search + '" method="post" target="_blank"></form>').appendTo('body').submit().remove();
-        window.location.href=ctx+API.member.export;
+        window.location.href=API.member.export;
     });
 
     //会员导入
@@ -114,15 +114,22 @@ function uploadFileStyle2(url,file,callback,check) {
                                 content:'导入成功 '+data.data.total+' 条 '+' 失败 '+data.data.failureTotal+' 条<br>您可以点击下面按钮下载失败列表',
                                 okValue:'下载失败列表',
                                 ok:function(){
-                                    //$.post(
-                                    //    API.member.importFail,{
-                                    //        csvString:csv
-                                    //    });
+                                    //$.ajax({
+                                    //    url:API.member.importFail,
+                                    //    data:{csvString:csv},
+                                    //    success:function(){
+                                    //        if(data.data.total){
+                                    //           //location.reload();
+                                    //        }
+                                    //    }
+                                    //});
                                     var inputs = '<input type="hidden" name="csvString" value="' + csv + '" />';
                                     // request发送请求
                                     jQuery('<form action="/member/memberUser/importFail.html" method="post" id="import_fail">' + inputs+ '</form>').appendTo('body').submit().remove();
-
                                     d.close();
+                                    if(data.data.total){
+                                        setTimeout(function(){location.reload()},1500);
+                                    }
                                 }
                             }).showModal();
                         }
@@ -180,6 +187,7 @@ function uploadFileStyle2(url,file,callback,check) {
                             PCwaiting.hide();
                             if (data.success) {
                                 dialog({
+                                    title:'提示',
                                     skin:'mini',
                                     content: data.message,
                                     ok: function () {
@@ -188,14 +196,7 @@ function uploadFileStyle2(url,file,callback,check) {
                                 }).showModal();
                             }
                             else {
-                                dialog({
-                                    skin:'mini',
-                                    title: '批量删除',
-                                    content: data.message,
-                                    ok: function () {
-
-                                    }
-                                }).showModal();
+                                alertMsg(data.message);
                             }
 
                         },
@@ -205,17 +206,22 @@ function uploadFileStyle2(url,file,callback,check) {
             }).showModal();
         }
         else {
-            dialog({
-                width: 300,
-                skin: 'mini',
-                title: '批量删除',
-                content: '需要至少选中一个会员哦',
-                ok: function () {
-
-                }
-            }).showModal();
+            alertMsg('需要至少选中一个会员哦')
         }
     })
+
+    //简单封一下，不带操作只提示文字的小弹窗
+    function alertMsg(content){
+        dialog({
+            skin:'mini',
+            title:'提示',
+            content:content,
+            okValue:'好的',
+            ok:function(){
+
+            }
+        }).showModal();
+    }
 
     //加载等待提示，pcWaiting.show()、waiting.remove(),电脑端等待，没有提示文字,arg=global：局部小等待
     PCwaiting = {

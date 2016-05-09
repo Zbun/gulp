@@ -29,6 +29,8 @@ input[type=number],
 input[type=date],
 input[type=color],
 input[type=time],
+input[type=url],
+input:not([type]),
 button,
 textarea,
 select,
@@ -80,10 +82,12 @@ a {
 
 .tips-top {
     position: absolute;
-    left: 50%;
-    padding: 0 30px;
-    @include trf-translate(-50%, 0);
+    left: 25%;
+    right: 25%;
+    padding: 4px 30px;
     z-index: 5;
+    text-align: center;
+    line-height: 2;
     &-info {
         @extend .bg-info;
     }
@@ -118,7 +122,6 @@ a {
     padding-right: 130px;
 }
 
-@import '_tree.scss';
 .table {
     thead{
         tr {
@@ -224,14 +227,10 @@ a {
 .search-field {
     position: relative;
     display: inline-block;
+    z-index: 2;
     .ipt-search {
         min-width: 280px;
         padding-right: 36px;
-        &:hover {
-            &+.btn-search {
-                background: $color-table-tr-hover;
-            }
-        }
         &:focus {
             &+.btn-search {
                 border-left-color: $color-primary;
@@ -254,6 +253,7 @@ a {
         text-align: center;
         color: $color-primary;
         &:hover {
+            background: $color-table-tr-hover;
             color: darken($color-primary, 4%);
         }
         &.icon-search {
@@ -270,6 +270,9 @@ a {
             -webkit-border-radius: 0 $border-radius $border-radius 0;
             -moz-border-radius: 0 $border-radius $border-radius 0;
             border-radius: 0 $border-radius $border-radius 0;
+            &:hover{
+                background: $color-table-tr-hover;
+            }
             &:focus {
                 border-color: $color-border;
             }
@@ -312,6 +315,7 @@ a {
 }
 
 .wrapper {
+    position: relative;
     padding: 0 30px;
     &.limited {
         max-width: 1260px;
@@ -338,63 +342,6 @@ a {
         &+.body {
             border-left: 1px solid $color-border;
             //@include anim(fadeInRight .2s);
-        }
-    }
-}
-
-.info-list {
-    >.item {
-        margin-top: 16px;
-        border: 1px solid $color-border;
-        -webkit-border-radius: $border-radius;
-        -moz-border-radius: $border-radius;
-        border-radius: $border-radius;
-        &.info-warning {
-            border-color: darken($color-bg-danger, 5%);
-            >.title {
-                border-bottom-color: darken($color-bg-danger, 5%);
-                background: $color-bg-danger;
-            }
-        }
-        >.title {
-            padding: 0 20px;
-            border-bottom: 1px solid $color-border;
-            line-height: 42px;
-            font-size: 14px;
-            background: $color-table-thead;
-            .tag {
-                margin-left: 3em;
-            }
-        }
-        >.content {
-            padding: 10px 40px;
-            >.item {
-                line-height: 2;
-                overflow: hidden;
-                >.title {
-                    float: left;
-                }
-                >.content {
-                    overflow: hidden;
-                }
-            }
-            &.col2 {
-                >.item {
-                    display: inline-block;
-                    width: 30%;
-                    vertical-align: middle;
-                    &:nth-child(even) {
-                        width: 60%;
-                    }
-                }
-            }
-        }
-    }
-    &.thin {
-        >.item {
-            >.title {
-                line-height: $height-table-thead;
-            }
         }
     }
 }
@@ -459,146 +406,7 @@ input.ipt-s {
         cursor: pointer;
     }
 }
-
-.text-tips {
-    line-height: 20px;
-}
-
-.tab-switcher {
-    position: relative;
-    border: 1px solid $color-border;
-    line-height: 2;
-    background: #fff;
-    overflow: hidden;
-    opacity: .95;
-    white-space: normal;
-    >.title {
-        position: relative;
-        margin-bottom: -2px;
-        overflow: hidden;
-        z-index: 3;
-        >.item {
-            display: table-cell;
-            padding: 2px 8px;
-            border-bottom: 2px solid $color-border;
-            color: $color;
-            text-decoration: none;
-            cursor: pointer;
-            white-space: nowrap;
-            &:hover {
-                color: $color-primary;
-            }
-            &:last-child {
-                border-right-width: 0;
-            }
-            &.on {
-                color: $color-primary;
-                border-bottom-color: currentcolor;
-            }
-        }
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-    }
-    >.content {
-        border-top: 2px solid $color-border;
-        overflow: hidden;
-        >.item {
-            display: none;
-            &:first-child {
-                display: block;
-            }
-            >.cell {
-                display: inline-block;
-                min-width: 5em;
-                padding: 2px;
-                text-align: center;
-                &:hover {
-                    color: $color-primary;
-                    cursor: pointer;
-                    text-decoration: none;
-                }
-            }
-        }
-    }
-}
-
-.tab-switcher-vertical {
-    //@extend .tab-switcher;
-    >.title {
-        float: left;
-        margin-bottom: 0;
-        margin-right: -1px;
-        >.item {
-            display: block;
-            border: 1px solid $color-border;
-            border-width: 0 1px 1px 0;
-            &:last-child {
-                border-bottom: 0;
-                border-right-width: 1px;
-            }
-            &.on {
-                border-bottom-color: $color-border;
-                border-right-color: #fff;
-            }
-        }
-    }
-    >.content {
-        padding: 0 5px;
-        border: 0;
-        border-left: 1px solid $color-border;
-        >.item {
-            >.cell {
-                min-width: auto;
-                padding: 2px 5px;
-            }
-        }
-    }
-}
-
-.data-empty {
-    .bg {
-        background: #fff;
-        border-color: #fff;
-        color: $color;
-    }
-}
-
-.arrow-down {
-    position: relative;
-    >.arrow-down-title {
-        display: inline-block;
-        position: relative;
-        input {
-            padding-right: 30px;
-        }
-        >.icon {
-            position: absolute;
-            right: 1px;
-            top: 1px;
-            bottom: 1px;
-            width: 28px;
-            cursor: pointer;
-            &:after {
-                content: '';
-                position: absolute;
-                width: 0;
-                height: 0;
-                top: 50%;
-                right: 9px;
-                border-style: solid;
-                border-width: 6px 5px 0 5px;
-                border-color: #555 transparent;
-                @include trf-translate(0, -50%);
-            }
-        }
-    }
-    >.arrow-down-content {
-        outline: 0;
-        display: none;
-    }
-}
+@import "_switcher.scss";
 
 .attach {
     position: fixed;

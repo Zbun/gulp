@@ -15,14 +15,20 @@ API={
 var vm = new Vue({
     el: 'body',
     data: {
+        scoreFlag:-1,
         tags: {
             list:[],
             selected: []
         },
+        batch:{
+
+        }
     },
     methods: {
         clearSelected:function(){
             this.tags.selected=[];
+            this.scoreFlag=-1;
+            localStorage.setItem('tagSelected','');
         }
     },
     computed: {
@@ -52,6 +58,7 @@ $('[data-dialog-content]').on('click', function () {
                 return {id:$(this).data('id'),name:$(this).data('name')}
             }).get();
 
+            localStorage.setItem('tagSelected',JSON.stringify(vm.tags.selected));
         },
         button: [
             {
@@ -103,6 +110,7 @@ $('body').on('click', '.js-toggle-class>.title>.item', function () {
     vm.tags.selected =$(this).closest('.tag').siblings('.tag').map(function(){
         return  {id:$(this).data('id'),name:$(this).data('name')}
     }).get();
+    localStorage.setItem('tagSelected',JSON.stringify(vm.tags.selected));
 });
 
 //处理选中标签继续选择带回啊
@@ -126,17 +134,6 @@ $('.chks').on('change', '.chk-all', function () {
         $data_Container.find('.chk-all').prop('checked', true);
     }
 });
-
-function alertMsg(content,okVal){
-    var okVal=okVal||'好的';
-    dialog({
-        title:'提示',
-        skin:'mini',
-        content:content,
-        okValue:okVal,
-        ok:function(){},
-    }).showModal();
-}
 
 //一些验证方法
 ;
@@ -188,6 +185,79 @@ Gvalidator = {
     }
 };
 
+
+//提交前验证一下手机号
+$('#search_form').submit(function(){
+
+    var $phone=$('[name=fuzzyPhone]'),phoneVal=$phone.val();
+
+    var $memeberId=$('[name="fuzzyMemberId"]'),memeberId=$memeberId.val();
+
+    if(!Gvalidator.isEmpty(memeberId) && Gvalidator.isNotInteger(memeberId)){
+        showTipsTopAutoHide('会员号为不大于20位的纯数字');
+        $memeberId.focus();
+        return false;
+    }
+
+    if(!Gvalidator.isEmpty(phoneVal) && !(/^1\d*$/.test(phoneVal))){
+        showTipsTopAutoHide('请输入正确的手机号');
+        $phone.focus();
+        return false;
+    }
+})
+
+
+
+function alertMsg(content,okVal){
+    var okVal=okVal||'好的';
+    dialog({
+        title:'提示',
+        skin:'mini',
+        content:content,
+        okValue:okVal,
+        ok:function(){},
+    }).showModal();
+}
+
+//封一下顶部提示，自动隐藏
+function showTipsTopAutoHide(content){
+    showTipsTop(content,'.wrapper.limited',2000);
+}
+
+function showTipsTop(content,target,time){
+    var div=document.createElement('div'),container='';
+    var cssText = 'position:absolute;left:25%;right:25%;top:0;padding:4px 30px;border:1px solid #ffd0c0;text-align:center;background:#fff6f3;color:#fb6362;line-height:2;z-index:5;';
+    div.innerHTML=content||'小提示';
+    div.classList.add('tips-top');
+    div.style.cssText=cssText;
+
+    if(target){
+        if(typeof target=='string'){
+            container=document.querySelector(target);
+        }
+        else if(target.nodeName){
+            container=target;
+        }
+        else{
+            container=target[0]
+        }
+    }
+    else{
+        container=document.body;
+    }
+
+    var tar=container;
+    tar.insertBefore(div,tar.firstChild);
+
+    var t=parseInt(time);
+    if(t){
+        setTimeout(function(){
+            tar.removeChild(div);
+        },t)
+    }
+
+}
+
 //加载等待提示，pcWaiting.show()、waiting.remove(),电脑端等待，没有提示文字,arg=global：局部小等待
 PCwaiting = {
     _getDiv: function (arg) {
@@ -213,4 +283,12 @@ PCwaiting = {
     remove: function () {
         document.body.removeChild(this._getDiv());
     }
+};
+
+//从搜索结果返回时，带回已选择的标签，低版本会出兼容问题
+try{
+    2==performance.navigation.type && (vm.tags.selected=JSON.parse(localStorage.tagSelected));
+}
+catch(e){
+    console.log(e);
 };

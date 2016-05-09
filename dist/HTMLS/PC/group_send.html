@@ -20,8 +20,8 @@
                 <section class="mt10">
                     <div class="tab-switcher-horizontal">
                         <div class="title group-status ">
-                            <a href="javascript:;" class="item on">新建群发</a>
-                            <a href="javascript:;" class="item">群发记录</a>
+                            <a href="javascript:;" class="item on" @click="this.view=''">新建群发</a>
+                            <a href="javascript:;" class="item" @click="this.view='list'">群发记录</a>
                         </div>
                         <div class="content group-content">
                             <div class="item new on">
@@ -101,25 +101,8 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>
-                                                    <div>文字</div>
-                                                </td>
-                                                <td>
-                                                    <div class="timestamp text-nowrap">2016-01-01 12：01：02</div>
-                                                </td>
-                                                <td class="text-left">
-                                                    <div class='send-content text-ellipsis'><span class="type">[文字]</span> 元宵节活动活动
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="num text-ellipsis">35655789789</div>
-                                                </td>
-                                                <td>
-                                                    <div class="num text-ellipsis">933956</div>
-                                                </td>
-                                            </tr>
-                                            <tr>
+                                            <component :is="view" keep-alive></component>
+                                            <!--                                             <tr>
                                                 <td>
                                                     <div>图片</div>
                                                 </td>
@@ -172,7 +155,7 @@
                                                 <td>
                                                     <div class="num text-ellipsis">9956</div>
                                                 </td>
-                                            </tr>
+                                            </tr> -->
                                         </tbody>
                                     </table>
                                     <div id="page-content"></div>
@@ -181,6 +164,22 @@
                                         <h3 class="bg text-center p10">
                         暂时没有相关数据（视情况输出，表格部分全部不显示）
                     </h3>
+                                    </div>
+                                    <div class="radio-switcher">
+                                        <div class="title">
+                                            <label class="item radio">
+                                                <input type="radio" checked name="sel" id="">图片<span class="icon"></span></label>
+                                                <label class="item radio">
+                                                <input type="radio" name="sel" id="">音乐<span class="icon"></span></label>
+                                        </div>
+                                        <div class="content">
+                                            <div class="item on">
+                                                图片图片内容内容
+                                            </div>
+                                            <div class="item">
+                                                音乐音乐内容内容
+                                            </div>
+                                        </div>
                                     </div>
                                 </section>
                             </div>
@@ -272,13 +271,81 @@
     <script src="../../scripts/lib/jquery-1.11.3.js"></script>
     <script src="../../scripts/lib/jquery.twbsPagination.js"></script>
     <script src="../../scripts/lib/artdialog/dist/dialog-plus-min.js"></script>
+    <script src="../../scripts/lib/vue.js"></script>
+    <script src="../../scripts/lib/vue-router.js"></script>
+    <script src="../../scripts/API/simulateData.js"></script>
+    <script src="../../scripts/bundle/bundle.js"></script>
     <script>
+    // $.ajax({
+    //     url:'/dist/scripts/api/simuleData.js',
+    //     dataType:'JSON',
+    //     function(data){
+    //         console.log(data);
+    //     }
+    // })
+
+    var listConstructor = Vue.extend({
+        props: ['dataList'],
+        template: '<tr v-for="item of dataList"><td><div>{{item.type}}</div></td><td><div class="timestamp text-nowrap">{{item.time}}</div></td><td class="text-left"><div class="send-content text-ellipsis"><span class="type">[{{item.type}}]</span> {{item.content}}</div></td><td><div class="num text-ellipsis">{{item.count.success}}</div></td><td><div class="num text-ellipsis">{{item.count.failure}}</div></td></tr>',
+        activate: function(done) {
+            var self = this;
+            loadDataAsync(function(data) {
+                console.log(data);
+                console.log(this.dataList)
+            })
+        }
+    })
+
+    // var listConstructor=Vue.extend({
+    //     props:['list'],
+    //     template:'<div>3893</div>'
+    // })
+
+
+    var list = Vue.component('list', listConstructor);
+
+    var vm = new Vue({
+        el: 'body',
+        data: {
+            dataList: obj.list,
+            view: ''
+        },
+        computed: {
+
+        },
+        methods: {
+
+        },
+        components: {
+            list: list
+        }
+    })
+
+    $('.filter-by-tag').on('click', function() {
+        var d = dialog({
+            title: '提示',
+            ok: function() {
+
+            },
+            cancel: function() {}
+        }).showModal();
+        d.content('<table><list></list></table>')
+    })
+
     //标签联动内容切换
     $('.tab-switcher-horizontal').children('.title').children('.item').on('click', function() {
         var $this = $(this),
             index = $this.index();
         $this.addClass('on').siblings('.item').removeClass('on').closest('.tab-switcher-horizontal').children('.content').children('.item').eq(index).addClass('on').siblings('.item').removeClass('on')
     });
+
+
+    //按钮关联内容切换
+    $('.radio-switcher').children('.title').children('.item').on('click',function(){
+        var $t=$(this),
+        index=$t.index();
+        $t.closest('.radio-switcher').children('.content').children('.item').eq(index).show().siblings('.item').hide();
+    })
 
     //小标签选择弹窗
     $('[data-dialog-content]').on('click', function() {
@@ -301,10 +368,10 @@
                     }
                 });
             },
-            cancel:function(){
+            cancel: function() {
                 // alert('h')
             },
-            cancelDisplay:false
+            cancelDisplay: false
         });
         d.content($('.popup-html').find('.' + dialog_content).html()).showModal();
     });

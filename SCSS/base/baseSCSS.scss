@@ -55,6 +55,8 @@ input[type=number],
 input[type=date],
 input[type=color],
 input[type=time],
+input[type=url],
+input:not([type]),
 button,
 textarea,
 select,
@@ -185,7 +187,7 @@ img {
 }
 
 .row {
-    padding: 10px;
+    // padding: 10px;
 }
 
 .clearfix:after {
@@ -227,6 +229,11 @@ img {
     border-collapse: collapse;
     >.item {
         display: table-cell;
+    }
+}
+.col2{
+    >.col-item{
+        width: 50%;
     }
 }
 
@@ -283,14 +290,6 @@ $cursor-disabled:not-allowed!default;
             font-weight: 400;
             line-height: inherit;
         }
-    }
-}
-
-.cols {
-    overflow: hidden;
-    >.item {
-        float: left;
-        width: 50%;
     }
 }
 

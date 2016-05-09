@@ -6,6 +6,8 @@
 @import '_set';
 @import 'base/_iconfont';
 @import 'base/_radio-check.scss';
+@import 'base/_btn_tag.scss';
+@import 'base/_arrow_down.scss';
 body {
     min-width: 1080px;
     background: #F0F0F0;
@@ -15,6 +17,7 @@ body {
     padding: 0 1.25em;
     min-width: 4.5em;
 }
+@import "base/_info_list.scss";
 
 .info-list {
     >.item {

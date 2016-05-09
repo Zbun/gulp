@@ -67,6 +67,7 @@
             }
         }
         .ui-dialog-body {
+            position: relative;
             padding: 20px;
             .ui-dialog-content {
                 min-width: 200px;
@@ -120,13 +121,17 @@
                         background: $color-btn-hover;
                     }
                 }
-                [i-id=ok] {
+                [i-id=ok],.ui-dialog-autofocus {
                     background: $color-primary;
                     color: #fff;
                     border-color: darken($color-primary, 4%);
                     &:hover {
                         background: darken($color-primary, 4%);
                     }
+                }
+                //兼容他们写的弹窗，确定按钮靠左
+                [i-id='确定'][autofocus]{
+                    float: left;
                 }
             }
         }
@@ -164,7 +169,6 @@
         }
     }
 }
-
 
 @-webkit-keyframes ui-dialog-loading {
     0% {
