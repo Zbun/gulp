@@ -1,4 +1,5 @@
-function popup(opts) {
+
+module.exports=(opts) =>{
     var opt = {
         title: opts.title||'',
         content: opts.content||'',                  //内容
@@ -40,14 +41,17 @@ style.innerText='.popup .btns{margin: 10px 0; text-align: center; font-size: 0; 
 '.popup.ios .wrapper .btns .btn-wrapper + .btn-wrapper,.popup.weixin .wrapper .btns .btn-wrapper + .btn-wrapper {border-color: #e2e2e2; }'+
 '@-webkit-keyframes popup-show { 100% { opacity: 1; } } @keyframes popup-show {100% {opacity: 1; } }';
    
+
+     var _isFunction=(obj)=>typeof obj == 'function' ? true : false;
+
     !document.querySelector('#z-popup') && document.querySelector('head').appendChild(style);
     var title = opt.title,
         content = opt.content,
         ok = opt.ok,
-        okVal = opt.okVal || typeof opt.ok=='function'?'确定':'',
+        okVal = opt.okVal || _isFunction(opt.ok)?'确定':'',
         mask = opt.mask;
     var time = parseInt(opt.time),
-        cancelVal = opt.cancelVal||typeof opt.cancel=='function'?'取消':'',
+        cancelVal = opt.cancelVal||_isFunction(opt.cancel)?'取消':'',
         cancel = opt.cancel,
         beforeShow = opt.beforeShow,
         afterShow = opt.afterShow,
@@ -65,7 +69,6 @@ style.innerText='.popup .btns{margin: 10px 0; text-align: center; font-size: 0; 
     var div = document.createElement('div'),
         className = 'popup ' + opt.theme.toLowerCase();
 
-        console.log(mask);
     if (!mask) {
         className += ' nomask';
     }
@@ -76,13 +79,17 @@ style.innerText='.popup .btns{margin: 10px 0; text-align: center; font-size: 0; 
     var html = '<div class="wrapper">' + (title ? ('<h3 class="title">' + title + '</h3>') : '') + '<a href="javascript:;" class="close"></a>' + (content ? ('<div class="content">' + content + '</div>') : '') + ((okVal || cancelVal) ? ('<div class="btns">' + (cancelVal ? ('<span class="btn-wrapper"><a href="javascript:;" class="cancel btn btn-danger">' + cancelVal + '</a></span>') : '') + (okVal ? ('<span class="btn-wrapper"><a href="javascript:;" class="btn btn-warning ok">' + okVal + '</a></span>') : '')) : '') + '</div></div>';
     div.innerHTML += html;
 
-    function _remove() {
+    // function _remove() {
+    //     div.parentNode.removeChild(div);
+    // }
+
+    var _remove=()=>{
         div.parentNode.removeChild(div);
     }
 
-    function _isFunction(obj) {
-        return typeof obj == 'function' ? true : false;
-    }
+    // function _isFunction(obj) {
+    //     return typeof obj == 'function' ? true : false;
+    // }
 
     document.body.appendChild(div);
     div.addEventListener('click', function(e) {
@@ -100,15 +107,18 @@ style.innerText='.popup .btns{margin: 10px 0; text-align: center; font-size: 0; 
     _isFunction(beforeShow) && beforeShow();
 
     //自动关闭执行事件
-    function _autoClose() {
+    //
+    var _autoClose=()=>{
         _remove();
         _isFunction(closeCallback) && closeCallback();
     }
+    // function _autoClose() {
+    //     _remove();
+    //     _isFunction(closeCallback) && closeCallback();
+    // }
 
     if (time > 0) {
         setTimeout(_autoClose, time);
     }
     return div;
 }
-
-module.exports=popup;

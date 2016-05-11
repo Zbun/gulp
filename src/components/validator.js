@@ -1,6 +1,6 @@
 //一些验证方法
-;
-var validator = {
+
+module.exports={
     _reg: {
         empty: /^\s*$/,
         phone: /^1\d{10}$/,
@@ -47,4 +47,3 @@ var validator = {
         return false;
     }
 };
-module.exports=validator;

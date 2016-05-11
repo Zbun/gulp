@@ -22,13 +22,14 @@ var vm = new Vue({
         },
         batch:{
 
-        }
+        },
+        isBackUp:true,
     },
     methods: {
         clearSelected:function(){
             this.tags.selected=[];
             this.scoreFlag=-1;
-            localStorage.setItem('tagSelected','');
+            document.cookie='tagSelected=""';
         }
     },
     computed: {
@@ -41,6 +42,7 @@ var vm = new Vue({
         }
     }
 })
+
 
 
 //标签选择相关
@@ -58,13 +60,16 @@ $('[data-dialog-content]').on('click', function () {
                 return {id:$(this).data('id'),name:$(this).data('name')}
             }).get();
 
-            localStorage.setItem('tagSelected',JSON.stringify(vm.tags.selected));
+            $htmlTagsSelected.html($(d.node).find('.ui-dialog-content').html())
+            document.cookie='tagSelected='+JSON.stringify(vm.tags.selected);
+            vm.isBackUp=false;
         },
         button: [
             {
                 value: '清空',
                 callback: function () {
                     $(d.node).find('.user-tag-list').find('.on').click();
+                    vm.isBackUp=true;
                     return false;
                 }
             }
@@ -73,7 +78,27 @@ $('[data-dialog-content]').on('click', function () {
 
     if(vm.tags.list.length>0){
         if(vm.tags.selected.length>0){
+
+            var arrTemp=vm.tags.selected;
+
+            try{
+                if(performance.navigation.type==2&&vm.isBackUp){
+                    var $newHtml=$('<div/>');
+                    $newHtml.html(htmlTagsList)
+                    for(var i=0;i<arrTemp.length;i++){
+                        $newHtml.find('[data-id='+arrTemp[i].id+']').addClass('on');
+                    }
+
+                    $htmlTagsSelected.html($newHtml.html());
+                    vm.isBackUp=false;
+                }
+            }
+            catch(e){
+                console.log(e);
+            }
+
             d.content($htmlTagsSelected.html());
+
             return;
         }
         d.content(htmlTagsList);
@@ -87,7 +112,27 @@ $('[data-dialog-content]').on('click', function () {
         }
         var getRealContent = function (){
             htmlTagsList=$('.popup-html').find('.'+dialog_content).children('.content').html();
-            d.content(htmlTagsList);
+            $htmlTagsSelected.html(htmlTagsList);
+            try{
+                if(vm.tags.selected.length>0) {
+                    var arrTemp=vm.tags.selected;
+                    if (performance.navigation.type == 2 && vm.isBackUp) {
+                        var $newHtml = $('<div/>');
+                        $newHtml.html(htmlTagsList)
+                        for (var i = 0; i < arrTemp.length; i++) {
+                            $newHtml.find('[data-id=' + arrTemp[i].id + ']').addClass('on');
+                        }
+
+                        $htmlTagsSelected.html($newHtml.html());
+                        vm.isBackUp = false;
+                    }
+                }
+            }
+            catch(e){
+                console.log(e);
+            }
+
+            d.content($htmlTagsSelected);
         }
         setTimeout(getRealContent);
     });
@@ -110,13 +155,8 @@ $('body').on('click', '.js-toggle-class>.title>.item', function () {
     vm.tags.selected =$(this).closest('.tag').siblings('.tag').map(function(){
         return  {id:$(this).data('id'),name:$(this).data('name')}
     }).get();
-    localStorage.setItem('tagSelected',JSON.stringify(vm.tags.selected));
+    document.cookie='tagSelected='+JSON.stringify(vm.tags.selected);
 });
-
-//处理选中标签继续选择带回啊
-$('body').on('click','.user-tag-list .btn-tag',function(){
-    $htmlTagsSelected.html($(this).closest('.ui-dialog-content').html())
-})
 
 
 //通用全选处理，个别情况单独处理
@@ -204,6 +244,14 @@ $('#search_form').submit(function(){
         $phone.focus();
         return false;
     }
+
+    var $score=$(this).find('[name=score]'),scoreVal=$score.val();
+    if(vm.scoreFlag!=-1 && (!Gvalidator.isEmpty(scoreVal) && Gvalidator.isNotInteger(scoreVal))){
+        showTipsTopAutoHide('请输入整数');
+        $score.focus();
+        return false;
+    }
+    document.cookie='tagSelected='+JSON.stringify(vm.tags.selected);
 })
 
 
@@ -287,7 +335,17 @@ PCwaiting = {
 
 //从搜索结果返回时，带回已选择的标签，低版本会出兼容问题
 try{
-    2==performance.navigation.type && (vm.tags.selected=JSON.parse(localStorage.tagSelected));
+    if(2==performance.navigation.type){
+
+        var cookie=document.cookie;
+        var start=cookie.indexOf('tagSelected'),
+            end=cookie.indexOf(';',start);
+        var tagSelected=cookie.substring(start,end).split('=')[1];
+        vm.tags.selected=JSON.parse(tagSelected);
+    }
+    else if(1==performance.navigation.type){
+        vm.tags.selected=[];
+    }
 }
 catch(e){
     console.log(e);

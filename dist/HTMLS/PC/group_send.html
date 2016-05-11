@@ -268,9 +268,58 @@
             </div>
         </div>
     </div>
+
+<style>
+    .tipsCenter{
+        position: fixed;
+        top: 36%;
+        left: 50%;
+        z-index: 10;
+       padding: 1em 2em;
+        color: #1fb5ac;
+        background: #fff;
+        border: 1px solid;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px;
+        line-height: 1;
+        -webkit-transform: translate(-50%,-50%);
+        -moz-transform: translate(-50%,-50%);
+        -ms-transform: translate(-50%,-50%);
+        -o-transform: translate(-50%,-50%);
+        transform: translate(-50%,-50%);
+        text-align: center;
+    }
+    .tipsCenter .icon{
+        font-size: 24px;
+width: 28px;
+line-height: 26px;
+margin-top: 4px;
+        margin-bottom: 10px;
+        display: inline-block;
+        -webkit-border-radius: 100%;
+        -moz-border-radius: 100%;
+        border-radius: 100%;
+        border: 1px solid;
+    }
+    .warning{
+        color:#fb6362;
+    }
+</style>
+
+    <div class="tipsCenter">
+        <div class="item">
+            <i class="icon">!</i>
+        <p>
+            操作成功 操作成功 操作成功;
+        </p>
+        </div>
+        
+    </div>
+
     <script src="../../scripts/lib/jquery-1.11.3.js"></script>
     <script src="../../scripts/lib/jquery.twbsPagination.js"></script>
-    <script src="../../scripts/lib/artdialog/dist/dialog-plus-min.js"></script>
+    <!-- <script src="../../scripts/lib/artdialog/dist/dialog-plus-min.js"></script> -->
     <script src="../../scripts/lib/vue.js"></script>
     <script src="../../scripts/lib/vue-router.js"></script>
     <script src="../../scripts/API/simulateData.js"></script>
@@ -321,65 +370,57 @@
         }
     })
 
-    $('.filter-by-tag').on('click', function() {
-        var d = dialog({
-            title: '提示',
-            ok: function() {
+    // $('.filter-by-tag').on('click', function() {
+    //     var d = dialog({
+    //         title: '提示',
+    //         ok: function() {
 
-            },
-            cancel: function() {}
-        }).showModal();
-        d.content('<table><list></list></table>')
-    })
+    //         },
+    //         cancel: function() {}
+    //     }).showModal();
+    //     d.content('<table><list></list></table>')
+    // })
 
-    //标签联动内容切换
-    $('.tab-switcher-horizontal').children('.title').children('.item').on('click', function() {
-        var $this = $(this),
-            index = $this.index();
-        $this.addClass('on').siblings('.item').removeClass('on').closest('.tab-switcher-horizontal').children('.content').children('.item').eq(index).addClass('on').siblings('.item').removeClass('on')
-    });
+    // //按钮关联内容切换
+    // $('.radio-switcher').children('.title').children('.item').on('click',function(){
+    //     var $t=$(this),
+    //     index=$t.index();
+    //     $t.closest('.radio-switcher').children('.content').children('.item').eq(index).show().siblings('.item').hide();
+    // })
 
+    // //小标签选择弹窗
+    // $('[data-dialog-content]').on('click', function() {
+    //     $t = $(this), dialog_content = $t.data('dialogContent'),
+    //         dialog_title = $t.data('dialogTitle');
+    //     var d = dialog({
+    //         title: dialog_title,
+    //         onshow: function() {
+    //             //分页，后台来时删除库及本段代码
+    //             $('.user-selected-pagination').twbsPagination({
+    //                 totalPages: 15,
+    //                 visiblePages: 5,
+    //                 goVal: 'Go',
+    //                 first: '首页',
+    //                 last: '末页',
+    //                 prev: '<',
+    //                 next: '>',
+    //                 onPageClick: function(event, page) {
+    //                     $('#page-content').text('Page ' + page);
+    //                 }
+    //             });
+    //         },
+    //         cancel: function() {
+    //             // alert('h')
+    //         },
+    //         cancelDisplay: false
+    //     });
+    //     d.content($('.popup-html').find('.' + dialog_content).html()).showModal();
+    // });
 
-    //按钮关联内容切换
-    $('.radio-switcher').children('.title').children('.item').on('click',function(){
-        var $t=$(this),
-        index=$t.index();
-        $t.closest('.radio-switcher').children('.content').children('.item').eq(index).show().siblings('.item').hide();
-    })
-
-    //小标签选择弹窗
-    $('[data-dialog-content]').on('click', function() {
-        $t = $(this), dialog_content = $t.data('dialogContent'),
-            dialog_title = $t.data('dialogTitle');
-        var d = dialog({
-            title: dialog_title,
-            onshow: function() {
-                //分页，后台来时删除库及本段代码
-                $('.user-selected-pagination').twbsPagination({
-                    totalPages: 15,
-                    visiblePages: 5,
-                    goVal: 'Go',
-                    first: '首页',
-                    last: '末页',
-                    prev: '<',
-                    next: '>',
-                    onPageClick: function(event, page) {
-                        $('#page-content').text('Page ' + page);
-                    }
-                });
-            },
-            cancel: function() {
-                // alert('h')
-            },
-            cancelDisplay: false
-        });
-        d.content($('.popup-html').find('.' + dialog_content).html()).showModal();
-    });
-
-    //小标签选中样式切换
-    $('body').on('click', '.js-toggle-class-clear>.title>.item', function() {
-        $(this).addClass('on').siblings('.item').removeClass('on').closest('.js-toggle-class').children('.content').children('.item').toggleClass('on');
-    });
+    // //小标签选中样式切换
+    // $('body').on('click', '.js-toggle-class-clear>.title>.item', function() {
+    //     $(this).addClass('on').siblings('.item').removeClass('on').closest('.js-toggle-class').children('.content').children('.item').toggleClass('on');
+    // });
     </script>
 </body>
 
