@@ -59,6 +59,7 @@ function SPIN(target, spinType) {
         return;
     }
     this.init(target, spinType);
+    return this.spinner;
 }
 SPIN.prototype.init = function(target, spinType) {
     this.target=getTarget(target);
@@ -77,4 +78,6 @@ SPIN.prototype.stop = function() {
     this.spinner.stop();
 }
 
-module.exports = SPIN;
+module.exports =(target,spinType)=>{
+    return new SPIN(target,spinType);
+};

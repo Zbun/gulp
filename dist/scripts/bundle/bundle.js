@@ -46,89 +46,115 @@
 
 	'use strict';
 
-	// var waiting=require('waiting.js');
-	// var $=require('jQuery');
-	// waiting.show();
-
-	var dialog = __webpack_require__(1);
-
-	var waiting = __webpack_require__(3);
-
-	// var  validator = require('validator');
-
-	// var popup=require('popupMobile');
-
-	__webpack_require__(5)();
-
-	// import al from 'alert.js';
-	// al(3)
-
-	//小标签选择弹窗
-	$('[data-dialog-content]').on('click', function () {
-	    var $t = $(this),
-	        dialog_content = $t.data('dialogContent'),
-	        dialog_title = $t.data('dialogTitle');
-	    var d = dialog({
-	        title: dialog_title,
-	        onshow: function onshow() {
-	            //分页，后台来时删除库及本段代码
-	            $('.user-selected-pagination').twbsPagination({
-	                totalPages: 15,
-	                visiblePages: 5,
-	                prev: '<',
-	                next: '>',
-	                onPageClick: function onPageClick(event, page) {
-	                    $('#page-content').text('Page ' + page);
-	                }
-	            });
-	        },
-	        cancel: function cancel() {
-	            // alert('h')
-	        },
-	        cancelDisplay: false
-	    });
-	    d.content($('.popup-html').find('.' + dialog_content).html()).showModal();
-	});
-
-	// popup({
-	// 	title:'提示',
-	// 	content:'你好啊',
-	// 	ok:function(){
-	// 		alert('ok')
-	// 	}
-
-	// })
-
-	// waiting.show();
-	// setTimeout(function(){
-	//     waiting.hide();
-	// },5000);
-
-	var w2 = waiting.show($('.wrapper'));
-	setTimeout(function () {
-	    w2.remove();
-	}, 6000);
-
-	var showTipsOnTop = __webpack_require__(6);
-
-	showTipsOnTop('操作成功', '.wrapper', 3333);
-
-	var SPIN = __webpack_require__(7);
-
-	var s1 = new SPIN($('.wrapper'));
-
-	setTimeout(function () {
-	    s1.stop();
-	}, 2000);
-
-	var s2 = new SPIN($('.tab-switcher-horizontal>.title'));
-
-	var showTips = __webpack_require__(9);
-
-	showTips();
+	//一些文档
+	__webpack_require__(1);
 
 /***/ },
 /* 1 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	module.exports = function () {
+	    //对话框
+	    var dialog = __webpack_require__(2);
+
+	    //请求等待动画，show的参数为容器，此时作为构造方法
+	    var waiting = __webpack_require__(4);
+
+	    waiting.show();
+
+	    setTimeout(function () {
+	        waiting.hide();
+	    }, 5000);
+
+	    // var w2= waiting.show($('.wrapper'));
+	    // setTimeout(function(){
+	    //     w2.remove();
+	    // },6000)
+
+	    //各类校验
+	    // var  validator = require('validator');
+
+	    //手机端弹窗
+	    // var popup=require('popupMobile');
+	    // popup({
+	    //  title:'提示',
+	    //  content:'你好啊',
+	    //  ok:function(){
+	    //      alert('ok')
+	    //  }
+
+	    // })
+
+	    //标签切换
+	    __webpack_require__(6);
+
+	    //全选功能
+	    __webpack_require__(7);
+
+	    // import al from 'alert.js';
+	    // al(3)
+
+	    //小标签选择弹窗
+	    $('[data-dialog-content]').on('click', function () {
+	        var $t = $(this),
+	            dialog_content = $t.data('dialogContent'),
+	            dialog_title = $t.data('dialogTitle');
+	        var d = dialog({
+	            title: dialog_title,
+	            onshow: function onshow() {
+	                //分页，后台来时删除库及本段代码
+	                $('.user-selected-pagination').twbsPagination({
+	                    totalPages: 15,
+	                    visiblePages: 5,
+	                    prev: '<',
+	                    next: '>',
+	                    onPageClick: function onPageClick(event, page) {
+	                        $('#page-content').text('Page ' + page);
+	                    }
+	                });
+	            },
+	            cancel: function cancel() {
+	                // alert('h')
+	            },
+	            cancelDisplay: false
+	        });
+	        d.content($('.popup-html').find('.' + dialog_content).html()).showModal();
+	    });
+
+	    //顶部提示的，目前只有红色框
+	    var showTipsOnTop = __webpack_require__(8);
+
+	    showTipsOnTop('未授权，请重试', '.wrapper', 3333);
+
+	    //加载数据的操作小菊花
+	    var spin = __webpack_require__(9);
+
+	    var s1 = spin($('.wrapper'));
+	    setTimeout(function () {
+	        s1.stop();
+	    }, 2000);
+
+	    //操作提示，第二个参数为成功与失败，可传'error','false','warning'
+	    var showTips = __webpack_require__(11);
+
+	    showTips('网络错误', 'error');
+
+	    //侧滑删除、arg1=对象,arg2=回调,arg3=方向(right,up,down),arg4=偏移距离
+	    var slideDel = __webpack_require__(14);
+
+	    $('.js-slide-del').on('click', function () {
+	        var dir = $(this).data('delDirection');
+	        slideDel(this, function () {
+	            console.log('del');
+	        }, dir);
+	        return false;
+	    });
+	}();
+
+/***/ },
+/* 2 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(module) {"use strict";
@@ -422,10 +448,10 @@
 	    }, c;
 	  });"object" == ( false ? "undefined" : _typeof(module)) && module.exports ? module.exports = a("dialog-plus") : window.dialog = a("dialog-plus");
 	}();
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)(module)))
 
 /***/ },
-/* 2 */
+/* 3 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -441,47 +467,94 @@
 
 
 /***/ },
-/* 3 */
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(getTarget) {'use strict';
 
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
 	//加载等待提示，pcWaiting.show()、waiting.remove(),电脑端等待，没有提示文字,arg=global：全遮罩
+	// function Waiting(container) {
+	//     this.init(container);
+	//     return this;
+	// };
 
-	function Waiting(container) {
-	    this.init(container);
-	    return this;
-	};
+	// Waiting.prototype.init = function(container) {
+	//     var container = getTarget(container) || document.body;
+	//     var box = container.querySelector('.PCwaiting');
+	//     if (!box) {
+	//         var div = document.createElement('div');
+	//         div.className = 'PCwaiting local';
+	//         box = div;
+	//         if (!container) {
+	//             div.style.position = 'fixed';
+	//         }
+	//         var style = document.createElement('style');
+	//         style.innerHTML = ".PCwaiting{position:absolute;top:0;bottom:0;left:0;right:0;background:rgba(0,0,0,.5);z-index:8888}.PCwaiting.local{left:50%;top:36%;width:50px;height:48px;margin-left:-25px;border-radius:3px;}.PCwaiting:after {content: ''; position: absolute; top: 50%; left: 50%; width: 3px; height: 3px; margin-top: -2px; margin-left: -2px; text-align: center; -webkit-border-radius: 100%; border-radius: 100%; box-shadow:0 0 3px; -webkit-transition: all, 0.3s, linear; transition: all, 0.3s, linear; -webkit-animation: am-wait 1.2s linear infinite; animation: am-wait 1.2s linear infinite;box-shadow:0 -10px 0 1px #eee, 10px 0px #eee, 0 10px #eee, -10px 0 #eee, -7px -7px 0 0.5px #eee, 7px -7px 0 0.5px #eee, 7px 7px #eee, -7px 7px #eee }@-webkit-keyframes am-wait {100% {-webkit-transform: rotate(1turn);transform: rotate(1turn);}}@keyframes am-wait {100% {-webkit-transform: rotate(1turn);transform: rotate(1turn);}";
+	//         box.appendChild(style);
+	//         // container.appendChild(w);
+	//     }
+	//     this.waitingContainer = container;
+	//     this.waitingBox = box;
+	// }
+	// Waiting.prototype.show = function() {
+	//     this.waitingContainer.appendChild(this.waitingBox);
+	//     return this;
+	// }
+	// Waiting.prototype.hide = function() {
+	//     this.waitingBox.style.display = 'none';
+	//     return this;
+	// }
+	// Waiting.prototype.remove = function() {
+	//     this.waitingContainer.removeChild(this.waitingBox);
+	// }
 
-	Waiting.prototype.init = function (container) {
-	    var container = getTarget(container) || document.body;
-	    var box = container.querySelector('.PCwaiting');
-	    if (!box) {
-	        var div = document.createElement('div');
-	        div.className = 'PCwaiting local';
-	        box = div;
-	        if (!container) {
-	            div.style.position = 'fixed';
+	var Waiting = function () {
+	    function Waiting(container) {
+	        _classCallCheck(this, Waiting);
+
+	        var container = getTarget(container) || document.body;
+	        var box = container.querySelector('.PCwaiting');
+	        if (!box) {
+	            var div = document.createElement('div');
+	            div.className = 'PCwaiting local';
+	            box = div;
+	            if (!container) {
+	                div.style.position = 'fixed';
+	            }
+	            var style = document.createElement('style');
+	            style.innerHTML = ".PCwaiting{position:absolute;top:0;bottom:0;left:0;right:0;background:rgba(0,0,0,.5);z-index:8888}.PCwaiting.local{left:50%;top:36%;width:50px;height:48px;margin-left:-25px;border-radius:3px;}.PCwaiting:after {content: ''; position: absolute; top: 50%; left: 50%; width: 3px; height: 3px; margin-top: -2px; margin-left: -2px; text-align: center; -webkit-border-radius: 100%; border-radius: 100%; box-shadow:0 0 3px; -webkit-transition: all, 0.3s, linear; transition: all, 0.3s, linear; -webkit-animation: am-wait 1.2s linear infinite; animation: am-wait 1.2s linear infinite;box-shadow:0 -10px 0 1px #eee, 10px 0px #eee, 0 10px #eee, -10px 0 #eee, -7px -7px 0 0.5px #eee, 7px -7px 0 0.5px #eee, 7px 7px #eee, -7px 7px #eee }@-webkit-keyframes am-wait {100% {-webkit-transform: rotate(1turn);transform: rotate(1turn);}}@keyframes am-wait {100% {-webkit-transform: rotate(1turn);transform: rotate(1turn);}";
+	            box.appendChild(style);
+	            // container.appendChild(w);
 	        }
-	        var style = document.createElement('style');
-	        style.innerHTML = ".PCwaiting{position:absolute;top:0;bottom:0;left:0;right:0;background:rgba(0,0,0,.5);z-index:8888}.PCwaiting.local{left:50%;top:36%;width:50px;height:48px;margin-left:-25px;border-radius:3px;}.PCwaiting:after {content: ''; position: absolute; top: 50%; left: 50%; width: 3px; height: 3px; margin-top: -2px; margin-left: -2px; text-align: center; -webkit-border-radius: 100%; border-radius: 100%; box-shadow:0 0 3px; -webkit-transition: all, 0.3s, linear; transition: all, 0.3s, linear; -webkit-animation: am-wait 1.2s linear infinite; animation: am-wait 1.2s linear infinite;box-shadow:0 -10px 0 1px #eee, 10px 0px #eee, 0 10px #eee, -10px 0 #eee, -7px -7px 0 0.5px #eee, 7px -7px 0 0.5px #eee, 7px 7px #eee, -7px 7px #eee }@-webkit-keyframes am-wait {100% {-webkit-transform: rotate(1turn);transform: rotate(1turn);}}@keyframes am-wait {100% {-webkit-transform: rotate(1turn);transform: rotate(1turn);}";
-	        box.appendChild(style);
-	        // container.appendChild(w);
+	        this.waitingContainer = container;
+	        this.waitingBox = box;
 	    }
-	    this.waitingContainer = container;
-	    this.waitingBox = box;
-	};
-	Waiting.prototype.show = function () {
-	    this.waitingContainer.appendChild(this.waitingBox);
-	    return this;
-	};
-	Waiting.prototype.hide = function () {
-	    this.waitingBox.style.display = 'none';
-	    return this;
-	};
-	Waiting.prototype.remove = function () {
-	    this.waitingContainer.removeChild(this.waitingBox);
-	};
+
+	    _createClass(Waiting, [{
+	        key: 'show',
+	        value: function show() {
+	            this.waitingContainer.appendChild(this.waitingBox);
+	            return this;
+	        }
+	    }, {
+	        key: 'hide',
+	        value: function hide() {
+	            this.waitingBox.style.display = 'none';
+	            return this;
+	        }
+	    }, {
+	        key: 'remove',
+	        value: function remove() {
+	            this.waitingContainer.removeChild(this.waitingBox);
+	        }
+	    }]);
+
+	    return Waiting;
+	}();
 
 	module.exports = {
 	    show: function show(container) {
@@ -491,40 +564,10 @@
 	        return new Waiting().hide();
 	    }
 	};
-
-	// var obj1= {
-	//     _getDiv(target) {
-	//         var obj = getTarget(target) || document.body;
-
-	//         var w = obj.querySelector('.PCwaiting');
-	//         if (!w) {
-	//             var div = document.createElement('div');
-	//             div.className = 'PCwaiting local';
-	//             w = div;
-	//             if (!target) {
-	//                 div.style.position = 'fixed';
-	//             }
-	//             var style = document.createElement('style');
-	//             style.innerHTML = ".PCwaiting{position:absolute;top:0;bottom:0;left:0;right:0;background:rgba(0,0,0,.5);z-index:8888}.PCwaiting.local{left:50%;top:36%;width:50px;height:48px;margin-left:-25px;border-radius:3px;}.PCwaiting:after {content: ''; position: absolute; top: 50%; left: 50%; width: 3px; height: 3px; margin-top: -2px; margin-left: -2px; text-align: center; -webkit-border-radius: 100%; border-radius: 100%; box-shadow:0 0 3px; -webkit-transition: all, 0.3s, linear; transition: all, 0.3s, linear; -webkit-animation: am-wait 1.2s linear infinite; animation: am-wait 1.2s linear infinite;box-shadow:0 -10px 0 1px #eee, 10px 0px #eee, 0 10px #eee, -10px 0 #eee, -7px -7px 0 0.5px #eee, 7px -7px 0 0.5px #eee, 7px 7px #eee, -7px 7px #eee }@-webkit-keyframes am-wait {100% {-webkit-transform: rotate(1turn);transform: rotate(1turn);}}@keyframes am-wait {100% {-webkit-transform: rotate(1turn);transform: rotate(1turn);}";
-	//             w.appendChild(style);
-	//             obj.appendChild(w);
-	//         }
-	//         return w;
-	//     },
-	//     show(target) {
-	//         this._getDiv(target).style.display = 'block';
-	//     },
-	//     hide(target) {
-	//         this._getDiv(target).style.display = 'none';
-	//     },
-	//     remove(target) {
-	//         document.body.removeChild(this._getDiv());
-	//     }
-	// };
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 4 */
+/* 5 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -544,23 +587,58 @@
 	};
 
 /***/ },
-/* 5 */
+/* 6 */
 /***/ function(module, exports) {
 
 	'use strict';
 
 	// var $=require('jquery');
 
-	module.exports = function () {
-	    $('.tab-switcher-horizontal').children('.title').children('.item').on('click', function () {
-	        var $this = $(this),
-	            index = $this.index();
-	        $this.addClass('on').siblings('.item').removeClass('on').closest('.tab-switcher-horizontal').children('.content').children('.item').eq(index).addClass('on').siblings('.item').removeClass('on');
+	module.exports = function ($) {
+	    if (!$) {
+	        console.warn('需要jQuery赞助哦');
+	        return;
+	    }
+
+	    $('.js-switcher').children('.title').children('.item').on('click', function () {
+	        var $t = $(this),
+	            index = $t.closest('.title').children('.item').index(this);
+	        $t.addClass('on').siblings('.item').removeClass('on').closest('.js-switcher').children('.content').children('.item').eq(index).addClass('on').siblings('.item').removeClass('on');
 	    });
-	};
+	}(jQuery);
 
 /***/ },
-/* 6 */
+/* 7 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	//全选处理，到时合至通用JS文件
+	module.exports = function ($) {
+
+	    if (!$) {
+	        console.warn('需要jQuery赞助哦');
+	        return;
+	    }
+
+	    $('.chks').on('change', '.chk-all', function () {
+	        $(this).closest('.chks').find('.chk').prop('checked', this.checked);
+	    }).on('change', '.chk:not(.chk-all)', function () {
+	        var $data_Container = $(this).closest('.chks');
+	        if (!this.checked) {
+	            $data_Container.find('.chk-all').prop('checked', false);
+	            return;
+	        }
+	        var length_checkbox = $data_Container.find('.chk:not(".chk-all")').length,
+	            length_checked = $data_Container.find(':checked').length;
+	        if (length_checkbox == length_checked) {
+	            $data_Container.find('.chk-all').prop('checked', true);
+	        }
+	    });
+	}(jQuery);
+
+/***/ },
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(getTarget) {'use strict';
@@ -586,15 +664,15 @@
 	    }
 	}
 	module.exports = showTipsOnTop;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 7 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(getTarget) {'use strict';
 
-	var Spinner = __webpack_require__(8);
+	var Spinner = __webpack_require__(10);
 
 	var spinOpts = {
 	    defaultOpt: {
@@ -652,6 +730,7 @@
 	        return;
 	    }
 	    this.init(target, spinType);
+	    return this.spinner;
 	}
 	SPIN.prototype.init = function (target, spinType) {
 	    this.target = getTarget(target);
@@ -670,11 +749,13 @@
 	    this.spinner.stop();
 	};
 
-	module.exports = SPIN;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+	module.exports = function (target, spinType) {
+	    return new SPIN(target, spinType);
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 8 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module) {"use strict";
@@ -777,15 +858,15 @@
 	    }();var o = e(a("group"), { behavior: "url(#default#VML)" });!d(o, "transform") && o.adj ? i() : j = d(o, "animation");
 	  }return h;
 	});
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)(module)))
 
 /***/ },
-/* 9 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var typeOf = __webpack_require__(10);
+	var typeOf = __webpack_require__(12);
 
 	module.exports = function () {
 		var content = arguments.length <= 0 || arguments[0] === undefined ? '操作成功' : arguments[0];
@@ -824,7 +905,7 @@
 	};
 
 /***/ },
-/* 10 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(getType) {'use strict';
@@ -840,10 +921,10 @@
 			return Array.isArray ? Array.isArray(obj) : getType(obj) === 'array';
 		}
 	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(11)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(13)))
 
 /***/ },
-/* 11 */
+/* 13 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -854,9 +935,50 @@
 	    try {
 	        return Object.prototype.toString.call(target).match(/object\s*(\w*)/)[1].toLowerCase();
 	    } catch (e) {
-	        console.wran(e);
+	        console.warn(e);
 	    }
 	};
+
+/***/ },
+/* 14 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(getTarget) {'use strict';
+
+	var getTargets = __webpack_require__(5);
+
+	module.exports = function () {
+	    var target = arguments.length <= 0 || arguments[0] === undefined ? '' : arguments[0];
+	    var callback = arguments.length <= 1 || arguments[1] === undefined ? '' : arguments[1];
+	    var direction = arguments.length <= 2 || arguments[2] === undefined ? 'left' : arguments[2];
+	    var distance = arguments.length <= 3 || arguments[3] === undefined ? 30 : arguments[3];
+
+	    var target = getTarget(target);
+	    if (target) {
+	        var dir = '';
+	        switch (direction) {
+	            case 'up':
+	                dir = 'translateY(-' + distance + 'px)';
+	                break;
+	            case 'down':
+	                dir = 'translateY(' + distance + 'px)';
+	                break;
+	            case 'right':
+	                dir = 'translateX(' + distance + 'px)';
+	                break;
+	            default:
+	                dir = 'translateX(-' + distance + 'px)';
+	                break;
+	        }
+	        target.style.cssText = 'transition:.3s ease-out;z-index:-1;transform:' + dir + ';opacity:.1';
+	        var _remove = function _remove() {
+	            target.parentNode.removeChild(target);
+	            typeof callback === 'function' && callback();
+	        };
+	        setTimeout(_remove, 200);
+	    }
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ }
 /******/ ]);

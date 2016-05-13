@@ -11,6 +11,12 @@
 </head>
 
 <body>
+
+        <div class="time" data-time='undifined'></div>
+
+        <div class="time" data-time='500'></div>
+        <div class="time" data-time='20'></div>
+
     <div class="wrapper limited">
         <div class="main">
             <article class="body group">
@@ -268,6 +274,7 @@
             </div>
         </div>
     </div>
+
     <script src="../../scripts/lib/jquery-1.11.3.js"></script>
     <script src="../../scripts/lib/jquery.twbsPagination.js"></script>
     <!-- <script src="../../scripts/lib/artdialog/dist/dialog-plus-min.js"></script> -->
@@ -275,6 +282,7 @@
     <script src="../../scripts/lib/vue-router.js"></script>
     <script src="../../scripts/API/simulateData.js"></script>
     <script src="../../scripts/bundle/bundle.js"></script>
+    <script src="../../../src/scripts/lib/countdown.js"></script>
     <script>
     // $.ajax({
     //     url:'/dist/scripts/api/simuleData.js',
@@ -283,6 +291,12 @@
     //         console.log(data);
     //     }
     // })
+
+    $('.time').countdown({
+        callBack:function(){
+            console.log('over');
+        }
+    })
 
     var listConstructor = Vue.extend({
         props: ['dataList'],
