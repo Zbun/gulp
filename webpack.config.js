@@ -43,10 +43,11 @@ module.exports = {
         extensions: ['', '.vue', '.js'],
         alias: {
             spin: '../../../dist/scripts/lib/spin.min.js',
+            dialog: path.join(__dirname, './dist/scripts/lib/artdialog/dist/dialog-plus-min.js'),
             getTarget: path.join(__dirname,'./src/scripts/module/getTarget.js'),
             getType: path.join(__dirname,'./src/scripts/module/getType.js'),
             typeOf: path.join(__dirname,'./src/scripts/module/typeOf.js'),
-            dialog: path.join(__dirname, './dist/scripts/lib/artdialog/dist/dialog-plus-min.js')
+            mergeObject:path.join(__dirname,'./src/scripts/module/mergeObject.js'),
             // jquery:path.join(__dirname,'./dist/scripts/lib/jquery-1.11.3.js')
         }
     },
@@ -54,17 +55,18 @@ module.exports = {
         // jquery合并打包，需要配合本地或CDN加载
         new webpack.ProvidePlugin({
             // jQuery:'jquery',
-            // $:'jquery'
+            // $:'jquery',
             getTarget: 'getTarget',
             getType: 'getType',
             typeOf: 'typeOf',
-            // dialog:'dialog',        //需要全局时开启
+            dialog:'dialog',
+            merge:'mergeObject',
         })
     ],
-    watch: true,
+    // watch: true,
     externals: {
         //外部引入2，页面中需要预先引入相关库
         jquery: 'jQuery', //此时外部引入
-        $: 'jQuery'
+        $: 'jQuery',
     }
 };

@@ -1,7 +1,14 @@
 
 module.exports=(function(){
+
 //对话框
-var dialog = require('dialog');
+// var dialog = require('dialog');
+
+// dialog({
+//     skin:'mini',
+//     content:"你好",
+//     ok:function(){}
+// }).showModal();
 
 //请求等待动画，show的参数为容器，此时作为构造方法
 var waiting = require('waiting');
@@ -19,9 +26,9 @@ setTimeout(function() {
 
 
 //各类校验
-// var  validator = require('validator');
+var  validator = require('validator');
 
-
+console.log(validator.isEmpty(3,'3434afdf','    '))
 //手机端弹窗
 // var popup=require('popupMobile');
 // popup({
@@ -43,31 +50,31 @@ require('checkAll.js');
 // al(3)
 
 //小标签选择弹窗
-$('[data-dialog-content]').on('click', function() {
-    var $t = $(this),
-        dialog_content = $t.data('dialogContent'),
-        dialog_title = $t.data('dialogTitle');
-    var d = dialog({
-        title: dialog_title,
-        onshow: function() {
-            //分页，后台来时删除库及本段代码
-            $('.user-selected-pagination').twbsPagination({
-                totalPages: 15,
-                visiblePages: 5,
-                prev: '<',
-                next: '>',
-                onPageClick: function(event, page) {
-                    $('#page-content').text('Page ' + page);
-                }
-            });
-        },
-        cancel: function() {
-            // alert('h')
-        },
-        cancelDisplay: false
-    });
-    d.content($('.popup-html').find('.' + dialog_content).html()).showModal();
-});
+// $('[data-dialog-content]').on('click', function() {
+//     var $t = $(this),
+//         dialog_content = $t.data('dialogContent'),
+//         dialog_title = $t.data('dialogTitle');
+//     var d = dialog({
+//         title: dialog_title,
+//         onshow: function() {
+//             //分页，后台来时删除库及本段代码
+//             $('.user-selected-pagination').twbsPagination({
+//                 totalPages: 15,
+//                 visiblePages: 5,
+//                 prev: '<',
+//                 next: '>',
+//                 onPageClick: function(event, page) {
+//                     $('#page-content').text('Page ' + page);
+//                 }
+//             });
+//         },
+//         cancel: function() {
+//             // alert('h')
+//         },
+//         cancelDisplay: false
+//     });
+//     d.content($('.popup-html').find('.' + dialog_content).html()).showModal();
+// });
 
 //顶部提示的，目前只有红色框
 var showTipsOnTop = require('showTipsOnTop.js');
@@ -94,6 +101,11 @@ $('.js-slide-del').on('click', function() {
         console.log('del')
     },dir);
     return false;
-})
+});
+
+var obj1={'name':'JOBS','job':'CEO'},
+obj2={'name':'Bill',sex:'Man'}
+
+console.log(merge(obj1,obj2));
 
 })()

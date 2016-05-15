@@ -15,13 +15,11 @@ module.exports={
             return pattern.test(arg);
         }
     },
-    isEmpty(arg) {
-        var l = arguments.length;
-        for (i = 0; i < l; i++) {
-            if (this._check(this._reg.empty)(arguments[i]))
-                return true;
-        }
-        return false;
+    isEmpty(...arg) {
+        var _t=this;
+        return arg.some(function(el){
+           return _t._check(_t._reg.empty)(el);
+        })
     },
     isNotPhone(arg) {
         return !this._check(this._reg.phone)(arg);
@@ -38,12 +36,10 @@ module.exports={
     isIllegal(arg) {
         return this._check(this._reg.illegal)(arg);
     },
-    isNotPercent(arg) {
-        var l = arguments.length;
-        for (i = 0; i < l; i++) {
-            if (!this._check(this._reg.percent)(arguments[i]))
-                return true;
-        }
-        return false;
+    isNotPercent(...arg) {
+        var _t=this;
+        return !arg.every(function(el){
+            return _t._check(_t._reg.percent)(el);
+        })
     }
 };

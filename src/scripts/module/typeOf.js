@@ -7,5 +7,8 @@ module.exports={
 	},
 	isArray(obj){
 		return Array.isArray?Array.isArray(obj):getType(obj)==='array';
+	},
+	isObject(obj){
+		return getType(obj)==='object';
 	}
 }

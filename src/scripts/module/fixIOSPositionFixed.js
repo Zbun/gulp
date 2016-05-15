@@ -23,7 +23,7 @@
         var _fixEles=function(e){
              var top = document.body.scrollTop || document.documentElement.scrollTop;
              if(l>0){
-                for(var i=0;i<l;i++){
+                for(let i of l){
                      eles[i].style.cssText='position:absolute;-webkit-transform:translate3D(0,'+top+'px,0)';
                 }
                 return;
@@ -40,7 +40,7 @@
         var _unbindFix=function(){
             document.removeEventListener('scroll',_fixEles);
             if(l>0){
-                for(var i=0;i<l;i++){
+                for(let i of l){
                      eles[i].removeAttribute('style');
                 }
                 return;
@@ -49,7 +49,7 @@
         }
 
         //目前绑在所有可输入元素上,异步加载时有些问题，暂时绑到滚动
-        for(var i=0;i<iptL;i++){
+        for(let i of iptL){
             inputs[i].removeEventListener('focus', _fix);
             inputs[i].removeEventListener('blur', _unbindFix);
 

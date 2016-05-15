@@ -6,7 +6,7 @@ var gulp = require('gulp'),
     gutil=require('gulp-util'),
     jshint=require('gulp-jshint'),
     minify=require('gulp-minify'),
-    minifyCss=require('gulp-minify-css'),
+    cleanCss=require('gulp-clean-css'),
     rename=require('gulp-rename'),
     runsequence=require('run-sequence'),
     sourcemaps=require("gulp-sourcemaps"),
@@ -16,7 +16,8 @@ var gulp = require('gulp'),
     sass=require('gulp-sass'),
     webpack=require('webpack');
 
-var webpackConfig=require('./webpack.config.js');
+var webpackConfig=Object.create(require('./webpack.config.js'));
+var dirDist='./dist/';
 
 var opts={
   destPath:'./dist/',
@@ -28,17 +29,17 @@ var cssStyles=['compressed','expanded'],cssStyle=cssStyles[1];
 
 //清理文件
 gulp.task('clean',function(cb){
-	del(['build/css','build/scripts'],cb);
+	del([driDist+'css',dirDist+'scripts'],cb);
 });
 
 //构建
-gulp.task('build',['minify','minifycss','sass'],function(){
+gulp.task('build',['minify','cleancss','sass'],function(){
    console.log("Good Job!");
 });
 
 //默认启动任务
 gulp.task("default",['browserSync'],function(){
-	// gulp.start('minify','minifycss')
+	// gulp.start('minify','cleancss')
    console.log("Enjoy!");
 });
 
@@ -54,7 +55,7 @@ gulp.task("greet",function(){
 });
 
 gulp.task('jshint',function(){
-  gulp.src('./scripts/*.js').pipe(jshint());
+  gulp.src(dirDis+'scripts/*.js').pipe(jshint());
 });
 
 //压缩、链接资源类
@@ -77,7 +78,7 @@ gulp.task('minify',function(){
 })
 
 gulp.task("minifycss",function(){
-  gulp.src("./css/*.css").pipe(minifyCss()).pipe(rename({suffix:'.min'})).pipe(gulp.dest('./dist/css/'))
+  gulp.src("./css/*.css").pipe(cleanCss()).pipe(rename({suffix:'.min'})).pipe(gulp.dest('./dist/css/'))
 });
 
 gulp.task('concat',function(){
@@ -120,10 +121,13 @@ gulp.task('watch',function(){
 
 //传给webpack用
 gulp.task('webpack',function(callback){
-  var config=Object.create(webpackConfig);
   webpack(
-    config,function(err,stats){
+    webpackConfig,function(err,stats){
+      if(err) throw new gutil.PluginError('webpack',err);
+      // gutil.log('[webpack]',stats.toString({}))
+
       callback();
+      // console.log(err);
     })
 });
 // gulp.watch('app/src/**/*.js', ['webpack']);
@@ -131,7 +135,7 @@ gulp.task('webpack',function(callback){
 //根据文件类型变动，自动刷新浏览器
 gulp.task("browserSync",['sass','webpack'],function(){
    browserSync({
-      files:["**/*.html","**/*.css","**/*.js",'!**.less','!**.coffee','!**.SCSS','!node_modules/**.*','!src/**.*'],
+      files:["**/*.html","**/*.css","**/*.js",'!**.less','!**.coffee','!**.SCSS','!node_modules/**.*','!src/**.*','!webpack.config.js'],
       server:{
          baseDir:"./"
       },
