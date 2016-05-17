@@ -49,7 +49,8 @@ select,
     padding-top: 0;
     padding-bottom: 0;
     &.big {
-        padding: 0 1.5em;
+        padding: 0 1em;
+        min-width: 5em;
         font-size: $btn-big-font-size;
         line-height: $btn-big-line-height;
         +.btn.big {
@@ -342,8 +343,8 @@ a {
 .main {
     border: 1px solid $color-border;
     background: #fff;
-    -webkit-animation: easeShow .6s linear;
-    animation: easeShow .6s linear;
+    -webkit-animation: easeShow .4s linear;
+    animation: easeShow .4s linear;
     >.body {
         position: relative;
         min-height: 600px;

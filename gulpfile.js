@@ -1,7 +1,7 @@
 var gulp = require('gulp'),
     browserSync=require('browser-sync'),
     concat=require('gulp-concat'),
-    coffee=require('gulp-coffee'),
+    // coffee=require('gulp-coffee'),
     del=require('del'),
     gutil=require('gulp-util'),
     jshint=require('gulp-jshint'),
@@ -25,7 +25,7 @@ var opts={
     suffix:'.min'
   },
 };
-var cssStyles=['compressed','expanded'],cssStyle=cssStyles[1];
+var cssStyles=['compressed','expanded'],cssStyle=cssStyles[0];
 
 //清理文件
 gulp.task('clean',function(cb){
@@ -89,14 +89,13 @@ gulp.task('concat',function(){
 });
 
 /*预处理系列*/
-gulp.task('coffee',function(){
-   gulp.src('coffee/*.coffee')
-   .pipe(sourcemaps.init())
-   .pipe(coffee({bare:true}).on('error',gutil.log))
-   .pipe(sourcemaps.write('../maps'))
-   .pipe(gulp.dest(opts.destPath+'scripts'));
-});
-
+// gulp.task('coffee',function(){
+//    gulp.src('coffee/*.coffee')
+//    .pipe(sourcemaps.init())
+//    .pipe(coffee({bare:true}).on('error',gutil.log))
+//    .pipe(sourcemaps.write('../maps'))
+//    .pipe(gulp.dest(opts.destPath+'scripts'));
+// });
 
 //outputStyle:compressed,expanded
 gulp.task('sass',function(){

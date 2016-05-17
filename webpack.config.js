@@ -2,16 +2,17 @@ var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
-    entry: './src/main.js',
+    entry: {webTempate:'./src/main.js',doc:'./src/doc.js',templateAdmin:'./src/templateAdmin.js'},
     output: {
         path: path.join(__dirname, './dist/scripts/bundle/'),
-        filename: 'bundle.js',
+        filename: '[name].bundle.js',
         publicPath: '/dist/htmls/'
     },
     module: {
         loaders: [{
                 test: /\.jsx?$/,
                 loader: 'babel',
+                include:[path.resolve('./src')],
                 exclude: /(node_modules|bower_components)/,
                 query: {
                     presets: ['es2015']
@@ -42,25 +43,20 @@ module.exports = {
         root: path.resolve('./src/scripts/module'),
         extensions: ['', '.vue', '.js'],
         alias: {
-            spin: '../../../dist/scripts/lib/spin.min.js',
+            spin: path.join(__dirname,'./dist/scripts/lib/spin.min.js'),
             dialog: path.join(__dirname, './dist/scripts/lib/artdialog/dist/dialog-plus-min.js'),
-            getTarget: path.join(__dirname,'./src/scripts/module/getTarget.js'),
-            getType: path.join(__dirname,'./src/scripts/module/getType.js'),
-            typeOf: path.join(__dirname,'./src/scripts/module/typeOf.js'),
-            mergeObject:path.join(__dirname,'./src/scripts/module/mergeObject.js'),
+            pagination: path.join(__dirname, './dist/scripts/lib/jquery.twbsPagination.min.js'),
             // jquery:path.join(__dirname,'./dist/scripts/lib/jquery-1.11.3.js')
         }
     },
     plugins: [
-        // jquery合并打包，需要配合本地或CDN加载
         new webpack.ProvidePlugin({
-            // jQuery:'jquery',
             // $:'jquery',
-            getTarget: 'getTarget',
-            getType: 'getType',
-            typeOf: 'typeOf',
+            getTarget: path.join(__dirname,'./src/scripts/module/getTarget.js'),
+            getType: path.join(__dirname,'./src/scripts/module/getType.js'),
+            typeOf: path.join(__dirname,'./src/scripts/module/typeOf.js'),
+            merge:path.resolve('./src/scripts/module/mergeObject.js'),
             dialog:'dialog',
-            merge:'mergeObject',
         })
     ],
     // watch: true,

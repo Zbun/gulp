@@ -3,7 +3,9 @@
 
 .btn {
     display: inline-block;
-    padding: 4px 12px;
+    // padding: 4px 12px;
+    padding: 0 1em;
+    min-width: 4.5em;
     margin-bottom: 0;
     border: 1px solid $color-border;
     font-family: $font-family;

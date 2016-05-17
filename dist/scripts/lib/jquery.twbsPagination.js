@@ -8,7 +8,7 @@
  * Modified by zlb 2016-04-20 
  * Add goto page function and split the page
  */
-(function($, window, document, undefined) {
+var pagination=function($, window, document, undefined) {
 
     'use strict';
 
@@ -340,7 +340,7 @@
         href: false,
         hrefVariable: '{{number}}',
         first: false,
-        prev: false,
+        prev: 'Prev',
         next: 'Next',
         last: false,
         goVal: 'Go',
@@ -365,5 +365,6 @@
         $.fn.twbsPagination = old;
         return this;
     };
-
-})(window.jQuery, window, document);
+};
+pagination(window.jQuery, window, document);
+typeof module=='object' && module.exports?module.exports=pagination(window.jQuery, window, document):'';
