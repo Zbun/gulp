@@ -60,9 +60,9 @@
 	    var hash = location.hash.split('#')[1];
 	    var $currentContent = $('.step').children('[data-step=' + hash + ']');
 	    if ($currentContent.length) {
-	        $currentContent.addClass('main on').siblings('.item').removeClass('on main');
+	        $currentContent.addClass('am-ease-show on').siblings('.item').removeClass('on am-ease-show');
 	    } else {
-	        $('.step').children('.item').first().addClass('main on');
+	        $('.step').children('.item').first().addClass('am-ease-show on');
 	    }
 	    var title = $currentContent.data('stepTitle');
 	    if (title) {
@@ -73,7 +73,6 @@
 	window.addEventListener('hashchange', showByHash);
 
 	//只拖动，不读数
-
 	var htmlMenuL2 = '<li class="item js-toggle">$text</li>';
 	$('.menu-l2').dragsort({
 	    itemSelector: 'li:not(.add-wrapper)',
@@ -92,10 +91,21 @@
 
 	//删除菜单
 	var slideDel = __webpack_require__(13);
-
 	$('.del-menu').on('click', function () {
-	    var $on = $('.footer.menu').find('.js-toggle.on');
-	    slideDel($on);
+	    var $on = $('.footer.menu').find('.on .on');
+	    var $prev = $on.prev('.js-toggle'),
+	        $next = $on.next('.js-toggle');
+	    var $parent = $on.parent();
+	    slideDel($on, function () {
+	        if ($parent.hasClass('menu-l2')) {
+	            if ($prev.length) {
+	                $prev.click();
+	            } else if ($next.length) {
+	                $next.click();
+	            }
+	            $parent.find('.add-wrapper').show();
+	        }
+	    });
 	});
 
 /***/ },
@@ -176,7 +186,7 @@
 	        target.style.cssText = 'transition:.3s ease-out;z-index:-1;transform:' + dir + ';opacity:.1';
 	        var _remove = function _remove() {
 	            target.parentNode.removeChild(target);
-	            typeof callback === 'function' && callback();
+	            typeof callback === 'function' && callback.bind(target)();
 	        };
 	        setTimeout(_remove, 200);
 	    }

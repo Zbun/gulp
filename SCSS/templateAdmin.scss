@@ -100,8 +100,10 @@
             }
             >.item {
                 position: relative;
-                border-left: 1px solid darken($color-border, 4%);
+                // border-left: 1px solid darken($color-border, 4%);
+                box-shadow: -1px 0 $color-border;
                 background:inherit;
+                z-index: 1;
                 >.title {
                     position: relative;
                     padding: 0 5px;
@@ -137,6 +139,7 @@
                     background:#fff;
                     @include trf-origin(bottom);
                     @include trf-scale(0);
+                    will-change:transform;
                     &:after{
                         content: '';
                         position: absolute;
@@ -170,14 +173,14 @@
                     }
                 }
                 ul{
-                    border: 1px solid $color-border;
                     border-bottom: 0;
                     -webkit-transition: .2s;
                     transition: .2s;
                 }
                 li{
-                    border-bottom: 1px solid $color-border;
+                    margin-top: -1px;
                     padding: 0 5px;
+                    border: 1px solid $color-border;
                     cursor: pointer;
                     @extend .text-ellipsis;
                 }

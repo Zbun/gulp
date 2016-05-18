@@ -149,11 +149,13 @@
 	    return false;
 	});
 
+	//合并对象，未深度操作
 	var obj1 = { 'name': 'JOBS', 'job': 'CEO' },
 	    obj2 = { 'name': 'Bill', sex: 'Man' };
 
 	console.log(merge(obj1, obj2));
 
+	//分页
 	__webpack_require__(14);
 	$('#pagination').twbsPagination({
 	    totalPages: 15,
@@ -660,7 +662,7 @@
 	        target.style.cssText = 'transition:.3s ease-out;z-index:-1;transform:' + dir + ';opacity:.1';
 	        var _remove = function _remove() {
 	            target.parentNode.removeChild(target);
-	            typeof callback === 'function' && callback();
+	            typeof callback === 'function' && callback.bind(target)();
 	        };
 	        setTimeout(_remove, 200);
 	    }

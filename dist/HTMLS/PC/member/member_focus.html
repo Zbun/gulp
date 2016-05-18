@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
+    <link rel="stylesheet" href="../../iconfonts/style.css">
+    <link rel="stylesheet" href="../../CSS/member_admin.css">
+    <title>已关注会员-中网易企赢</title>
+</head>
+
+<body>
+    <div class="wrapper limited">
+        <div class="main">
+            <article class="body member">
+                <header class="">
+                    <h2 class="content-title">会员资料</h2>
+                </header>
+                <section class="member-status mt10">
+                    <div class="tab-switcher-horizontal">
+                        <div class="title"><a href="member_all.html" class="item">会部会员<span class="text-muted">(99999)</span></a>
+                            <a href="member_focus.html" class="item on">已关注<span class="text-muted">(99999)</span></a>
+                            <a href="javascript:;" class="item">未关注<span class="text-muted">(99999)</span></a>
+                            <a href="member_offline.html" class="item">线下会员<span class="text-muted">(99999)</span></a>
+                            <a href="member_yqx.html" class="item">易企秀<span class="text-muted">(99999)</span></a></div>
+                    </div>
+                </section>
+                <section class="search clearfix mt10">
+                    <div class="fr">
+                        <a href="search_advanced.html" class="align-ipt ml10 fr">高级查询</a>
+                        <span class="search-field fr">
+                    <input type="search" class='ipt-search kw com-ipt' title='会员名称或手机号' placeholder='输入会员名称、手机号码'>
+                    <button class="btn-search icon-search"><i class="fa fa-search"></i></button>
+                    </span>
+                        
+                    </div>
+                    <div class="action">
+                        <button class="btn btn-align-ipt import-member">导入会员</button>
+                        <button class="btn btn-align-ipt">导出会员</button>
+                    </div>
+                </section>
+                <section class="data mt10 member-info">
+                    <table class='table text-center table-bordered table-hover table-radian'>
+                        <thead>
+                            <tr>
+                                <th>会员名称</th>
+                                <th>手机号</th>
+                                <th>会员卡</th>
+                                <th>
+                                    <p class="text-right pr10 mr10">积分（分）</p>
+                                </th>
+                                <th>
+                                    <p class="text-right pr10 mr10">余额（元）</p>
+                                </th>
+                                <th>会员类型</th>
+                                <th width=200>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class='text-left summary clearfix'>
+                                        <a href="javascript:;"> <img src="../../images/t1_w600.jpg" alt="头像" class="avator"></a>
+                                        <div class="info">
+                                            <p class="name"><a href="javascript:;">我是全身镶钻会员</a></p>
+                                            <p class="num">0000000001</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <p class='phone'>138*****138</p>
+                                </td>
+                                <td>
+                                    <p class='type text-nowrap'>钻石会员卡</p>
+                                </td>
+                                <td>
+                                    <p class="num text-right pr10 mr10">3568688686868</p>
+                                </td>
+                                <td>
+                                    <p class="num text-right pr10 mr10">995665.21</p>
+                                </td>
+                                <td>已关注</td>
+                                <td>
+                                    <div class='action-field'><a class='item' href="javascript:;">查看</a><a class='item' href="javascript:;">编辑</a><a class='item' href="javascript:;">充值</a><a class='item' href="javascript:;">积分</a><a class='item' href="javascript:;">标签</a></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class='text-left summary clearfix'>
+                                        <a href="javascript:;"><img src="../../images/t1_w6ddf00.jpg" alt="头像" class="avator"></a>
+                                        <div class="info">
+                                            <p class="name"><a href="javascript:;">我是全身镶钻会员</a></p>
+                                            <p class="num">0000000001</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <p class='phone'>138*****138</p>
+                                </td>
+                                <td>
+                                    <p class='type'>钻石会员卡</p>
+                                </td>
+                                <td>
+                                    <p class="num text-right pr10 mr10">3868</p>
+                                </td>
+                                <td>
+                                    <p class="num text-right pr10 mr10">9.21</p>
+                                </td>
+                                <td>已关注</td>
+                                <td>
+                                    <div class='action-field'><a class='item' href="javascript:;">查看</a><a class='item' href="javascript:;">编辑</a><a class='item' href="javascript:;">充值</a><a class='item' href="javascript:;">积分</a><a class='item' href="javascript:;">标签</a></div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div id="page-content"></div>
+                    <div id="pagination" class='text-center'></div>
+                    <div class="data-empty">
+                        <h3 class="bg text-center p10">
+                        暂时没有相关数据（视情况输出，表格部分全部不显示）
+                    </h3>
+                    </div>
+                </section>
+            </article>
+        </div>
+    </div>
+    <div class="popup-html">
+         <template class="import-member">
+        <div class="content import-member">
+            <div class="text-center file-area">
+                <div class="upload-wrapper">
+                    <button class="big btn">选择文件</button>
+                    <input type="file" class="file-select member">
+                </div>
+                <span class="file-info">
+                </span>
+                <p class="tips"></p>
+            </div>
+            <ul class="m10">
+                <li>
+                    若您使用的不是我们的模板，请
+                    <a href="javascript:;">点击下载</a>
+                </li>
+                <li>
+                    文件大小需要小于3M的，请知悉
+                </li>
+            </ul>
+        </div>
+    </template>
+    </div>
+
+    <script src="../../scripts/lib/jquery-1.11.3.js"></script>
+    <script src="../../scripts/lib/artdialog/dist/dialog-plus-min.js"></script>
+    <script src="../../scripts/lib/jquery.twbsPagination.js"></script>
+    <script>
+
+    $('.import-member').on('click',function(){
+        dialog({
+            title:'导入会员',
+            content:$('.import-member').children('.content').html(),
+            okValue:'提交',
+            ok:function(){
+
+            },
+            cancel:function(){}
+        }).showModal()
+    })
+
+    //分页，后台来时删除库及本段代码
+    $('#pagination').twbsPagination({
+        totalPages: 15,
+        visiblePages: 7,
+        goVal: 'Go',
+        sizeSelect: [5, 10, 15],
+        first: '首页',
+        last: '末页',
+        prev: '<',
+        next: '>',
+        onPageClick: function(event, page) {
+            $('#page-content').text('Page ' + page);
+        }
+    });
+    </script>
+</body>
+
+</html>

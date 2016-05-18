@@ -21,7 +21,7 @@ module.exports = (target = '', callback = '', direction = 'left', distance = 30)
         target.style.cssText = 'transition:.3s ease-out;z-index:-1;transform:' + dir + ';opacity:.1';
         var _remove = function() {
             target.parentNode.removeChild(target);
-            typeof callback === 'function' && callback();
+            typeof callback === 'function' && (callback.bind(target))();
         }
         setTimeout(_remove, 200);
     }

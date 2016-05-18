@@ -5,6 +5,7 @@
 @import 'base/iconfont';
 @import 'base/_radio-check.scss';
 @import 'base/_btn_tag.scss';
+@import 'base/_scrollbar.scss';
 
 .show-list{
 	>.item{
@@ -12,7 +13,7 @@
 		width: 33.33%;
 		min-width: 322px;
 		padding: 0 5px;
-		margin-bottom: 10px;
+		margin-bottom: 34px;
 		text-align: center;
 	}
 }
@@ -24,7 +25,7 @@
     &.phone {
     	display: inline-block;
         width: 319px;
-        height: 578px;
+        height: 568px;
         padding-bottom: 40px;
         margin-bottom: 34px;
         text-align: left;
@@ -37,6 +38,14 @@
         	color: #fff;
         }
     }
+    >.content{
+    	max-height: 460px;
+        overflow-x: hidden;
+    	@extend %scrollbar;
+    	.show-img{
+    		max-width: 100%;
+    	}
+    }
     .footer {
         position: absolute;
         left: 0;
@@ -47,6 +56,11 @@
         background:#fff;
         line-height: 40px;
         text-align: center;
+        &.abs{
+        	&+.content{
+        		margin-bottom: 40px;
+        	}
+        }
         &.menu {
         	.ico.keyboard{
         		display: inline-block;
@@ -65,7 +79,7 @@
         	}
             >.item {
                 position: relative;
-                border-left: 1px solid darken($color-border, 4%);
+                border-left: 1px solid $color-border;
                 background:inherit;
                 >.title {
                 	position: relative;
@@ -102,6 +116,7 @@
                     right: -1px;
                     background:#fff;
                     @include trf-translate(0,100%);
+                    will-change:transform;
                 }
                 &.expanded{
                 	>.content{

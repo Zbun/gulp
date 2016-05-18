@@ -101,11 +101,13 @@ $('.js-slide-del').on('click', function() {
     return false;
 });
 
+//合并对象，未深度操作
 var obj1={'name':'JOBS','job':'CEO'},
 obj2={'name':'Bill',sex:'Man'}
 
 console.log(merge(obj1,obj2));
 
+//分页
 require('pagination');
 $('#pagination').twbsPagination({
 	totalPages:15,

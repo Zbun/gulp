@@ -18,6 +18,11 @@ module.exports = {
                     presets: ['es2015']
                 }
             },
+            {
+                test:/.vue$/,
+                loader:'vue'
+            }
+
             // {
             //shimming，用于不符合规范的模块（如一些直接返回全局变更的插件）进行shimi处理
             //这时用exports-loader
@@ -56,6 +61,7 @@ module.exports = {
             getType: path.join(__dirname,'./src/scripts/module/getType.js'),
             typeOf: path.join(__dirname,'./src/scripts/module/typeOf.js'),
             merge:path.resolve('./src/scripts/module/mergeObject.js'),
+            spinZ:path.resolve('./src/scripts/module/spinZ.js'),
             dialog:'dialog',
         })
     ],
