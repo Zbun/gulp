@@ -1,3 +1,10 @@
+/**
+ * 滑动删除
+ * @author Zhao Liubin
+ * @param { target} 删除目标 
+ * @param {function} 回调 
+ * @type {[type]}
+ */
 var getTargets = require('getTarget');
 
 module.exports = (target = '', callback = '', direction = 'left', distance = 30) => {
@@ -20,8 +27,10 @@ module.exports = (target = '', callback = '', direction = 'left', distance = 30)
         }
         target.style.cssText = 'transition:.3s ease-out;z-index:-1;transform:' + dir + ';opacity:.1';
         var _remove = function() {
-            target.parentNode.removeChild(target);
-            typeof callback === 'function' && (callback.bind(target))();
+            if (target.parentNode) {
+                target.parentNode.removeChild(target);
+                typeof callback === 'function' && (callback.bind(target))();
+            }
         }
         setTimeout(_remove, 200);
     }

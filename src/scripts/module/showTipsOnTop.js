@@ -1,5 +1,12 @@
- //顶部提示框
-
+/**
+ * 顶部提示
+ * @author Zhao Liubin
+ * @date   2016-05-19
+ * @param  {提示信息}
+ * @param  {作用目标}
+ * @param  {可能需要自动删除倒计时间}
+ * @return {[type]}
+ */
  function showTipsOnTop(content='小提示', target, time) {
      var div = document.createElement('div'),
          tar = '';

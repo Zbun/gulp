@@ -34,7 +34,10 @@
 //     this.waitingContainer.removeChild(this.waitingBox);
 // }
 
-
+/**
+ * 操作等待旋转提示，非全屏，可加参数，修改下方法，去掉className :local
+ * @author Zhao Liubin
+ */
 class Waiting {
     constructor(container) {
         var container = getTarget(container) || document.body;

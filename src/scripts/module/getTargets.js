@@ -1,3 +1,10 @@
+/**
+ * 获取节点数组
+ * @author Zhao Liubin
+ * @date   2016-05-19
+ * @param  {jQuery Obj||DOMS||String}
+ * @return {[type]}
+ */
 module.exports = (target) => {
     var arrTemp = [];
     if (target) {

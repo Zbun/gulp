@@ -1,4 +1,10 @@
-
+/**
+ * 手机端弹窗
+ * @author Zhao Liubin
+ * @date   2016-05-19
+ * @param  {opts}
+ * @return {[type]}
+ */
 module.exports=(opts) =>{
     var opt = {
         title: opts.title||'',

@@ -1,3 +1,10 @@
+/**
+ * 获取目标节点，真实的，非jQuery
+ * @author Zhao Liubin
+ * @date   2016-05-19
+ * @param  {jQuery obj || DOM || String}
+ * @return {[type]}
+ */
 module.exports = (target) => {
     if (target) {
         if (typeof target == 'string') {

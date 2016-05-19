@@ -1,4 +1,10 @@
-//修正iOS固定元素显示错乱，传入需要修正的元素
+/**
+ * 修正iOS可能出现的固定位时，失效的问题
+ * @author Zhao Liubin
+ * @date   2016-05-19
+ * @param  {node||nodelist}
+ * @return {[type]}
+ */
     function fixFixed(eles) {
         if(!eles||eles.length<=0){
             return;

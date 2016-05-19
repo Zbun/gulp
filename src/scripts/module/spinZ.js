@@ -1,4 +1,8 @@
-
+/**
+ * 加载等待小菊花，封装进一个对象，不用new 构造了
+ * @author  Zhao Liubin
+ * @type {[type]}
+ */
 var Spinner=require('spin');
 
 var spinOpts = {

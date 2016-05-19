@@ -1,5 +1,8 @@
-//一些验证方法
-
+/**
+ * 一些校验数据的方法集合
+ * @author Zhao Liubin
+ * @type {Object}
+ */
 module.exports={
     _reg: {
         empty: /^\s*$/,

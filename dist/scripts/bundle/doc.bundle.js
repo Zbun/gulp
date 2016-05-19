@@ -169,7 +169,14 @@
 
 	/* WEBPACK VAR INJECTION */(function(typeOf) {"use strict";
 
-	//合并对象
+	/**
+	 * 合并对象，非深度
+	 * @author Zhao Liubin
+	 * @date   2016-05-19
+	 * @param  {Object}
+	 * @param  {object,object}
+	 * @return {[type]}
+	 */
 	module.exports = function () {
 		var objTo = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 		var objFrom = arguments[1];
@@ -191,6 +198,10 @@
 
 	/* WEBPACK VAR INJECTION */(function(getType) {'use strict';
 
+	/**
+	 * 判断目标类型，方法集合
+	 * @type {Object}
+	 */
 	module.exports = {
 		isFunction: function isFunction(obj) {
 			return getType(obj) === 'function';
@@ -213,8 +224,13 @@
 
 	"use strict";
 
-	/*获取目标类型方法*/
-
+	/**
+	 * 获取目标类型
+	 * @author Zhao Liubin
+	 * @date   2016-05-19
+	 * @param  {obj}
+	 * @return {[type]}
+	 */
 	module.exports = function (target) {
 	    try {
 	        return Object.prototype.toString.call(target).match(/object\s*(\w*)/)[1].toLowerCase();
@@ -268,6 +284,11 @@
 	// Waiting.prototype.remove = function() {
 	//     this.waitingContainer.removeChild(this.waitingBox);
 	// }
+
+	/**
+	 * 操作等待旋转提示，非全屏，可加参数，修改下方法，去掉className :local
+	 * @author Zhao Liubin
+	 */
 
 	var Waiting = function () {
 	    function Waiting(container) {
@@ -329,6 +350,13 @@
 
 	'use strict';
 
+	/**
+	 * 获取目标节点，真实的，非jQuery
+	 * @author Zhao Liubin
+	 * @date   2016-05-19
+	 * @param  {jQuery obj || DOM || String}
+	 * @return {[type]}
+	 */
 	module.exports = function (target) {
 	    if (target) {
 	        if (typeof target == 'string') {
@@ -349,8 +377,11 @@
 
 	"use strict";
 
-	//一些验证方法
-
+	/**
+	 * 一些校验数据的方法集合
+	 * @author Zhao Liubin
+	 * @type {Object}
+	 */
 	module.exports = {
 	    _reg: {
 	        empty: /^\s*$/,
@@ -411,8 +442,13 @@
 
 	'use strict';
 
-	// var $=require('jquery');
-
+	/**
+	 * 标签及单选之类切换，需要对应DOM结构
+	 * @author Zhao Liubin
+	 * @date   2016-05-19
+	 * @param  {[type]}
+	 * @return {[type]}
+	 */
 	module.exports = function ($) {
 	    if (!$) {
 	        console.warn('需要jQuery赞助哦');
@@ -432,7 +468,14 @@
 
 	'use strict';
 
-	//全选处理，到时合至通用JS文件
+	/**
+	 * 全部选中方法，对应一个顶层的class:chks,
+	 * 全选class:chks,子checkbox的class:chk
+	 * @author zhaoliubin@knet.cn
+	 * @date   2016-05-19
+	 * @param  {[type]}
+	 * @return {[type]}
+	 */
 	module.exports = function ($) {
 
 	    if (!$) {
@@ -462,8 +505,15 @@
 
 	/* WEBPACK VAR INJECTION */(function(getTarget) {'use strict';
 
-	//顶部提示框
-
+	/**
+	 * 顶部提示
+	 * @author Zhao Liubin
+	 * @date   2016-05-19
+	 * @param  {提示信息}
+	 * @param  {作用目标}
+	 * @param  {可能需要自动删除倒计时间}
+	 * @return {[type]}
+	 */
 	function showTipsOnTop() {
 	    var content = arguments.length <= 0 || arguments[0] === undefined ? '小提示' : arguments[0];
 	    var target = arguments[1];
@@ -495,6 +545,11 @@
 
 	/* WEBPACK VAR INJECTION */(function(getTarget) {'use strict';
 
+	/**
+	 * 加载等待小菊花，封装进一个对象，不用new 构造了
+	 * @author  Zhao Liubin
+	 * @type {[type]}
+	 */
 	var Spinner = __webpack_require__(11);
 
 	var spinOpts = {
@@ -590,6 +645,11 @@
 
 	'use strict';
 
+	/**
+	 * 操作提示，需要进一步封装为成功或失败方法
+	 * @author  Zhao Liubin
+	 * @type {[type]}
+	 */
 	var typeOf = __webpack_require__(2);
 
 	module.exports = function () {
@@ -634,6 +694,13 @@
 
 	/* WEBPACK VAR INJECTION */(function(getTarget) {'use strict';
 
+	/**
+	 * 滑动删除
+	 * @author Zhao Liubin
+	 * @param { target} 删除目标 
+	 * @param {function} 回调 
+	 * @type {[type]}
+	 */
 	var getTargets = __webpack_require__(5);
 
 	module.exports = function () {
@@ -661,8 +728,10 @@
 	        }
 	        target.style.cssText = 'transition:.3s ease-out;z-index:-1;transform:' + dir + ';opacity:.1';
 	        var _remove = function _remove() {
-	            target.parentNode.removeChild(target);
-	            typeof callback === 'function' && callback.bind(target)();
+	            if (target.parentNode) {
+	                target.parentNode.removeChild(target);
+	                typeof callback === 'function' && callback.bind(target)();
+	            }
 	        };
 	        setTimeout(_remove, 200);
 	    }

@@ -1,3 +1,8 @@
+/**
+ * cookie get and set method
+ * @author Zhao Liubin
+ * @type {Object}
+ */
 module.exports = {
     get(key) {
         var cookie = document.cookie;

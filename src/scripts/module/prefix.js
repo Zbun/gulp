@@ -1,3 +1,7 @@
+/**
+ * 加兼容性前缀如 webkit等
+ * @type {Object}
+ */
 module.exports = {
     prefix: ['webkit'],
     event(opts = { target: '', handle: '', capture: false }) {

@@ -1,3 +1,9 @@
+/**
+ * HTML5 formdata upload method
+ * @author Zhao Liubin
+ * @date   2016-05-19
+ * @return {[type]}
+ */
 function html5Upload() {
     var arg = arguments[0];
     var obj = arg.obj;                               //作用于上传按钮对象

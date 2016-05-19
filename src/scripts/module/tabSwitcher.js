@@ -1,5 +1,10 @@
-// var $=require('jquery');
-
+/**
+ * 标签及单选之类切换，需要对应DOM结构
+ * @author Zhao Liubin
+ * @date   2016-05-19
+ * @param  {[type]}
+ * @return {[type]}
+ */
 module.exports = (function($) {
     if (!$) {
         console.warn('需要jQuery赞助哦');

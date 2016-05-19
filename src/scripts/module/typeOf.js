@@ -1,3 +1,7 @@
+/**
+ * 判断目标类型，方法集合
+ * @type {Object}
+ */
 module.exports={
 	isFunction(obj){
 		return getType(obj)==='function';

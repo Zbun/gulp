@@ -46,36 +46,26 @@
 
 	/* WEBPACK VAR INJECTION */(function(spinZ) {'use strict';
 
-	$('body').on('click', '.footer.menu>.item .js-toggle', function () {
-		var $t = $(this);
-		$t.closest('.menu-l1').toggleClass('expanded').siblings('.item').removeClass('expanded');
-		$t.addClass('on').siblings('.item').removeClass('on');
-		if (!$t.hasClass('wealthy')) {
-			$t.closest('.menu-l1').addClass('on').siblings('.item').removeClass('on');
-		}
-	});
-
 	var jsonMenu = __webpack_require__(15);
 
 	var Vue = __webpack_require__(16);
-	var vcomMenu = __webpack_require__(18);
+	var vcomMenu = __webpack_require__(24);
 
-	new Vue({
-		el: 'body',
-		data: {
-			menulist: jsonMenu
-		},
-		components: {
-			'menu-box': vcomMenu
-		}
+	var vm = new Vue({
+	    el: 'body',
+	    data: {
+	        menulist: []
+	    },
+	    components: {
+	        'menu-box': vcomMenu
+	    }
 	});
 
-	$('.create').on('click', function () {
-		var spin1 = spinZ($('.show').children('.content'));
-		setTimeout(function () {
-			spin1.stop();
-		}, 3000);
-	});
+	var spin1 = spinZ($('.show-list'));
+	setTimeout(function () {
+	    spin1.stop();
+	    vm.menulist = jsonMenu;
+	}, 2000);
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
 
 /***/ },
@@ -88,6 +78,13 @@
 
 	'use strict';
 
+	/**
+	 * 获取目标节点，真实的，非jQuery
+	 * @author Zhao Liubin
+	 * @date   2016-05-19
+	 * @param  {jQuery obj || DOM || String}
+	 * @return {[type]}
+	 */
 	module.exports = function (target) {
 	    if (target) {
 	        if (typeof target == 'string') {
@@ -112,6 +109,11 @@
 
 	/* WEBPACK VAR INJECTION */(function(getTarget) {'use strict';
 
+	/**
+	 * 加载等待小菊花，封装进一个对象，不用new 构造了
+	 * @author  Zhao Liubin
+	 * @type {[type]}
+	 */
 	var Spinner = __webpack_require__(11);
 
 	var spinOpts = {
@@ -10388,63 +10390,8 @@
 
 
 /***/ },
-/* 18 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var __vue_script__, __vue_template__
-	__vue_script__ = __webpack_require__(19)
-	if (__vue_script__ &&
-	    __vue_script__.__esModule &&
-	    Object.keys(__vue_script__).length > 1) {
-	  console.warn("[vue-loader] src\\scripts\\module\\vue\\components\\menu.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(23)
-	module.exports = __vue_script__ || {}
-	if (module.exports.__esModule) module.exports = module.exports.default
-	if (__vue_template__) {
-	(typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports).template = __vue_template__
-	}
-	if (false) {(function () {  module.hot.accept()
-	  var hotAPI = require("vue-hot-reload-api")
-	  hotAPI.install(require("vue"), true)
-	  if (!hotAPI.compatible) return
-	  var id = "D:\\javaworkspaces\\wxp-template-web\\src\\main\\webapp\\WEB-INF\\static\\src\\scripts\\module\\vue\\components\\menu.vue"
-	  if (!module.hot.data) {
-	    hotAPI.createRecord(id, module.exports)
-	  } else {
-	    hotAPI.update(id, module.exports, __vue_template__)
-	  }
-	})()}
-
-/***/ },
-/* 19 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _footerMenu = __webpack_require__(20);
-
-	var _footerMenu2 = _interopRequireDefault(_footerMenu);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	exports.default = {
-	    props: { arrayMenu: Array },
-	    data: function data() {
-	        return {
-	            list: []
-	        };
-	    },
-
-	    components: {
-	        'footer-menu': _footerMenu2.default
-	    }
-	};
-
-/***/ },
+/* 18 */,
+/* 19 */,
 /* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -10487,6 +10434,17 @@
 	        return {
 	            list: this.objMenu
 	        };
+	    },
+
+	    methods: {
+	        toggle: function toggle() {
+	            var $t = $(event.target);
+	            $t.closest('.menu-l1').toggleClass('expanded').siblings('.item').removeClass('expanded');
+	            $t.addClass('on').siblings('.item').removeClass('on');
+	            if (!$t.hasClass('wealthy')) {
+	                $t.closest('.menu-l1').addClass('on').siblings('.item').removeClass('on');
+	            }
+	        }
 	    }
 	};
 
@@ -10494,13 +10452,98 @@
 /* 22 */
 /***/ function(module, exports) {
 
-	module.exports = "\n<div class=\"title js-toggle\" :class=\"{'wealthy':list.list.length>0}\">\n    <p class=\"inner\">{{list.name}}</p>\n</div>\n<ul class=\"content menu-l2\">\n    <li class=\"item js-toggle\" v-for=\"item2 of list.list\"><a href=\"javascript:;\">{{item2.name}}</a>\n</ul>\n\n";
+	module.exports = "\n<div class=\"title js-toggle\" @click=\"toggle\" :class=\"{'wealthy':list.list.length>0}\">\n    <p class=\"inner\">{{list.name}}</p>\n</div>\n<ul class=\"content menu-l2\">\n    <li class=\"item js-toggle\" @click=\"toggle\" v-for=\"item2 of list.list\">\n        <a href=\"javascript:;\">{{item2.name}}</a>\n    </li>\n</ul>\n";
 
 /***/ },
-/* 23 */
+/* 23 */,
+/* 24 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __vue_script__, __vue_template__
+	__vue_script__ = __webpack_require__(25)
+	if (__vue_script__ &&
+	    __vue_script__.__esModule &&
+	    Object.keys(__vue_script__).length > 1) {
+	  console.warn("[vue-loader] src\\scripts\\module\\vue\\components\\menu.vue: named exports in *.vue files are ignored.")}
+	__vue_template__ = __webpack_require__(26)
+	module.exports = __vue_script__ || {}
+	if (module.exports.__esModule) module.exports = module.exports.default
+	if (__vue_template__) {
+	(typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports).template = __vue_template__
+	}
+	if (false) {(function () {  module.hot.accept()
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), true)
+	  if (!hotAPI.compatible) return
+	  var id = "D:\\javaworkspaces\\wxp-template-web\\src\\main\\webapp\\WEB-INF\\static\\src\\scripts\\module\\vue\\components\\menu.vue"
+	  if (!module.hot.data) {
+	    hotAPI.createRecord(id, module.exports)
+	  } else {
+	    hotAPI.update(id, module.exports, __vue_template__)
+	  }
+	})()}
+
+/***/ },
+/* 25 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(spinZ) {'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _footerMenu = __webpack_require__(20);
+
+	var _footerMenu2 = _interopRequireDefault(_footerMenu);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = {
+	    props: {
+	        arrayMenu: Array
+	    },
+	    data: function data() {
+	        return {
+	            list: []
+	        };
+	    },
+
+	    components: {
+	        'footer-menu': _footerMenu2.default
+	    },
+	    methods: {
+	        like: function like(event) {
+	            var $t = $(event.target);
+	            var $container = $t.closest('.item').children('.show').children('.content');
+
+	            var $showImg = $container.find('.show-img'),
+	                $showSite = $container.find('.show-site');
+
+	            var spin1 = spinZ($container);
+
+
+	            var site = 'http://www.uisdc.com/';
+
+	            if ($showSite.attr('src') == site) {
+	                spin1.stop();
+	                return;
+	            }
+
+	            $container.find('.show-site').on('load', function () {
+	                spin1.stop();
+	            }).attr('src', site).show();
+	            setTimeout(function () {}, 5000);
+	        }
+	    }
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
+
+/***/ },
+/* 26 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n<div class=\"show title phone\">\n    <h3 class=\"title text-ellipsis\">\n                                易企赢\n                            </h3>\n    <div class=\"content\">\n        <img class=\"show-img\" alt=\"\"> 俺是内容 俺 是内容\n        <p style='height: 200px'>\n            俺蛤内空\n        </p>\n        <p style='height: 200px'>\n            俺蛤内空\n        </p>\n        <p style='height: 200px'>\n            俺蛤内空\n        </p>\n        <p>\n            我是最后一行字\n        </p>\n    </div>\n    <footer class=\"footer menu dis-flex abs\">\n        <i class=\"ico keyboard\"></i>\n        <div class=\"item menu-l1\" v-for=\"item of arrayMenu\">\n        \t<footer-menu :obj-menu=\"item\"></footer-menu>\n        </div>\n    </footer>\n</div>\n<div class=\"text-center select\">\n    <button class=\"btn btn-primary big\">就选这个</button>\n    <span class=\"pl10 text-muted\">\n                        \t\t点击菜单预览效果\n                        \t</span>\n</div>\n\n";
+	module.exports = "\n<div class=\"show title phone\">\n    <h3 class=\"title text-ellipsis\">\n                            易企赢</h3>\n    <div class=\"content\">\n        <img class=\"show-img\" alt=\"\">\n        <iframe class=\"show-site\" frameborder=\"0\"></iframe>\n    </div>\n    <footer class=\"footer menu dis-flex abs\">\n        <i class=\"ico keyboard\"></i>\n        <div class=\"item menu-l1\" v-for=\"item of arrayMenu\">\n            <footer-menu :obj-menu=\"item\"></footer-menu>\n        </div>\n    </footer>\n</div>\n<div class=\"text-center select\">\n    <button class=\"btn btn-primary big like\" v-on:click=\"like\">就选这个</button>\n    <span class=\"pl10 text-muted\">点击菜单预览效果</span>\n</div>\n";
 
 /***/ }
 /******/ ]);

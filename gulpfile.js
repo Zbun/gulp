@@ -6,7 +6,7 @@ var gulp = require('gulp'),
     gutil=require('gulp-util'),
     jshint=require('gulp-jshint'),
     minify=require('gulp-minify'),
-    cleanCss=require('gulp-clean-css'),
+    cleanCSS=require('gulp-clean-css'),
     rename=require('gulp-rename'),
     runsequence=require('run-sequence'),
     sourcemaps=require("gulp-sourcemaps"),
@@ -25,20 +25,20 @@ var opts={
     suffix:'.min'
   },
 };
-var cssStyles=['compressed','expanded'],cssStyle=cssStyles[0];
+var cssStyles=['compressed','expanded'],cssStyle=cssStyles[1];
 
 //清理文件
 gulp.task('clean',function(cb){
-	del([driDist+'css',dirDist+'scripts'],cb);
+	del([driDist+'css/',dirDist+'scripts/bundle/'],cb);
 });
 
 //构建
-gulp.task('build',['minify','cleancss','sass'],function(){
+gulp.task('build',['uglify','cleancss'],function(){
    console.log("Good Job!");
 });
 
 //默认启动任务
-gulp.task("default",['browserSync'],function(){
+gulp.task('default',['browserSync'],function(){
 	// gulp.start('minify','cleancss')
    console.log("Enjoy!");
 });
@@ -59,26 +59,26 @@ gulp.task('jshint',function(){
 });
 
 //压缩、链接资源类
-gulp.task('unlify', function () {
-   gulp.src('./src/scripts/*.js')
+gulp.task('uglify', function () {
+   gulp.src(opts.destPath+'scripts/bundle/*.js')
       .pipe(sourcemaps.init())
       .pipe(uglify())
-      .pipe(rename({suffix:'.min'}))
-      .pipe(sourcemaps.write('../maps'))
-      .pipe(gulp.dest(opts.destPath+'scripts'));
+      .pipe(gulp.dest(opts.destPath+'scripts/bundle'));
+      // .pipe(rename({suffix:'.min'}))
+      // .pipe(sourcemaps.write('../maps'))
 });
 
 gulp.task('minify',function(){
-    gulp.src('./src/scripts/*.js')
+    gulp.src(opts.destPath+'scripts/bundle/*.js')
         .pipe(minify({
                 exclude:['tasks'],
                 ignoreFiles:['.combo.js','-min.js']
         }))
-        .pipe(gulp.dest(opts.destPath+'scripts'));
+        .pipe(gulp.dest(opts.destPath+'scripts/bundle'));
 })
 
-gulp.task("minifycss",function(){
-  gulp.src("./css/*.css").pipe(cleanCss()).pipe(rename({suffix:'.min'})).pipe(gulp.dest('./dist/css/'))
+gulp.task('minifycss',['sass'],function(){
+  gulp.src(opts.destPath+"CSS/*.css").pipe(cleanCSS()).pipe(gulp.dest(opts.destPath+'CSS'));
 });
 
 gulp.task('concat',function(){

@@ -1,3 +1,8 @@
+/**
+ * 操作提示，需要进一步封装为成功或失败方法
+ * @author  Zhao Liubin
+ * @type {[type]}
+ */
 var typeOf=require('typeOf');
 
 module.exports=(content='操作成功',state='ok',callback='',time=3000)=>{

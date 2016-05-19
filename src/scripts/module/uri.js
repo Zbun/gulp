@@ -1,3 +1,8 @@
+/**
+ * URI操作，存取query及取hash
+ * @author Zhao Liubin
+ * @type {Object}
+ */
 module.exports = {
     query: {
         locTop: top.window.location.href,

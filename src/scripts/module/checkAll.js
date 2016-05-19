@@ -1,4 +1,11 @@
-	  //全选处理，到时合至通用JS文件
+/**
+ * 全部选中方法，对应一个顶层的class:chks,
+ * 全选class:chks,子checkbox的class:chk
+ * @author zhaoliubin@knet.cn
+ * @date   2016-05-19
+ * @param  {[type]}
+ * @return {[type]}
+ */
 module.exports=(function($){
 
 	if(!$){
