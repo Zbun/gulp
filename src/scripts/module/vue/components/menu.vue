@@ -3,13 +3,13 @@
         <h3 class="title text-ellipsis">
                                 易企赢</h3>
         <div class="content">
-            <img class="show-img" alt="">
+            <img class="show-img" src="/imgs/guaka.png" alt="">
             <iframe class="show-site" frameborder="0"></iframe>
         </div>
         <footer class="footer menu dis-flex abs">
             <i class="ico keyboard"></i>
-            <div class="item menu-l1" v-for="item of arrayMenu">
-                <footer-menu :obj-menu="item"></footer-menu>
+            <div class="item menu-l1" v-for="item of menuList">
+                <footer-menu :menu-item="item"></footer-menu>
             </div>
         </footer>
     </div>
@@ -22,7 +22,7 @@
 import footerMenu from 'vue/components/footerMenu.vue';
 export default {
     props: {
-        arrayMenu: Array
+        menuList: Array
     },
     data() {
         return {

@@ -23,7 +23,7 @@
                                 易企赢
                             </h3>
                             <footer class="footer menu dis-flex">
-                                <menu-box :array-menu="menulist.list"></menu-box>
+                                <menu-box :menu-item="menulist.data" :menu1-length="menu1Length"></menu-box>
                                 <!--  <div class="item menu-l1">
                                     <div class="title js-toggle">
                                         <p class="inner">没有二级</p>
@@ -59,7 +59,10 @@
                                             菜单名称
                                         </dt>
                                         <dd class="content">
-                                            <input class="ipt-large" type="text">
+                                            <input class="ipt-large" maxlength=8 type="text" v-model="menuSet.name" @keyup="iptName">
+                                            <span class="text-muted tips">
+                                                （建议4个汉字或8个字母）
+                                            </span>
                                         </dd>
                                     </dl>
                                     <dl class="item">
@@ -69,11 +72,11 @@
                                         <div class="content">
                                             <div class="radio-switcher js-switcher">
                                                 <div class="title">
-                                                    <label class="item radio mr10">
+                                                    <label class="item radio mr10" :class="menuSet.type.message">
                                                         <input type="radio" id="" name="type" checked>发送消息<i class="icon"></i></label>
-                                                    <label class="item radio ml10">
+                                                    <label class="item radio ml10" :class="menuSet.type.app">
                                                         <input type="radio" id="" name="type">活动/应用<i class="icon"></i></label>
-                                                    <label class="item radio ml10">
+                                                    <label class="item radio ml10"  :class="menuSet.type.own">
                                                         <input type="radio" id="" name="type">自定义链接<i class="icon"></i></label>
                                                 </div>
                                                 <div class="content mt10">
@@ -109,7 +112,7 @@
                     </div>
                     <p class="text-center content-expanded">
                         <a href="#copy" class="btn big">上一步</a>
-                        <button class="btn btn-primary big">保存</button>
+                        <button class="btn btn-primary big" @click="save">保存</button>
                     </p>
                 </div>
             </div>

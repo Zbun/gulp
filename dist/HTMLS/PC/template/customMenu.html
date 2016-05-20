@@ -24,8 +24,8 @@
                     <hr>
                 </div>
                 <div class="show-list clearfix mt10 content-expanded">
-                    <div class="item" v-for="item in menulist.list">
-                        <menu-box :array-menu="menulist.list"></menu-box>
+                    <div class="item" v-for="item in menulist.data">
+                        <menu-box :menu-list="menulist.data"></menu-box>
                     </div>
                   <!--   <div class="item">
                         <div class="show title phone">

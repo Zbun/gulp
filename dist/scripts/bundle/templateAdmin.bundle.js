@@ -47,8 +47,9 @@
 	'use strict';
 
 	/**
-	 * 模板编辑菜单相关功能，使用webpack、Vue打包文件，修改需要配环境
+	 * 模板编辑菜单相关功能，使用webpack、Vue打包文件，修改时需要配环境
 	 * 复制package.json，gulpfile.js 文件，先运行 npm install，完成后运行 gulp
+	 * 上线时，需要 gulp build 或npm run build构建一下
 	 * @author Zhao Liubin
 	 */
 	__webpack_require__(7);
@@ -73,6 +74,12 @@
 	//滑动删除元素方法
 	var slideDel = __webpack_require__(13);
 
+	var showTips = __webpack_require__(12);
+
+	var showTipsWarning = function showTipsWarning(content) {
+	    showTips(content, 'error');
+	};
+
 	var jsonMenu = __webpack_require__(15);
 
 	var Vue = __webpack_require__(16);
@@ -80,32 +87,80 @@
 	var vm = new Vue({
 	    el: 'body',
 	    data: {
-	        menulist: jsonMenu
+	        menulist: jsonMenu,
+	        menu1Length: jsonMenu.data.length,
+	        menuSet: {
+	            name: '',
+	            type: {
+	                message: 'MESSAGE',
+	                own: 'OWN',
+	                app: 'APP'
+	            }
+	        },
+	        htmlTplMenu1: '<div class="item menu-l1 on"><div class="title js-toggle" data-name="添加菜单" title="添加菜单"><p class="inner">添加菜单</p></div><ul class="content menu-l2"><li class="item add-wrapper"><a href="javascript:;" class="font-bigger add" title="添加菜单">+</a></li></ul></div>',
+	        htmlTplMenu2: '<li class="item js-toggle" data-name="菜单名称"><span class="inner">菜单名称</span></li>'
+	    },
+	    computed: {
+	        // menu1Length: function() {
+	        //     return this.menulist.data.length;
+	        // }
 	    },
 	    components: {
 	        'menu-box': vcomMenu
 	    },
 	    ready: function ready() {
+	        var context = this;
 	        //只拖动，不读数
-	        $('.menu-l2').dragsort({
-	            itemSelector: 'li:not(.add-wrapper)',
-	            dragSelector: 'li',
-	            dragBetween: true,
-	            placeHolderTemplate: "<li></li>"
-	        });
+	        function drag() {
+	            $('.menu-l2').dragsort('destroy');
+	            $('.menu-l2').dragsort({
+	                itemSelector: 'li:not(.add-wrapper)',
+	                dragSelector: 'li',
+	                dragBetween: true,
+	                placeHolderTemplate: "<li></li>"
+	            });
+	        }
+	        drag();
+
+	        //菜单点击切换事件
 	        $('.footer.menu').on('click', '.js-toggle', function () {
 	            var $t = $(this);
+	            var name = $t.data('name');
+	            context.menuSet.name = name;
 	            $t.closest('.menu-l1').addClass('on').find('.on').removeClass('on').end().siblings('.item').removeClass('on');
 	            $t.addClass('on');
+	        }).find('.js-toggle:first').click();
+
+	        //添加一、二级菜单
+	        $('.footer.menu').on('click', '.add-menu1 .add', function () {
+	            $(this).closest('.menu-l1').before(vm.htmlTplMenu1);
+	            var $arrayMenu1 = $('.footer.menu').children('.item:not(.add-menu1)');
+	            vm.menu1Length = $arrayMenu1.length;
+	            drag();
+	            $arrayMenu1.last().children('.js-toggle').click();
+	        }).on('click', '.content .add', function () {
+	            var $t = $(this);
+	            var $parent = $t.closest('.menu-l2');
+	            $parent.prev().addClass('wealthy');
+	            $t.closest('.menu-l2').children().first().before(vm.htmlTplMenu2);
+	            if ($parent.children().length > 5) {
+	                $t.parent().hide();
+	            }
 	        });
 	    },
 	    methods: {
+	        //删除菜单选项
+
 	        delMenu: function delMenu() {
 	            var $menu1 = $('.footer.menu').find('.menu-l1.on');
 	            var $on = $menu1.find('.on');
 	            var $prev = $on.prev('.js-toggle'),
 	                $next = $on.next('.js-toggle');
 	            var $parent = $on.parent();
+	            if (vm.menu1Length < 2) {
+	                showTipsWarning('最后一个菜单不能删除哦');
+	                return;
+	            }
 	            slideDel($on, function () {
 	                if ($parent.hasClass('menu-l2')) {
 	                    if ($prev.length) {
@@ -114,17 +169,78 @@
 	                        $next.click();
 	                    }
 	                    $parent.find('.add-wrapper').show();
-	                };
+	                } else {
+	                    var $pprev = $parent.prev('.item');
+	                    if ($pprev.length) {
+	                        $pprev.children('.js-toggle').click();
+	                    } else {
+	                        $parent.next().children('.js-toggle').click();
+	                    }
+	                    $parent.remove();
+	                    vm.menu1Length = $('.footer.menu').children('.item:not(.add-menu1)').length;
+	                }
 	                !$parent.find('.js-toggle').length && $menu1.find('.wealthy').removeClass('wealthy');
 	            });
-	        }
+	        },
+	        save: function save() {
+	            alert(this.menuSet.name.getUTFLength());
+	        },
+	        iptName: function iptName() {
+	            $('.footer.menu').find('.on').find('.on').find('.inner').text(this.menuSet.name || '菜单名称');
+	        },
+	        iptSite: function iptSite() {}
 	    }
 	});
 
 /***/ },
 /* 1 */,
-/* 2 */,
-/* 3 */,
+/* 2 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(getType) {'use strict';
+
+	/**
+	 * 判断目标类型，方法集合
+	 * @type {Object}
+	 */
+	module.exports = {
+		isFunction: function isFunction(obj) {
+			return getType(obj) === 'function';
+		},
+		isString: function isString(obj) {
+			return getType(obj) === 'string';
+		},
+		isArray: function isArray(obj) {
+			return Array.isArray ? Array.isArray(obj) : getType(obj) === 'array';
+		},
+		isObject: function isObject(obj) {
+			return getType(obj) === 'object';
+		}
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+
+/***/ },
+/* 3 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	/**
+	 * 获取目标类型
+	 * @author Zhao Liubin
+	 * @date   2016-05-19
+	 * @param  {obj}
+	 * @return {[type]}
+	 */
+	module.exports = function (target) {
+	    try {
+	        return Object.prototype.toString.call(target).match(/object\s*(\w*)/)[1].toLowerCase();
+	    } catch (e) {
+	        console.warn(e);
+	    }
+	};
+
+/***/ },
 /* 4 */,
 /* 5 */
 /***/ function(module, exports) {
@@ -184,7 +300,55 @@
 /* 9 */,
 /* 10 */,
 /* 11 */,
-/* 12 */,
+/* 12 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	/**
+	 * 操作提示，需要进一步封装为成功或失败方法
+	 * @author  Zhao Liubin
+	 * @type {[type]}
+	 */
+	var typeOf = __webpack_require__(2);
+
+	module.exports = function () {
+		var content = arguments.length <= 0 || arguments[0] === undefined ? '操作成功' : arguments[0];
+		var state = arguments.length <= 1 || arguments[1] === undefined ? 'ok' : arguments[1];
+		var callback = arguments.length <= 2 || arguments[2] === undefined ? '' : arguments[2];
+		var time = arguments.length <= 3 || arguments[3] === undefined ? 3000 : arguments[3];
+
+		var box = document.createElement('div');
+		var styleBox = 'position: fixed;top: 36%;left: 50%;min-width:150px;max-width:300px;padding: 1em 2em;border: 1px solid;line-height: 1.5;text-align: center;color: #1fb5ac;background: #fff;-webkit-border-radius: 3px;-moz-border-radius: 3px;border-radius: 3px;z-index: 10;-webkit-transform: translate(-50%,-50%);transform: translate(-50%,-50%);';
+		box.style.cssText = styleBox;
+		box.classList.add('tips-state');
+
+		var icon = document.createElement('i');
+		var styleIcon = 'display: inline-block;width: 28px;margin-top: 4px;margin-bottom: 8px;border: 1px solid;font-size: 24px;line-height: 26px;-webkit-border-radius: 100%;border-radius: 100%;';
+		icon.innerHTML = '&#x2713';
+		icon.style.cssText = styleIcon;
+		if (state === 'false' || state === 'cancel' || state === 'error') {
+			box.style.color = '#fb6363';
+			icon.innerHTML = '!';
+		}
+		box.appendChild(icon);
+		var contentWrapper = document.createElement('p');
+		contentWrapper.innerHTML = content;
+		box.appendChild(contentWrapper);
+
+		document.body.appendChild(box);
+
+		var _close = function _close() {
+			document.body.removeChild(box);
+		};
+
+		setTimeout(function () {
+			_close();
+			typeOf.isFunction(callback) && callback();
+		}, parseInt(time));
+	};
+
+/***/ },
 /* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -239,48 +403,184 @@
 /* 15 */
 /***/ function(module, exports) {
 
-	module.exports={
-		success:true,
-		list:[
-		{
-			name:'进店购物',
-			id:'10000',
-			list:[
-			{
-				name:'徽商城',
-				id:'100001'
-			},{
-				name:'微官网',
-				id:'100002'
-			},{
-				name:'微应用',
-				id:'100003'
-			}
-			]
-		},
-		{
-			name:'我没有下级',
-			id:'20000',
-			list:[]
-		},
-		{
-			name:'粉丝互动',
-			id:'30000',
-			list:[
-			{
-				name:'拆礼盒',
-				id:300001
-			},{
-				name:'大转盘',
-				id:300002
-			},{
-				name:'摇钱树',
-				id:300003
-			}
-			]
-		}
-		]
+	module.exports = {
+	    "code": "0",
+	    "data": [{
+	        "id": "7ee1f9a01cba4eb688bed9b7242930e4",
+	        "menuType": "MESSAGE",
+	        "name": "菜单1",
+	        "orderId": "1",
+	        "parentId": "0",
+	        "subMenuList": [{
+	            "createDate": "2016-05-20 00:00:00",
+	            "createDateString": "2016-05-20",
+	            "id": "e3c5782c31f1425ca7a0c1201b1a5f11",
+	            "menuContent": "http://www.eqying.com",
+	            "menuType": "OWN",
+	            "name": "测试2",
+	            "orderId": 1,
+	            "parentId": "7ee1f9a01cba4eb688bed9b7242930e4",
+	            "state": "NO",
+	            "updateDate": "2016-05-20 00:00:00",
+	            "updateDateString": "2016-05-20",
+	            "userId": 1000000008333
+	        }, {
+	            "createDate": "2016-05-20 00:00:00",
+	            "createDateString": "2016-05-20",
+	            "id": "1dee1bf6e8fd46239eb02b0f94d876a4",
+	            "menuContent": "http://www.eqying.com",
+	            "menuType": "OWN",
+	            "name": "测试1",
+	            "orderId": 2,
+	            "parentId": "7ee1f9a01cba4eb688bed9b7242930e4",
+	            "state": "NO",
+	            "updateDate": "2016-05-20 00:00:00",
+	            "updateDateString": "2016-05-20",
+	            "userId": 1000000008333
+	        }]
+	    }, {
+	        "id": "0f598b0aefb54e3496e9a92da7d04104",
+	        "menuType": "OWN",
+	        "name": "菜单2",
+	        "orderId": "2",
+	        "parentId": "0",
+	        "subMenuList": [{
+	            "createDate": "2016-05-20 00:00:00",
+	            "createDateString": "2016-05-20",
+	            "groupId": "1000000001547",
+	            "id": "cb7fb04bc8c149d88d69f70cded30377",
+	            "menuType": "MESSAGE",
+	            "name": "图片",
+	            "orderId": 1,
+	            "parentId": "0f598b0aefb54e3496e9a92da7d04104",
+	            "state": "NO",
+	            "updateDate": "2016-05-20 00:00:00",
+	            "updateDateString": "2016-05-20",
+	            "userId": 1000000008333
+	        }]
+	    }, {
+	        "id": "140a575b2f73423787789005d2a045ed",
+	        "menuType": "APP",
+	        "name": "菜单3",
+	        "orderId": "3",
+	        "parentId": "0",
+	        "subMenuList": [{
+	            "appDemoUrl": "http://test.yqxiu.cn/s/E2OPfq4X",
+	            "appPicUrl": "group1/M00/01/22/wKj5L1c9RrCAf6C2AAB4yRoqhDI513.jpg",
+	            "appType": "WEBSITE",
+	            "appTypeValue": "0",
+	            "createDate": "2016-05-20 00:00:00",
+	            "createDateString": "2016-05-20",
+	            "id": "e43152286b784de8b40c53892fbe2e66",
+	            "menuItemId": "2d769157ba3145fe9d971c7f52c8a29f",
+	            "menuType": "APP",
+	            "modelType": "WEBSITE",
+	            "name": "菜单4",
+	            "orderId": 1,
+	            "parentId": "140a575b2f73423787789005d2a045ed",
+	            "state": "NO",
+	            "updateDate": "2016-05-20 00:00:00",
+	            "updateDateString": "2016-05-20",
+	            "userId": 1000000008333
+	        }, {
+	            "appDemoUrl": "http://test.yqxiu.cn/s/E2OPfq4X",
+	            "appPicUrl": "group1/M00/01/22/wKj5L1c9RrCAf6C2AAB4yRoqhDI513.jpg",
+	            "appType": "BARGAIN",
+	            "appTypeValue": "58cdc952df8e416799cbcedbaf6f1c5d",
+	            "createDate": "2016-05-20 00:00:00",
+	            "createDateString": "2016-05-20",
+	            "id": "81922eba65584aabb2170abf6894a7b5",
+	            "menuItemId": "e3960f608ae14bb3b6f36bbaa853e968",
+	            "menuType": "APP",
+	            "modelType": "PROMOTION",
+	            "name": "砍价",
+	            "orderId": 2,
+	            "parentId": "140a575b2f73423787789005d2a045ed",
+	            "state": "NO",
+	            "updateDate": "2016-05-20 00:00:00",
+	            "updateDateString": "2016-05-20",
+	            "userId": 1000000008333
+	        }]
+	    }],
+	    "message": "success",
+	    "success": true
 	}
+
+
+
+	// {
+	//     success: true,
+	//     data: [{
+	//         name: '进店购物',
+	//         id: '10000',
+	//         menuType: 'MESSAGE',
+	//         subMenuList: [{
+	//             createDate: '2016-05-19',
+	//             menuContent: 'http://www.eqying.com',
+	//             menuType: 'OWN',
+	//             name: '微商城',
+	//             orderId: 1,
+	//             id: '100001',
+	//             state: 'NO',
+	//             userId: '10000000083'
+	//         }, {
+	//             createDate: '2016-05-19',
+	//             menuContent: 'http://www.eqying.com',
+	//             menuType: 'OWN',
+	//             name: '微官网',
+	//             orderId: 2,
+	//             id: '100002',
+	//             state: 'NO',
+	//             userId: '10000000084'
+	//         }, {
+	//             createDate: '2016-05-19',
+	//             menuContent: 'http://www.eqying.com',
+	//             menuType: 'OWN',
+	//             name: '微应用',
+	//             orderId: 3,
+	//             id: '100001',
+	//             state: 'YES',
+	//             userId: '10000000085'
+	//         }]
+	//     }, {
+	//         name: '我没有下级',
+	//         id: '20000',
+	//         menuType: 'APP'
+	//     }, {
+	//         name: '粉丝互动',
+	//         id: '30000',
+	//         menuType: 'APP',
+	//         subMenuList: [{
+	//             createDate: '2016-05-19',
+	//             menuContent: 'http://www.eqying.com',
+	//             menuType: 'OWN',
+	//             name: '拆礼盒',
+	//             orderId: 1,
+	//             id: '300001',
+	//             state: 'YES',
+	//             userId: '30000000085'
+	//         }, {
+	//             createDate: '2016-05-19',
+	//             menuContent: 'http://www.eqying.com',
+	//             menuType: 'OWN',
+	//             name: '大转盘',
+	//             orderId: 2,
+	//             id: '300002',
+	//             state: 'YES',
+	//             userId: '30000000086'
+	//         }, {
+	//             createDate: '2016-05-19',
+	//             menuContent: 'http://www.eqying.com',
+	//             menuType: 'OWN',
+	//             name: '摇钱树',
+	//             orderId: 3,
+	//             id: '300003',
+	//             state: 'YES',
+	//             userId: '30000000088'
+	//         }]
+	//     }]
+	// }
+
 
 /***/ },
 /* 16 */
@@ -10463,32 +10763,15 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	exports.default = {
-	    props: {
-	        arrayMenu: Array
-	    },
+	    props: ['menuItem', 'menu1Length'],
 	    data: function data() {
 	        return {
-	            list: [],
-	            htmlTplMenu2: '<li class="item js-toggle">$text</li>'
+	            list: []
 	        };
 	    },
 
-	    methods: {
-	        add: function add() {
-	            var $t = $(event.target);
-	            var $parent = $t.closest('.menu-l2');
-	            $parent.prev().addClass('wealthy');
-	            $t.closest('.menu-l2').children().first().before(this.htmlTplMenu2);
-	            if ($parent.children().length > 5) {
-	                $t.parent().hide();
-	            }
-	        },
-	        toggle: function toggle() {
-	            var $t = $(event.target);
-	            $t.closest('.menu-l1').addClass('on').find('.on').removeClass('on').end().siblings('.item').removeClass('on');
-	            $t.addClass('on');
-	        }
-	    }
+	    ready: function ready() {},
+	    methods: {}
 	};
 
 /***/ },
@@ -10529,10 +10812,10 @@
 	    value: true
 	});
 	exports.default = {
-	    props: ['objMenu'],
+	    props: ['menuItem'],
 	    data: function data() {
 	        return {
-	            list: this.objMenu
+	            menu: this.menuItem
 	        };
 	    },
 
@@ -10552,13 +10835,13 @@
 /* 22 */
 /***/ function(module, exports) {
 
-	module.exports = "\n<div class=\"title js-toggle\" @click=\"toggle\" :class=\"{'wealthy':list.list.length>0}\">\n    <p class=\"inner\">{{list.name}}</p>\n</div>\n<ul class=\"content menu-l2\">\n    <li class=\"item js-toggle\" @click=\"toggle\" v-for=\"item2 of list.list\">\n        <a href=\"javascript:;\">{{item2.name}}</a>\n    </li>\n</ul>\n";
+	module.exports = "\n<div class=\"title js-toggle\" @click=\"toggle\" :class=\"{'wealthy':menuItem.subMenuList.length>0}\">\n    <p class=\"inner\">{{menuItem.name}}</p>\n</div>\n<ul class=\"content menu-l2\">\n    <li class=\"item js-toggle\" @click=\"toggle\" v-for=\"item2 of menuItem.subMenuList\">\n        <a href=\"javascript:;\">{{item2.name}}</a>\n    </li>\n</ul>\n";
 
 /***/ },
 /* 23 */
 /***/ function(module, exports) {
 
-	module.exports = "\n<div><i class=\"ico keyboard\"></i></div>\n<div class=\"item menu-l1\" v-for=\"item of arrayMenu\" :class=\"{on:$index==0}\">\n    <div class=\"title js-toggle\" :class=\"{'wealthy':item.list.length>0}\">\n        <p class=\"inner\">{{item.name}}</p>\n    </div>\n    <ul class=\"content menu-l2\">\n        <li class=\"item js-toggle\" v-for=\"item2 of item.list\"><a href=\"javascript:;\">{{item2.name}}</a></li>\n        <li class=\"item add-wrapper\">\n            <a href=\"javascript:;\" class=\"font-bigger add\" v-on:click=\"add\" title=\"添加菜单\">+</a>\n        </li>\n    </ul>\n</div>\n";
+	module.exports = "\n<div><i class=\"ico keyboard\"></i></div>\n<div class=\"item menu-l1\" v-for=\"item of menuItem\" :class=\"{on:$index==0}\">\n    <div class=\"title js-toggle\" :class=\"{'wealthy':item.subMenuList.length>0}\" :data-name=\"item.name\" :title=\"item.name\">\n        <p class=\"inner\">{{item.name}}</p>\n    </div>\n    <ul class=\"content menu-l2\">\n        <li class=\"item js-toggle\" v-for=\"item2 of item.subMenuList\" :data-name=\"item2.name\" :title=\"item2.name\"><span class=\"inner\">{{item2.name}}</span></li>\n        <li class=\"item add-wrapper\">\n            <a href=\"javascript:;\" class=\"font-bigger add\"  title=\"添加菜单\">+</a>\n        </li>\n    </ul>\n</div>\n<div class=\"item menu-l1 add-menu1\" v-if=\"menu1Length<4\">\n    <p class=\"item add-wrapper\">\n        <a href=\"javascript:;\" class=\"font-bigger add\">+</a>\n    </p>\n</div>\n";
 
 /***/ }
 /******/ ]);

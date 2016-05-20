@@ -9,17 +9,20 @@
         visibility: hidden;
         z-index: 2;
         &:checked {
-            ~.icon:before {
+            ~.icon{
+                border-color: $color-border;
+                &:before {
                 visibility: visible;
             }
+        }
         }
     }
     .icon {
         position: absolute;
         top: .7em;
         left: 5px;
-        width: 1.2em;
-        height: 1.2em;
+        width: 14px;
+        height: 14px;
         padding: 3px;
         border: 1px solid $color-border;
         background-color: #fff;
@@ -27,7 +30,6 @@
         -webkit-border-radius: 100%;
         -moz-border-radius: 100%;
         border-radius: 100%;
-        pointer-events:none;
         &:before{
             content: '';
             position: absolute;
@@ -40,6 +42,11 @@
             -moz-border-radius: 100%;
             border-radius: 100%;
             visibility: hidden;
+        }
+    }
+    &:hover{
+        .icon{
+            border-color: #bbb;
         }
     }
 }

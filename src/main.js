@@ -17,4 +17,5 @@ var spin1 = spinZ($('.show-list'));
 setTimeout(function() {
     spin1.stop();
     vm.menulist = jsonMenu;
-}, 2000)
+    console.log(vm.menulist)
+}, 1000)
