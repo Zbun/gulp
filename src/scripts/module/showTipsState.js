@@ -3,7 +3,6 @@
  * @author  Zhao Liubin
  * @type {[type]}
  */
-var typeOf=require('typeOf');
 
 module.exports=(content='操作成功',state='ok',callback='',time=3000)=>{
 	var box=document.createElement('div');
@@ -32,7 +31,7 @@ module.exports=(content='操作成功',state='ok',callback='',time=3000)=>{
 
 	setTimeout(function(){
 		_close();
-		typeOf.isFunction(callback) && callback();
+		typeof callback==='function' && callback();
 	},parseInt(time))
 	
 }

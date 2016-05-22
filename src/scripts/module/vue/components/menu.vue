@@ -1,5 +1,5 @@
 <template>
-    <div class="show title phone">
+    <section class="show title phone">
         <h3 class="title text-ellipsis">
                                 易企赢</h3>
         <div class="content">
@@ -12,7 +12,7 @@
                 <footer-menu :menu-item="item"></footer-menu>
             </div>
         </footer>
-    </div>
+    </section>
     <div class="text-center select">
         <button class="btn btn-primary big like" v-on:click="like">就选这个</button>
         <span class="pl10 text-muted">点击菜单预览效果</span>
@@ -45,9 +45,9 @@ export default {
                 //     spin1 = spinZ($container);
 
             // img.onload=function(){
-            // 	spin1.stop();
-            // 	$container.find('.show-img').attr('src', img.src);
-            // 	console.log('loaded');
+            //  spin1.stop();
+            //  $container.find('.show-img').attr('src', img.src);
+            //  console.log('loaded');
             // }
 
             var site = 'http://www.uisdc.com/';

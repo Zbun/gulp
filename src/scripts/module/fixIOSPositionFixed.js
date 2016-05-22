@@ -5,7 +5,7 @@
  * @param  {node||nodelist}
  * @return {[type]}
  */
-    function fixFixed(eles) {
+    var fixFixed=function(eles) {
         if(!eles||eles.length<=0){
             return;
         }

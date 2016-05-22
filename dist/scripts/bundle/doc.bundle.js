@@ -471,7 +471,7 @@
 	/**
 	 * 全部选中方法，对应一个顶层的class:chks,
 	 * 全选class:chks,子checkbox的class:chk
-	 * @author zhaoliubin@knet.cn
+	 * @author Zhao Liubin
 	 * @date   2016-05-19
 	 * @param  {[type]}
 	 * @return {[type]}
@@ -514,7 +514,7 @@
 	 * @param  {可能需要自动删除倒计时间}
 	 * @return {[type]}
 	 */
-	function showTipsOnTop() {
+	var showTipsOnTop = function showTipsOnTop() {
 	    var content = arguments.length <= 0 || arguments[0] === undefined ? '小提示' : arguments[0];
 	    var target = arguments[1];
 	    var time = arguments[2];
@@ -535,7 +535,7 @@
 	            tar.removeChild(div);
 	        }, t);
 	    }
-	}
+	};
 	module.exports = showTipsOnTop;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
@@ -641,7 +641,7 @@
 
 /***/ },
 /* 12 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	'use strict';
 
@@ -650,7 +650,6 @@
 	 * @author  Zhao Liubin
 	 * @type {[type]}
 	 */
-	var typeOf = __webpack_require__(2);
 
 	module.exports = function () {
 		var content = arguments.length <= 0 || arguments[0] === undefined ? '操作成功' : arguments[0];
@@ -684,7 +683,7 @@
 
 		setTimeout(function () {
 			_close();
-			typeOf.isFunction(callback) && callback();
+			typeof callback === 'function' && callback();
 		}, parseInt(time));
 	};
 

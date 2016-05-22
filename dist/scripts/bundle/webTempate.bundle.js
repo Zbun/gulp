@@ -10548,7 +10548,7 @@
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), true)
 	  if (!hotAPI.compatible) return
-	  var id = "D:\\javaworkspaces\\wxp-template-web\\src\\main\\webapp\\WEB-INF\\static\\src\\scripts\\module\\vue\\components\\footerMenu.vue"
+	  var id = "D:\\GitRepo\\bugoftime\\src\\scripts\\module\\vue\\components\\footerMenu.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {
@@ -10612,7 +10612,7 @@
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), true)
 	  if (!hotAPI.compatible) return
-	  var id = "D:\\javaworkspaces\\wxp-template-web\\src\\main\\webapp\\WEB-INF\\static\\src\\scripts\\module\\vue\\components\\menu.vue"
+	  var id = "D:\\GitRepo\\bugoftime\\src\\scripts\\module\\vue\\components\\menu.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {
@@ -10680,7 +10680,7 @@
 /* 26 */
 /***/ function(module, exports) {
 
-	module.exports = "\n<div class=\"show title phone\">\n    <h3 class=\"title text-ellipsis\">\n                            易企赢</h3>\n    <div class=\"content\">\n        <img class=\"show-img\" src=\"/imgs/guaka.png\" alt=\"\">\n        <iframe class=\"show-site\" frameborder=\"0\"></iframe>\n    </div>\n    <footer class=\"footer menu dis-flex abs\">\n        <i class=\"ico keyboard\"></i>\n        <div class=\"item menu-l1\" v-for=\"item of menuList\">\n            <footer-menu :menu-item=\"item\"></footer-menu>\n        </div>\n    </footer>\n</div>\n<div class=\"text-center select\">\n    <button class=\"btn btn-primary big like\" v-on:click=\"like\">就选这个</button>\n    <span class=\"pl10 text-muted\">点击菜单预览效果</span>\n</div>\n";
+	module.exports = "\n<section class=\"show title phone\">\n    <h3 class=\"title text-ellipsis\">\n                            易企赢</h3>\n    <div class=\"content\">\n        <img class=\"show-img\" src=\"/imgs/guaka.png\" alt=\"\">\n        <iframe class=\"show-site\" frameborder=\"0\"></iframe>\n    </div>\n    <footer class=\"footer menu dis-flex abs\">\n        <i class=\"ico keyboard\"></i>\n        <div class=\"item menu-l1\" v-for=\"item of menuList\">\n            <footer-menu :menu-item=\"item\"></footer-menu>\n        </div>\n    </footer>\n</section>\n<div class=\"text-center select\">\n    <button class=\"btn btn-primary big like\" v-on:click=\"like\">就选这个</button>\n    <span class=\"pl10 text-muted\">点击菜单预览效果</span>\n</div>\n";
 
 /***/ }
 /******/ ]);

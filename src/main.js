@@ -19,3 +19,4 @@ setTimeout(function() {
     vm.menulist = jsonMenu;
     console.log(vm.menulist)
 }, 1000)
+

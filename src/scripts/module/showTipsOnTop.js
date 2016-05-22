@@ -7,7 +7,7 @@
  * @param  {可能需要自动删除倒计时间}
  * @return {[type]}
  */
- function showTipsOnTop(content='小提示', target, time) {
+ var  showTipsOnTop=function(content='小提示', target, time) {
      var div = document.createElement('div'),
          tar = '';
      var cssText = 'position:absolute;left:25%;right:25%;top:0;padding:4px 30px;border:1px solid #ffd0c0;text-align:center;background:#fff6f3;color:#fb6362;line-height:2;z-index:5;';

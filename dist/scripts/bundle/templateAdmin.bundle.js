@@ -194,53 +194,8 @@
 
 /***/ },
 /* 1 */,
-/* 2 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(getType) {'use strict';
-
-	/**
-	 * 判断目标类型，方法集合
-	 * @type {Object}
-	 */
-	module.exports = {
-		isFunction: function isFunction(obj) {
-			return getType(obj) === 'function';
-		},
-		isString: function isString(obj) {
-			return getType(obj) === 'string';
-		},
-		isArray: function isArray(obj) {
-			return Array.isArray ? Array.isArray(obj) : getType(obj) === 'array';
-		},
-		isObject: function isObject(obj) {
-			return getType(obj) === 'object';
-		}
-	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
-
-/***/ },
-/* 3 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	/**
-	 * 获取目标类型
-	 * @author Zhao Liubin
-	 * @date   2016-05-19
-	 * @param  {obj}
-	 * @return {[type]}
-	 */
-	module.exports = function (target) {
-	    try {
-	        return Object.prototype.toString.call(target).match(/object\s*(\w*)/)[1].toLowerCase();
-	    } catch (e) {
-	        console.warn(e);
-	    }
-	};
-
-/***/ },
+/* 2 */,
+/* 3 */,
 /* 4 */,
 /* 5 */
 /***/ function(module, exports) {
@@ -301,7 +256,7 @@
 /* 10 */,
 /* 11 */,
 /* 12 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	'use strict';
 
@@ -310,7 +265,6 @@
 	 * @author  Zhao Liubin
 	 * @type {[type]}
 	 */
-	var typeOf = __webpack_require__(2);
 
 	module.exports = function () {
 		var content = arguments.length <= 0 || arguments[0] === undefined ? '操作成功' : arguments[0];
@@ -344,7 +298,7 @@
 
 		setTimeout(function () {
 			_close();
-			typeOf.isFunction(callback) && callback();
+			typeof callback === 'function' && callback();
 		}, parseInt(time));
 	};
 
@@ -10738,7 +10692,7 @@
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), true)
 	  if (!hotAPI.compatible) return
-	  var id = "D:\\javaworkspaces\\wxp-template-web\\src\\main\\webapp\\WEB-INF\\static\\src\\scripts\\module\\vue\\components\\templateAdmin\\menu.vue"
+	  var id = "D:\\GitRepo\\bugoftime\\src\\scripts\\module\\vue\\components\\templateAdmin\\menu.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {
@@ -10794,7 +10748,7 @@
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), true)
 	  if (!hotAPI.compatible) return
-	  var id = "D:\\javaworkspaces\\wxp-template-web\\src\\main\\webapp\\WEB-INF\\static\\src\\scripts\\module\\vue\\components\\footerMenu.vue"
+	  var id = "D:\\GitRepo\\bugoftime\\src\\scripts\\module\\vue\\components\\footerMenu.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {

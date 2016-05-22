@@ -1,7 +1,7 @@
 /**
  * 全部选中方法，对应一个顶层的class:chks,
  * 全选class:chks,子checkbox的class:chk
- * @author zhaoliubin@knet.cn
+ * @author Zhao Liubin
  * @date   2016-05-19
  * @param  {[type]}
  * @return {[type]}
