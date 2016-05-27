@@ -1,9 +1,9 @@
 <template>
-    <div class="title js-toggle" @click="toggle" :class="{'wealthy':menuItem.subMenuList.length>0}">
+    <div class="title js-toggle" :class="{'wealthy':menuItem.subMenuList.length>0}">
         <p class="inner">{{menuItem.name}}</p>
     </div>
     <ul class="content menu-l2">
-        <li class="item js-toggle" @click="toggle" v-for="item2 of menuItem.subMenuList">
+        <li class="item js-toggle" v-for="item2 of menuItem.subMenuList">
             <a href="javascript:;">{{item2.name}}</a>
         </li>
     </ul>

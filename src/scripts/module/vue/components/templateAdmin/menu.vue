@@ -1,24 +1,23 @@
 <template>
     <div><i class="ico keyboard"></i></div>
     <div class="item menu-l1" v-for="item of menuItem" :class="{on:$index==0}">
-        <div class="title js-toggle" :class="{'wealthy':item.subMenuList.length>0}" :data-name="item.name" :title="item.name">
+        <div class="title js-toggle" :class="{'wealthy':item.subMenuList.length>0}" :data-menu-type="item.menuType" :data-name="item.name" :title="item.name" :data-menu-content="item.menuContent" :data-app-demo-url="item.appDemoUrl" :data-app-pic-url="item.appPicUrl" :data-app-type="item.appType" :data-model-type="item.modelType" :data-model-text="item.modelText"  :data-app-name="item.appName">
             <p class="inner">{{item.name}}</p>
         </div>
         <ul class="content menu-l2">
-            <li class="item js-toggle" v-for="item2 of item.subMenuList" :data-name="item2.name" :title="item2.name"><span class="inner">{{item2.name}}</span></li>
-            <li class="item add-wrapper">
-                <a href="javascript:;" class="font-bigger add"  title="添加菜单">+</a>
+            <li class="item js-toggle" v-for="item of item.subMenuList" :data-name="item.name" :data-menu-type="item.menuType" :data-name="item.name" :title="item.name" :data-menu-content="item.menuContent" :data-app-demo-url="item.appDemoUrl" :data-app-pic-url="item.appPicUrl" :data-app-type="item.appType" :data-model-type="item.modelType" :data-model-text="item.modelText" :data-app-name="item.appName"><span class="inner">{{item.name}}</span></li>
+            <li class="item add-wrapper" v-show="item.subMenuList.length<5">
+                <a href="javascript:;" class="font-bigger add" :data-menu-type="item.menuType" title="添加菜单">+</a>
             </li>
         </ul>
     </div>
-    <div class="item menu-l1 add-menu1" v-if="menu1Length<4">
+    <div class="item menu-l1 add-menu1" v-if="menu1Length<3">
         <p class="item add-wrapper">
-            <a href="javascript:;" class="font-bigger add">+</a>
+            <a href="javascript:;" class="font-bigger add" data-menu-type="MESSAGE">+</a>
         </p>
     </div>
 </template>
 <script>
-import footerMenu from 'vue/components/footerMenu.vue';
 export default {
     props: ['menuItem','menu1Length'],
     data() {

@@ -1,13 +1,13 @@
 @charset "utf-8";
 @import 'base/basePC';
-@import '_dialog';
-@import '_pagination';
-@import '_progress';
-@import '_set';
+@import 'dialog';
+@import 'pagination';
+@import 'progress';
+@import 'set';
 @import 'base/_iconfont';
-@import 'base/_radio-check.scss';
-@import 'base/_btn_tag.scss';
-@import 'base/_arrow_down.scss';
+@import 'base/_radio-check';
+@import 'base/_btn_tag';
+@import 'base/_arrow_down';
 body {
     min-width: 1080px;
     background: #F0F0F0;
@@ -17,7 +17,7 @@ body {
     padding: 0 1.25em;
     min-width: 4.5em;
 }
-@import "base/_info_list.scss";
+@import "base/_info_list";
 
 .info-list {
     >.item {

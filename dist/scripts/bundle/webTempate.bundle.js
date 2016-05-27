@@ -46,10 +46,10 @@
 
 	/* WEBPACK VAR INJECTION */(function(spinZ) {'use strict';
 
-	var jsonMenu = __webpack_require__(15);
+	var jsonMenu = __webpack_require__(22);
 
-	var Vue = __webpack_require__(16);
-	var vcomMenu = __webpack_require__(24);
+	var Vue = __webpack_require__(17);
+	var vcomMenu = __webpack_require__(23);
 
 	var vm = new Vue({
 	    el: 'body',
@@ -67,6 +67,15 @@
 	    vm.menulist = jsonMenu;
 	    console.log(vm.menulist);
 	}, 1000);
+
+	$('body').on('click', '.footer.menu .js-toggle', function () {
+	    var $t = $(this);
+	    $t.closest('.menu-l1').toggleClass('expanded').siblings('.item').removeClass('expanded');
+	    $t.addClass('on').siblings('.item').removeClass('on');
+	    if (!$t.hasClass('wealthy')) {
+	        $t.closest('.menu-l1').addClass('on').siblings('.item').removeClass('on');
+	    }
+	});
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
 
 /***/ },
@@ -208,190 +217,9 @@
 /* 12 */,
 /* 13 */,
 /* 14 */,
-/* 15 */
-/***/ function(module, exports) {
-
-	module.exports = {
-	    "code": "0",
-	    "data": [{
-	        "id": "7ee1f9a01cba4eb688bed9b7242930e4",
-	        "menuType": "MESSAGE",
-	        "name": "菜单1",
-	        "orderId": "1",
-	        "parentId": "0",
-	        "subMenuList": [{
-	            "createDate": "2016-05-20 00:00:00",
-	            "createDateString": "2016-05-20",
-	            "id": "e3c5782c31f1425ca7a0c1201b1a5f11",
-	            "menuContent": "http://www.eqying.com",
-	            "menuType": "OWN",
-	            "name": "测试2",
-	            "orderId": 1,
-	            "parentId": "7ee1f9a01cba4eb688bed9b7242930e4",
-	            "state": "NO",
-	            "updateDate": "2016-05-20 00:00:00",
-	            "updateDateString": "2016-05-20",
-	            "userId": 1000000008333
-	        }, {
-	            "createDate": "2016-05-20 00:00:00",
-	            "createDateString": "2016-05-20",
-	            "id": "1dee1bf6e8fd46239eb02b0f94d876a4",
-	            "menuContent": "http://www.eqying.com",
-	            "menuType": "OWN",
-	            "name": "测试1",
-	            "orderId": 2,
-	            "parentId": "7ee1f9a01cba4eb688bed9b7242930e4",
-	            "state": "NO",
-	            "updateDate": "2016-05-20 00:00:00",
-	            "updateDateString": "2016-05-20",
-	            "userId": 1000000008333
-	        }]
-	    }, {
-	        "id": "0f598b0aefb54e3496e9a92da7d04104",
-	        "menuType": "OWN",
-	        "name": "菜单2",
-	        "orderId": "2",
-	        "parentId": "0",
-	        "subMenuList": [{
-	            "createDate": "2016-05-20 00:00:00",
-	            "createDateString": "2016-05-20",
-	            "groupId": "1000000001547",
-	            "id": "cb7fb04bc8c149d88d69f70cded30377",
-	            "menuType": "MESSAGE",
-	            "name": "图片",
-	            "orderId": 1,
-	            "parentId": "0f598b0aefb54e3496e9a92da7d04104",
-	            "state": "NO",
-	            "updateDate": "2016-05-20 00:00:00",
-	            "updateDateString": "2016-05-20",
-	            "userId": 1000000008333
-	        }]
-	    }, {
-	        "id": "140a575b2f73423787789005d2a045ed",
-	        "menuType": "APP",
-	        "name": "菜单3",
-	        "orderId": "3",
-	        "parentId": "0",
-	        "subMenuList": [{
-	            "appDemoUrl": "http://test.yqxiu.cn/s/E2OPfq4X",
-	            "appPicUrl": "group1/M00/01/22/wKj5L1c9RrCAf6C2AAB4yRoqhDI513.jpg",
-	            "appType": "WEBSITE",
-	            "appTypeValue": "0",
-	            "createDate": "2016-05-20 00:00:00",
-	            "createDateString": "2016-05-20",
-	            "id": "e43152286b784de8b40c53892fbe2e66",
-	            "menuItemId": "2d769157ba3145fe9d971c7f52c8a29f",
-	            "menuType": "APP",
-	            "modelType": "WEBSITE",
-	            "name": "菜单4",
-	            "orderId": 1,
-	            "parentId": "140a575b2f73423787789005d2a045ed",
-	            "state": "NO",
-	            "updateDate": "2016-05-20 00:00:00",
-	            "updateDateString": "2016-05-20",
-	            "userId": 1000000008333
-	        }, {
-	            "appDemoUrl": "http://test.yqxiu.cn/s/E2OPfq4X",
-	            "appPicUrl": "group1/M00/01/22/wKj5L1c9RrCAf6C2AAB4yRoqhDI513.jpg",
-	            "appType": "BARGAIN",
-	            "appTypeValue": "58cdc952df8e416799cbcedbaf6f1c5d",
-	            "createDate": "2016-05-20 00:00:00",
-	            "createDateString": "2016-05-20",
-	            "id": "81922eba65584aabb2170abf6894a7b5",
-	            "menuItemId": "e3960f608ae14bb3b6f36bbaa853e968",
-	            "menuType": "APP",
-	            "modelType": "PROMOTION",
-	            "name": "砍价",
-	            "orderId": 2,
-	            "parentId": "140a575b2f73423787789005d2a045ed",
-	            "state": "NO",
-	            "updateDate": "2016-05-20 00:00:00",
-	            "updateDateString": "2016-05-20",
-	            "userId": 1000000008333
-	        }]
-	    }],
-	    "message": "success",
-	    "success": true
-	}
-
-
-
-	// {
-	//     success: true,
-	//     data: [{
-	//         name: '进店购物',
-	//         id: '10000',
-	//         menuType: 'MESSAGE',
-	//         subMenuList: [{
-	//             createDate: '2016-05-19',
-	//             menuContent: 'http://www.eqying.com',
-	//             menuType: 'OWN',
-	//             name: '微商城',
-	//             orderId: 1,
-	//             id: '100001',
-	//             state: 'NO',
-	//             userId: '10000000083'
-	//         }, {
-	//             createDate: '2016-05-19',
-	//             menuContent: 'http://www.eqying.com',
-	//             menuType: 'OWN',
-	//             name: '微官网',
-	//             orderId: 2,
-	//             id: '100002',
-	//             state: 'NO',
-	//             userId: '10000000084'
-	//         }, {
-	//             createDate: '2016-05-19',
-	//             menuContent: 'http://www.eqying.com',
-	//             menuType: 'OWN',
-	//             name: '微应用',
-	//             orderId: 3,
-	//             id: '100001',
-	//             state: 'YES',
-	//             userId: '10000000085'
-	//         }]
-	//     }, {
-	//         name: '我没有下级',
-	//         id: '20000',
-	//         menuType: 'APP'
-	//     }, {
-	//         name: '粉丝互动',
-	//         id: '30000',
-	//         menuType: 'APP',
-	//         subMenuList: [{
-	//             createDate: '2016-05-19',
-	//             menuContent: 'http://www.eqying.com',
-	//             menuType: 'OWN',
-	//             name: '拆礼盒',
-	//             orderId: 1,
-	//             id: '300001',
-	//             state: 'YES',
-	//             userId: '30000000085'
-	//         }, {
-	//             createDate: '2016-05-19',
-	//             menuContent: 'http://www.eqying.com',
-	//             menuType: 'OWN',
-	//             name: '大转盘',
-	//             orderId: 2,
-	//             id: '300002',
-	//             state: 'YES',
-	//             userId: '30000000086'
-	//         }, {
-	//             createDate: '2016-05-19',
-	//             menuContent: 'http://www.eqying.com',
-	//             menuType: 'OWN',
-	//             name: '摇钱树',
-	//             orderId: 3,
-	//             id: '300003',
-	//             state: 'YES',
-	//             userId: '30000000088'
-	//         }]
-	//     }]
-	// }
-
-
-/***/ },
-/* 16 */
+/* 15 */,
+/* 16 */,
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global, process) {/*!
@@ -10424,10 +10252,10 @@
 	}, 0);
 
 	module.exports = Vue;
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(17)))
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(18)))
 
 /***/ },
-/* 17 */
+/* 18 */
 /***/ function(module, exports) {
 
 	// shim for using process in browser
@@ -10527,82 +10355,204 @@
 
 
 /***/ },
-/* 18 */,
 /* 19 */,
-/* 20 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var __vue_script__, __vue_template__
-	__vue_script__ = __webpack_require__(21)
-	if (__vue_script__ &&
-	    __vue_script__.__esModule &&
-	    Object.keys(__vue_script__).length > 1) {
-	  console.warn("[vue-loader] src\\scripts\\module\\vue\\components\\footerMenu.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(22)
-	module.exports = __vue_script__ || {}
-	if (module.exports.__esModule) module.exports = module.exports.default
-	if (__vue_template__) {
-	(typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports).template = __vue_template__
-	}
-	if (false) {(function () {  module.hot.accept()
-	  var hotAPI = require("vue-hot-reload-api")
-	  hotAPI.install(require("vue"), true)
-	  if (!hotAPI.compatible) return
-	  var id = "D:\\GitRepo\\bugoftime\\src\\scripts\\module\\vue\\components\\footerMenu.vue"
-	  if (!module.hot.data) {
-	    hotAPI.createRecord(id, module.exports)
-	  } else {
-	    hotAPI.update(id, module.exports, __vue_template__)
-	  }
-	})()}
-
-/***/ },
-/* 21 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.default = {
-	    props: ['menuItem'],
-	    data: function data() {
-	        return {
-	            menu: this.menuItem
-	        };
-	    },
-
-	    methods: {
-	        toggle: function toggle() {
-	            var $t = $(event.target);
-	            $t.closest('.menu-l1').toggleClass('expanded').siblings('.item').removeClass('expanded');
-	            $t.addClass('on').siblings('.item').removeClass('on');
-	            if (!$t.hasClass('wealthy')) {
-	                $t.closest('.menu-l1').addClass('on').siblings('.item').removeClass('on');
-	            }
-	        }
-	    }
-	};
-
-/***/ },
+/* 20 */,
+/* 21 */,
 /* 22 */
 /***/ function(module, exports) {
 
-	module.exports = "\n<div class=\"title js-toggle\" @click=\"toggle\" :class=\"{'wealthy':menuItem.subMenuList.length>0}\">\n    <p class=\"inner\">{{menuItem.name}}</p>\n</div>\n<ul class=\"content menu-l2\">\n    <li class=\"item js-toggle\" @click=\"toggle\" v-for=\"item2 of menuItem.subMenuList\">\n        <a href=\"javascript:;\">{{item2.name}}</a>\n    </li>\n</ul>\n";
+	module.exports = {
+	    "code": "0",
+	    "data": [{
+	        "id": "7ee1f9a01cba4eb688bed9b7242930e4",
+	        "menuType": "MESSAGE",
+	        "name": "菜单1",
+	        "orderId": "1",
+	        "parentId": "0",
+	        "subMenuList": [{
+	            "createDate": "2016-05-20 00:00:00",
+	            "createDateString": "2016-05-20",
+	            "id": "e3c5782c31f1425ca7a0c1201b1a5f11",
+	            "menuContent": "http://www.eqying.com",
+	            "menuType": "OWN",
+	            "name": "测试2",
+	            "orderId": 1,
+	            "parentId": "7ee1f9a01cba4eb688bed9b7242930e4",
+	            "state": "NO",
+	            "updateDate": "2016-05-20 00:00:00",
+	            "updateDateString": "2016-05-20",
+	            "userId": 1000000008333
+	        }, {
+	            "createDate": "2016-05-20 00:00:00",
+	            "createDateString": "2016-05-20",
+	            "id": "1dee1bf6e8fd46239eb02b0f94d876a4",
+	            "menuContent": "https://www.google.com",
+	            "menuType": "OWN",
+	            "name": "Google",
+	            "orderId": 2,
+	            "parentId": "7ee1f9a01cba4eb688bed9b7242930e4",
+	            "state": "NO",
+	            "updateDate": "2016-05-20 00:00:00",
+	            "updateDateString": "2016-05-20",
+	            "userId": 1000000008333
+	        }]
+	    }, {
+	        "id": "0f598b0aefb54e3496e9a92da7d04104",
+	        "menuType": "OWN",
+	        "name": "菜单2",
+	        "orderId": "2",
+	        "parentId": "0",
+	        "subMenuList": [{
+	            "createDate": "2016-05-20 00:00:00",
+	            "createDateString": "2016-05-20",
+	            "groupId": "1000000001547",
+	            "id": "cb7fb04bc8c149d88d69f70cded30377",
+	            "menuType": "MESSAGE",
+	            "name": "图片",
+	            "orderId": 1,
+	            "parentId": "0f598b0aefb54e3496e9a92da7d04104",
+	            "state": "NO",
+	            "updateDate": "2016-05-20 00:00:00",
+	            "updateDateString": "2016-05-20",
+	            "userId": 1000000008333
+	        }]
+	    }, {
+	        "id": "140a575b2f73423787789005d2a045ed",
+	        "menuType": "APP",
+	        "name": "菜单3",
+	        "orderId": "3",
+	        "parentId": "0",
+	        "subMenuList": [{
+	            "appDemoUrl": "http://acthd.yqydev.wkey.cn/act/dispatcher.html?actId=1000000004937",
+	            "appPicUrl": "group1/M00/01/22/wKj5L1c9RrCAf6C2AAB4yRoqhDI513.jpg",
+	            "appType": "WEBSITE",
+	            "appTypeValue": "0",
+	            "createDate": "2016-05-20 00:00:00",
+	            "createDateString": "2016-05-20",
+	            "id": "e43152286b784de8b40c53892fbe2e66",
+	            "menuItemId": "2d769157ba3145fe9d971c7f52c8a29f",
+	            "menuType": "APP",
+	            "modelType": "INTERACTIVE_GAME",
+	            "modelText":"互动游戏",
+	            "name": "互动游戏",
+	            "appName":"命悬一线",
+	            "orderId": 1,
+	            "parentId": "140a575b2f73423787789005d2a045ed",
+	            "state": "NO",
+	            "updateDate": "2016-05-20 00:00:00",
+	            "updateDateString": "2016-05-20",
+	            "userId": 1000000008333
+	        }, {
+	            "appDemoUrl": "http://test.yqxiu.cn/s/E2OPfq4X",
+	            "appPicUrl": "group1/M00/01/22/wKj5L1c9RrCAf6C2AAB4yRoqhDI513.jpg",
+	            "appType": "BARGAIN",
+	            "appTypeValue": "58cdc952df8e416799cbcedbaf6f1c5d",
+	            "createDate": "2016-05-20 00:00:00",
+	            "createDateString": "2016-05-20",
+	            "id": "81922eba65584aabb2170abf6894a7b5",
+	            "menuItemId": "e3960f608ae14bb3b6f36bbaa853e968",
+	            "menuType": "MESSAGE",
+	            "modelType": "PROMOTION",
+	            "name": "砍价",
+	            "orderId": 2,
+	            "parentId": "140a575b2f73423787789005d2a045ed",
+	            "state": "NO",
+	            "updateDate": "2016-05-20 00:00:00",
+	            "updateDateString": "2016-05-20",
+	            "userId": 1000000008333
+	        }]
+	    }],
+	    "message": "success",
+	    "success": true
+	}
+
+
+
+	// {
+	//     success: true,
+	//     data: [{
+	//         name: '进店购物',
+	//         id: '10000',
+	//         menuType: 'MESSAGE',
+	//         subMenuList: [{
+	//             createDate: '2016-05-19',
+	//             menuContent: 'http://www.eqying.com',
+	//             menuType: 'OWN',
+	//             name: '微商城',
+	//             orderId: 1,
+	//             id: '100001',
+	//             state: 'NO',
+	//             userId: '10000000083'
+	//         }, {
+	//             createDate: '2016-05-19',
+	//             menuContent: 'http://www.eqying.com',
+	//             menuType: 'OWN',
+	//             name: '微官网',
+	//             orderId: 2,
+	//             id: '100002',
+	//             state: 'NO',
+	//             userId: '10000000084'
+	//         }, {
+	//             createDate: '2016-05-19',
+	//             menuContent: 'http://www.eqying.com',
+	//             menuType: 'OWN',
+	//             name: '微应用',
+	//             orderId: 3,
+	//             id: '100001',
+	//             state: 'YES',
+	//             userId: '10000000085'
+	//         }]
+	//     }, {
+	//         name: '我没有下级',
+	//         id: '20000',
+	//         menuType: 'APP'
+	//     }, {
+	//         name: '粉丝互动',
+	//         id: '30000',
+	//         menuType: 'APP',
+	//         subMenuList: [{
+	//             createDate: '2016-05-19',
+	//             menuContent: 'http://www.eqying.com',
+	//             menuType: 'OWN',
+	//             name: '拆礼盒',
+	//             orderId: 1,
+	//             id: '300001',
+	//             state: 'YES',
+	//             userId: '30000000085'
+	//         }, {
+	//             createDate: '2016-05-19',
+	//             menuContent: 'http://www.eqying.com',
+	//             menuType: 'OWN',
+	//             name: '大转盘',
+	//             orderId: 2,
+	//             id: '300002',
+	//             state: 'YES',
+	//             userId: '30000000086'
+	//         }, {
+	//             createDate: '2016-05-19',
+	//             menuContent: 'http://www.eqying.com',
+	//             menuType: 'OWN',
+	//             name: '摇钱树',
+	//             orderId: 3,
+	//             id: '300003',
+	//             state: 'YES',
+	//             userId: '30000000088'
+	//         }]
+	//     }]
+	// }
+
 
 /***/ },
-/* 23 */,
-/* 24 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
-	__vue_script__ = __webpack_require__(25)
+	__vue_script__ = __webpack_require__(24)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] src\\scripts\\module\\vue\\components\\menu.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(26)
+	__vue_template__ = __webpack_require__(28)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	if (__vue_template__) {
@@ -10612,7 +10562,7 @@
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), true)
 	  if (!hotAPI.compatible) return
-	  var id = "D:\\GitRepo\\bugoftime\\src\\scripts\\module\\vue\\components\\menu.vue"
+	  var id = "D:\\javaworkspaces\\wxp-template\\wxp-template-web\\src\\main\\webapp\\static\\src\\scripts\\module\\vue\\components\\menu.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {
@@ -10621,7 +10571,7 @@
 	})()}
 
 /***/ },
-/* 25 */
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(spinZ) {'use strict';
@@ -10630,7 +10580,7 @@
 	    value: true
 	});
 
-	var _footerMenu = __webpack_require__(20);
+	var _footerMenu = __webpack_require__(25);
 
 	var _footerMenu2 = _interopRequireDefault(_footerMenu);
 
@@ -10677,10 +10627,73 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
 
 /***/ },
+/* 25 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __vue_script__, __vue_template__
+	__vue_script__ = __webpack_require__(26)
+	if (__vue_script__ &&
+	    __vue_script__.__esModule &&
+	    Object.keys(__vue_script__).length > 1) {
+	  console.warn("[vue-loader] src\\scripts\\module\\vue\\components\\footerMenu.vue: named exports in *.vue files are ignored.")}
+	__vue_template__ = __webpack_require__(27)
+	module.exports = __vue_script__ || {}
+	if (module.exports.__esModule) module.exports = module.exports.default
+	if (__vue_template__) {
+	(typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports).template = __vue_template__
+	}
+	if (false) {(function () {  module.hot.accept()
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), true)
+	  if (!hotAPI.compatible) return
+	  var id = "D:\\javaworkspaces\\wxp-template\\wxp-template-web\\src\\main\\webapp\\static\\src\\scripts\\module\\vue\\components\\footerMenu.vue"
+	  if (!module.hot.data) {
+	    hotAPI.createRecord(id, module.exports)
+	  } else {
+	    hotAPI.update(id, module.exports, __vue_template__)
+	  }
+	})()}
+
+/***/ },
 /* 26 */
 /***/ function(module, exports) {
 
-	module.exports = "\n<section class=\"show title phone\">\n    <h3 class=\"title text-ellipsis\">\n                            易企赢</h3>\n    <div class=\"content\">\n        <img class=\"show-img\" src=\"/imgs/guaka.png\" alt=\"\">\n        <iframe class=\"show-site\" frameborder=\"0\"></iframe>\n    </div>\n    <footer class=\"footer menu dis-flex abs\">\n        <i class=\"ico keyboard\"></i>\n        <div class=\"item menu-l1\" v-for=\"item of menuList\">\n            <footer-menu :menu-item=\"item\"></footer-menu>\n        </div>\n    </footer>\n</section>\n<div class=\"text-center select\">\n    <button class=\"btn btn-primary big like\" v-on:click=\"like\">就选这个</button>\n    <span class=\"pl10 text-muted\">点击菜单预览效果</span>\n</div>\n";
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = {
+	    props: ['menuItem'],
+	    data: function data() {
+	        return {
+	            menu: this.menuItem
+	        };
+	    },
+
+	    methods: {
+	        toggle: function toggle() {
+	            var $t = $(event.target);
+	            $t.closest('.menu-l1').toggleClass('expanded').siblings('.item').removeClass('expanded');
+	            $t.addClass('on').siblings('.item').removeClass('on');
+	            if (!$t.hasClass('wealthy')) {
+	                $t.closest('.menu-l1').addClass('on').siblings('.item').removeClass('on');
+	            }
+	        }
+	    }
+	};
+
+/***/ },
+/* 27 */
+/***/ function(module, exports) {
+
+	module.exports = "\n<div class=\"title js-toggle\" :class=\"{'wealthy':menuItem.subMenuList.length>0}\">\n    <p class=\"inner\">{{menuItem.name}}</p>\n</div>\n<ul class=\"content menu-l2\">\n    <li class=\"item js-toggle\" v-for=\"item2 of menuItem.subMenuList\">\n        <a href=\"javascript:;\">{{item2.name}}</a>\n    </li>\n</ul>\n";
+
+/***/ },
+/* 28 */
+/***/ function(module, exports) {
+
+	module.exports = "\n<section class=\"show title phone\">\n    <h3 class=\"title text-ellipsis\">\n                            易企赢</h3>\n    <div class=\"content\">\n        <div class=\"container img\">\n           <img class=\"show-img\" alt=\"\"> \n        </div>\n        <div class=\"container site\">\n            <iframe class=\"show-site\" frameborder=\"0\"></iframe>\n        </div>\n        \n    </div>\n    <footer class=\"footer menu dis-flex abs\">\n        <i class=\"ico keyboard\"></i>\n        <div class=\"item menu-l1\" v-for=\"item of menuList\">\n            <footer-menu :menu-item=\"item\"></footer-menu>\n        </div>\n    </footer>\n</section>\n<div class=\"text-center select\">\n    <button class=\"btn btn-primary big like\" v-on:click=\"like\">就选这个</button>\n    <span class=\"pl10 text-muted\">点击菜单预览效果</span>\n</div>\n";
 
 /***/ }
 /******/ ]);

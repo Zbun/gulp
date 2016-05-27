@@ -24,15 +24,7 @@
                             </h3>
                             <footer class="footer menu dis-flex">
                                 <menu-box :menu-item="menulist.data" :menu1-length="menu1Length"></menu-box>
-                                <!--  <div class="item menu-l1">
-                                    <div class="title js-toggle">
-                                        <p class="inner">没有二级</p>
-                                    </div> <ul class="content menu-l2">
-                                            <li class="item add-wrapper">
-                                                <a href="javascript:;" class="font-bigger add" title="添加菜单">+</a>
-                                            </li>
-                                        </ul>
-                                </div>
+                                <!--
                                 <div class="item menu-l1">
                                     <div class="title js-toggle wealthy">
                                         <p class="inner">粉丝互动</p>
@@ -59,48 +51,52 @@
                                             菜单名称
                                         </dt>
                                         <dd class="content">
-                                            <input class="ipt-large" maxlength=8 type="text" v-model="menuSet.name" @keyup="iptName">
+                                            <input class="ipt-large menu-name" onblur="this.classList.remove('error');" maxlength=8 type="text" v-model="menuSet.name" @keyup="iptName">
                                             <span class="text-muted tips">
                                                 （建议4个汉字或8个字母）
                                             </span>
                                         </dd>
                                     </dl>
-                                    <dl class="item">
+                                    <dl class="item" v-show="!hasSubMenu" style="display:none;">
                                         <dt class="title require-mark">
                                             菜单内容
                                         </dt>
                                         <div class="content">
                                             <div class="radio-switcher js-switcher">
-                                                <div class="title">
-                                                    <label class="item radio mr10" :class="menuSet.type.message">
+                                                <div class="title content-type">
+                                                    <label class="item radio mr10" :data-type="menuSet.type.message">
                                                         <input type="radio" id="" name="type" checked>发送消息<i class="icon"></i></label>
-                                                    <label class="item radio ml10" :class="menuSet.type.app">
+                                                    <label class="item radio ml10" :data-type="menuSet.type.app">
                                                         <input type="radio" id="" name="type">活动/应用<i class="icon"></i></label>
-                                                    <label class="item radio ml10"  :class="menuSet.type.own">
+                                                    <label class="item radio ml10" :data-type="menuSet.type.own">
                                                         <input type="radio" id="" name="type">自定义链接<i class="icon"></i></label>
                                                 </div>
-                                                <div class="content mt10">
+                                                <div class="content mt10 content-detail">
                                                     <div class="item on">
                                                         <select name="" id="">
-                                                            <option value="">发送消息案例</option>
-                                                            <option value="">发送消息案例</option>
-                                                            <option value="">发送消息案例</option>
+                                                            <option value="">发送图文</option>
                                                         </select>
                                                     </div>
                                                     <div class="item">
-                                                        <select name="" id="">
-                                                            <option value="">活动</option>
-                                                            <option value="">活动</option>
-                                                            <option value="">活动</option>
+                                                        <div class="activity-selected" style="display:none;" v-show="activity.isAPP">
+                                                            当前选择：
+                                                            <span class="text-primary activity-selected-type">{{activity.modelText}}</span>
+                                                            <span class="activity-selected-content" v-show="activity.appName"> > {{activity.appName}}</span>
+                                                        </div>
+                                                        <div class="mt10">
+                                                            重新选择：
+                                                        
+                                                        <select v-on:change="activityChange" name="" id="activity">
+                                                            <option  v-for="item of activity.data" :value="item.modelType" :data-model-type="item.modelType" :data-model-text="item.modelText">{{item.modelText}}</option>
                                                         </select>
-                                                        <select name="" id="" class="ml10">
-                                                            <option value="">页面效果图</option>
-                                                            <option value="">页面效果图</option>
-                                                            <option value="">页面效果图</option>
+                                                        <select name="" id="activityContent" class="ml10" v-show="activityContent.length>0" v-on:change="activityContentChange">
+                                                            <option 
+                                                            v-for="item of activityContent" :value="item.addDemoUrl" :data-app-demo-url="item.appDemoUrl" :data-app-name="item.appName" :data-app-pic-url="item.appPicUrl" :data-app-type="item.appType" :data-app-type-name="item.appTypeName">{{item.appName}}</option>
                                                         </select>
+                                                        </div>
                                                     </div>
                                                     <div class="item">
-                                                        <input class="ipt-large" type="text" placeholder="输入网址">
+                                                        <input class="ipt-large menu-site" type="text" v-on:input="iptSite" v-model="menuSet.siteURL" placeholder="输入网址">
                                                     </div>
                                                 </div>
                                             </div>

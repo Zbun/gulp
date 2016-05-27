@@ -1,8 +1,8 @@
-@import '_variables.scss';
-@import 'baseSCSS.scss';
-@import '_animation.scss';
-@import '_radio-check.scss';
-@import '_tag.scss';
+@import 'variables';
+@import 'baseSCSS';
+@import 'animation';
+@import 'radio-check';
+@import 'tag';
 $line-height: (20/12);
 $btn-line-height:26px;
 $btn-big-font-size:16px;

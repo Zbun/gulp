@@ -1,11 +1,11 @@
 @charset "utf-8";
 @import 'base/basePC';
-@import '_dialog';
-@import '_set';
-@import 'base/iconfont';
-@import 'base/_radio-check.scss';
-@import 'base/_btn_tag.scss';
-@import '_pagination';
+@import 'dialog';
+@import 'set';
+@import 'base/_iconfont';
+@import 'base/_radio-check';
+@import 'base/_btn_tag';
+@import 'pagination';
 .btn {
     padding: 0 1em;
     min-width: 4.5em;

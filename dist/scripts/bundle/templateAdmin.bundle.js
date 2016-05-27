@@ -44,7 +44,7 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	/* WEBPACK VAR INJECTION */(function(spinZ, dialog) {'use strict';
 
 	/**
 	 * 模板编辑菜单相关功能，使用webpack、Vue打包文件，修改时需要配环境
@@ -52,66 +52,76 @@
 	 * 上线时，需要 gulp build 或npm run build构建一下
 	 * @author Zhao Liubin
 	 */
+
 	__webpack_require__(7);
+	var slideDel = __webpack_require__(14);
+	var showTips = __webpack_require__(13);
+	var waiting = __webpack_require__(4);
 
-	//前进后退下步，不刷页面
-	// function showByHash() {
-	//     var hash = location.hash.split('#')[1];
-	//     var $currentContent = $('.step').children('[data-step=' + hash + ']');
-	//     if ($currentContent.length) {
-	//         $currentContent.addClass('am-ease-show on').siblings('.item').removeClass('on am-ease-show');
-	//     } else {
-	//         $('.step').children('.item').first().addClass('am-ease-show on');
-	//     }
-	//     var title = $currentContent.data('stepTitle');
-	//     if (title) {
-	//         document.title = title;
-	//     }
-	// }
-	// showByHash();
-	// window.addEventListener('hashchange', showByHash);
-
-	//滑动删除元素方法
-	var slideDel = __webpack_require__(13);
-
-	var showTips = __webpack_require__(12);
-
-	var showTipsWarning = function showTipsWarning(content) {
-	    showTips(content, 'error');
+	var showTipsWarning = function showTipsWarning(content, callback) {
+	    showTips(content, 'error', callback);
 	};
 
-	var jsonMenu = __webpack_require__(15);
+	// var jsonMenu = require('simulateData/menu.json');
+	// var jsonActivity = require('simulateData/activity.json');
 
-	var Vue = __webpack_require__(16);
-	var vcomMenu = __webpack_require__(18);
+	var Vue = __webpack_require__(17);
+	var vcomMenu = __webpack_require__(19);
+
+	var API = {
+	    menu: {
+	        get: '/templatemenu/list.html',
+	        set: '/templatemenu/saveOrUpdate.html',
+	        del: ''
+	    },
+	    activity: {
+	        get: '/module/common/modelAppList.html'
+	    }
+	};
+
+	var bID = $('#businessId').val(),
+	    tID = $('#templateId').val();
+
 	var vm = new Vue({
 	    el: 'body',
 	    data: {
-	        menulist: jsonMenu,
-	        menu1Length: jsonMenu.data.length,
+	        menuList: [],
+	        menu1Length: 4,
+	        jsonActivity: [],
+	        activity: {
+	            data: [],
+	            index: 0,
+	            isAPP: false, //控制选择APP是否显示
+	            modelText: '',
+	            appName: ''
+	        },
 	        menuSet: {
 	            name: '',
+	            siteURL: '',
 	            type: {
 	                message: 'MESSAGE',
 	                own: 'OWN',
 	                app: 'APP'
-	            }
+	            },
+	            curType: ''
 	        },
-	        htmlTplMenu1: '<div class="item menu-l1 on"><div class="title js-toggle" data-name="添加菜单" title="添加菜单"><p class="inner">添加菜单</p></div><ul class="content menu-l2"><li class="item add-wrapper"><a href="javascript:;" class="font-bigger add" title="添加菜单">+</a></li></ul></div>',
-	        htmlTplMenu2: '<li class="item js-toggle" data-name="菜单名称"><span class="inner">菜单名称</span></li>'
+	        currentType: 'MESSAGE',
+	        htmlTplMenu1: '<div class="item menu-l1 on"><div class="title js-toggle" data-name="添加菜单" data-menu-type="MESSAGE" title="添加菜单"><p class="inner">添加菜单</p></div><ul class="content menu-l2"><li class="item add-wrapper"><a href="javascript:;" class="font-bigger add" title="添加菜单" data-menu-type="$type">+</a></li></ul></div>',
+	        htmlTplMenu2: '<li class="item js-toggle" data-name="菜单名称" data-menu-type="$type"><span class="inner">菜单名称</span></li>',
+	        hasSubMenu: true
 	    },
 	    computed: {
-	        // menu1Length: function() {
-	        //     return this.menulist.data.length;
-	        // }
+	        activityContent: function activityContent() {
+	            return this.activity.data.length ? this.activity.data[this.activity.index].list : '';
+	        }
 	    },
 	    components: {
 	        'menu-box': vcomMenu
 	    },
 	    ready: function ready() {
-	        var context = this;
+	        var vmAgent = this;
 	        //只拖动，不读数
-	        function drag() {
+	        var drag = function drag() {
 	            $('.menu-l2').dragsort('destroy');
 	            $('.menu-l2').dragsort({
 	                itemSelector: 'li:not(.add-wrapper)',
@@ -119,37 +129,148 @@
 	                dragBetween: true,
 	                placeHolderTemplate: "<li></li>"
 	            });
-	        }
+	        };
 	        drag();
 
-	        //菜单点击切换事件
+	        var initActivity = function initActivity() {
+	            vm.activity.data = [];
+	            Vue.nextTick(function () {
+	                vm.activity.data = vm.jsonActivity;
+	                vm.activity.index = 0;
+	            });
+	        };
+
+	        var s1 = spinZ('.footer.menu');
+	        //拿菜单数据
+	        $.ajax({
+	            type: 'POST',
+	            url: API.menu.get,
+	            data: { businessId: bID, templateId: tID },
+	            dataType: 'JSON',
+	            success: function success(data) {
+	                s1.stop();
+	                vmAgent.menuList = data;
+	                vmAgent.menu1Length = data.data.length;
+	                vmAgent.hasSubMenu = data.data[0].subMenuList.length > 0 ? true : false;
+	                setTimeout(function () {
+	                    drag();
+	                    $('.footer.menu').find('.js-toggle:first').click();
+	                }, 0);
+	            },
+	            error: function error(data) {
+	                console.warn(data);
+	            }
+	        });
+
+	        //拿活动数据
+	        $.post(API.activity.get, { templateId: tID }, function (data) {
+	            vm.jsonActivity = vmAgent.activity.data = data.data;
+	        });
+
+	        //菜单点击时切换事件
 	        $('.footer.menu').on('click', '.js-toggle', function () {
-	            var $t = $(this);
+	            var $t = $(this),
+	                type = $t.data('menuType');
 	            var name = $t.data('name');
-	            context.menuSet.name = name;
+	            vmAgent.menuSet.name = name;
 	            $t.closest('.menu-l1').addClass('on').find('.on').removeClass('on').end().siblings('.item').removeClass('on');
 	            $t.addClass('on');
-	        }).find('.js-toggle:first').click();
+
+	            //点击时，是否显示右边菜单内容功能
+	            if ($t.hasClass('wealthy')) {
+	                vmAgent.hasSubMenu = true;
+	                return;
+	            } else {
+	                vmAgent.hasSubMenu = false;
+	                $('.content-type').find('[data-type=' + type + ']').click();
+	            }
+
+	            if ('OWN' === type) {
+	                vmAgent.menuSet.siteURL = $t.data('menuContent');
+	            }
+	        });
 
 	        //添加一、二级菜单
 	        $('.footer.menu').on('click', '.add-menu1 .add', function () {
-	            $(this).closest('.menu-l1').before(vm.htmlTplMenu1);
+	            var $t = $(this),
+	                type = $t.data('menuType');
+	            $t.closest('.menu-l1').before(vmAgent.htmlTplMenu1.replace('$type', type));
 	            var $arrayMenu1 = $('.footer.menu').children('.item:not(.add-menu1)');
-	            vm.menu1Length = $arrayMenu1.length;
+	            vmAgent.menu1Length = $arrayMenu1.length;
 	            drag();
 	            $arrayMenu1.last().children('.js-toggle').click();
 	        }).on('click', '.content .add', function () {
-	            var $t = $(this);
+	            var $t = $(this),
+	                type = $t.closest('.menu-l1').children('.title').data('menuType');
 	            var $parent = $t.closest('.menu-l2');
 	            $parent.prev().addClass('wealthy');
-	            $t.closest('.menu-l2').children().first().before(vm.htmlTplMenu2);
+	            var $on = $t.closest('.menu-l2').find('.add-wrapper').before(vmAgent.htmlTplMenu2.replace('$type', type)).prev().click();
+	            if ('APP' === type) {
+	                initActivity();
+	                Vue.nextTick(function () {
+	                    var data0 = vm.activity.data[0];
+	                    $on.data({
+	                        'modelText': data0['modelText'],
+	                        'modelType': data0['modelType'],
+	                        'appName': data0.list[0]['appName'],
+	                        'appPicUrl': data0.list[0]['appPicUrl'],
+	                        'appDemoUrl': data0.list[0]['appDemoUrl'],
+	                        'appType': data0.list[0]['appType'],
+	                        'appTypeName': data0.list[0]['appTypeName']
+	                    });
+	                    vm.activity.modelText = $on.data('modelText');
+	                    vm.activity.appName = $on.data('appName');
+	                });
+	            }
+
 	            if ($parent.children().length > 5) {
 	                $t.parent().hide();
 	            }
 	        });
+
+	        //切换内容类型时，菜单类型选项写入
+	        $('.content-type').on('click', '[data-type]', function () {
+	            var $t = $(this);
+	            var $on = $('.footer.menu').find('.on .on');
+	            var currentType = $on.data('menuType');
+	            var menuType = $t.data('type');
+	            vm.menuSet.curType = menuType;
+	            if (menuType === 'APP') {
+	                initActivity();
+	                vm.activity.isAPP = true;
+	                vm.activity.modelText = $on.data('modelText');
+	                vm.activity.appName = $on.data('appName');
+	                if ('APP' !== currentType) {
+	                    Vue.nextTick(function () {
+	                        var data0 = vm.activity.data[0];
+	                        if (!$on.data('modelText')) {
+	                            $on.data({
+	                                'modelText': data0['modelText'],
+	                                'modelType': data0['modelType'],
+	                                'appName': data0.list[0]['appName'],
+	                                'appPicUrl': data0.list[0]['appPicUrl'],
+	                                'appDemoUrl': data0.list[0]['appDemoUrl'],
+	                                'appType': data0.list[0]['appType'],
+	                                'appTypeName': data0.list[0]['appTypeName']
+	                            });
+	                        }
+	                        vm.activity.modelText = $on.data('modelText');
+	                        vm.activity.appName = $on.data('appName');
+	                    });
+	                }
+	            } else {
+	                vm.activity.isAPP = false;
+	            }
+
+	            if ('OWN' === currentType) {
+	                $('.menu-site').focus();
+	            }
+	            $on.data('menuType', menuType);
+	            vmAgent.menuSet.siteURL = $on.data('menuContent');
+	        });
 	    },
 	    methods: {
-	        //删除菜单选项
+	        //删除菜单
 
 	        delMenu: function delMenu() {
 	            var $menu1 = $('.footer.menu').find('.menu-l1.on');
@@ -157,71 +278,270 @@
 	            var $prev = $on.prev('.js-toggle'),
 	                $next = $on.next('.js-toggle');
 	            var $parent = $on.parent();
-	            if (vm.menu1Length < 2) {
+	            if ($parent.hasClass('menu-l1') && vm.menu1Length < 2) {
 	                showTipsWarning('最后一个菜单不能删除哦');
 	                return;
 	            }
-	            slideDel($on, function () {
-	                if ($parent.hasClass('menu-l2')) {
-	                    if ($prev.length) {
-	                        $prev.click();
-	                    } else if ($next.length) {
-	                        $next.click();
-	                    }
-	                    $parent.find('.add-wrapper').show();
-	                } else {
-	                    var $pprev = $parent.prev('.item');
-	                    if ($pprev.length) {
-	                        $pprev.children('.js-toggle').click();
-	                    } else {
-	                        $parent.next().children('.js-toggle').click();
-	                    }
-	                    $parent.remove();
-	                    vm.menu1Length = $('.footer.menu').children('.item:not(.add-menu1)').length;
+	            dialog({
+	                skin: 'mini',
+	                content: '确认删除菜单么？<br><span class=text-muted>（删除后，需要点击保存，才能生效哦）</span>',
+	                ok: function ok() {
+	                    //真正删除及回调
+	                    slideDel($on, function () {
+	                        !$parent.find('.js-toggle').length && $menu1.find('.wealthy').removeClass('wealthy');
+	                        if ($parent.hasClass('menu-l2')) {
+	                            if ($prev.length) {
+	                                $prev.click();
+	                            } else if ($next.length) {
+	                                $next.click();
+	                            } else {
+	                                $parent.prev().click();
+	                            }
+	                            $parent.find('.add-wrapper').show();
+	                        } else {
+	                            var $pprev = $parent.prev('.item');
+	                            if ($pprev.length) {
+	                                $pprev.children('.js-toggle').click();
+	                            } else {
+	                                $parent.next().children('.js-toggle').click();
+	                            }
+	                            $parent.remove();
+	                            vm.menu1Length = $('.footer.menu').children('.item:not(.add-menu1)').length;
+	                        }
+	                    });
+	                },
+	                cancel: function cancel() {}
+	            }).showModal();
+	        },
+
+	        //保存功能
+	        save: function save(event) {
+	            var $t = $(event.target);
+	            //未知，原生写法有缓存，使用jQuery式写法
+	            var arrMenu1 = [];
+	            var menu1 = $('.footer.menu').children('.item:not(.add-menu1)').get();
+	            menu1.forEach(function (element, index) {
+	                arrMenu1[index] = {};
+	                var arrMenu2 = [];
+	                var $element = $(element),
+	                    $title = $element.children('.title').data('orderId', index + 1);
+	                $element.children('.content').children('.js-toggle').get().forEach(function (el, index1) {
+	                    arrMenu2[index1] = {};
+	                    $(el).data('orderId', index1 + 1);
+	                    Object.keys($(el).data()).forEach(function (ele, index2) {
+	                        arrMenu2[index1][ele] = $(el).data(ele);
+	                    });
+	                });
+	                Object.keys($title.data()).forEach(function (el) {
+	                    arrMenu1[index][el] = $title.data(el);
+	                });
+	                arrMenu1[index]['subMenuList'] = arrMenu2;
+	            });
+
+	            if (/^\s*$/.test(vm.menuSet.name)) {
+	                $('.menu-name').addClass('error').focus();
+	                return;
+	            }
+
+	            //是自定义网址时校验不为空
+	            if (vm.menuSet.curType === 'OWN') {
+	                if (!vm.menuSet.siteURL || /^\s*$/.test(vm.menuSet.siteURL)) {
+	                    $('.menu-site').addClass('error').focus();
+	                    return;
 	                }
-	                !$parent.find('.js-toggle').length && $menu1.find('.wealthy').removeClass('wealthy');
+	            }
+
+	            $t.addClass('disabled');
+	            waiting.show();
+	            $.ajax({
+	                type: 'POST',
+	                url: API.menu.set,
+	                contentType: 'Application/JSON',
+	                data: JSON.stringify({
+	                    businessId: bID,
+	                    templateId: tID,
+	                    menulist: arrMenu1
+	                }),
+	                success: function success(data) {
+	                    if (data.success) {
+	                        showTips(data.message, function () {
+	                            location = data.data;
+	                        });
+	                    } else {
+	                        showTipsWarning('保存失败，请稍候重试');
+	                    }
+	                },
+	                error: function error(data) {
+	                    showTipsWarning('保存失败，请稍候重试');
+	                },
+	                complete: function complete() {
+	                    waiting.hide();
+	                    $t.removeClass('disabled');
+	                }
 	            });
 	        },
-	        save: function save() {
-	            alert(this.menuSet.name.getUTFLength());
+	        iptName: function iptName(event) {
+	            var name = this.menuSet.name;
+	            $(event.target).removeClass('error');
+	            $('.footer.menu').find('.on').find('.on').data('name', name || '菜单名称').find('.inner').text(name || '菜单名称');
 	        },
-	        iptName: function iptName() {
-	            $('.footer.menu').find('.on').find('.on').find('.inner').text(this.menuSet.name || '菜单名称');
+	        iptSite: function iptSite(event) {
+	            $(event.target).removeClass('error');
+	            $('.footer.menu').find('.on').find('.on').data('menuContent', event.target.value || 'http://www.eqying.com');
 	        },
-	        iptSite: function iptSite() {}
+	        activityChange: function activityChange(event) {
+	            var i = event.target.selectedIndex,
+	                $on = $('.footer.menu').find('.on').find('.on');
+	            this.activity.index = i;
+	            var objData = event.target[i].dataset;
+	            Object.keys(objData).forEach(function (el, index) {
+	                $on.data(el, objData[el]);
+	            });
+	            vm.activity.isAPP = true;
+	            vm.activity.modelText = objData['modelText'];
+	            var dataNow = vm.activity.data[i];
+	            vm.activity.appName = dataNow.list[0] ? dataNow.list[0]['appName'] : '';
+	            $on.data({
+	                'appName': dataNow.list[0]['appName'],
+	                'appPicUrl': dataNow.list[0]['appPicUrl'],
+	                'appDemoUrl': dataNow.list[0]['appDemoUrl'],
+	                'appType': dataNow.list[0]['appType'],
+	                'appTypeName': dataNow.list[0]['appTypeName']
+	            });
+	        },
+	        activityContentChange: function activityContentChange(event) {
+	            var objData = event.target[event.target.selectedIndex].dataset;
+	            Object.keys(objData).forEach(function (el, index) {
+	                $('.footer.menu').find('.on').find('.on').data(el, objData[el]);
+	            });
+	            vm.activity.appName = objData['appName'];
+	        }
 	    }
 	});
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(11), __webpack_require__(16)))
 
 /***/ },
 /* 1 */,
 /* 2 */,
 /* 3 */,
-/* 4 */,
+/* 4 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module) {'use strict';
+
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+
+	/**
+	 * 操作等待旋转提示，非全屏，可加参数
+	 * 使用说明：require或webpack,单独使用时显示：waiting.show('可先容器字符串')，去除：waiting.hide();
+	 * 若修改源码时去掉className :local，变为全屏遮罩
+	 * @author Zhao Liubin
+	 */
+	(function () {
+	    var Waiting = function Waiting(container) {
+	        this.init(container);
+	        return this;
+	    };
+
+	    Waiting.prototype.init = function (container) {
+	        var container = document.querySelector(container) || document.body;
+	        var box = container.querySelector('.PCwaiting');
+	        if (!box) {
+	            var div = document.createElement('div');
+	            div.className = 'PCwaiting local';
+	            box = div;
+	            if (!container) {
+	                div.style.position = 'fixed';
+	            }
+	            var style = document.createElement('style');
+	            style.innerHTML = ".PCwaiting{position:absolute;top:0;bottom:0;left:0;right:0;background:rgba(0,0,0,.5);z-index:8888}.PCwaiting.local{left:50%;top:40%;width:52px;height:50px;margin:-25px -26px;border-radius:3px;}.PCwaiting:after {content: ''; position: absolute; top: 50%; left: 50%; width: 3px; height: 3px; margin-top: -2px; margin-left: -2px; text-align: center; -webkit-border-radius: 100%; border-radius: 100%; box-shadow:0 0 3px; -webkit-transition: all, 0.3s, linear; transition: all, 0.3s, linear; -webkit-animation: am-wait 1.2s linear infinite; animation: am-wait 1.2s linear infinite;box-shadow:0 -10px 0 1px #eee, 10px 0px #eee, 0 10px #eee, -10px 0 #eee, -7px -7px 0 0.5px #eee, 7px -7px 0 0.5px #eee, 7px 7px #eee, -7px 7px #eee }@-webkit-keyframes am-wait {100% {-webkit-transform: rotate(1turn);transform: rotate(1turn);}}@keyframes am-wait {100% {-webkit-transform: rotate(1turn);transform: rotate(1turn);}";
+	            box.appendChild(style);
+	        }
+	        this.waitingContainer = container;
+	        if (container.tagName === 'BODY') {
+	            box.style.position = 'fixed';
+	        }
+	        this.waitingBox = box;
+	    };
+	    Waiting.prototype.show = function () {
+	        this.waitingContainer.appendChild(this.waitingBox);
+	        return this;
+	    };
+	    Waiting.prototype.hide = function () {
+	        this.remove();
+	        return this;
+	    };
+	    Waiting.prototype.remove = function () {
+	        this.waitingContainer.removeChild(this.waitingBox);
+	    };
+
+	    // class Waiting {
+	    //     constructor(container) {
+	    //         var container = getTarget(container) || document.body;
+	    //         var box = container.querySelector('.PCwaiting');
+	    //         if (!box) {
+	    //             var div = document.createElement('div');
+	    //             div.className = 'PCwaiting local';
+	    //             box = div;
+	    //             if (!container) {
+	    //                 div.style.position = 'fixed';
+	    //             }
+	    //             var style = document.createElement('style');
+	    //             style.innerHTML = ".PCwaiting{position:absolute;top:0;bottom:0;left:0;right:0;background:rgba(0,0,0,.5);z-index:8888}.PCwaiting.local{left:50%;top:36%;width:52px;height:50px;margin-left:-25px;border-radius:3px;}.PCwaiting:after {content: ''; position: absolute; top: 50%; left: 50%; width: 3px; height: 3px; margin-top: -2px; margin-left: -2px; text-align: center; -webkit-border-radius: 100%; border-radius: 100%; box-shadow:0 0 3px; -webkit-transition: all, 0.3s, linear; transition: all, 0.3s, linear; -webkit-animation: am-wait 1.2s linear infinite; animation: am-wait 1.2s linear infinite;box-shadow:0 -10px 0 1px #eee, 10px 0px #eee, 0 10px #eee, -10px 0 #eee, -7px -7px 0 0.5px #eee, 7px -7px 0 0.5px #eee, 7px 7px #eee, -7px 7px #eee }@-webkit-keyframes am-wait {100% {-webkit-transform: rotate(1turn);transform: rotate(1turn);}}@keyframes am-wait {100% {-webkit-transform: rotate(1turn);transform: rotate(1turn);}";
+	    //             box.appendChild(style);
+	    //             // container.appendChild(w);
+	    //         }
+	    //         this.waitingContainer = container;
+	    //         if(container.tagName==='BODY'){
+	    //              box.style.position='fixed';
+	    //              }
+	    //         this.waitingBox = box;
+	    //     }
+
+	    //     show() {
+	    //         this.waitingContainer.appendChild(this.waitingBox);
+	    //         return this;
+	    //     }
+
+	    //     hide() {
+	    //         this.remove();
+	    //         return this;
+	    //     }
+	    //     remove() {
+	    //         this.waitingContainer.removeChild(this.waitingBox);
+	    //     }
+	    // }
+
+	    var exportObj = {
+	        show: function show(container) {
+	            return new Waiting(container).show();
+	        },
+	        hide: function hide() {
+	            return new Waiting().hide();
+	        }
+	    };
+
+	    ( false ? 'undefined' : _typeof(module)) === 'object' && module.exports ? module.exports = exportObj :  true ? !(__WEBPACK_AMD_DEFINE_RESULT__ = function () {
+	        return exportObj;
+	    }.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)) : window.waiting = exportObj;
+	})();
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)(module)))
+
+/***/ },
 /* 5 */
 /***/ function(module, exports) {
 
-	'use strict';
+	module.exports = function(module) {
+		if(!module.webpackPolyfill) {
+			module.deprecate = function() {};
+			module.paths = [];
+			// module.parent = undefined by default
+			module.children = [];
+			module.webpackPolyfill = 1;
+		}
+		return module;
+	}
 
-	/**
-	 * 获取目标节点，真实的，非jQuery
-	 * @author Zhao Liubin
-	 * @date   2016-05-19
-	 * @param  {jQuery obj || DOM || String}
-	 * @return {[type]}
-	 */
-	module.exports = function (target) {
-	    if (target) {
-	        if (typeof target == 'string') {
-	            return document.querySelector(target);
-	        } else if (target.nodeName) {
-	            return target;
-	        } else {
-	            return target[0];
-	        }
-	    } else {
-	        return '';
-	    }
-	};
 
 /***/ },
 /* 6 */,
@@ -253,57 +573,198 @@
 /***/ },
 /* 8 */,
 /* 9 */,
-/* 10 */,
-/* 11 */,
-/* 12 */
+/* 10 */
 /***/ function(module, exports) {
 
 	'use strict';
 
 	/**
-	 * 操作提示，需要进一步封装为成功或失败方法
+	 * 获取目标节点，真实的，非jQuery
+	 * @author Zhao Liubin
+	 * @date   2016-05-19
+	 * @param  {jQuery obj || DOM || String}
+	 * @return {[type]}
+	 */
+	module.exports = function (target) {
+	    if (target) {
+	        if (typeof target == 'string') {
+	            return document.querySelector(target);
+	        } else if (target.nodeName) {
+	            return target;
+	        } else {
+	            return target[0];
+	        }
+	    } else {
+	        return '';
+	    }
+	};
+
+/***/ },
+/* 11 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(getTarget) {'use strict';
+
+	/**
+	 * 加载等待小菊花，封装进一个对象，不用new 构造了
+	 * @author  Zhao Liubin
+	 * @type {[type]}
+	 */
+	var Spinner = __webpack_require__(12);
+
+	var spinOpts = {
+	    defaultOpt: {
+	        lines: 10 // The number of lines to draw
+
+	        , length: 3 // The length of each line
+
+	        , width: 2 // The line thickness
+
+	        , radius: 3 // The radius of the inner circle
+
+	        , scale: 1 // Scales overall size of the spinner
+
+	        , corners: 1 // Corner roundness (0..1)
+
+	        , color: '#333' // #rgb or #rrggbb or array of colors
+
+	        , opacity: 0.25 // Opacity of the lines
+
+	        , rotate: 0 // The rotation offset
+
+	        , direction: 1 // 1: clockwise, -1: counterclockwise
+
+	        , speed: 1 // Rounds per second
+
+	        , trail: 50 // Afterglow percentage
+
+	        , fps: 20 // Frames per second when using setTimeout() as a fallback for CSS
+
+	        , zIndex: 2e9 // The z-index (defaults to 2000000000)
+
+	        , className: 'spinner' // The CSS class to assign to the spinner
+
+	        , top: '50%' // Top position relative to parent
+
+	        , left: '50%' // Left position relative to parent
+
+	        , shadow: false // Whether to render a shadow
+
+	        , hwaccel: false // Whether to use hardware acceleration
+
+	        , position: 'absolute' // Element positioning
+	    },
+	    _getLoadMore: function _getLoadMore() {},
+	    loadMore: function loadMore() {
+	        var o = Object.create(this.defaultOpt);
+	        o.className = 'spinner-loadmore';
+	        return o;
+	    }
+	};
+
+	function SPIN(target, spinType) {
+	    if (typeof Spinner !== 'function') {
+	        console.warn('需要引入spin.js哦');
+	        return;
+	    }
+	    this.init(target, spinType);
+	    return this.spinner;
+	}
+	SPIN.prototype.init = function (target, spinType) {
+	    this.target = getTarget(target);
+	    if (!this.target) {
+	        return;
+	    }
+	    this.spinOpt = spinType ? spinOpts[spinType]() : spinOpts.defaultOpt;
+	    this.target.classList.add(this.spinOpt.className);
+	    this.spinner = new Spinner(this.spinOpt).spin(this.target);
+	};
+	SPIN.prototype.stop = function () {
+	    if (!this.target) {
+	        return;
+	    }
+	    this.target.classList.remove(this.spinOpt.className);
+	    this.spinner.stop();
+	};
+
+	module.exports = function (target, spinType) {
+	    return new SPIN(target, spinType);
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
+
+/***/ },
+/* 12 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;// http://spin.js.org/#v2.3.2
+	!function(a,b){"object"==typeof module&&module.exports?module.exports=b(): true?!(__WEBPACK_AMD_DEFINE_FACTORY__ = (b), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.call(exports, __webpack_require__, exports, module)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)):a.Spinner=b()}(this,function(){"use strict";function a(a,b){var c,d=document.createElement(a||"div");for(c in b)d[c]=b[c];return d}function b(a){for(var b=1,c=arguments.length;c>b;b++)a.appendChild(arguments[b]);return a}function c(a,b,c,d){var e=["opacity",b,~~(100*a),c,d].join("-"),f=.01+c/d*100,g=Math.max(1-(1-a)/b*(100-f),a),h=j.substring(0,j.indexOf("Animation")).toLowerCase(),i=h&&"-"+h+"-"||"";return m[e]||(k.insertRule("@"+i+"keyframes "+e+"{0%{opacity:"+g+"}"+f+"%{opacity:"+a+"}"+(f+.01)+"%{opacity:1}"+(f+b)%100+"%{opacity:"+a+"}100%{opacity:"+g+"}}",k.cssRules.length),m[e]=1),e}function d(a,b){var c,d,e=a.style;if(b=b.charAt(0).toUpperCase()+b.slice(1),void 0!==e[b])return b;for(d=0;d<l.length;d++)if(c=l[d]+b,void 0!==e[c])return c}function e(a,b){for(var c in b)a.style[d(a,c)||c]=b[c];return a}function f(a){for(var b=1;b<arguments.length;b++){var c=arguments[b];for(var d in c)void 0===a[d]&&(a[d]=c[d])}return a}function g(a,b){return"string"==typeof a?a:a[b%a.length]}function h(a){this.opts=f(a||{},h.defaults,n)}function i(){function c(b,c){return a("<"+b+' xmlns="urn:schemas-microsoft.com:vml" class="spin-vml">',c)}k.addRule(".spin-vml","behavior:url(#default#VML)"),h.prototype.lines=function(a,d){function f(){return e(c("group",{coordsize:k+" "+k,coordorigin:-j+" "+-j}),{width:k,height:k})}function h(a,h,i){b(m,b(e(f(),{rotation:360/d.lines*a+"deg",left:~~h}),b(e(c("roundrect",{arcsize:d.corners}),{width:j,height:d.scale*d.width,left:d.scale*d.radius,top:-d.scale*d.width>>1,filter:i}),c("fill",{color:g(d.color,a),opacity:d.opacity}),c("stroke",{opacity:0}))))}var i,j=d.scale*(d.length+d.width),k=2*d.scale*j,l=-(d.width+d.length)*d.scale*2+"px",m=e(f(),{position:"absolute",top:l,left:l});if(d.shadow)for(i=1;i<=d.lines;i++)h(i,-2,"progid:DXImageTransform.Microsoft.Blur(pixelradius=2,makeshadow=1,shadowopacity=.3)");for(i=1;i<=d.lines;i++)h(i);return b(a,m)},h.prototype.opacity=function(a,b,c,d){var e=a.firstChild;d=d.shadow&&d.lines||0,e&&b+d<e.childNodes.length&&(e=e.childNodes[b+d],e=e&&e.firstChild,e=e&&e.firstChild,e&&(e.opacity=c))}}var j,k,l=["webkit","Moz","ms","O"],m={},n={lines:12,length:7,width:5,radius:10,scale:1,corners:1,color:"#000",opacity:.25,rotate:0,direction:1,speed:1,trail:100,fps:20,zIndex:2e9,className:"spinner",top:"50%",left:"50%",shadow:!1,hwaccel:!1,position:"absolute"};if(h.defaults={},f(h.prototype,{spin:function(b){this.stop();var c=this,d=c.opts,f=c.el=a(null,{className:d.className});if(e(f,{position:d.position,width:0,zIndex:d.zIndex,left:d.left,top:d.top}),b&&b.insertBefore(f,b.firstChild||null),f.setAttribute("role","progressbar"),c.lines(f,c.opts),!j){var g,h=0,i=(d.lines-1)*(1-d.direction)/2,k=d.fps,l=k/d.speed,m=(1-d.opacity)/(l*d.trail/100),n=l/d.lines;!function o(){h++;for(var a=0;a<d.lines;a++)g=Math.max(1-(h+(d.lines-a)*n)%l*m,d.opacity),c.opacity(f,a*d.direction+i,g,d);c.timeout=c.el&&setTimeout(o,~~(1e3/k))}()}return c},stop:function(){var a=this.el;return a&&(clearTimeout(this.timeout),a.parentNode&&a.parentNode.removeChild(a),this.el=void 0),this},lines:function(d,f){function h(b,c){return e(a(),{position:"absolute",width:f.scale*(f.length+f.width)+"px",height:f.scale*f.width+"px",background:b,boxShadow:c,transformOrigin:"left",transform:"rotate("+~~(360/f.lines*k+f.rotate)+"deg) translate("+f.scale*f.radius+"px,0)",borderRadius:(f.corners*f.scale*f.width>>1)+"px"})}for(var i,k=0,l=(f.lines-1)*(1-f.direction)/2;k<f.lines;k++)i=e(a(),{position:"absolute",top:1+~(f.scale*f.width/2)+"px",transform:f.hwaccel?"translate3d(0,0,0)":"",opacity:f.opacity,animation:j&&c(f.opacity,f.trail,l+k*f.direction,f.lines)+" "+1/f.speed+"s linear infinite"}),f.shadow&&b(i,e(h("#000","0 0 4px #000"),{top:"2px"})),b(d,b(i,h(g(f.color,k),"0 0 1px rgba(0,0,0,.1)")));return d},opacity:function(a,b,c){b<a.childNodes.length&&(a.childNodes[b].style.opacity=c)}}),"undefined"!=typeof document){k=function(){var c=a("style",{type:"text/css"});return b(document.getElementsByTagName("head")[0],c),c.sheet||c.styleSheet}();var o=e(a("group"),{behavior:"url(#default#VML)"});!d(o,"transform")&&o.adj?i():j=d(o,"animation")}return h});
+
+/***/ },
+/* 13 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module) {'use strict';
+
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+
+	/**
+	 * 操作提示，需要进一步封装为成功或失败方法，模块化
+	 * 使用方法：require或Webpack，单独使用时：showTipsState('操作成功',function(){}),showTipsState('操作失败','error',function(){})
 	 * @author  Zhao Liubin
 	 * @type {[type]}
 	 */
 
-	module.exports = function () {
-		var content = arguments.length <= 0 || arguments[0] === undefined ? '操作成功' : arguments[0];
-		var state = arguments.length <= 1 || arguments[1] === undefined ? 'ok' : arguments[1];
-		var callback = arguments.length <= 2 || arguments[2] === undefined ? '' : arguments[2];
-		var time = arguments.length <= 3 || arguments[3] === undefined ? 3000 : arguments[3];
+	(function () {
+	    var showTips = function showTips(content, state, callback, time) {
+	        var content = content || '操作成功',
+	            time = parseInt(time) || 3000;
+	        var box = document.createElement('div');
+	        var styleBox = 'position: fixed;top: 40%;left: 50%;min-width:150px;max-width:300px;padding: 1em 2em;border: 1px solid;font-size:12px;line-height: 1.5;text-align: center;color: #1fb5ac;background: #fff;-webkit-border-radius: 3px;-moz-border-radius: 3px;border-radius: 3px;z-index: 10;-webkit-transform: translate(-50%,-50%);transform: translate(-50%,-50%) rotateX(90deg);transition:.3s;opacity:0;';
+	        box.style.cssText = styleBox;
+	        box.classList.add('tips-state');
 
-		var box = document.createElement('div');
-		var styleBox = 'position: fixed;top: 36%;left: 50%;min-width:150px;max-width:300px;padding: 1em 2em;border: 1px solid;line-height: 1.5;text-align: center;color: #1fb5ac;background: #fff;-webkit-border-radius: 3px;-moz-border-radius: 3px;border-radius: 3px;z-index: 10;-webkit-transform: translate(-50%,-50%);transform: translate(-50%,-50%);';
-		box.style.cssText = styleBox;
-		box.classList.add('tips-state');
+	        var icon = document.createElement('span');
+	        var styleIcon = 'display: inline-block;width: 28px;margin-top: 4px;margin-bottom: 8px;border: 1px solid;font-size: 24px;line-height: 26px;-webkit-border-radius: 100%;border-radius: 100%;';
+	        icon.innerHTML = '&#x2713';
+	        icon.style.cssText = styleIcon;
+	        if (state === 'false' || state === 'cancel' || state === 'error') {
+	            box.style.color = '#fb6363';
+	            icon.innerHTML = '!';
+	        }
+	        box.appendChild(icon);
+	        var contentWrapper = document.createElement('div');
+	        contentWrapper.innerHTML = content;
+	        box.appendChild(contentWrapper);
 
-		var icon = document.createElement('i');
-		var styleIcon = 'display: inline-block;width: 28px;margin-top: 4px;margin-bottom: 8px;border: 1px solid;font-size: 24px;line-height: 26px;-webkit-border-radius: 100%;border-radius: 100%;';
-		icon.innerHTML = '&#x2713';
-		icon.style.cssText = styleIcon;
-		if (state === 'false' || state === 'cancel' || state === 'error') {
-			box.style.color = '#fb6363';
-			icon.innerHTML = '!';
-		}
-		box.appendChild(icon);
-		var contentWrapper = document.createElement('p');
-		contentWrapper.innerHTML = content;
-		box.appendChild(contentWrapper);
+	        document.body.appendChild(box);
+	        setTimeout(function () {
+	            box.style.transform = 'translate(-50%,-50%) rotateX(0)';
+	            box.style.opacity = 0.95;
+	        }, 10);
 
-		document.body.appendChild(box);
+	        var _close = function _close() {
+	            document.body.removeChild(box);
+	        };
 
-		var _close = function _close() {
-			document.body.removeChild(box);
-		};
+	        setTimeout(function () {
+	            box.style.transform = 'translate(-50%,-50%) rotateX(90deg)';
+	            box.style.opacity = 0.05;
+	        }, parseInt(time) - 500);
+	        setTimeout(function () {
+	            _close();
+	            typeof state === 'function' ? state() : typeof callback === 'function' && callback();
+	        }, parseInt(time));
+	    };
 
-		setTimeout(function () {
-			_close();
-			typeof callback === 'function' && callback();
-		}, parseInt(time));
-	};
+	    var exportObj = showTips;
+	    ( false ? 'undefined' : _typeof(module)) === 'object' && module.exports ? module.exports = exportObj :  true ? !(__WEBPACK_AMD_DEFINE_RESULT__ = function () {
+	        return exportObj;
+	    }.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)) : window.showTipsState = exportObj;
+	})();
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)(module)))
 
 /***/ },
-/* 13 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(getTarget) {'use strict';
@@ -315,7 +776,7 @@
 	 * @param {function} 回调 
 	 * @type {[type]}
 	 */
-	var getTargets = __webpack_require__(5);
+	var getTargets = __webpack_require__(10);
 
 	module.exports = function () {
 	    var target = arguments.length <= 0 || arguments[0] === undefined ? '' : arguments[0];
@@ -350,194 +811,18 @@
 	        setTimeout(_remove, 200);
 	    }
 	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
 
 /***/ },
-/* 14 */,
-/* 15 */
+/* 15 */,
+/* 16 */
 /***/ function(module, exports) {
 
-	module.exports = {
-	    "code": "0",
-	    "data": [{
-	        "id": "7ee1f9a01cba4eb688bed9b7242930e4",
-	        "menuType": "MESSAGE",
-	        "name": "菜单1",
-	        "orderId": "1",
-	        "parentId": "0",
-	        "subMenuList": [{
-	            "createDate": "2016-05-20 00:00:00",
-	            "createDateString": "2016-05-20",
-	            "id": "e3c5782c31f1425ca7a0c1201b1a5f11",
-	            "menuContent": "http://www.eqying.com",
-	            "menuType": "OWN",
-	            "name": "测试2",
-	            "orderId": 1,
-	            "parentId": "7ee1f9a01cba4eb688bed9b7242930e4",
-	            "state": "NO",
-	            "updateDate": "2016-05-20 00:00:00",
-	            "updateDateString": "2016-05-20",
-	            "userId": 1000000008333
-	        }, {
-	            "createDate": "2016-05-20 00:00:00",
-	            "createDateString": "2016-05-20",
-	            "id": "1dee1bf6e8fd46239eb02b0f94d876a4",
-	            "menuContent": "http://www.eqying.com",
-	            "menuType": "OWN",
-	            "name": "测试1",
-	            "orderId": 2,
-	            "parentId": "7ee1f9a01cba4eb688bed9b7242930e4",
-	            "state": "NO",
-	            "updateDate": "2016-05-20 00:00:00",
-	            "updateDateString": "2016-05-20",
-	            "userId": 1000000008333
-	        }]
-	    }, {
-	        "id": "0f598b0aefb54e3496e9a92da7d04104",
-	        "menuType": "OWN",
-	        "name": "菜单2",
-	        "orderId": "2",
-	        "parentId": "0",
-	        "subMenuList": [{
-	            "createDate": "2016-05-20 00:00:00",
-	            "createDateString": "2016-05-20",
-	            "groupId": "1000000001547",
-	            "id": "cb7fb04bc8c149d88d69f70cded30377",
-	            "menuType": "MESSAGE",
-	            "name": "图片",
-	            "orderId": 1,
-	            "parentId": "0f598b0aefb54e3496e9a92da7d04104",
-	            "state": "NO",
-	            "updateDate": "2016-05-20 00:00:00",
-	            "updateDateString": "2016-05-20",
-	            "userId": 1000000008333
-	        }]
-	    }, {
-	        "id": "140a575b2f73423787789005d2a045ed",
-	        "menuType": "APP",
-	        "name": "菜单3",
-	        "orderId": "3",
-	        "parentId": "0",
-	        "subMenuList": [{
-	            "appDemoUrl": "http://test.yqxiu.cn/s/E2OPfq4X",
-	            "appPicUrl": "group1/M00/01/22/wKj5L1c9RrCAf6C2AAB4yRoqhDI513.jpg",
-	            "appType": "WEBSITE",
-	            "appTypeValue": "0",
-	            "createDate": "2016-05-20 00:00:00",
-	            "createDateString": "2016-05-20",
-	            "id": "e43152286b784de8b40c53892fbe2e66",
-	            "menuItemId": "2d769157ba3145fe9d971c7f52c8a29f",
-	            "menuType": "APP",
-	            "modelType": "WEBSITE",
-	            "name": "菜单4",
-	            "orderId": 1,
-	            "parentId": "140a575b2f73423787789005d2a045ed",
-	            "state": "NO",
-	            "updateDate": "2016-05-20 00:00:00",
-	            "updateDateString": "2016-05-20",
-	            "userId": 1000000008333
-	        }, {
-	            "appDemoUrl": "http://test.yqxiu.cn/s/E2OPfq4X",
-	            "appPicUrl": "group1/M00/01/22/wKj5L1c9RrCAf6C2AAB4yRoqhDI513.jpg",
-	            "appType": "BARGAIN",
-	            "appTypeValue": "58cdc952df8e416799cbcedbaf6f1c5d",
-	            "createDate": "2016-05-20 00:00:00",
-	            "createDateString": "2016-05-20",
-	            "id": "81922eba65584aabb2170abf6894a7b5",
-	            "menuItemId": "e3960f608ae14bb3b6f36bbaa853e968",
-	            "menuType": "APP",
-	            "modelType": "PROMOTION",
-	            "name": "砍价",
-	            "orderId": 2,
-	            "parentId": "140a575b2f73423787789005d2a045ed",
-	            "state": "NO",
-	            "updateDate": "2016-05-20 00:00:00",
-	            "updateDateString": "2016-05-20",
-	            "userId": 1000000008333
-	        }]
-	    }],
-	    "message": "success",
-	    "success": true
-	}
-
-
-
-	// {
-	//     success: true,
-	//     data: [{
-	//         name: '进店购物',
-	//         id: '10000',
-	//         menuType: 'MESSAGE',
-	//         subMenuList: [{
-	//             createDate: '2016-05-19',
-	//             menuContent: 'http://www.eqying.com',
-	//             menuType: 'OWN',
-	//             name: '微商城',
-	//             orderId: 1,
-	//             id: '100001',
-	//             state: 'NO',
-	//             userId: '10000000083'
-	//         }, {
-	//             createDate: '2016-05-19',
-	//             menuContent: 'http://www.eqying.com',
-	//             menuType: 'OWN',
-	//             name: '微官网',
-	//             orderId: 2,
-	//             id: '100002',
-	//             state: 'NO',
-	//             userId: '10000000084'
-	//         }, {
-	//             createDate: '2016-05-19',
-	//             menuContent: 'http://www.eqying.com',
-	//             menuType: 'OWN',
-	//             name: '微应用',
-	//             orderId: 3,
-	//             id: '100001',
-	//             state: 'YES',
-	//             userId: '10000000085'
-	//         }]
-	//     }, {
-	//         name: '我没有下级',
-	//         id: '20000',
-	//         menuType: 'APP'
-	//     }, {
-	//         name: '粉丝互动',
-	//         id: '30000',
-	//         menuType: 'APP',
-	//         subMenuList: [{
-	//             createDate: '2016-05-19',
-	//             menuContent: 'http://www.eqying.com',
-	//             menuType: 'OWN',
-	//             name: '拆礼盒',
-	//             orderId: 1,
-	//             id: '300001',
-	//             state: 'YES',
-	//             userId: '30000000085'
-	//         }, {
-	//             createDate: '2016-05-19',
-	//             menuContent: 'http://www.eqying.com',
-	//             menuType: 'OWN',
-	//             name: '大转盘',
-	//             orderId: 2,
-	//             id: '300002',
-	//             state: 'YES',
-	//             userId: '30000000086'
-	//         }, {
-	//             createDate: '2016-05-19',
-	//             menuContent: 'http://www.eqying.com',
-	//             menuType: 'OWN',
-	//             name: '摇钱树',
-	//             orderId: 3,
-	//             id: '300003',
-	//             state: 'YES',
-	//             userId: '30000000088'
-	//         }]
-	//     }]
-	// }
-
+	/*! artDialog v6.0.5 | https://github.com/aui/artDialog */
+	!function(){function a(b){var d=c[b],e="exports";return"object"==typeof d?d:(d[e]||(d[e]={},d[e]=d.call(d[e],a,d[e],d)||d[e]),d[e])}function b(a,b){c[a]=b}var c={};b("jquery",function(){return jQuery}),b("popup",function(a){function b(){this.destroyed=!1,this.__popup=c("<div />").css({display:"none",position:"absolute",outline:0}).attr("tabindex","-1").html(this.innerHTML).appendTo("body"),this.__backdrop=this.__mask=c("<div />").css({opacity:.7,background:"#000"}),this.node=this.__popup[0],this.backdrop=this.__backdrop[0],d++}var c=a("jquery"),d=0,e=!("minWidth"in c("html")[0].style),f=!e;return c.extend(b.prototype,{node:null,backdrop:null,fixed:!1,destroyed:!0,open:!1,returnValue:"",autofocus:!0,align:"bottom left",innerHTML:"",className:"ui-popup",show:function(a){if(this.destroyed)return this;var d=this.__popup,g=this.__backdrop;if(this.__activeElement=this.__getActive(),this.open=!0,this.follow=a||this.follow,!this.__ready){if(d.addClass(this.className).attr("role",this.modal?"alertdialog":"dialog").css("position",this.fixed?"fixed":"absolute"),e||c(window).on("resize",c.proxy(this.reset,this)),this.modal){var h={position:"fixed",left:0,top:0,width:"100%",height:"100%",overflow:"hidden",userSelect:"none",zIndex:this.zIndex||b.zIndex};d.addClass(this.className+"-modal"),f||c.extend(h,{position:"absolute",width:c(window).width()+"px",height:c(document).height()+"px"}),g.css(h).attr({tabindex:"0"}).on("focus",c.proxy(this.focus,this)),this.__mask=g.clone(!0).attr("style","").insertAfter(d),g.addClass(this.className+"-backdrop").insertBefore(d),this.__ready=!0}d.html()||d.html(this.innerHTML)}return d.addClass(this.className+"-show").show(),g.show(),this.reset().focus(),this.__dispatchEvent("show"),this},showModal:function(){return this.modal=!0,this.show.apply(this,arguments)},close:function(a){return!this.destroyed&&this.open&&(void 0!==a&&(this.returnValue=a),this.__popup.hide().removeClass(this.className+"-show"),this.__backdrop.hide(),this.open=!1,this.blur(),this.__dispatchEvent("close")),this},remove:function(){if(this.destroyed)return this;this.__dispatchEvent("beforeremove"),b.current===this&&(b.current=null),this.__popup.remove(),this.__backdrop.remove(),this.__mask.remove(),e||c(window).off("resize",this.reset),this.__dispatchEvent("remove");for(var a in this)delete this[a];return this},reset:function(){var a=this.follow;return a?this.__follow(a):this.__center(),this.__dispatchEvent("reset"),this},focus:function(){var a=this.node,d=this.__popup,e=b.current,f=this.zIndex=b.zIndex++;if(e&&e!==this&&e.blur(!1),!c.contains(a,this.__getActive())){var g=d.find("[autofocus]")[0];!this._autofocus&&g?this._autofocus=!0:g=a,this.__focus(g)}return d.css("zIndex",f),b.current=this,d.addClass(this.className+"-focus"),this.__dispatchEvent("focus"),this},blur:function(){var a=this.__activeElement,b=arguments[0];return b!==!1&&this.__focus(a),this._autofocus=!1,this.__popup.removeClass(this.className+"-focus"),this.__dispatchEvent("blur"),this},addEventListener:function(a,b){return this.__getEventListener(a).push(b),this},removeEventListener:function(a,b){for(var c=this.__getEventListener(a),d=0;d<c.length;d++)b===c[d]&&c.splice(d--,1);return this},__getEventListener:function(a){var b=this.__listener;return b||(b=this.__listener={}),b[a]||(b[a]=[]),b[a]},__dispatchEvent:function(a){var b=this.__getEventListener(a);this["on"+a]&&this["on"+a]();for(var c=0;c<b.length;c++)b[c].call(this)},__focus:function(a){try{this.autofocus&&!/^iframe$/i.test(a.nodeName)&&a.focus()}catch(b){}},__getActive:function(){try{var a=document.activeElement,b=a.contentDocument,c=b&&b.activeElement||a;return c}catch(d){}},__center:function(){var a=this.__popup,b=c(window),d=c(document),e=this.fixed,f=e?0:d.scrollLeft(),g=e?0:d.scrollTop(),h=b.width(),i=b.height(),j=a.width(),k=a.height(),l=(h-j)/2+f,m=382*(i-k)/1e3+g,n=a[0].style;n.left=Math.max(parseInt(l),f)+"px",n.top=Math.max(parseInt(m),g)+"px"},__follow:function(a){var b=a.parentNode&&c(a),d=this.__popup;if(this.__followSkin&&d.removeClass(this.__followSkin),b){var e=b.offset();if(e.left*e.top<0)return this.__center()}var f=this,g=this.fixed,h=c(window),i=c(document),j=h.width(),k=h.height(),l=i.scrollLeft(),m=i.scrollTop(),n=d.width(),o=d.height(),p=b?b.outerWidth():0,q=b?b.outerHeight():0,r=this.__offset(a),s=r.left,t=r.top,u=g?s-l:s,v=g?t-m:t,w=g?0:l,x=g?0:m,y=w+j-n,z=x+k-o,A={},B=this.align.split(" "),C=this.className+"-",D={top:"bottom",bottom:"top",left:"right",right:"left"},E={top:"top",bottom:"top",left:"left",right:"left"},F=[{top:v-o,bottom:v+q,left:u-n,right:u+p},{top:v,bottom:v-o+q,left:u,right:u-n+p}],G={left:u+p/2-n/2,top:v+q/2-o/2},H={left:[w,y],top:[x,z]};c.each(B,function(a,b){F[a][b]>H[E[b]][1]&&(b=B[a]=D[b]),F[a][b]<H[E[b]][0]&&(B[a]=D[b])}),B[1]||(E[B[1]]="left"===E[B[0]]?"top":"left",F[1][B[1]]=G[E[B[1]]]),C+=B.join("-")+" "+this.className+"-follow",f.__followSkin=C,b&&d.addClass(C),A[E[B[0]]]=parseInt(F[0][B[0]]),A[E[B[1]]]=parseInt(F[1][B[1]]),d.css(A)},__offset:function(a){var b=a.parentNode,d=b?c(a).offset():{left:a.pageX,top:a.pageY};a=b?a:a.target;var e=a.ownerDocument,f=e.defaultView||e.parentWindow;if(f==window)return d;var g=f.frameElement,h=c(e),i=h.scrollLeft(),j=h.scrollTop(),k=c(g).offset(),l=k.left,m=k.top;return{left:d.left+l-i,top:d.top+m-j}}}),b.zIndex=1024,b.current=null,b}),b("dialog-config",{backdropBackground:"#000",backdropOpacity:.7,content:'<span class="ui-dialog-loading">Loading..</span>',title:"",statusbar:"",button:null,ok:null,cancel:null,okValue:"确定",cancelValue:"取消",cancelDisplay:!0,width:"",height:"",padding:"",skin:"",quickClose:!1,cssUri:"../css/ui-dialog.css",innerHTML:'<div i="dialog" class="ui-dialog"><div class="ui-dialog-arrow-a"></div><div class="ui-dialog-arrow-b"></div><table class="ui-dialog-grid"><tr><td i="header" class="ui-dialog-header"><button i="close" class="ui-dialog-close">&#215;</button><div i="title" class="ui-dialog-title"></div></td></tr><tr><td i="body" class="ui-dialog-body"><div i="content" class="ui-dialog-content"></div></td></tr><tr><td i="footer" class="ui-dialog-footer"><div i="statusbar" class="ui-dialog-statusbar"></div><div i="button" class="ui-dialog-button"></div></td></tr></table></div>'}),b("dialog",function(a){var b=a("jquery"),c=a("popup"),d=a("dialog-config"),e=d.cssUri;if(e){var f=a[a.toUrl?"toUrl":"resolve"];f&&(e=f(e),e='<link rel="stylesheet" href="'+e+'" />',b("base")[0]?b("base").before(e):b("head").append(e))}var g=0,h=new Date-0,i=!("minWidth"in b("html")[0].style),j="createTouch"in document&&!("onmousemove"in document)||/(iPhone|iPad|iPod)/i.test(navigator.userAgent),k=!i&&!j,l=function(a,c,d){var e=a=a||{};("string"==typeof a||1===a.nodeType)&&(a={content:a,fixed:!j}),a=b.extend(!0,{},l.defaults,a),a.original=e;var f=a.id=a.id||h+g,i=l.get(f);return i?i.focus():(k||(a.fixed=!1),a.quickClose&&(a.modal=!0,a.backdropOpacity=0),b.isArray(a.button)||(a.button=[]),void 0!==d&&(a.cancel=d),a.cancel&&a.button.push({id:"cancel",value:a.cancelValue,callback:a.cancel,display:a.cancelDisplay}),void 0!==c&&(a.ok=c),a.ok&&a.button.push({id:"ok",value:a.okValue,callback:a.ok,autofocus:!0}),l.list[f]=new l.create(a))},m=function(){};m.prototype=c.prototype;var n=l.prototype=new m;return l.create=function(a){var d=this;b.extend(this,new c);var e=(a.original,b(this.node).html(a.innerHTML)),f=b(this.backdrop);return this.options=a,this._popup=e,b.each(a,function(a,b){"function"==typeof d[a]?d[a](b):d[a]=b}),a.zIndex&&(c.zIndex=a.zIndex),e.attr({"aria-labelledby":this._$("title").attr("id","title:"+this.id).attr("id"),"aria-describedby":this._$("content").attr("id","content:"+this.id).attr("id")}),this._$("close").css("display",this.cancel===!1?"none":"").attr("title",'关闭').on("click",function(a){d._trigger("cancel"),a.preventDefault()}),this._$("dialog").addClass(this.skin),this._$("body").css("padding",this.padding),a.quickClose&&f.on("onmousedown"in document?"mousedown":"click",function(){return d._trigger("cancel"),!1}),this.addEventListener("show",function(){f.css({opacity:0,background:a.backdropBackground}).animate({opacity:a.backdropOpacity},150)}),this._esc=function(a){var b=a.target,e=b.nodeName,f=/^input|textarea$/i,g=c.current===d,h=a.keyCode;!g||f.test(e)&&"button"!==b.type||27===h&&d._trigger("cancel")},b(document).on("keydown",this._esc),this.addEventListener("remove",function(){b(document).off("keydown",this._esc),delete l.list[this.id]}),g++,l.oncreate(this),this},l.create.prototype=n,b.extend(n,{content:function(a){var c=this._$("content");return"object"==typeof a?(a=b(a),c.empty("").append(a.show()),this.addEventListener("beforeremove",function(){b("body").append(a.hide())})):c.html(a),this.reset()},title:function(a){return this._$("title").text(a),this._$("header")[a?"show":"hide"](),this},width:function(a){return this._$("content").css("width",a),this.reset()},height:function(a){return this._$("content").css("height",a),this.reset()},button:function(a){a=a||[];var c=this,d="",e=0;return this.callbacks={},"string"==typeof a?(d=a,e++):b.each(a,function(a,f){var g=f.id=f.id||f.value,h="";c.callbacks[g]=f.callback,f.display===!1?h=' style="display:none"':e++,d+='<button type="button" i-id="'+g+'"'+h+(f.disabled?" disabled":"")+(f.autofocus?' autofocus class="ui-dialog-autofocus"':"")+">"+f.value+"</button>",c._$("button").on("click","[i-id="+g+"]",function(a){var d=b(this);d.attr("disabled")||c._trigger(g),a.preventDefault()})}),this._$("button").html(d),this._$("footer")[e?"show":"hide"](),this},statusbar:function(a){return this._$("statusbar").html(a)[a?"show":"hide"](),this},_$:function(a){return this._popup.find("[i="+a+"]")},_trigger:function(a){var b=this.callbacks[a];return"function"!=typeof b||b.call(this)!==!1?this.close().remove():this}}),l.oncreate=b.noop,l.getCurrent=function(){return c.current},l.get=function(a){return void 0===a?l.list:l.list[a]},l.list={},l.defaults=d,l}),b("drag",function(a){var b=a("jquery"),c=b(window),d=b(document),e="createTouch"in document,f=document.documentElement,g=!("minWidth"in f.style),h=!g&&"onlosecapture"in f,i="setCapture"in f,j={start:e?"touchstart":"mousedown",over:e?"touchmove":"mousemove",end:e?"touchend":"mouseup"},k=e?function(a){return a.touches||(a=a.originalEvent.touches.item(0)),a}:function(a){return a},l=function(){this.start=b.proxy(this.start,this),this.over=b.proxy(this.over,this),this.end=b.proxy(this.end,this),this.onstart=this.onover=this.onend=b.noop};return l.types=j,l.prototype={start:function(a){return a=this.startFix(a),d.on(j.over,this.over).on(j.end,this.end),this.onstart(a),!1},over:function(a){return a=this.overFix(a),this.onover(a),!1},end:function(a){return a=this.endFix(a),d.off(j.over,this.over).off(j.end,this.end),this.onend(a),!1},startFix:function(a){return a=k(a),this.target=b(a.target),this.selectstart=function(){return!1},d.on("selectstart",this.selectstart).on("dblclick",this.end),h?this.target.on("losecapture",this.end):c.on("blur",this.end),i&&this.target[0].setCapture(),a},overFix:function(a){return a=k(a)},endFix:function(a){return a=k(a),d.off("selectstart",this.selectstart).off("dblclick",this.end),h?this.target.off("losecapture",this.end):c.off("blur",this.end),i&&this.target[0].releaseCapture(),a}},l.create=function(a,e){var f,g,h,i,j=b(a),k=new l,m=l.types.start,n=function(){},o=a.className.replace(/^\s|\s.*/g,"")+"-drag-start",p={onstart:n,onover:n,onend:n,off:function(){j.off(m,k.start)}};return k.onstart=function(b){var e="fixed"===j.css("position"),k=d.scrollLeft(),l=d.scrollTop(),m=j.width(),n=j.height();f=0,g=0,h=e?c.width()-m+f:d.width()-m,i=e?c.height()-n+g:d.height()-n;var q=j.offset(),r=this.startLeft=e?q.left-k:q.left,s=this.startTop=e?q.top-l:q.top;this.clientX=b.clientX,this.clientY=b.clientY,j.addClass(o),p.onstart.call(a,b,r,s)},k.onover=function(b){var c=b.clientX-this.clientX+this.startLeft,d=b.clientY-this.clientY+this.startTop,e=j[0].style;c=Math.max(f,Math.min(h,c)),d=Math.max(g,Math.min(i,d)),e.left=c+"px",e.top=d+"px",p.onover.call(a,b,c,d)},k.onend=function(b){var c=j.position(),d=c.left,e=c.top;j.removeClass(o),p.onend.call(a,b,d,e)},k.off=function(){j.off(m,k.start)},e?k.start(e):j.on(m,k.start),p},l}),b("dialog-plus",function(a){var b=a("jquery"),c=a("dialog"),d=a("drag");return c.oncreate=function(a){var c,e=a.options,f=e.original,g=e.url,h=e.oniframeload;if(g&&(this.padding=e.padding=0,c=b("<iframe />"),c.attr({src:g,name:a.id,width:"100%",height:"100%",allowtransparency:"yes",frameborder:"no",scrolling:"no"}).on("load",function(){var b;try{b=c[0].contentWindow.frameElement}catch(d){}b&&(e.width||a.width(c.contents().width()),e.height||a.height(c.contents().height())),h&&h.call(a)}),a.addEventListener("beforeremove",function(){c.attr("src","about:blank").remove()},!1),a.content(c[0]),a.iframeNode=c[0]),!(f instanceof Object))for(var i=function(){a.close().remove()},j=0;j<frames.length;j++)try{if(f instanceof frames[j].Object){b(frames[j]).one("unload",i);break}}catch(k){}b(a.node).on(d.types.start,"[i=title]",function(b){a.follow||(a.focus(),d.create(a.node,b))})},c.get=function(a){if(a&&a.frameElement){var b,d=a.frameElement,e=c.list;for(var f in e)if(b=e[f],b.node.getElementsByTagName("iframe")[0]===d)return b}else if(a)return c.list[a]},c});"object"==typeof module&&module.exports?module.exports=a("dialog-plus"):window.dialog=a("dialog-plus")}();
 
 /***/ },
-/* 16 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global, process) {/*!
@@ -10570,10 +10855,10 @@
 	}, 0);
 
 	module.exports = Vue;
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(17)))
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(18)))
 
 /***/ },
-/* 17 */
+/* 18 */
 /***/ function(module, exports) {
 
 	// shim for using process in browser
@@ -10673,16 +10958,16 @@
 
 
 /***/ },
-/* 18 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
-	__vue_script__ = __webpack_require__(19)
+	__vue_script__ = __webpack_require__(20)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] src\\scripts\\module\\vue\\components\\templateAdmin\\menu.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(23)
+	__vue_template__ = __webpack_require__(21)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	if (__vue_template__) {
@@ -10692,7 +10977,7 @@
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), true)
 	  if (!hotAPI.compatible) return
-	  var id = "D:\\GitRepo\\bugoftime\\src\\scripts\\module\\vue\\components\\templateAdmin\\menu.vue"
+	  var id = "D:\\javaworkspaces\\wxp-template\\wxp-template-web\\src\\main\\webapp\\static\\src\\scripts\\module\\vue\\components\\templateAdmin\\menu.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {
@@ -10701,21 +10986,14 @@
 	})()}
 
 /***/ },
-/* 19 */
-/***/ function(module, exports, __webpack_require__) {
+/* 20 */
+/***/ function(module, exports) {
 
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-
-	var _footerMenu = __webpack_require__(20);
-
-	var _footerMenu2 = _interopRequireDefault(_footerMenu);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 	exports.default = {
 	    props: ['menuItem', 'menu1Length'],
 	    data: function data() {
@@ -10729,73 +11007,10 @@
 	};
 
 /***/ },
-/* 20 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var __vue_script__, __vue_template__
-	__vue_script__ = __webpack_require__(21)
-	if (__vue_script__ &&
-	    __vue_script__.__esModule &&
-	    Object.keys(__vue_script__).length > 1) {
-	  console.warn("[vue-loader] src\\scripts\\module\\vue\\components\\footerMenu.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(22)
-	module.exports = __vue_script__ || {}
-	if (module.exports.__esModule) module.exports = module.exports.default
-	if (__vue_template__) {
-	(typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports).template = __vue_template__
-	}
-	if (false) {(function () {  module.hot.accept()
-	  var hotAPI = require("vue-hot-reload-api")
-	  hotAPI.install(require("vue"), true)
-	  if (!hotAPI.compatible) return
-	  var id = "D:\\GitRepo\\bugoftime\\src\\scripts\\module\\vue\\components\\footerMenu.vue"
-	  if (!module.hot.data) {
-	    hotAPI.createRecord(id, module.exports)
-	  } else {
-	    hotAPI.update(id, module.exports, __vue_template__)
-	  }
-	})()}
-
-/***/ },
 /* 21 */
 /***/ function(module, exports) {
 
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.default = {
-	    props: ['menuItem'],
-	    data: function data() {
-	        return {
-	            menu: this.menuItem
-	        };
-	    },
-
-	    methods: {
-	        toggle: function toggle() {
-	            var $t = $(event.target);
-	            $t.closest('.menu-l1').toggleClass('expanded').siblings('.item').removeClass('expanded');
-	            $t.addClass('on').siblings('.item').removeClass('on');
-	            if (!$t.hasClass('wealthy')) {
-	                $t.closest('.menu-l1').addClass('on').siblings('.item').removeClass('on');
-	            }
-	        }
-	    }
-	};
-
-/***/ },
-/* 22 */
-/***/ function(module, exports) {
-
-	module.exports = "\n<div class=\"title js-toggle\" @click=\"toggle\" :class=\"{'wealthy':menuItem.subMenuList.length>0}\">\n    <p class=\"inner\">{{menuItem.name}}</p>\n</div>\n<ul class=\"content menu-l2\">\n    <li class=\"item js-toggle\" @click=\"toggle\" v-for=\"item2 of menuItem.subMenuList\">\n        <a href=\"javascript:;\">{{item2.name}}</a>\n    </li>\n</ul>\n";
-
-/***/ },
-/* 23 */
-/***/ function(module, exports) {
-
-	module.exports = "\n<div><i class=\"ico keyboard\"></i></div>\n<div class=\"item menu-l1\" v-for=\"item of menuItem\" :class=\"{on:$index==0}\">\n    <div class=\"title js-toggle\" :class=\"{'wealthy':item.subMenuList.length>0}\" :data-name=\"item.name\" :title=\"item.name\">\n        <p class=\"inner\">{{item.name}}</p>\n    </div>\n    <ul class=\"content menu-l2\">\n        <li class=\"item js-toggle\" v-for=\"item2 of item.subMenuList\" :data-name=\"item2.name\" :title=\"item2.name\"><span class=\"inner\">{{item2.name}}</span></li>\n        <li class=\"item add-wrapper\">\n            <a href=\"javascript:;\" class=\"font-bigger add\"  title=\"添加菜单\">+</a>\n        </li>\n    </ul>\n</div>\n<div class=\"item menu-l1 add-menu1\" v-if=\"menu1Length<4\">\n    <p class=\"item add-wrapper\">\n        <a href=\"javascript:;\" class=\"font-bigger add\">+</a>\n    </p>\n</div>\n";
+	module.exports = "\n<div><i class=\"ico keyboard\"></i></div>\n<div class=\"item menu-l1\" v-for=\"item of menuItem\" :class=\"{on:$index==0}\">\n    <div class=\"title js-toggle\" :class=\"{'wealthy':item.subMenuList.length>0}\" :data-menu-type=\"item.menuType\" :data-name=\"item.name\" :title=\"item.name\" :data-menu-content=\"item.menuContent\" :data-app-demo-url=\"item.appDemoUrl\" :data-app-pic-url=\"item.appPicUrl\" :data-app-type=\"item.appType\" :data-model-type=\"item.modelType\" :data-model-text=\"item.modelText\"  :data-app-name=\"item.appName\">\n        <p class=\"inner\">{{item.name}}</p>\n    </div>\n    <ul class=\"content menu-l2\">\n        <li class=\"item js-toggle\" v-for=\"item of item.subMenuList\" :data-name=\"item.name\" :data-menu-type=\"item.menuType\" :data-name=\"item.name\" :title=\"item.name\" :data-menu-content=\"item.menuContent\" :data-app-demo-url=\"item.appDemoUrl\" :data-app-pic-url=\"item.appPicUrl\" :data-app-type=\"item.appType\" :data-model-type=\"item.modelType\" :data-model-text=\"item.modelText\" :data-app-name=\"item.appName\"><span class=\"inner\">{{item.name}}</span></li>\n        <li class=\"item add-wrapper\" v-show=\"item.subMenuList.length<5\">\n            <a href=\"javascript:;\" class=\"font-bigger add\" :data-menu-type=\"item.menuType\" title=\"添加菜单\">+</a>\n        </li>\n    </ul>\n</div>\n<div class=\"item menu-l1 add-menu1\" v-if=\"menu1Length<3\">\n    <p class=\"item add-wrapper\">\n        <a href=\"javascript:;\" class=\"font-bigger add\" data-menu-type=\"MESSAGE\">+</a>\n    </p>\n</div>\n";
 
 /***/ }
 /******/ ]);

@@ -3,8 +3,13 @@
         <h3 class="title text-ellipsis">
                                 易企赢</h3>
         <div class="content">
-            <img class="show-img" src="/imgs/guaka.png" alt="">
-            <iframe class="show-site" frameborder="0"></iframe>
+            <div class="container img">
+               <img class="show-img" alt=""> 
+            </div>
+            <div class="container site">
+                <iframe class="show-site" frameborder="0"></iframe>
+            </div>
+            
         </div>
         <footer class="footer menu dis-flex abs">
             <i class="ico keyboard"></i>

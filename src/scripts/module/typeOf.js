@@ -1,5 +1,6 @@
 /**
  * 判断目标类型，方法集合
+ * @author Zhao Liubin
  * @type {Object}
  */
 module.exports={

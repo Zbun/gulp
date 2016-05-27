@@ -1,11 +1,11 @@
 @charset "utf-8";
 @import 'base/basePC';
-@import '_dialog';
-@import '_set';
-@import 'base/iconfont';
-@import 'base/_radio-check.scss';
-@import 'base/_btn_tag.scss';
-@import 'base/_scrollbar.scss';
+@import 'dialog';
+@import 'set';
+@import 'base/_iconfont';
+@import 'base/_radio-check';
+@import 'base/_btn_tag';
+@import 'base/_scrollbar';
 
 .show-list{
 	>.item{
@@ -34,11 +34,13 @@
         background-repeat: no-repeat;
         >.title{
         	position: absolute;
-            left: 60px;
-            right: 60px;
-            margin-top: -32px;
-        	text-align: center;
-        	color: #fff;
+            left: 64px;
+            right: 64px;
+            margin-top: -34px;
+            font-size: 15px;
+            font-weight: 400;
+            color: #eee;
+            text-align: center;
         }
     }
     >.content{
@@ -48,10 +50,13 @@
     	.show-img{
     		max-width: 100%;
     	}
-        .show-site{
-            width: 100%;
-            height: 463px;
+        .container.site{
             display: none;
+            height: 463px;
+        }
+        .show-site{
+            height: 100%;
+            width: 100%;
             @extend %scrollbar;
         }
     }
@@ -161,4 +166,7 @@
             }
         }
     }
+}
+.ui-popup-show .ui-dialog .ui-dialog-header{
+    cursor:auto;
 }

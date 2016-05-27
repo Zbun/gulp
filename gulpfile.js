@@ -25,7 +25,7 @@ var opts={
     suffix:'.min'
   },
 };
-var cssStyles=['compressed','expanded'],cssStyle=cssStyles[1];
+var cssStyles=['compressed','expanded'],cssStyle=cssStyles[0];
 
 //清理文件
 gulp.task('clean',function(cb){
@@ -125,6 +125,7 @@ gulp.task('webpack',function(callback){
       if(err) throw new gutil.PluginError('webpack',err);
       // gutil.log('[webpack]',stats.toString({}))
 
+      stats.compilation.errors[0] && console.log(stats.compilation.errors[0].error);
       callback();
       // console.log(err);
     })

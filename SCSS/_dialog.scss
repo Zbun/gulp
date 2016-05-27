@@ -137,6 +137,7 @@
         }
         &.mini,&.mini-tips {
             .ui-dialog-header{
+                display: block !important;
                 background-color: transparent;
             }
             .ui-dialog-title {

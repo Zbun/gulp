@@ -15,7 +15,7 @@ waiting.show();
 
 setTimeout(function() {
     waiting.hide();
-}, 5000);
+}, 25000);
 
 // var w2= waiting.show($('.wrapper'));
 // setTimeout(function(){
@@ -88,7 +88,11 @@ setTimeout(function() { s1.stop() }, 2000);
 //操作提示，第二个参数为成功与失败，可传'error','false','warning'
 var showTips = require('showTipsState');
 
-showTips('网络错误', 'error');
+// showTips('操作成功',function(){
+// 	alert('OK');
+// })
+
+showTips('网络错误','error');
 
 //侧滑删除、arg1=对象,arg2=回调,arg3=方向(right,up,down),arg4=偏移距离
 var slideDel = require('slideDelete');
@@ -103,9 +107,9 @@ $('.js-slide-del').on('click', function() {
 
 //合并对象，未深度操作
 var obj1={'name':'JOBS','job':'CEO'},
-obj2={'name':'Bill',sex:'Man'}
+obj2={'name':'Bill',sex:'Man'},obj3={'age':60,'eyeColor':'Blue'}
 
-console.log(merge(obj1,obj2));
+console.log(merge(obj1,obj2,'sss',obj3));
 
 //分页
 require('pagination');

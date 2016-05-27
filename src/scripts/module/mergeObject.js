@@ -6,13 +6,15 @@
  * @param  {object,object}
  * @return {[type]}
  */
-module.exports=(objTo={},objFrom)=>{
-	objTo=typeOf.isObject(objTo)?objTo:{};
-	if(!typeOf.isObject(objFrom)){
-		return objTo;
-	}
-	Object.keys(objFrom).forEach(function(item){
-		objTo[item]=objFrom[item]
-	});
-	return objTo;
+module.exports = (objTo = {}, ...objFrom) => {
+    objTo = typeOf.isObject(objTo) ? objTo : {};
+    objFrom.forEach(function(el, index) {
+        if (!typeOf.isObject(el)) {
+            return;
+        }
+        Object.keys(el).forEach(function(item) {
+            objTo[item] = el[item]
+        });
+    })
+    return objTo;
 }

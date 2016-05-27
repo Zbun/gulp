@@ -1,7 +1,7 @@
 @charset "utf-8";
 @import 'baseSCSS';
-@import '_animation.scss';
-@import '_tag.scss';
+@import 'animation';
+@import 'tag';
 $font-size: 12px;
 $line-height: (20/12);
 $btn-line-height:26px;
@@ -408,7 +408,7 @@ input.ipt-s {
         cursor: pointer;
     }
 }
-@import "_switcher.scss";
+@import "switcher";
 
 .attach {
     position: fixed;
@@ -469,4 +469,4 @@ input.ipt-s {
     }
 }
 
-@import '_compat';
+@import 'compat';

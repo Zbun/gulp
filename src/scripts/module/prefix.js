@@ -1,5 +1,5 @@
 /**
- * 加兼容性前缀如 webkit等
+ * 加兼容性前缀如 webkit等，未完成
  * @type {Object}
  */
 module.exports = {

@@ -1,5 +1,5 @@
-@import '_variables.scss';
-@import '_mixin.scss';
+@import 'variables';
+@import 'mixin';
 //单选、多选样式
 .radio {
     position: relative;
@@ -47,6 +47,17 @@
     &:hover{
         .icon{
             border-color: #bbb;
+        }
+    }
+}
+
+.radio-simulate{
+    padding-left: 23px;
+    &.on{
+        .icon{
+            &:before{
+                visibility: visible;
+            }
         }
     }
 }
