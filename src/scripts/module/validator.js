@@ -3,8 +3,8 @@
  * @author Zhao Liubin
  * @type {Object}
  */
-module.exports={
-    _reg: {
+module.exports = (function() {
+    var regExp = {
         empty: /^\s*$/,
         phone: /^1\d{10}$/,
         email: /^\w+[\w-+.]*@[\w-]+(\.[\w-])+$/,
@@ -12,37 +12,38 @@ module.exports={
         integer: /^\d+$/,
         illegal: /[<>]/,
         percent: /^0$|^[1-9]\d?$|^100$/
-    },
-    _check(pattern) {
+    };
+
+    function check(pattern) {
         return function(arg) {
             return pattern.test(arg);
         }
-    },
-    isEmpty(...arg) {
-        var _t=this;
-        return arg.some(function(el){
-           return _t._check(_t._reg.empty)(el);
-        })
-    },
-    isNotPhone(arg) {
-        return !this._check(this._reg.phone)(arg);
-    },
-    isNotEmail(arg) {
-        return !this._check(this._reg.email)(arg);
-    },
-    isNotMoneyFormat(arg) {
-        return !this._check(this._reg.moneyFormat)(arg);
-    },
-    isNotInteger(arg) {
-        return !this._check(this._reg.integer)(arg);
-    },
-    isIllegal(arg) {
-        return this._check(this._reg.illegal)(arg);
-    },
-    isNotPercent(...arg) {
-        var _t=this;
-        return !arg.every(function(el){
-            return _t._check(_t._reg.percent)(el);
-        })
+    };
+    return {
+        isEmpty(...arg) {
+            return arg.some(function(el) {
+                return check(regExp.empty)(el);
+            })
+        },
+        isNotPhone(arg) {
+            return !check(regExp.phone)(arg);
+        },
+        isNotEmail(arg) {
+            return !check(regExp.email)(arg);
+        },
+        isNotMoneyFormat(arg) {
+            return !check(regExp.moneyFormat)(arg);
+        },
+        isNotInteger(arg) {
+            return !check(regExp.integer)(arg);
+        },
+        isIllegal(arg) {
+            return check(regExp.illegal)(arg);
+        },
+        isNotPercent(...arg) {
+            return !arg.every(function(el) {
+                return check(regExp.percent)(el);
+            })
+        }
     }
-};
+})();

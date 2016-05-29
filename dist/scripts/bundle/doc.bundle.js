@@ -381,8 +381,8 @@
 	 * @author Zhao Liubin
 	 * @type {Object}
 	 */
-	module.exports = {
-	    _reg: {
+	module.exports = function () {
+	    var regExp = {
 	        empty: /^\s*$/,
 	        phone: /^1\d{10}$/,
 	        email: /^\w+[\w-+.]*@[\w-]+(\.[\w-])+$/,
@@ -390,50 +390,49 @@
 	        integer: /^\d+$/,
 	        illegal: /[<>]/,
 	        percent: /^0$|^[1-9]\d?$|^100$/
-	    },
-	    _check: function _check(pattern) {
+	    };
+
+	    function check(pattern) {
 	        return function (arg) {
 	            return pattern.test(arg);
 	        };
-	    },
-	    isEmpty: function isEmpty() {
-	        var _t = this;
+	    };
+	    return {
+	        isEmpty: function isEmpty() {
+	            for (var _len = arguments.length, arg = Array(_len), _key = 0; _key < _len; _key++) {
+	                arg[_key] = arguments[_key];
+	            }
 
-	        for (var _len = arguments.length, arg = Array(_len), _key = 0; _key < _len; _key++) {
-	            arg[_key] = arguments[_key];
+	            return arg.some(function (el) {
+	                return check(regExp.empty)(el);
+	            });
+	        },
+	        isNotPhone: function isNotPhone(arg) {
+	            return !check(regExp.phone)(arg);
+	        },
+	        isNotEmail: function isNotEmail(arg) {
+	            return !check(regExp.email)(arg);
+	        },
+	        isNotMoneyFormat: function isNotMoneyFormat(arg) {
+	            return !check(regExp.moneyFormat)(arg);
+	        },
+	        isNotInteger: function isNotInteger(arg) {
+	            return !check(regExp.integer)(arg);
+	        },
+	        isIllegal: function isIllegal(arg) {
+	            return check(regExp.illegal)(arg);
+	        },
+	        isNotPercent: function isNotPercent() {
+	            for (var _len2 = arguments.length, arg = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+	                arg[_key2] = arguments[_key2];
+	            }
+
+	            return !arg.every(function (el) {
+	                return check(regExp.percent)(el);
+	            });
 	        }
-
-	        return arg.some(function (el) {
-	            return _t._check(_t._reg.empty)(el);
-	        });
-	    },
-	    isNotPhone: function isNotPhone(arg) {
-	        return !this._check(this._reg.phone)(arg);
-	    },
-	    isNotEmail: function isNotEmail(arg) {
-	        return !this._check(this._reg.email)(arg);
-	    },
-	    isNotMoneyFormat: function isNotMoneyFormat(arg) {
-	        return !this._check(this._reg.moneyFormat)(arg);
-	    },
-	    isNotInteger: function isNotInteger(arg) {
-	        return !this._check(this._reg.integer)(arg);
-	    },
-	    isIllegal: function isIllegal(arg) {
-	        return this._check(this._reg.illegal)(arg);
-	    },
-	    isNotPercent: function isNotPercent() {
-	        var _t = this;
-
-	        for (var _len2 = arguments.length, arg = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-	            arg[_key2] = arguments[_key2];
-	        }
-
-	        return !arg.every(function (el) {
-	            return _t._check(_t._reg.percent)(el);
-	        });
-	    }
-	};
+	    };
+	}();
 
 /***/ },
 /* 7 */

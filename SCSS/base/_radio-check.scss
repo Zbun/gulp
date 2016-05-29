@@ -46,7 +46,7 @@
     }
     &:hover{
         .icon{
-            border-color: #bbb;
+            border-color: #ccc;
         }
     }
 }
@@ -85,6 +85,11 @@
             border-width: 0 0 1px 1px;
             visibility: hidden;
             @include trf(rotateZ(-45deg));
+        }
+    }
+    &:hover{
+        .icon{
+            border-color:#ccc;
         }
     }
     input[type=checkbox] {

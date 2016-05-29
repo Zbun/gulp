@@ -4,12 +4,11 @@
                                 易企赢</h3>
         <div class="content">
             <div class="container img">
-               <img class="show-img" alt=""> 
+                <img class="show-img" alt="">
             </div>
             <div class="container site">
                 <iframe class="show-site" frameborder="0"></iframe>
             </div>
-            
         </div>
         <footer class="footer menu dis-flex abs">
             <i class="ico keyboard"></i>

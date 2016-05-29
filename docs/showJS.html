@@ -40,6 +40,9 @@
         counter-increment: contentTitle;
         content: counter(contentTitle)'. ';
     }
+    .H1{
+        font-size: 20px;
+    }
     </style>
 </head>
 
@@ -51,7 +54,7 @@
         <div class="main">
             <article class="body">
                 <div class="row">
-                    <h2 class="content-title">标签切换</h2>
+                    <h2 class="content-title h1">标签切换</h2>
                     <div class="l2">
                         <h3 class="content-title-l2">
                             文字标签型切换
@@ -89,10 +92,10 @@
                         <h3 class="content-title-l2">按钮型切换</h3>
                         <div class="radio-switcher js-switcher mt5">
                             <div class="title">
-                                <label class="item radio">
-                                    <input type="radio" checked name="sel" id="">图片<span class="icon"></span></label>
-                                <label class="item radio">
-                                    <input type="radio" name="sel" id="">音乐<span class="icon"></span></label>
+                                <label class="item radio radio-simulate on">
+                                    图片<span class="icon"></span></label>
+                                <label class="item radio radio-simulate">
+                                    音乐<span class="icon"></span></label>
                             </div>
                             <div class="content mt10">
                                 <div class="item on">
