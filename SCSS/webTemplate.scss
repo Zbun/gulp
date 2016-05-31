@@ -52,7 +52,18 @@
     	}
         .container.site{
             display: none;
-            height: 463px;
+            position: relative;
+            height: 470px;
+            overflow: hidden;
+            &:before{
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 10px;
+            top: 0;
+            bottom: 0;
+            z-index: 2;
+            }
         }
         .show-site{
             height: 100%;

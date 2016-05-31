@@ -15,7 +15,7 @@ waiting.show();
 
 setTimeout(function() {
     waiting.hide();
-}, 25000);
+}, 2500);
 
 // var w2= waiting.show($('.wrapper'));
 // setTimeout(function(){

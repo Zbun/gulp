@@ -46,6 +46,20 @@
 
 	/* WEBPACK VAR INJECTION */(function(spinZ, dialog) {'use strict';
 
+	var _slideDelete = __webpack_require__(14);
+
+	var _slideDelete2 = _interopRequireDefault(_slideDelete);
+
+	var _showTipsState = __webpack_require__(13);
+
+	var _showTipsState2 = _interopRequireDefault(_showTipsState);
+
+	var _waiting = __webpack_require__(4);
+
+	var _waiting2 = _interopRequireDefault(_waiting);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 	/**
 	 * 模板编辑菜单相关功能，使用webpack、Vue打包文件，修改时需要配环境
 	 * 复制package.json，gulpfile.js 文件，先运行 npm install，完成后运行 gulp
@@ -54,12 +68,10 @@
 	 */
 
 	__webpack_require__(7);
-	var slideDel = __webpack_require__(14);
-	var showTips = __webpack_require__(13);
-	var waiting = __webpack_require__(4);
+
 
 	var showTipsWarning = function showTipsWarning(content, callback) {
-	    showTips(content, 'error', callback);
+	    (0, _showTipsState2.default)(content, 'error', callback);
 	};
 
 	// var jsonMenu = require('simulateData/menu.json');
@@ -76,6 +88,18 @@
 	    },
 	    activity: {
 	        get: '/module/common/modelAppList.html'
+	    }
+	};
+
+	var leaveTips = {
+	    add: function add() {
+	        window.onbeforeunload = null;
+	        window.onbeforeunload = function () {
+	            return '------------------------------------------------------\n您辛辛苦苦编辑的菜单还没有保存哦，确认操作吗？\n' + '------------------------------------------------------';
+	        };
+	    },
+	    cancel: function cancel() {
+	        window.onbeforeunload = null;
 	    }
 	};
 
@@ -127,6 +151,7 @@
 	                itemSelector: 'li:not(.add-wrapper)',
 	                dragSelector: 'li',
 	                dragBetween: true,
+	                dragEnd: leaveTips.add,
 	                placeHolderTemplate: "<li></li>"
 	            });
 	        };
@@ -154,7 +179,7 @@
 	                vmAgent.hasSubMenu = data.data[0].subMenuList.length > 0 ? true : false;
 	                setTimeout(function () {
 	                    drag();
-	                    $('.footer.menu').find('.js-toggle:first').click();
+	                    $('.footer.menu').find('.js-toggle:first').mouseup();
 	                }, 0);
 	            },
 	            error: function error(data) {
@@ -168,7 +193,7 @@
 	        });
 
 	        //菜单点击时切换事件
-	        $('.footer.menu').on('click', '.js-toggle', function () {
+	        $('.footer.menu').on('mouseup', '.js-toggle', function () {
 	            var $t = $(this),
 	                type = $t.data('menuType');
 	            var name = $t.data('name');
@@ -198,13 +223,14 @@
 	            var $arrayMenu1 = $('.footer.menu').children('.item:not(.add-menu1)');
 	            vmAgent.menu1Length = $arrayMenu1.length;
 	            drag();
-	            $arrayMenu1.last().children('.js-toggle').click();
+	            $arrayMenu1.last().children('.js-toggle').mouseup();
+	            leaveTips.add();
 	        }).on('click', '.content .add', function () {
 	            var $t = $(this),
 	                type = $t.closest('.menu-l1').children('.title').data('menuType');
 	            var $parent = $t.closest('.menu-l2');
 	            $parent.prev().addClass('wealthy');
-	            var $on = $t.closest('.menu-l2').find('.add-wrapper').before(vmAgent.htmlTplMenu2.replace('$type', type)).prev().click();
+	            var $on = $t.closest('.menu-l2').find('.add-wrapper').before(vmAgent.htmlTplMenu2.replace('$type', type)).prev().mouseup();
 	            if ('APP' === type) {
 	                initActivity();
 	                Vue.nextTick(function () {
@@ -226,6 +252,7 @@
 	            if ($parent.children().length > 5) {
 	                $t.parent().hide();
 	            }
+	            leaveTips.add();
 	        });
 
 	        //切换内容类型时，菜单类型选项写入
@@ -279,7 +306,7 @@
 	                $next = $on.next('.js-toggle');
 	            var $parent = $on.parent();
 	            if ($parent.hasClass('menu-l1') && vm.menu1Length < 2) {
-	                showTipsWarning('最后一个菜单不能删除哦');
+	                showTipsWarning('需要保留至少一菜单哦');
 	                return;
 	            }
 	            dialog({
@@ -287,27 +314,28 @@
 	                content: '确认删除菜单么？<br><span class=text-muted>（删除后，需要点击保存，才能生效哦）</span>',
 	                ok: function ok() {
 	                    //真正删除及回调
-	                    slideDel($on, function () {
+	                    (0, _slideDelete2.default)($on, function () {
 	                        !$parent.find('.js-toggle').length && $menu1.find('.wealthy').removeClass('wealthy');
 	                        if ($parent.hasClass('menu-l2')) {
 	                            if ($prev.length) {
-	                                $prev.click();
+	                                $prev.mouseup();
 	                            } else if ($next.length) {
-	                                $next.click();
+	                                $next.mouseup();
 	                            } else {
-	                                $parent.prev().click();
+	                                $parent.prev().mouseup();
 	                            }
 	                            $parent.find('.add-wrapper').show();
 	                        } else {
 	                            var $pprev = $parent.prev('.item');
 	                            if ($pprev.length) {
-	                                $pprev.children('.js-toggle').click();
+	                                $pprev.children('.js-toggle').mouseup();
 	                            } else {
-	                                $parent.next().children('.js-toggle').click();
+	                                $parent.next().children('.js-toggle').mouseup();
 	                            }
 	                            $parent.remove();
 	                            vm.menu1Length = $('.footer.menu').children('.item:not(.add-menu1)').length;
 	                        }
+	                        leaveTips.add();
 	                    });
 	                },
 	                cancel: function cancel() {}
@@ -352,7 +380,7 @@
 	            }
 
 	            $t.addClass('disabled');
-	            waiting.show();
+	            _waiting2.default.show();
 	            $.ajax({
 	                type: 'POST',
 	                url: API.menu.set,
@@ -364,7 +392,7 @@
 	                }),
 	                success: function success(data) {
 	                    if (data.success) {
-	                        showTips(data.message, function () {
+	                        (0, _showTipsState2.default)(data.message, function () {
 	                            location = data.data;
 	                        });
 	                    } else {
@@ -375,8 +403,9 @@
 	                    showTipsWarning('保存失败，请稍候重试');
 	                },
 	                complete: function complete() {
-	                    waiting.hide();
+	                    _waiting2.default.hide();
 	                    $t.removeClass('disabled');
+	                    leaveTips.cancel();
 	                }
 	            });
 	        },
@@ -384,10 +413,12 @@
 	            var name = this.menuSet.name;
 	            $(event.target).removeClass('error');
 	            $('.footer.menu').find('.on').find('.on').data('name', name || '菜单名称').find('.inner').text(name || '菜单名称');
+	            leaveTips.add();
 	        },
 	        iptSite: function iptSite(event) {
 	            $(event.target).removeClass('error');
 	            $('.footer.menu').find('.on').find('.on').data('menuContent', event.target.value || 'http://www.eqying.com');
+	            leaveTips.add();
 	        },
 	        activityChange: function activityChange(event) {
 	            var i = event.target.selectedIndex,
@@ -408,13 +439,25 @@
 	                'appType': dataNow.list[0]['appType'],
 	                'appTypeName': dataNow.list[0]['appTypeName']
 	            });
+	            leaveTips.add();
 	        },
 	        activityContentChange: function activityContentChange(event) {
+	            var $on = $('.footer.menu').find('.on').find('.on'),
+	                nodeActivity = $('#activity')[0],
+	                objActivity = nodeActivity[nodeActivity.selectedIndex].dataset;
+
+	            $on.data({
+	                modelText: objActivity.modelText,
+	                modelType: objActivity.modelType
+	            });
+	            vm.activity.modelText = objActivity['modelText'];
+
 	            var objData = event.target[event.target.selectedIndex].dataset;
 	            Object.keys(objData).forEach(function (el, index) {
-	                $('.footer.menu').find('.on').find('.on').data(el, objData[el]);
+	                $on.data(el, objData[el]);
 	            });
 	            vm.activity.appName = objData['appName'];
+	            leaveTips.add();
 	        }
 	    }
 	});
@@ -10977,7 +11020,7 @@
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), true)
 	  if (!hotAPI.compatible) return
-	  var id = "D:\\GitRepo\\bugoftime\\src\\scripts\\module\\vue\\components\\templateAdmin\\menu.vue"
+	  var id = "D:\\javaworkspaces\\wxp-template\\wxp-template-web\\src\\main\\webapp\\static\\src\\scripts\\module\\vue\\components\\templateAdmin\\menu.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {

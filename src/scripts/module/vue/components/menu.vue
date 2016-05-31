@@ -7,7 +7,7 @@
                 <img class="show-img" alt="">
             </div>
             <div class="container site">
-                <iframe class="show-site" frameborder="0"></iframe>
+                <iframe sandbox class="show-site" frameborder="0" ></iframe>
             </div>
         </div>
         <footer class="footer menu dis-flex abs">
