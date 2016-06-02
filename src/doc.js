@@ -1,4 +1,3 @@
-
 //对话框
 // var dialog = require('dialog');
 
@@ -14,7 +13,7 @@ var waiting = require('waiting');
 waiting.show();
 
 setTimeout(function() {
-    waiting.hide();
+  waiting.hide();
 }, 2500);
 
 // var w2= waiting.show($('.wrapper'));
@@ -24,17 +23,17 @@ setTimeout(function() {
 
 
 //各类校验
-var  validator = require('validator');
+var validator = require('validator');
 
-console.log(validator.isEmpty(3,'3434afdf','    '))
-//手机端弹窗
-// var popup=require('popupMobile');
-// popup({
-//  title:'提示',
-//  content:'你好啊',
-//  ok:function(){
-//      alert('ok')
-//  }
+console.log(validator.isEmpty(3, '3434afdf', '    '))
+  //手机端弹窗
+  // var popup=require('popupMobile');
+  // popup({
+  //  title:'提示',
+  //  content:'你好啊',
+  //  ok:function(){
+  //      alert('ok')
+  //  }
 
 // })
 
@@ -92,28 +91,46 @@ var showTips = require('showTipsState');
 // 	alert('OK');
 // })
 
-showTips('网络错误','error');
+showTips('网络错误', 'error');
 
 //侧滑删除、arg1=对象,arg2=回调,arg3=方向(right,up,down),arg4=偏移距离
 var slideDel = require('slideDelete');
 
 $('.js-slide-del').on('click', function() {
-    var dir=$(this).data('delDirection');
-    slideDel(this, function() {
-        console.log('del')
-    },dir);
-    return false;
+  var dir = $(this).data('delDirection');
+  slideDel(this, function() {
+    console.log('del')
+  }, dir);
+  return false;
 });
 
 //合并对象，未深度操作
-var obj1={'name':'JOBS','job':'CEO'},
-obj2={'name':'Bill',sex:'Man'},obj3={'age':60,'eyeColor':'Blue'}
+var obj1 = { 'name': 'JOBS', 'job': 'CEO' },
+  obj2 = { 'name': 'Bill', sex: 'Man' },
+  obj3 = { 'age': 60, 'eyeColor': 'Blue' }
 
-console.log(merge(obj1,obj2,'sss',obj3));
+console.log(merge(obj1, obj2, 'sss', obj3));
 
 //分页
 require('pagination');
 $('#pagination').twbsPagination({
-	totalPages:15,
-	visiblePages:7
+  totalPages: 15,
+  visiblePages: 7
 })
+
+
+
+const tmpl = addrs => `
+<ul>
+${addrs.map(addr=>`<li><span>${addr.first} 
+	${addr.last}</span></li>`).join('')}`
+
+const a1=[{
+	first:'Jone',
+	last:'Smith'
+},{
+	first:'Zoe',
+	last:'Cook'
+}]
+
+console.log(tmpl(a1));

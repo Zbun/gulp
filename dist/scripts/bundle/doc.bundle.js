@@ -61,7 +61,7 @@
 	waiting.show();
 
 	setTimeout(function () {
-	    waiting.hide();
+	  waiting.hide();
 	}, 2500);
 
 	// var w2= waiting.show($('.wrapper'));
@@ -130,7 +130,7 @@
 
 	var s1 = spin($('.wrapper'));
 	setTimeout(function () {
-	    s1.stop();
+	  s1.stop();
 	}, 2000);
 
 	//操作提示，第二个参数为成功与失败，可传'error','false','warning'
@@ -146,11 +146,11 @@
 	var slideDel = __webpack_require__(14);
 
 	$('.js-slide-del').on('click', function () {
-	    var dir = $(this).data('delDirection');
-	    slideDel(this, function () {
-	        console.log('del');
-	    }, dir);
-	    return false;
+	  var dir = $(this).data('delDirection');
+	  slideDel(this, function () {
+	    console.log('del');
+	  }, dir);
+	  return false;
 	});
 
 	//合并对象，未深度操作
@@ -163,9 +163,25 @@
 	//分页
 	__webpack_require__(15);
 	$('#pagination').twbsPagination({
-	    totalPages: 15,
-	    visiblePages: 7
+	  totalPages: 15,
+	  visiblePages: 7
 	});
+
+	var tmpl = function tmpl(addrs) {
+	  return '\n<ul>\n' + addrs.map(function (addr) {
+	    return '<li><span>' + addr.first + ' \n\t' + addr.last + '</span></li>';
+	  }).join('');
+	};
+
+	var a1 = [{
+	  first: 'Jone',
+	  last: 'Smith'
+	}, {
+	  first: 'Zoe',
+	  last: 'Cook'
+	}];
+
+	console.log(tmpl(a1));
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ },
@@ -680,51 +696,62 @@
 	 */
 
 	(function () {
-	    var showTips = function showTips(content, state, callback, time) {
-	        var content = content || '操作成功',
-	            time = parseInt(time) || 3000;
-	        var box = document.createElement('div');
-	        var styleBox = 'position: fixed;top: 40%;left: 50%;min-width:150px;max-width:300px;padding: 1em 2em;border: 1px solid;font-size:12px;line-height: 1.5;text-align: center;color: #1fb5ac;background: #fff;-webkit-border-radius: 3px;-moz-border-radius: 3px;border-radius: 3px;z-index: 10;-webkit-transform: translate(-50%,-50%);transform: translate(-50%,-50%) rotateX(90deg);transition:.3s;opacity:0;';
-	        box.style.cssText = styleBox;
-	        box.classList.add('tips-state');
+	  var showTips = function showTips(content, state, callback, time) {
+	    var content = content || '操作成功',
+	        time = parseInt(time) || 3000;
+	    var box = document.createElement('div');
+	    var styleBox = 'position: fixed;top: 40%;left: 50%;min-width:150px;max-width:300px;padding: 1em 2em;border: 1px solid;font-size:12px;line-height: 1.5;text-align: center;color: #1fb5ac;background: #fff;-webkit-border-radius: 3px;-moz-border-radius: 3px;border-radius: 3px;z-index: 10;-webkit-transform: translate(-50%,-50%);transform: translate(-50%,-50%) rotateX(90deg);transition:.3s;opacity:0;';
+	    box.style.cssText = styleBox;
+	    box.classList.add('tips-state');
 
-	        var icon = document.createElement('span');
-	        var styleIcon = 'display: inline-block;width: 28px;margin-top: 4px;margin-bottom: 8px;border: 1px solid;font-size: 24px;line-height: 26px;-webkit-border-radius: 100%;border-radius: 100%;';
-	        icon.innerHTML = '&#x2713';
-	        icon.style.cssText = styleIcon;
-	        if (state === 'false' || state === 'cancel' || state === 'error') {
-	            box.style.color = '#fb6363';
-	            icon.innerHTML = '!';
-	        }
-	        box.appendChild(icon);
-	        var contentWrapper = document.createElement('div');
-	        contentWrapper.innerHTML = content;
-	        box.appendChild(contentWrapper);
+	    var icon = document.createElement('span');
+	    var styleIcon = 'display: inline-block;width: 28px;margin-top: 4px;margin-bottom: 8px;border: 1px solid;font-size: 24px;line-height: 26px;-webkit-border-radius: 100%;border-radius: 100%;';
+	    icon.innerHTML = '&#x2713';
+	    icon.style.cssText = styleIcon;
+	    if (state === 'false' || state === 'cancel' || state === 'error') {
+	      box.style.color = '#fb6363';
+	      icon.innerHTML = '!';
+	    }
+	    box.appendChild(icon);
+	    var contentWrapper = document.createElement('div');
+	    contentWrapper.innerHTML = content;
+	    box.appendChild(contentWrapper);
 
-	        document.body.appendChild(box);
-	        setTimeout(function () {
-	            box.style.transform = 'translate(-50%,-50%) rotateX(0)';
-	            box.style.opacity = 0.95;
-	        }, 10);
+	    document.body.appendChild(box);
+	    setTimeout(function () {
+	      box.style.transform = 'translate(-50%,-50%) rotateX(0)';
+	      box.style.opacity = 0.95;
+	    }, 20);
 
-	        var _close = function _close() {
-	            document.body.removeChild(box);
-	        };
+	    // var opDef=0,deg=95;
+	    // var rotateShow=function(){
+	    //     opDef+=0.05,deg-=5;
+	    //     box.style.transform='translate(-50%,-50%) rotateX('+deg+'deg)';
+	    //     box.style.opacity=opDef;
+	    //     if(opDef<0.95){
+	    //         requestAnimationFrame(rotateShow);
+	    //     }
+	    // }
+	    // requestAnimationFrame(rotateShow);
 
-	        setTimeout(function () {
-	            box.style.transform = 'translate(-50%,-50%) rotateX(90deg)';
-	            box.style.opacity = 0.05;
-	        }, parseInt(time) - 500);
-	        setTimeout(function () {
-	            _close();
-	            typeof state === 'function' ? state() : typeof callback === 'function' && callback();
-	        }, parseInt(time));
+	    var _close = function _close() {
+	      document.body.removeChild(box);
 	    };
 
-	    var exportObj = showTips;
-	    ( false ? 'undefined' : _typeof(module)) === 'object' && module.exports ? module.exports = exportObj :  true ? !(__WEBPACK_AMD_DEFINE_RESULT__ = function () {
-	        return exportObj;
-	    }.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)) : window.showTipsState = exportObj;
+	    setTimeout(function () {
+	      box.style.transform = 'translate(-50%,-50%) rotateX(90deg)';
+	      box.style.opacity = 0.05;
+	    }, parseInt(time) - 500);
+	    setTimeout(function () {
+	      _close();
+	      typeof state === 'function' ? state() : typeof callback === 'function' && callback();
+	    }, parseInt(time));
+	  };
+
+	  var exportObj = showTips;
+	  ( false ? 'undefined' : _typeof(module)) === 'object' && module.exports ? module.exports = exportObj :  true ? !(__WEBPACK_AMD_DEFINE_RESULT__ = function () {
+	    return exportObj;
+	  }.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)) : window.showTipsState = exportObj;
 	})();
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)(module)))
 
@@ -744,37 +771,38 @@
 	var getTargets = __webpack_require__(10);
 
 	module.exports = function () {
-	    var target = arguments.length <= 0 || arguments[0] === undefined ? '' : arguments[0];
-	    var callback = arguments.length <= 1 || arguments[1] === undefined ? '' : arguments[1];
-	    var direction = arguments.length <= 2 || arguments[2] === undefined ? 'left' : arguments[2];
-	    var distance = arguments.length <= 3 || arguments[3] === undefined ? 30 : arguments[3];
+	  var target = arguments.length <= 0 || arguments[0] === undefined ? '' : arguments[0];
+	  var callback = arguments.length <= 1 || arguments[1] === undefined ? '' : arguments[1];
+	  var direction = arguments.length <= 2 || arguments[2] === undefined ? 'left' : arguments[2];
+	  var distance = arguments.length <= 3 || arguments[3] === undefined ? 30 : arguments[3];
 
-	    var target = getTarget(target);
-	    if (target) {
-	        var dir = '';
-	        switch (direction) {
-	            case 'up':
-	                dir = 'translateY(-' + distance + 'px)';
-	                break;
-	            case 'down':
-	                dir = 'translateY(' + distance + 'px)';
-	                break;
-	            case 'right':
-	                dir = 'translateX(' + distance + 'px)';
-	                break;
-	            default:
-	                dir = 'translateX(-' + distance + 'px)';
-	                break;
-	        }
-	        target.style.cssText = 'transition:.3s ease-out;z-index:-1;transform:' + dir + ';opacity:.1';
-	        var _remove = function _remove() {
-	            if (target.parentNode) {
-	                target.parentNode.removeChild(target);
-	                typeof callback === 'function' && callback.bind(target)();
-	            }
-	        };
-	        setTimeout(_remove, 200);
+	  var target = getTarget(target);
+	  if (target) {
+	    var dir = '';
+	    switch (direction) {
+	      case 'up':
+	        dir = 'translateY(-' + distance + 'px)';
+	        break;
+	      case 'down':
+	        dir = 'translateY(' + distance + 'px)';
+	        break;
+	      case 'right':
+	        dir = 'translateX(' + distance + 'px)';
+	        break;
+	      default:
+	        dir = 'translateX(-' + distance + 'px)';
+	        break;
 	    }
+	    target.style.cssText = 'transition: .3s ease;z-index:-1;transform:' + dir + ';opacity:0';
+	    var _remove = function _remove() {
+	      if (target.parentNode) {
+	        target.parentNode.removeChild(target);
+	        typeof callback === 'function' && callback.bind(target)();
+	      }
+	    };
+	    // setTimeout(_remove, 300);
+	    target.addEventListener('transitionend', _remove, false);
+	  }
 	};
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
 

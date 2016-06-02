@@ -79,6 +79,9 @@ a {
         color: $color-anchor-hover;
         text-decoration: underline;
     }
+    &:active{
+        color: $color-anchor-hover;
+    }
 }
 
 .tips-top {
@@ -389,7 +392,7 @@ a {
     }
 }
 
-input.ipt-s {
+input.ipt-s,input.ipt-small {
     width: 100px;
 }
 

@@ -144,7 +144,7 @@
                     opacity: 0;
                     background:#fff;
                     @include trf-origin(bottom);
-                    @include trf-scale(0);
+                    @include trf-scale(.8);
                     will-change:transform;
                     &:after{
                         content: '';
