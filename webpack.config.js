@@ -61,6 +61,7 @@ module.exports = {
       typeOf: path.join(__dirname, './src/scripts/module/typeOf.js'),
       merge: path.resolve('./src/scripts/module/mergeObject.js'),
       spinZ: path.resolve('./src/scripts/module/spinZ.js'),
+      loading:path.resolve('./src/scripts/module/loading.js'),
       dialog: 'dialog',
     })
   ],

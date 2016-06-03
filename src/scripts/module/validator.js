@@ -14,7 +14,7 @@ module.exports = (function() {
         percent: /^0$|^[1-9]\d?$|^100$/
     };
 
-    function check(pattern) {
+    function _check(pattern) {
         return function(arg) {
             return pattern.test(arg);
         }
@@ -22,27 +22,27 @@ module.exports = (function() {
     return {
         isEmpty(...arg) {
             return arg.some(function(el) {
-                return check(regExp.empty)(el);
+                return _check(regExp.empty)(el);
             })
         },
         isNotPhone(arg) {
-            return !check(regExp.phone)(arg);
+            return !_check(regExp.phone)(arg);
         },
         isNotEmail(arg) {
-            return !check(regExp.email)(arg);
+            return !_check(regExp.email)(arg);
         },
         isNotMoneyFormat(arg) {
-            return !check(regExp.moneyFormat)(arg);
+            return !_check(regExp.moneyFormat)(arg);
         },
         isNotInteger(arg) {
-            return !check(regExp.integer)(arg);
+            return !_check(regExp.integer)(arg);
         },
         isIllegal(arg) {
-            return check(regExp.illegal)(arg);
+            return _check(regExp.illegal)(arg);
         },
         isNotPercent(...arg) {
             return !arg.every(function(el) {
-                return check(regExp.percent)(el);
+                return _check(regExp.percent)(el);
             })
         }
     }

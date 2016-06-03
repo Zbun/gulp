@@ -5,90 +5,92 @@
  * @author Zhao Liubin
  */
 (function() {
-    var Waiting = function(container) {
-        this.init(container);
-        return this;
-    };
+  var Waiting = function(container) {
+    this.init(container);
+    return this;
+  };
 
-    Waiting.prototype.init = function(container) {
-        var container = document.querySelector(container) || document.body;
-        var box = container.querySelector('.PCwaiting');
-        if (!box) {
-            var div = document.createElement('div');
-            div.className = 'PCwaiting local';
-            box = div;
-            if (!container) {
-                div.style.position = 'fixed';
-            }
-            var style = document.createElement('style');
-            style.innerHTML = ".PCwaiting{position:absolute;top:0;bottom:0;left:0;right:0;background:rgba(0,0,0,.5);z-index:8888}.PCwaiting.local{left:50%;top:40%;width:52px;height:50px;margin:-25px -26px;border-radius:3px;}.PCwaiting:after {content: ''; position: absolute; top: 50%; left: 50%; width: 3px; height: 3px; margin-top: -2px; margin-left: -2px; text-align: center; -webkit-border-radius: 100%; border-radius: 100%; box-shadow:0 0 3px; -webkit-transition: all, 0.3s, linear; transition: all, 0.3s, linear; -webkit-animation: am-wait 1.2s linear infinite; animation: am-wait 1.2s linear infinite;box-shadow:0 -10px 0 1px #eee, 10px 0px #eee, 0 10px #eee, -10px 0 #eee, -7px -7px 0 0.5px #eee, 7px -7px 0 0.5px #eee, 7px 7px #eee, -7px 7px #eee }@-webkit-keyframes am-wait {100% {-webkit-transform: rotate(1turn);transform: rotate(1turn);}}@keyframes am-wait {100% {-webkit-transform: rotate(1turn);transform: rotate(1turn);}";
-            box.appendChild(style);
-        }
-        this.waitingContainer = container;
-        if (container.tagName === 'BODY') {
-            box.style.position = 'fixed';
-        }
-        this.waitingBox = box;
+  Waiting.prototype.init = function(container) {
+    var container = document.querySelector(container) || document.body;
+    var box = container.querySelector('.PCwaiting');
+    if (!box) {
+      var div = document.createElement('div');
+      div.className = 'PCwaiting local';
+      box = div;
+      if (!container) {
+        div.style.position = 'fixed';
+      }
+      var style = document.createElement('style');
+      style.innerHTML = ".PCwaiting{position:absolute;top:0;bottom:0;left:0;right:0;background:rgba(0,0,0,.5);z-index:8888}.PCwaiting.local{left:50%;top:40%;width:52px;height:50px;margin:-25px -26px;border-radius:3px;}.PCwaiting:after {content: ''; position: absolute; top: 50%; left: 50%; width: 3px; height: 3px; margin-top: -2px; margin-left: -2px; text-align: center; -webkit-border-radius: 100%; border-radius: 100%; box-shadow:0 0 3px; -webkit-transition: all, 0.3s, linear; transition: all, 0.3s, linear; -webkit-animation: am-wait 1.2s linear infinite; animation: am-wait 1.2s linear infinite;box-shadow:0 -10px 0 1px #eee, 10px 0px #eee, 0 10px #eee, -10px 0 #eee, -7px -7px 0 0.5px #eee, 7px -7px 0 0.5px #eee, 7px 7px #eee, -7px 7px #eee }@-webkit-keyframes am-wait {100% {-webkit-transform: rotate(1turn);transform: rotate(1turn);}}@keyframes am-wait {100% {-webkit-transform: rotate(1turn);transform: rotate(1turn);}";
+      box.appendChild(style);
     }
-    Waiting.prototype.show = function() {
-        this.waitingContainer.appendChild(this.waitingBox);
-        return this;
+    this.waitingContainer = container;
+    if (container.tagName === 'BODY') {
+      box.style.position = 'fixed';
     }
-    Waiting.prototype.hide = function() {
-        this.remove();
-        return this;
+    this.waitingBox = box;
+  }
+  Waiting.prototype.show = function() {
+    this.waitingContainer.appendChild(this.waitingBox);
+    return this;
+  }
+  Waiting.prototype.hide = function() {
+    this.remove();
+    return this;
+  }
+  Waiting.prototype.remove = function() {
+    this.waitingContainer.removeChild(this.waitingBox);
+  }
+
+  // class Waiting {
+  //     constructor(container) {
+  //         var container = getTarget(container) || document.body;
+  //         var box = container.querySelector('.PCwaiting');
+  //         if (!box) {
+  //             var div = document.createElement('div');
+  //             div.className = 'PCwaiting local';
+  //             box = div;
+  //             if (!container) {
+  //                 div.style.position = 'fixed';
+  //             }
+  //             var style = document.createElement('style');
+  //             style.innerHTML = ".PCwaiting{position:absolute;top:0;bottom:0;left:0;right:0;background:rgba(0,0,0,.5);z-index:8888}.PCwaiting.local{left:50%;top:36%;width:52px;height:50px;margin-left:-25px;border-radius:3px;}.PCwaiting:after {content: ''; position: absolute; top: 50%; left: 50%; width: 3px; height: 3px; margin-top: -2px; margin-left: -2px; text-align: center; -webkit-border-radius: 100%; border-radius: 100%; box-shadow:0 0 3px; -webkit-transition: all, 0.3s, linear; transition: all, 0.3s, linear; -webkit-animation: am-wait 1.2s linear infinite; animation: am-wait 1.2s linear infinite;box-shadow:0 -10px 0 1px #eee, 10px 0px #eee, 0 10px #eee, -10px 0 #eee, -7px -7px 0 0.5px #eee, 7px -7px 0 0.5px #eee, 7px 7px #eee, -7px 7px #eee }@-webkit-keyframes am-wait {100% {-webkit-transform: rotate(1turn);transform: rotate(1turn);}}@keyframes am-wait {100% {-webkit-transform: rotate(1turn);transform: rotate(1turn);}";
+  //             box.appendChild(style);
+  //             // container.appendChild(w);
+  //         }
+  //         this.waitingContainer = container;
+  //         if(container.tagName==='BODY'){
+  //              box.style.position='fixed';
+  //              }
+  //         this.waitingBox = box;
+  //     }
+
+  //     show() {
+  //         this.waitingContainer.appendChild(this.waitingBox);
+  //         return this;
+  //     }
+
+  //     hide() {
+  //         this.remove();
+  //         return this;
+  //     }
+  //     remove() {
+  //         this.waitingContainer.removeChild(this.waitingBox);
+  //     }
+  // }
+
+  var exportObj = {
+    entity: '',
+    show: function(container) {
+      this.entity = new Waiting(container).show();
+      return this.entity;
+    },
+    hide: function() {
+      this.entity.hide();
     }
-    Waiting.prototype.remove = function() {
-        this.waitingContainer.removeChild(this.waitingBox);
-    }
+  };
 
-    // class Waiting {
-    //     constructor(container) {
-    //         var container = getTarget(container) || document.body;
-    //         var box = container.querySelector('.PCwaiting');
-    //         if (!box) {
-    //             var div = document.createElement('div');
-    //             div.className = 'PCwaiting local';
-    //             box = div;
-    //             if (!container) {
-    //                 div.style.position = 'fixed';
-    //             }
-    //             var style = document.createElement('style');
-    //             style.innerHTML = ".PCwaiting{position:absolute;top:0;bottom:0;left:0;right:0;background:rgba(0,0,0,.5);z-index:8888}.PCwaiting.local{left:50%;top:36%;width:52px;height:50px;margin-left:-25px;border-radius:3px;}.PCwaiting:after {content: ''; position: absolute; top: 50%; left: 50%; width: 3px; height: 3px; margin-top: -2px; margin-left: -2px; text-align: center; -webkit-border-radius: 100%; border-radius: 100%; box-shadow:0 0 3px; -webkit-transition: all, 0.3s, linear; transition: all, 0.3s, linear; -webkit-animation: am-wait 1.2s linear infinite; animation: am-wait 1.2s linear infinite;box-shadow:0 -10px 0 1px #eee, 10px 0px #eee, 0 10px #eee, -10px 0 #eee, -7px -7px 0 0.5px #eee, 7px -7px 0 0.5px #eee, 7px 7px #eee, -7px 7px #eee }@-webkit-keyframes am-wait {100% {-webkit-transform: rotate(1turn);transform: rotate(1turn);}}@keyframes am-wait {100% {-webkit-transform: rotate(1turn);transform: rotate(1turn);}";
-    //             box.appendChild(style);
-    //             // container.appendChild(w);
-    //         }
-    //         this.waitingContainer = container;
-    //         if(container.tagName==='BODY'){
-    //              box.style.position='fixed';
-    //              }
-    //         this.waitingBox = box;
-    //     }
-
-    //     show() {
-    //         this.waitingContainer.appendChild(this.waitingBox);
-    //         return this;
-    //     }
-
-    //     hide() {
-    //         this.remove();
-    //         return this;
-    //     }
-    //     remove() {
-    //         this.waitingContainer.removeChild(this.waitingBox);
-    //     }
-    // }
-
-    var exportObj = {
-        show: function(container) {
-            return new Waiting(container).show();
-        },
-        hide: function() {
-            return new Waiting().hide();
-        }
-    };
-
-    typeof module === 'object' && module.exports ? module.exports = exportObj : typeof define === 'function' && define.amd ? define(function() {
-        return exportObj
-    }) : window.waiting = exportObj;
+  typeof module === 'object' && module.exports ? module.exports = exportObj : typeof define === 'function' && define.amd ? define(function() {
+    return exportObj
+  }) : window.waiting = exportObj;
 })();

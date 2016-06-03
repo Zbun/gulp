@@ -16,11 +16,10 @@ setTimeout(function() {
   waiting.hide();
 }, 2500);
 
-// var w2= waiting.show($('.wrapper'));
+// var w2= waiting.show('.wrapper');
 // setTimeout(function(){
-//     w2.remove();
+//     w2.hide();
 // },6000)
-
 
 //各类校验
 var validator = require('validator');
@@ -119,6 +118,9 @@ $('#pagination').twbsPagination({
 })
 
 
+//加载数据时右上角提示，可在show中加回调方法
+loading.show();
+setTimeout(function(){loading.hide()},3000);
 
 const tmpl = addrs => `
 <ul>
@@ -132,5 +134,3 @@ const a1=[{
 	first:'Zoe',
 	last:'Cook'
 }]
-
-console.log(tmpl(a1));

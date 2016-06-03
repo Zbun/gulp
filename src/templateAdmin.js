@@ -71,8 +71,6 @@ var vm = new Vue({
       curType: ''
     },
     currentType: 'MESSAGE',
-    htmlTplMenu1: '<div class="item menu-l1 on"><div class="title js-toggle" data-name="添加菜单" data-menu-type="MESSAGE" title="添加菜单"><p class="inner">添加菜单</p></div><ul class="content menu-l2"><li class="item add-wrapper"><a href="javascript:;" class="font-bigger add" title="添加菜单" data-menu-type="$type">+</a></li></ul></div>',
-    htmlTplMenu2: '<li class="item js-toggle" data-name="菜单名称" data-menu-type="$type"><span class="inner">菜单名称</span></li>',
     hasSubMenu: true,
   },
   computed: {
@@ -213,7 +211,7 @@ var vm = new Vue({
     $('.footer.menu').on('click', '.add-menu1 .add', function() {
       var $t = $(this),
         type = $t.data('menuType');
-      $t.closest('.menu-l1').before(vmAgent.htmlTplMenu1.replace('$type', type));
+      $t.closest('.menu-l1').before(`<div class="item menu-l1 on"><div class="title js-toggle" data-name="菜单名称" data-menu-type="MESSAGE" title="菜单名称"><p class="inner">菜单名称</p></div><ul class="content menu-l2"><li class="item add-wrapper"><a href="javascript:;" class="font-bigger add" title="添加菜单" data-menu-type='MESSAGE'>+</a></li></ul></div>`);
       var $arrayMenu1 = $('.footer.menu').children('.item:not(.add-menu1)');
       vmAgent.menu1Length = $arrayMenu1.length;
       drag();
@@ -224,7 +222,7 @@ var vm = new Vue({
         type = $t.closest('.menu-l1').children('.title').data('menuType');
       var $parent = $t.closest('.menu-l2');
       $parent.prev().addClass('wealthy');
-      var $on = $t.closest('.menu-l2').find('.add-wrapper').before(vmAgent.htmlTplMenu2.replace('$type', type)).prev().mouseup();
+      var $on = $t.closest('.menu-l2').find('.add-wrapper').before(`<li class="item js-toggle" data-name="菜单名称" data-menu-type=${type}><span class="inner">菜单名称</span></li>`).prev().mouseup();
       if ('APP' === type) {
         initActivity();
         Vue.nextTick(function() {
@@ -258,12 +256,12 @@ var vm = new Vue({
         $next = $on.next('.js-toggle');
       var $parent = $on.parent();
       if ($parent.hasClass('menu-l1') && vm.menu1Length < 2) {
-        showTipsWarning('需要保留至少一菜单哦');
+        showTipsWarning('需要保留至少一个菜单哦');
         return;
       }
       dialog({
         skin: 'mini',
-        content: '确认删除菜单么？<br><span class=text-muted>（删除后，需要点击保存，才能生效哦）</span>',
+        content: '确认删除该菜单么？<br><span class=text-muted>（删除后，需要点击保存，才能生效哦）</span>',
         ok: function() {
           //真正删除及回调 
           slideDel($on, function() {

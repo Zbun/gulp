@@ -5,6 +5,7 @@
 
 .ui-popup-show {
   // position: fixed !important;
+  box-shadow: 0 0 6px #666;
   -webkit-animation: popup-zoom .2s;
   animation: popup-zoom .2s;
   will-change:transform;
