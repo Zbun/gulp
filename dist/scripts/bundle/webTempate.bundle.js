@@ -102,17 +102,17 @@
 	 * @return {[type]}
 	 */
 	module.exports = function (target) {
-	    if (target) {
-	        if (typeof target == 'string') {
-	            return document.querySelector(target);
-	        } else if (target.nodeName) {
-	            return target;
-	        } else {
-	            return target[0];
-	        }
+	  if (target) {
+	    if (typeof target == 'string') {
+	      return document.querySelector(target);
+	    } else if (target.nodeName) {
+	      return target;
 	    } else {
-	        return '';
+	      return target[0];
 	    }
+	  } else {
+	    return '';
+	  }
 	};
 
 /***/ },
@@ -10488,7 +10488,7 @@
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), true)
 	  if (!hotAPI.compatible) return
-	  var id = "D:\\javaworkspaces\\wxp-template\\wxp-template-web\\src\\main\\webapp\\static\\src\\scripts\\module\\vue\\components\\menu.vue"
+	  var id = "D:\\GitRepo\\bugoftime\\src\\scripts\\module\\vue\\components\\menu.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {
@@ -10572,7 +10572,7 @@
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), true)
 	  if (!hotAPI.compatible) return
-	  var id = "D:\\javaworkspaces\\wxp-template\\wxp-template-web\\src\\main\\webapp\\static\\src\\scripts\\module\\vue\\components\\footerMenu.vue"
+	  var id = "D:\\GitRepo\\bugoftime\\src\\scripts\\module\\vue\\components\\footerMenu.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {

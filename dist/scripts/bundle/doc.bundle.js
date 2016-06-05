@@ -203,22 +203,22 @@
 	 * @return {[type]}
 	 */
 	module.exports = function () {
-	    for (var _len = arguments.length, objFrom = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-	        objFrom[_key - 1] = arguments[_key];
+	  for (var _len = arguments.length, objFrom = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+	    objFrom[_key - 1] = arguments[_key];
+	  }
+
+	  var objTo = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+
+	  objTo = typeOf.isObject(objTo) ? objTo : {};
+	  objFrom.forEach(function (el, index) {
+	    if (!typeOf.isObject(el)) {
+	      return;
 	    }
-
-	    var objTo = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
-
-	    objTo = typeOf.isObject(objTo) ? objTo : {};
-	    objFrom.forEach(function (el, index) {
-	        if (!typeOf.isObject(el)) {
-	            return;
-	        }
-	        Object.keys(el).forEach(function (item) {
-	            objTo[item] = el[item];
-	        });
+	    Object.keys(el).forEach(function (item) {
+	      objTo[item] = el[item];
 	    });
-	    return objTo;
+	  });
+	  return objTo;
 	};
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
@@ -234,18 +234,18 @@
 	 * @type {Object}
 	 */
 	module.exports = {
-		isFunction: function isFunction(obj) {
-			return getType(obj) === 'function';
-		},
-		isString: function isString(obj) {
-			return getType(obj) === 'string';
-		},
-		isArray: function isArray(obj) {
-			return Array.isArray ? Array.isArray(obj) : getType(obj) === 'array';
-		},
-		isObject: function isObject(obj) {
-			return getType(obj) === 'object';
-		}
+	  isFunction: function isFunction(obj) {
+	    return getType(obj) === 'function';
+	  },
+	  isString: function isString(obj) {
+	    return getType(obj) === 'string';
+	  },
+	  isArray: function isArray(obj) {
+	    return Array.isArray ? Array.isArray(obj) : getType(obj) === 'array';
+	  },
+	  isObject: function isObject(obj) {
+	    return getType(obj) === 'object';
+	  }
 	};
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
@@ -263,11 +263,11 @@
 	 * @return {[type]}
 	 */
 	module.exports = function (target) {
-	    try {
-	        return Object.prototype.toString.call(target).match(/object\s*(\w*)/)[1].toLowerCase();
-	    } catch (e) {
-	        console.warn(e);
-	    }
+	  try {
+	    return Object.prototype.toString.call(target).match(/object\s*(\w*)/)[1].toLowerCase();
+	  } catch (e) {
+	    console.warn(e);
+	  }
 	};
 
 /***/ },
@@ -543,25 +543,25 @@
 	 */
 	module.exports = function ($) {
 
-	    if (!$) {
-	        console.warn('需要jQuery赞助哦');
-	        return;
-	    }
+	  if (!$) {
+	    console.warn('需要jQuery赞助哦');
+	    return;
+	  }
 
-	    $('.chks').on('change', '.chk-all', function () {
-	        $(this).closest('.chks').find('.chk').prop('checked', this.checked);
-	    }).on('change', '.chk:not(.chk-all)', function () {
-	        var $data_Container = $(this).closest('.chks');
-	        if (!this.checked) {
-	            $data_Container.find('.chk-all').prop('checked', false);
-	            return;
-	        }
-	        var length_checkbox = $data_Container.find('.chk:not(".chk-all")').length,
-	            length_checked = $data_Container.find(':checked').length;
-	        if (length_checkbox == length_checked) {
-	            $data_Container.find('.chk-all').prop('checked', true);
-	        }
-	    });
+	  $('.chks').on('change', '.chk-all', function () {
+	    $(this).closest('.chks').find('.chk').prop('checked', this.checked);
+	  }).on('change', '.chk:not(.chk-all)', function () {
+	    var $data_Container = $(this).closest('.chks');
+	    if (!this.checked) {
+	      $data_Container.find('.chk-all').prop('checked', false);
+	      return;
+	    }
+	    var length_checkbox = $data_Container.find('.chk:not(".chk-all")').length,
+	        length_checked = $data_Container.find(':checked').length;
+	    if (length_checkbox == length_checked) {
+	      $data_Container.find('.chk-all').prop('checked', true);
+	    }
+	  });
 	}(jQuery);
 
 /***/ },
@@ -580,26 +580,26 @@
 	 * @return {[type]}
 	 */
 	var showTipsOnTop = function showTipsOnTop() {
-	    var content = arguments.length <= 0 || arguments[0] === undefined ? '小提示' : arguments[0];
-	    var target = arguments[1];
-	    var time = arguments[2];
+	  var content = arguments.length <= 0 || arguments[0] === undefined ? '小提示' : arguments[0];
+	  var target = arguments[1];
+	  var time = arguments[2];
 
-	    var div = document.createElement('div'),
-	        tar = '';
-	    var cssText = 'position:absolute;left:25%;right:25%;top:0;padding:4px 30px;border:1px solid #ffd0c0;text-align:center;background:#fff6f3;color:#fb6362;line-height:2;z-index:5;';
-	    div.innerHTML = content;
-	    div.classList.add('tips-top');
-	    div.style.cssText = cssText;
+	  var div = document.createElement('div'),
+	      tar = '';
+	  var cssText = 'position:absolute;left:25%;right:25%;top:0;padding:4px 30px;border:1px solid #ffd0c0;text-align:center;background:#fff6f3;color:#fb6362;line-height:2;z-index:5;';
+	  div.innerHTML = content;
+	  div.classList.add('tips-top');
+	  div.style.cssText = cssText;
 
-	    tar = getTarget(target) || document.body;
-	    tar.insertBefore(div, tar.firstChild);
+	  tar = getTarget(target) || document.body;
+	  tar.insertBefore(div, tar.firstChild);
 
-	    var t = parseInt(time);
-	    if (t) {
-	        setTimeout(function () {
-	            tar.removeChild(div);
-	        }, t);
-	    }
+	  var t = parseInt(time);
+	  if (t) {
+	    setTimeout(function () {
+	      tar.removeChild(div);
+	    }, t);
+	  }
 	};
 	module.exports = showTipsOnTop;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(11)))
@@ -618,17 +618,17 @@
 	 * @return {[type]}
 	 */
 	module.exports = function (target) {
-	    if (target) {
-	        if (typeof target == 'string') {
-	            return document.querySelector(target);
-	        } else if (target.nodeName) {
-	            return target;
-	        } else {
-	            return target[0];
-	        }
+	  if (target) {
+	    if (typeof target == 'string') {
+	      return document.querySelector(target);
+	    } else if (target.nodeName) {
+	      return target;
 	    } else {
-	        return '';
+	      return target[0];
 	    }
+	  } else {
+	    return '';
+	  }
 	};
 
 /***/ },
