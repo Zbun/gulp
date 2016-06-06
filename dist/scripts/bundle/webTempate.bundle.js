@@ -10488,7 +10488,7 @@
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), true)
 	  if (!hotAPI.compatible) return
-	  var id = "D:\\GitRepo\\bugoftime\\src\\scripts\\module\\vue\\components\\menu.vue"
+	  var id = "D:\\javaworkspaces\\wxp-template\\wxp-template-web\\src\\main\\webapp\\static\\src\\scripts\\module\\vue\\components\\menu.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {
@@ -10572,7 +10572,7 @@
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), true)
 	  if (!hotAPI.compatible) return
-	  var id = "D:\\GitRepo\\bugoftime\\src\\scripts\\module\\vue\\components\\footerMenu.vue"
+	  var id = "D:\\javaworkspaces\\wxp-template\\wxp-template-web\\src\\main\\webapp\\static\\src\\scripts\\module\\vue\\components\\footerMenu.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {

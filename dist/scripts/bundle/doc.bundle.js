@@ -449,56 +449,56 @@
 	 * @type {Object}
 	 */
 	module.exports = function () {
-	    var regExp = {
-	        empty: /^\s*$/,
-	        phone: /^1\d{10}$/,
-	        email: /^\w+[\w-+.]*@[\w-]+(\.[\w-])+$/,
-	        moneyFormat: /^\d+(\.\d{1,2})?$/,
-	        integer: /^\d+$/,
-	        illegal: /[<>]/,
-	        percent: /^0$|^[1-9]\d?$|^100$/
-	    };
+	  var regExp = {
+	    empty: /^\s*$/,
+	    phone: /^1\d{10}$/,
+	    email: /^\w+[\w-+.]*@[\w-]+(\.[\w-])+$/,
+	    moneyFormat: /^\d+(\.\d{1,2})?$/,
+	    integer: /^\d+$/,
+	    illegal: /[<>]/,
+	    percent: /^0$|^[1-9]\d?$|^100$/
+	  };
 
-	    function _check(pattern) {
-	        return function (arg) {
-	            return pattern.test(arg);
-	        };
+	  function _check(pattern) {
+	    return function (arg) {
+	      return pattern.test(arg);
 	    };
-	    return {
-	        isEmpty: function isEmpty() {
-	            for (var _len = arguments.length, arg = Array(_len), _key = 0; _key < _len; _key++) {
-	                arg[_key] = arguments[_key];
-	            }
+	  };
+	  return {
+	    isEmpty: function isEmpty() {
+	      for (var _len = arguments.length, arg = Array(_len), _key = 0; _key < _len; _key++) {
+	        arg[_key] = arguments[_key];
+	      }
 
-	            return arg.some(function (el) {
-	                return _check(regExp.empty)(el);
-	            });
-	        },
-	        isNotPhone: function isNotPhone(arg) {
-	            return !_check(regExp.phone)(arg);
-	        },
-	        isNotEmail: function isNotEmail(arg) {
-	            return !_check(regExp.email)(arg);
-	        },
-	        isNotMoneyFormat: function isNotMoneyFormat(arg) {
-	            return !_check(regExp.moneyFormat)(arg);
-	        },
-	        isNotInteger: function isNotInteger(arg) {
-	            return !_check(regExp.integer)(arg);
-	        },
-	        isIllegal: function isIllegal(arg) {
-	            return _check(regExp.illegal)(arg);
-	        },
-	        isNotPercent: function isNotPercent() {
-	            for (var _len2 = arguments.length, arg = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-	                arg[_key2] = arguments[_key2];
-	            }
+	      return arg.some(function (el) {
+	        return _check(regExp.empty)(el);
+	      });
+	    },
+	    isNotPhone: function isNotPhone(arg) {
+	      return !_check(regExp.phone)(arg);
+	    },
+	    isNotEmail: function isNotEmail(arg) {
+	      return !_check(regExp.email)(arg);
+	    },
+	    isNotMoneyFormat: function isNotMoneyFormat(arg) {
+	      return !_check(regExp.moneyFormat)(arg);
+	    },
+	    isNotInteger: function isNotInteger(arg) {
+	      return !_check(regExp.integer)(arg);
+	    },
+	    isIllegal: function isIllegal(arg) {
+	      return _check(regExp.illegal)(arg);
+	    },
+	    isNotPercent: function isNotPercent() {
+	      for (var _len2 = arguments.length, arg = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+	        arg[_key2] = arguments[_key2];
+	      }
 
-	            return !arg.every(function (el) {
-	                return _check(regExp.percent)(el);
-	            });
-	        }
-	    };
+	      return !arg.every(function (el) {
+	        return _check(regExp.percent)(el);
+	      });
+	    }
+	  };
 	}();
 
 /***/ },

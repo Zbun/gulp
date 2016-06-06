@@ -92,13 +92,13 @@
 	};
 
 	var leaveTips = {
-	  add: function add() {
+	  enable: function enable() {
 	    window.onbeforeunload = null;
 	    window.onbeforeunload = function () {
 	      return '------------------------------------------------------\n您辛辛苦苦编辑的菜单还没有保存哦，确认操作吗？\n' + '------------------------------------------------------';
 	    };
 	  },
-	  cancel: function cancel() {
+	  disable: function disable() {
 	    window.onbeforeunload = null;
 	  }
 	};
@@ -149,7 +149,7 @@
 	        itemSelector: 'li:not(.add-wrapper)',
 	        dragSelector: 'li',
 	        dragBetween: true,
-	        dragEnd: leaveTips.add,
+	        dragEnd: leaveTips.enable,
 	        placeHolderTemplate: "<li></li>"
 	      });
 	    };
@@ -192,7 +192,7 @@
 	    //拿活动数据
 	    $.post(API.activity.get, { templateId: tID }, function (data) {
 	      if (data.success) {
-	        vm.jsonActivity = vmAgent.activity.data = data.data;
+	        vm.jsonActivity = vm.activity.data = data.data;
 	      } else {
 	        console.warn('活动数据可能没返回，稍等重试吧');
 	      }
@@ -229,32 +229,26 @@
 	      var currentType = $on.data('menuType');
 	      var menuType = $t.data('type');
 	      if (vm.menuSet.curType && vm.menuSet.curType !== menuType) {
-	        leaveTips.add();
+	        leaveTips.enable();
 	      }
 	      vm.menuSet.curType = menuType;
 	      if (menuType === 'APP') {
 	        initActivity();
 	        vm.activity.isAPP = true;
-	        vm.activity.modelText = $on.data('modelText');
-	        vm.activity.appName = $on.data('appName');
-	        if ('APP' !== currentType) {
-	          Vue.nextTick(function () {
-	            var data0 = vm.activity.data[0];
-	            if (!$on.data('modelText')) {
-	              $on.data({
-	                'modelText': data0['modelText'],
-	                'modelType': data0['modelType'],
-	                'appName': data0.list[0]['appName'],
-	                'appPicUrl': data0.list[0]['appPicUrl'],
-	                'appDemoUrl': data0.list[0]['appDemoUrl'],
-	                'appType': data0.list[0]['appType'],
-	                'appTypeName': data0.list[0]['appTypeName']
-	              });
-	            }
-	            vm.activity.modelText = $on.data('modelText');
-	            vm.activity.appName = $on.data('appName');
+	        if (!$on.data('modelText')) {
+	          var data0 = vm.jsonActivity[0];
+	          $on.data({
+	            'modelText': data0['modelText'],
+	            'modelType': data0['modelType'],
+	            'appName': data0.list[0]['appName'],
+	            'appPicUrl': data0.list[0]['appPicUrl'],
+	            'appDemoUrl': data0.list[0]['appDemoUrl'],
+	            'appType': data0.list[0]['appType'],
+	            'appTypeName': data0.list[0]['appTypeName']
 	          });
 	        }
+	        vm.activity.modelText = $on.data('modelText');
+	        vm.activity.appName = $on.data('appName');
 	      } else {
 	        vm.activity.isAPP = false;
 	      }
@@ -275,7 +269,7 @@
 	      vmAgent.menu1Length = $arrayMenu1.length;
 	      drag();
 	      $arrayMenu1.last().children('.js-toggle').mouseup();
-	      leaveTips.add();
+	      leaveTips.enable();
 	    }).on('click', '.content .add', function () {
 	      var $t = $(this),
 	          type = $t.closest('.menu-l1').children('.title').data('menuType');
@@ -303,7 +297,7 @@
 	      if ($parent.children().length > 5) {
 	        $t.parent().hide();
 	      }
-	      leaveTips.add();
+	      leaveTips.enable();
 	    });
 	  },
 	  methods: {
@@ -345,7 +339,7 @@
 	              $parent.remove();
 	              vm.menu1Length = $('.footer.menu').children('.item:not(.add-menu1)').length;
 	            }
-	            leaveTips.add();
+	            leaveTips.enable();
 	          });
 	        },
 	        cancel: function cancel() {}
@@ -376,11 +370,15 @@
 	        arrMenu1[index]['subMenuList'] = arrMenu2;
 	      });
 
+	      if (arrMenu1.length < 1) {
+	        showTipsWarning('请至少添加一个菜单');
+	        return;
+	      }
+
 	      if (/^\s*$/.test(vm.menuSet.name)) {
 	        $('.menu-name').addClass('error').focus();
 	        return;
 	      }
-
 	      //是自定义网址时校验不为空
 	      if (vm.menuSet.curType === 'OWN') {
 	        if (!vm.menuSet.siteURL || /^\s*$/.test(vm.menuSet.siteURL)) {
@@ -388,7 +386,6 @@
 	          return;
 	        }
 	      }
-
 	      $t.addClass('disabled');
 	      _waiting2.default.show();
 	      $.ajax({
@@ -415,7 +412,7 @@
 	        complete: function complete() {
 	          _waiting2.default.hide();
 	          $t.removeClass('disabled');
-	          leaveTips.cancel();
+	          leaveTips.disable();
 	        }
 	      });
 	    },
@@ -423,12 +420,12 @@
 	      var name = this.menuSet.name;
 	      $(event.target).removeClass('error');
 	      $('.footer.menu').find('.on').find('.on').data('name', name || '菜单名称').find('.inner').text(name || '菜单名称');
-	      leaveTips.add();
+	      leaveTips.enable();
 	    },
 	    iptSite: function iptSite(event) {
 	      $(event.target).removeClass('error');
 	      $('.footer.menu').find('.on').find('.on').data('menuContent', event.target.value || 'http://www.eqying.com');
-	      leaveTips.add();
+	      leaveTips.enable();
 	    },
 	    activityChange: function activityChange(event) {
 	      var i = event.target.selectedIndex,
@@ -449,7 +446,7 @@
 	        'appType': dataNow.list[0]['appType'],
 	        'appTypeName': dataNow.list[0]['appTypeName']
 	      });
-	      leaveTips.add();
+	      leaveTips.enable();
 	    },
 	    activityContentChange: function activityContentChange(event) {
 	      var $on = $('.footer.menu').find('.on').find('.on'),
@@ -467,7 +464,7 @@
 	        $on.data(el, objData[el]);
 	      });
 	      vm.activity.appName = objData['appName'];
-	      leaveTips.add();
+	      leaveTips.enable();
 	    }
 	  }
 	});
@@ -11045,7 +11042,7 @@
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), true)
 	  if (!hotAPI.compatible) return
-	  var id = "D:\\GitRepo\\bugoftime\\src\\scripts\\module\\vue\\components\\templateAdmin\\menu.vue"
+	  var id = "D:\\javaworkspaces\\wxp-template\\wxp-template-web\\src\\main\\webapp\\static\\src\\scripts\\module\\vue\\components\\templateAdmin\\menu.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {

@@ -26,7 +26,7 @@ var opts = {
   },
 };
 var cssStyles = ['compressed', 'expanded'],
-  cssStyle = cssStyles[0];
+  cssStyle = cssStyles[1];
 
 //清理文件
 gulp.task('clean', function(cb) {
