@@ -85,7 +85,10 @@ a {
 }
 
 [draggable]{
-    user-select:none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .content-title {
@@ -95,7 +98,8 @@ a {
 }
 
 .content-expanded {
-    padding: 20px 30px 60px;
+    padding: 20px 30px 0;
+    margin-bottom: 30px;
 }
 
 .content-large {
@@ -302,17 +306,16 @@ a {
 
 .wrapper {
     position: relative;
-    padding: 0 30px;
+    padding: 0 25px;
     &.limited {
-        max-width: 1260px;
+        max-width: 1250px;
         margin: 0 auto;
     }
     .main {
-        margin: 30px 0;
+        margin: 25px 0;
         padding: 10px;
     }
 }
-
 
 .main {
     border: 1px solid $color-border;
@@ -380,9 +383,9 @@ input.ipt-s,input.ipt-small {
 
 .upload-wrapper {
     position: relative;
-    float: left;
     overflow: hidden;
     input[type=file] {
+        display: none;
         position: absolute;
         left: -8px;
         top: 4px;

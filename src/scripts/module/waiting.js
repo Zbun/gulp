@@ -4,7 +4,7 @@
  * 若修改源码时去掉className :local，变为全屏遮罩
  * @author Zhao Liubin
  */
-(function() {
+(function(window,document) {
   var Waiting = function(container) {
     this.init(container);
     return this;
@@ -93,4 +93,4 @@
   typeof module === 'object' && module.exports ? module.exports = exportObj : typeof define === 'function' && define.amd ? define(function() {
     return exportObj
   }) : window.waiting = exportObj;
-})();
+})(window,document);

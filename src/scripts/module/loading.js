@@ -4,7 +4,7 @@
  * @date   2016-06-03
  * @return {[type]}
  */
-(function() {
+;(function(window,document) {
   function Constructor(content, callback) {
     var content1 = typeof content === 'string' ? content : '数据加载中，请稍等...';
     var box = document.createElement('div');
@@ -33,4 +33,4 @@
     return exportObj
   }) : window.loading = exportObj;
 
-})();
+})(window,document);

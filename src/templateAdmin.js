@@ -5,10 +5,12 @@
  * @author Zhao Liubin
  */
 
-require('tabSwitcher');
+import 'tabSwitcher';
 import slideDel from 'slideDelete';
 import showTips from 'showTipsState';
 import waiting from 'waiting';
+import 'getUTFLength';
+import cutString from 'cutstring';
 
 var showTipsWarning = function(content, callback) {
   showTips(content, 'error', callback);
@@ -62,7 +64,9 @@ var vm = new Vue({
     },
     menuSet: {
       name: '',
+      isNameReady: true,
       siteURL: '',
+      isSiteReady: true,
       type: {
         message: 'MESSAGE',
         own: 'OWN',
@@ -128,19 +132,26 @@ var vm = new Vue({
       error: function(data) {
         console.warn(data);
       }
-    })
-
-    //拿活动数据
-    $.post(API.activity.get, { templateId: tID }, function(data) {
-      if (data.success) {
-        vm.jsonActivity = vm.activity.data = data.data;
-      } else {
-        console.warn('活动数据可能没返回，稍等重试吧');
-      }
-    })
+    }).done(function() {
+      //拿活动数据
+      $.post(API.activity.get, { templateId: tID }, function(data) {
+        if (data.success) {
+          vm.jsonActivity = vm.activity.data = data.data;
+        } else {
+          console.warn('活动数据可能没返回，稍等重试吧');
+        }
+      })
+    });
 
     //菜单点击时切换事件
+    var $menuName = $('.menu-name');
     $('.footer.menu').on('mouseup', '.js-toggle', function() {
+      if (!vm.menuSet.isNameReady) {
+        $menuName.addClass('error').focus();
+        return;
+      } else {
+        $menuName.removeClass('error');
+      };
       var $t = $(this),
         type = $t.data('menuType');
       var name = $t.data('name');
@@ -202,21 +213,35 @@ var vm = new Vue({
     })
 
     //添加一、二级菜单
+    function checkName() {
+      if (!vm.menuSet.name || /^\s*$/.test(vm.menuSet.name)) {
+        $menuName.addClass('error').focus();
+        return false;
+      } else return true;
+    }
+
     $('.footer.menu').on('click', '.add-menu1 .add', function() {
+      if (vmAgent.menu1Length && !checkName()) {
+        return;
+      };
       var $t = $(this),
         type = $t.data('menuType');
-      $t.closest('.menu-l1').before(`<div class="item menu-l1 on"><div class="title js-toggle" data-name="菜单名称" data-menu-type="MESSAGE" title="菜单名称"><p class="inner">菜单名称</p></div><ul class="content menu-l2"><li class="item add-wrapper"><a href="javascript:;" class="font-bigger add" title="添加菜单" data-menu-type='MESSAGE'>+</a></li></ul></div>`);
+      $t.closest('.menu-l1').before(`<div class="item menu-l1 on"><div class="title js-toggle" data-menu-type="MESSAGE" title="菜单名称"><p class="inner">菜单名称</p></div><ul class="content menu-l2"><li class="item add-wrapper"><a href="javascript:;" class="font-bigger add" title="添加菜单" data-menu-type='MESSAGE'>+</a></li></ul></div>`);
       var $arrayMenu1 = $('.footer.menu').children('.item:not(.add-menu1)');
       vmAgent.menu1Length = $arrayMenu1.length;
       drag();
       $arrayMenu1.last().children('.js-toggle').mouseup();
+      $menuName.focus();
       leaveTips.enable();
     }).on('click', '.content .add', function() {
+      if (vmAgent.menu1Length && !checkName()) {
+        return;
+      };
       var $t = $(this),
         type = $t.closest('.menu-l1').children('.title').data('menuType');
       var $parent = $t.closest('.menu-l2');
       $parent.prev().addClass('wealthy');
-      var $on = $t.closest('.menu-l2').find('.add-wrapper').before(`<li class="item js-toggle" data-name="菜单名称" data-menu-type=${type}><span class="inner">菜单名称</span></li>`).prev().mouseup();
+      var $on = $t.closest('.menu-l2').find('.add-wrapper').before(`<li class="item js-toggle"  data-menu-type=${type}><span class="inner">菜单名称</span></li>`).prev().mouseup();
       if ('APP' === type) {
         initActivity();
         Vue.nextTick(function() {
@@ -238,6 +263,7 @@ var vm = new Vue({
       if ($parent.children().length > 5) {
         $t.parent().hide();
       }
+      $menuName.focus();
       leaveTips.enable();
     });
   },
@@ -260,6 +286,7 @@ var vm = new Vue({
           //真正删除及回调 
           slideDel($on, function() {
             !$parent.find('.js-toggle').length && $menu1.find('.wealthy').removeClass('wealthy');
+            vm.menuSet.isNameReady=true;
             if ($parent.hasClass('menu-l2')) {
               if ($prev.length) {
                 $prev.mouseup();
@@ -309,15 +336,16 @@ var vm = new Vue({
         arrMenu1[index]['subMenuList'] = arrMenu2;
       });
 
-      if(arrMenu1.length<1){
+      if (arrMenu1.length < 1) {
         showTipsWarning('请至少添加一个菜单');
         return;
       }
 
-      if (/^\s*$/.test(vm.menuSet.name)) {
+      if (!vm.menuSet.name || /^\s*$/.test(vm.menuSet.name)) {
         $('.menu-name').addClass('error').focus();
         return;
       }
+
       //是自定义网址时校验不为空
       if (vm.menuSet.curType === 'OWN') {
         if (!vm.menuSet.siteURL || /^\s*$/.test(vm.menuSet.siteURL)) {
@@ -356,19 +384,41 @@ var vm = new Vue({
       })
     },
     iptName(event) {
+      var _this = event.target;
+      if (/^\s*$/.test(_this.value)) {
+        _this.classList.add('error');
+        this.menuSet.isNameReady = false;
+      } else {
+        _this.classList.remove('error');
+        this.menuSet.isNameReady = true;
+      }
       var name = this.menuSet.name;
-      $(event.target).removeClass('error');
-      $('.footer.menu').find('.on').find('.on').data('name', name || '菜单名称').find('.inner').text(name || '菜单名称');
+      $('.footer.menu').find('>.on').find('.on').data('name', name || '菜单名称').find('.inner').text(name || '菜单名称');
       leaveTips.enable();
     },
+    iptNameBlur(event) {
+      var _this = event.target,
+        _v = _this.value;
+      var $on = $('.footer.menu').find('>.on').find('.on');
+      if (_this.value.UTFlength > 8) {
+        if ($on.hasClass('title')) {
+          _this.value = cutString(_this.value, 8);
+        }
+        $on.data('name', _this.value || '菜单名称').find('.inner').text(_this.value || '菜单名称');
+      }
+      else if(/^\s*$/.test(_this.value)){
+        this.menuSet.isNameReady=false;
+      }
+    },
     iptSite(event) {
-      $(event.target).removeClass('error');
-      $('.footer.menu').find('.on').find('.on').data('menuContent', event.target.value || 'http://www.eqying.com');
+      var _this = event.target;
+      $(_this).removeClass('error');
+      $('.footer.menu').find('>.on').find('.on').data('menuContent', _this.value || 'http://www.eqying.com');
       leaveTips.enable();
     },
     activityChange(event) {
       var i = event.target.selectedIndex,
-        $on = $('.footer.menu').find('.on').find('.on');
+        $on = $('.footer.menu').find('>.on').find('.on');
       this.activity.index = i;
       var objData = event.target[i].dataset;
       Object.keys(objData).forEach(function(el, index) {
@@ -388,7 +438,7 @@ var vm = new Vue({
       leaveTips.enable();
     },
     activityContentChange(event) {
-      var $on = $('.footer.menu').find('.on').find('.on'),
+      var $on = $('.footer.menu').find('>.on').find('.on'),
         nodeActivity = $('#activity')[0],
         objActivity = nodeActivity[nodeActivity.selectedIndex].dataset;
 

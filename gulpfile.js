@@ -1,18 +1,15 @@
 var gulp = require('gulp'),
   browserSync = require('browser-sync'),
-  concat = require('gulp-concat'),
-  // coffee=require('gulp-coffee'),
-  del = require('del'),
+  // concat = require('gulp-concat'),
+  // del = require('del'),
+  // rename = require('gulp-rename'),
+  // revAppend = require('gulp-rev-append'),
   gutil = require('gulp-util'),
   jshint = require('gulp-jshint'),
   minify = require('gulp-minify'),
   cleanCSS = require('gulp-clean-css'),
-  rename = require('gulp-rename'),
-  runsequence = require('run-sequence'),
   sourcemaps = require("gulp-sourcemaps"),
   uglify = require('gulp-uglify'),
-  rev = require('gulp-rev'),
-  revAppend = require('gulp-rev-append'),
   sass = require('gulp-sass'),
   webpack = require('webpack');
 
@@ -29,9 +26,9 @@ var cssStyles = ['compressed', 'expanded'],
   cssStyle = cssStyles[1];
 
 //清理文件
-gulp.task('clean', function(cb) {
-  del([driDist + 'css/', dirDist + 'scripts/bundle/'], cb);
-});
+// gulp.task('clean', function(cb) {
+//   del([driDist + 'css/', dirDist + 'scripts/bundle/'], cb);
+// });
 
 //构建
 gulp.task('build', ['uglify', 'cleancss'], function() {
@@ -45,11 +42,11 @@ gulp.task('default', ['browserSync'], function() {
 });
 
 //文件添加版本号，在HTML中写入**.js?rev=@hash
-gulp.task('rev', function() {
-  gulp.src('./src/htmls/pc/*.html')
-    .pipe(revAppend())
-    .pipe(gulp.dest(opts.destPath + 'htmls/pc/'));
-})
+// gulp.task('rev', function() {
+//   gulp.src('./src/htmls/pc/*.html')
+//     .pipe(revAppend())
+//     .pipe(gulp.dest(opts.destPath + 'htmls/pc/'));
+// })
 
 gulp.task("greet", function() {
   console.log('Hello World!');
@@ -82,42 +79,23 @@ gulp.task('minifycss', ['sass'], function() {
   gulp.src(opts.destPath + "CSS/*.css").pipe(cleanCSS()).pipe(gulp.dest(opts.destPath + 'CSS'));
 });
 
-gulp.task('concat', function() {
-  gulp.src('./scripts/*.js')
-    .pipe(uglify())
-    .pipe(concat('site.js'))
-    .pipe(gulp.dest(opts.destPath + 'scripts'));
-});
-
-/*预处理系列*/
-// gulp.task('coffee',function(){
-//    gulp.src('coffee/*.coffee')
-//    .pipe(sourcemaps.init())
-//    .pipe(coffee({bare:true}).on('error',gutil.log))
-//    .pipe(sourcemaps.write('../maps'))
-//    .pipe(gulp.dest(opts.destPath+'scripts'));
-// });
-
 //outputStyle:compressed,expanded
 gulp.task('sass', function() {
   return gulp.src('./scss/*.scss')
     .pipe(sass({ outputStyle: cssStyle }).on('error', sass.logError))
     .pipe(gulp.dest(opts.destPath + 'css'));
-
-  //以下为传给browseSync用
-  // return gulp.src("app/scss/*.scss")
-  //       .pipe(sass())
-  //       .pipe(gulp.dest("app/css"))
-  //       .pipe(browserSync.stream());
 });
 
-//监视文件变化，执行相关任务
-gulp.task('watch', function() {
-  gulp.watch("**.coffee", ['coffee']);
-  gulp.watch('./scripts/**/*.js', ['rev']);
-  gulp.watch('./css/**/*.css', 'rev');
-  gulp.watch('/scss/*.scss', 'sass');
-});
+//PostCSS、未成功
+// var postcss = require('gulp-postcss'),
+//   cssnext = require('postcss-cssnext'),
+//   precss = require('precss');
+// var processors = [cssnext];
+// gulp.task('postcss', function() {
+//   return gulp.src('./src/postCSS/**/*.css')
+//     .pipe(postcss(processors))
+//     .pipe(gulp.dest(opts.destPath + 'css'));
+// });
 
 //传给webpack用
 gulp.task('webpack', function(callback) {
@@ -146,5 +124,4 @@ gulp.task("browserSync", ['sass', 'webpack'], function() {
   gulp.watch('./scss/**/*.scss', ['sass']);
   gulp.watch('./src/**/*.*', ['webpack']);
   //gulp.watch('./src/scripts/**/*.js', ['rev']);
-  //gulp.watch('./src/css/**/*.css','rev')
 });
