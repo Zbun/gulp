@@ -1770,6 +1770,7 @@ select {
   top: 3px\0;
   padding: 3px 6px;
   border: 0;
+  line-height: 1;
   font-weight: 400;
   font-size: 24px;
   font-family: Helvetica, arial, sans-serif;
@@ -1996,7 +1997,7 @@ select {
   line-height: 32px;
 }
 
-.set > .item > .title {
+.set > .item > .title, .set > .item > .name {
   float: left;
   min-width: 6em;
   margin-right: 1em;

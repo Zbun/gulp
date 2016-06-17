@@ -283,7 +283,7 @@ var vm = new Vue({
         skin: 'mini',
         content: '确认删除该菜单么？<br><span class=text-muted>（删除后，需要点击保存，才能生效哦）</span>',
         ok: function() {
-          //真正删除及回调 
+          //真正删除及回调
           slideDel($on, function() {
             !$parent.find('.js-toggle').length && $menu1.find('.wealthy').removeClass('wealthy');
             vm.menuSet.isNameReady=true;

@@ -36,7 +36,7 @@ var serializeTitle = function(filesrc, tpl) {
         // })
       })
       resolve(htmlStr);
-    })
+   });
   }).then(function(value) {
     var htmlTpl = fs.readFileSync(tpl, 'utf8');
     // htmlTpl = htmlTpl.replace('{{'+htmlList.src[el]+'}}', value);
@@ -44,7 +44,14 @@ var serializeTitle = function(filesrc, tpl) {
   });
 }
 
-serializeTitle(htmlList.src.DOC,htmlList.tpl);
+var stream=require('stream'),Readable=stream.Readable;
+var rs=new Readable;
+rs.push('beep ');
+rs.push('boop\n');
+rs.push(null);
+rs.pipe(process.stdout);
+
+// serializeTitle(htmlList.src.DOC,htmlList.tpl);
 
 // Object.keys(htmlList.src).forEach(function(el, index) {
 //   serializeTitle(htmlList.src[el], htmlList.tpl);
