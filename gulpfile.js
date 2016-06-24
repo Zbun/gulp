@@ -4,23 +4,22 @@ var gulp = require('gulp'),
   // del = require('del'),
   // rename = require('gulp-rename'),
   // revAppend = require('gulp-rev-append'),
+  // jshint = require('gulp-jshint'),
   gutil = require('gulp-util'),
-  jshint = require('gulp-jshint'),
   minify = require('gulp-minify'),
   cleanCSS = require('gulp-clean-css'),
-  sourcemaps = require("gulp-sourcemaps"),
+  sourcemaps = require('gulp-sourcemaps'),
   uglify = require('gulp-uglify'),
   sass = require('gulp-sass'),
   webpack = require('webpack');
 
 var webpackConfig = Object.create(require('./webpack.config.js'));
-var dirDist = './dist/';
 
 var opts = {
   destPath: './dist/',
   minRename: {
     suffix: '.min'
-  },
+  }
 };
 var cssStyles = ['compressed', 'expanded'],
   cssStyle = cssStyles[1];
@@ -31,14 +30,14 @@ var cssStyles = ['compressed', 'expanded'],
 // });
 
 //构建
-gulp.task('build', ['uglify', 'cleancss'], function() {
-  console.log("Good Job!");
+gulp.task('build', ['uglify'], function() {
+  console.log('Good Job!');
 });
 
 //默认启动任务
 gulp.task('default', ['browserSync'], function() {
   // gulp.start('minify','cleancss')
-  console.log("Enjoy!");
+  console.log('Enjoy!');
 });
 
 //文件添加版本号，在HTML中写入**.js?rev=@hash
@@ -48,13 +47,13 @@ gulp.task('default', ['browserSync'], function() {
 //     .pipe(gulp.dest(opts.destPath + 'htmls/pc/'));
 // })
 
-gulp.task("greet", function() {
+gulp.task('greet', function() {
   console.log('Hello World!');
 });
 
-gulp.task('jshint', function() {
-  gulp.src(dirDis + 'scripts/*.js').pipe(jshint());
-});
+// gulp.task('jshint', function() {
+//   gulp.src(opts.destPath + 'scripts/*.js').pipe(jshint());
+// });
 
 //压缩、链接资源类
 gulp.task('uglify', function() {
@@ -73,10 +72,10 @@ gulp.task('minify', function() {
       ignoreFiles: ['.combo.js', '-min.js']
     }))
     .pipe(gulp.dest(opts.destPath + 'scripts/bundle'));
-})
+});
 
 gulp.task('minifycss', ['sass'], function() {
-  gulp.src(opts.destPath + "CSS/*.css").pipe(cleanCSS()).pipe(gulp.dest(opts.destPath + 'CSS'));
+  gulp.src(opts.destPath + 'CSS/*.css').pipe(cleanCSS()).pipe(gulp.dest(opts.destPath + 'CSS'));
 });
 
 //outputStyle:compressed,expanded
@@ -108,16 +107,16 @@ gulp.task('webpack', function(callback) {
       stats.compilation.errors[0] && console.log(stats.compilation.errors[0].error);
       callback();
       // console.log(err);
-    })
+    });
 });
 // gulp.watch('app/src/**/*.js', ['webpack']);
 
 //根据文件类型变动，自动刷新浏览器
-gulp.task("browserSync", ['sass', 'webpack'], function() {
+gulp.task('browserSync', ['sass', 'webpack'], function() {
   browserSync({
-    files: ["**/*.html", "**/*.css", "**/*.js", '!**.less', '!**.coffee', '!**.SCSS', '!node_modules/**.*', '!src/**.*', '!webpack.config.js'],
+    files: ['**/*.html', '**/*.css', '**/*.js', '!**.less', '!**.coffee', '!**.SCSS', '!node_modules/**.*', '!src/**.*', '!webpack.config.js'],
     server: {
-      baseDir: "./"
+      baseDir: './'
     },
     port: 2015
   });

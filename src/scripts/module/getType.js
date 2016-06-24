@@ -11,4 +11,4 @@ module.exports = (target) => {
   } catch (e) {
     console.warn(e);
   }
-}
+};

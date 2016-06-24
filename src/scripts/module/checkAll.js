@@ -12,7 +12,6 @@ module.exports = (function($) {
     console.warn('需要jQuery赞助哦');
     return;
   }
-
   $('.chks').on('change', '.chk-all', function() {
     $(this).closest('.chks').find('.chk').prop('checked', this.checked);
   }).on('change', '.chk:not(.chk-all)', function() {

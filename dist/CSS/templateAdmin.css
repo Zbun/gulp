@@ -2502,6 +2502,12 @@ select {
   background: inherit;
 }
 
+.show .footer.menu > .item .error {
+  position: relative;
+  border-color: #fb6361 !important;
+  z-index: 2;
+}
+
 .show .footer.menu > .item > .title {
   position: relative;
   padding: 0 5px;

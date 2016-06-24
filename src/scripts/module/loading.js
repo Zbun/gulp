@@ -4,7 +4,8 @@
  * @date   2016-06-03
  * @return {[type]}
  */
-;(function(window,document) {
+;
+(function(window, document) {
   function Constructor(content, callback) {
     var content1 = typeof content === 'string' ? content : '数据加载中，请稍等...';
     var box = document.createElement('div');
@@ -17,7 +18,7 @@
   Constructor.prototype.hide = function() {
     document.body.removeChild(this.loadingBox);
     typeof this.loadingEndCallback === 'function' && this.loadingEndCallback();
-  }
+  };
 
   var exportObj = {
     entity: '',
@@ -27,10 +28,10 @@
     hide: function() {
       this.entity.hide();
     }
-  }
+  };
 
   typeof module === 'object' && module.exports ? module.exports = exportObj : typeof define === 'function' && define.amd ? define(function() {
-    return exportObj
+    return exportObj;
   }) : window.loading = exportObj;
 
-})(window,document);
+})(window, document);

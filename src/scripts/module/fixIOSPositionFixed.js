@@ -35,12 +35,12 @@ var fixFixed = function(eles) {
       return;
     }
     eles.style.cssText = 'position:absolute;-webkit-transform:translate3D(0,' + top + 'px,0)';
-  }
+  };
 
   //滚动绑定事件
   var _fix = function() {
     document.addEventListener('scroll', _fixEles);
-  }
+  };
 
   //解绑
   var _unbindFix = function() {
@@ -52,7 +52,7 @@ var fixFixed = function(eles) {
       return;
     }
     eles.removeAttribute('style');
-  }
+  };
 
   //目前绑在所有可输入元素上,异步加载时有些问题，暂时绑到滚动
   for (let i of iptL) {
@@ -60,7 +60,7 @@ var fixFixed = function(eles) {
     inputs[i].removeEventListener('blur', _unbindFix);
 
     inputs[i].addEventListener('focus', _fix);
-    inputs[i].addEventListener('blur', _unbindFix)
+    inputs[i].addEventListener('blur', _unbindFix);
   }
   // _fix();
 };

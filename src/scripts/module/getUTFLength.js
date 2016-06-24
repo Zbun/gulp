@@ -9,6 +9,9 @@ module.exports = (function() {
   //   return this.replace(/[\u4E00-\u9FA5]/g, 'zz').length;
   // }
 
-  Object.defineProperty(String.prototype, 'UTFlength', { get: function() {
-      return this.replace(/[\u4E00-\u9FA5]/g, 'zz').length; } })
+  Object.defineProperty(String.prototype, 'UTFlength', {
+    get: function() {
+      return this.replace(/[\u4E00-\u9FA5]/g, 'zz').length;
+    }
+  });
 })();

@@ -320,7 +320,8 @@
 	 * @date   2016-06-03
 	 * @return {[type]}
 	 */
-	;(function (window, document) {
+	;
+	(function (window, document) {
 	  function Constructor(content, callback) {
 	    var content1 = typeof content === 'string' ? content : '数据加载中，请稍等...';
 	    var box = document.createElement('div');
@@ -415,9 +416,11 @@
 	  //   return this.replace(/[\u4E00-\u9FA5]/g, 'zz').length;
 	  // }
 
-	  Object.defineProperty(String.prototype, 'UTFlength', { get: function get() {
+	  Object.defineProperty(String.prototype, 'UTFlength', {
+	    get: function get() {
 	      return this.replace(/[\u4E00-\u9FA5]/g, 'zz').length;
-	    } });
+	    }
+	  });
 	}();
 
 /***/ },
@@ -538,7 +541,7 @@
 	 * @type {Object}
 	 */
 	module.exports = function () {
-	  var regExp = {
+	  var _regExp = {
 	    empty: /^\s*$/,
 	    phone: /^1\d{10}$/,
 	    email: /^\w+[\w-+.]*@[\w-]+(\.[\w-])+$/,
@@ -552,7 +555,7 @@
 	    return function (arg) {
 	      return pattern.test(arg);
 	    };
-	  };
+	  }
 	  return {
 	    isEmpty: function isEmpty() {
 	      for (var _len = arguments.length, arg = Array(_len), _key = 0; _key < _len; _key++) {
@@ -560,23 +563,23 @@
 	      }
 
 	      return arg.some(function (el) {
-	        return _check(regExp.empty)(el);
+	        return _check(_regExp.empty)(el);
 	      });
 	    },
 	    isNotPhone: function isNotPhone(arg) {
-	      return !_check(regExp.phone)(arg);
+	      return !_check(_regExp.phone)(arg);
 	    },
 	    isNotEmail: function isNotEmail(arg) {
-	      return !_check(regExp.email)(arg);
+	      return !_check(_regExp.email)(arg);
 	    },
 	    isNotMoneyFormat: function isNotMoneyFormat(arg) {
-	      return !_check(regExp.moneyFormat)(arg);
+	      return !_check(_regExp.moneyFormat)(arg);
 	    },
 	    isNotInteger: function isNotInteger(arg) {
-	      return !_check(regExp.integer)(arg);
+	      return !_check(_regExp.integer)(arg);
 	    },
 	    isIllegal: function isIllegal(arg) {
-	      return _check(regExp.illegal)(arg);
+	      return _check(_regExp.illegal)(arg);
 	    },
 	    isNotPercent: function isNotPercent() {
 	      for (var _len2 = arguments.length, arg = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
@@ -584,8 +587,11 @@
 	      }
 
 	      return !arg.every(function (el) {
-	        return _check(regExp.percent)(el);
+	        return _check(_regExp.percent)(el);
 	      });
+	    },
+	    mySelf: function mySelf(arg, regExp) {
+	      return _check(regExp)(arg);
 	    }
 	  };
 	}();
@@ -604,16 +610,16 @@
 	 * @return {[type]}
 	 */
 	module.exports = function ($) {
-	    if (!$) {
-	        console.warn('需要jQuery赞助哦');
-	        return;
-	    }
+	  if (!$) {
+	    console.warn('需要jQuery赞助哦');
+	    return;
+	  }
 
-	    $('.js-switcher').children('.title').children('.item').on('click', function () {
-	        var $t = $(this),
-	            index = $t.closest('.title').children('.item').index(this);
-	        $t.addClass('on').siblings('.item').removeClass('on').closest('.js-switcher').children('.content').children('.item').removeClass('on').eq(index).addClass('on');
-	    });
+	  $('.js-switcher').children('.title').children('.item').on('click', function () {
+	    var $t = $(this),
+	        index = $t.closest('.title').children('.item').index(this);
+	    $t.addClass('on').siblings('.item').removeClass('on').closest('.js-switcher').children('.content').children('.item').removeClass('on').eq(index).addClass('on');
+	  });
 	}(jQuery);
 
 /***/ },
@@ -636,7 +642,6 @@
 	    console.warn('需要jQuery赞助哦');
 	    return;
 	  }
-
 	  $('.chks').on('change', '.chk-all', function () {
 	    $(this).closest('.chks').find('.chk').prop('checked', this.checked);
 	  }).on('change', '.chk:not(.chk-all)', function () {
@@ -734,82 +739,82 @@
 	var Spinner = __webpack_require__(12);
 
 	var spinOpts = {
-	    defaultOpt: {
-	        lines: 10 // The number of lines to draw
+	  defaultOpt: {
+	    lines: 10 // The number of lines to draw
 
-	        , length: 3 // The length of each line
+	    , length: 3 // The length of each line
 
-	        , width: 2 // The line thickness
+	    , width: 2 // The line thickness
 
-	        , radius: 3 // The radius of the inner circle
+	    , radius: 3 // The radius of the inner circle
 
-	        , scale: 1 // Scales overall size of the spinner
+	    , scale: 1 // Scales overall size of the spinner
 
-	        , corners: 1 // Corner roundness (0..1)
+	    , corners: 1 // Corner roundness (0..1)
 
-	        , color: '#333' // #rgb or #rrggbb or array of colors
+	    , color: '#333' // #rgb or #rrggbb or array of colors
 
-	        , opacity: 0.25 // Opacity of the lines
+	    , opacity: 0.25 // Opacity of the lines
 
-	        , rotate: 0 // The rotation offset
+	    , rotate: 0 // The rotation offset
 
-	        , direction: 1 // 1: clockwise, -1: counterclockwise
+	    , direction: 1 // 1: clockwise, -1: counterclockwise
 
-	        , speed: 1 // Rounds per second
+	    , speed: 1 // Rounds per second
 
-	        , trail: 50 // Afterglow percentage
+	    , trail: 50 // Afterglow percentage
 
-	        , fps: 20 // Frames per second when using setTimeout() as a fallback for CSS
+	    , fps: 20 // Frames per second when using setTimeout() as a fallback for CSS
 
-	        , zIndex: 2e9 // The z-index (defaults to 2000000000)
+	    , zIndex: 2e9 // The z-index (defaults to 2000000000)
 
-	        , className: 'spinner' // The CSS class to assign to the spinner
+	    , className: 'spinner' // The CSS class to assign to the spinner
 
-	        , top: '50%' // Top position relative to parent
+	    , top: '50%' // Top position relative to parent
 
-	        , left: '50%' // Left position relative to parent
+	    , left: '50%' // Left position relative to parent
 
-	        , shadow: false // Whether to render a shadow
+	    , shadow: false // Whether to render a shadow
 
-	        , hwaccel: false // Whether to use hardware acceleration
+	    , hwaccel: false // Whether to use hardware acceleration
 
-	        , position: 'absolute' // Element positioning
-	    },
-	    _getLoadMore: function _getLoadMore() {},
-	    loadMore: function loadMore() {
-	        var o = Object.create(this.defaultOpt);
-	        o.className = 'spinner-loadmore';
-	        return o;
-	    }
+	    , position: 'absolute' // Element positioning
+	  },
+	  _getLoadMore: function _getLoadMore() {},
+	  loadMore: function loadMore() {
+	    var o = Object.create(this.defaultOpt);
+	    o.className = 'spinner-loadmore';
+	    return o;
+	  }
 	};
 
 	function SPIN(target, spinType) {
-	    if (typeof Spinner !== 'function') {
-	        console.warn('需要引入spin.js哦');
-	        return;
-	    }
-	    this.init(target, spinType);
-	    return this.spinner;
+	  if (typeof Spinner !== 'function') {
+	    console.warn('需要引入spin.js哦');
+	    return;
+	  }
+	  this.init(target, spinType);
+	  return this.spinner;
 	}
 	SPIN.prototype.init = function (target, spinType) {
-	    this.target = getTarget(target);
-	    if (!this.target) {
-	        return;
-	    }
-	    this.spinOpt = spinType ? spinOpts[spinType]() : spinOpts.defaultOpt;
-	    this.target.classList.add(this.spinOpt.className);
-	    this.spinner = new Spinner(this.spinOpt).spin(this.target);
+	  this.target = getTarget(target);
+	  if (!this.target) {
+	    return;
+	  }
+	  this.spinOpt = spinType ? spinOpts[spinType]() : spinOpts.defaultOpt;
+	  this.target.classList.add(this.spinOpt.className);
+	  this.spinner = new Spinner(this.spinOpt).spin(this.target);
 	};
 	SPIN.prototype.stop = function () {
-	    if (!this.target) {
-	        return;
-	    }
-	    this.target.classList.remove(this.spinOpt.className);
-	    this.spinner.stop();
+	  if (!this.target) {
+	    return;
+	  }
+	  this.target.classList.remove(this.spinOpt.className);
+	  this.spinner.stop();
 	};
 
 	module.exports = function (target, spinType) {
-	    return new SPIN(target, spinType);
+	  return new SPIN(target, spinType);
 	};
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
 
@@ -904,8 +909,8 @@
 	/**
 	 * 滑动删除
 	 * @author Zhao Liubin
-	 * @param { target} 删除目标 
-	 * @param {function} 回调 
+	 * @param { target} 删除目标
+	 * @param {function} 回调
 	 * @type {[type]}
 	 */
 	var getTargets = __webpack_require__(10);

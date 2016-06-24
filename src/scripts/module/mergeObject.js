@@ -13,8 +13,8 @@ module.exports = (objTo = {}, ...objFrom) => {
       return;
     }
     Object.keys(el).forEach(function(item) {
-      objTo[item] = el[item]
+      objTo[item] = el[item];
     });
-  })
+  });
   return objTo;
 }

@@ -22,7 +22,7 @@ var showTipsOnTop = function(content = '小提示', target, time) {
   if (t) {
     setTimeout(function() {
       tar.removeChild(div);
-    }, t)
+    }, t);
   }
-}
+};
 module.exports = showTipsOnTop;

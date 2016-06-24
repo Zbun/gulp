@@ -7,17 +7,17 @@ var htmlList = {
     DOC: 'docs'
   },
   tpl: 'TPLindex.html'
-}
+};
 
 var serializeTitle = function(filesrc, tpl) {
   var htmlStr = '';
   new Promise(function(resolve) {
     fs.readdir(filesrc, function(err, files) {
       files.forEach(function(filename) {
-        if(/\.html/i.test(filename)){
+        if (/\.html/i.test(filename)) {
           var data = fs.readFileSync(`${filesrc}/${filename}`, 'utf8');
-            var title = data.match(/<title>\s*(.*?)\s*<\/title>/)[1];
-            htmlStr += `<li><a href="${filesrc}/${filename}">${title}</a></li>`;
+          var title = data.match(/<title>\s*(.*?)\s*<\/title>/)[1];
+          htmlStr += `<li><a href="${filesrc}/${filename}">${title}</a></li>`;
         }
 
         // var dataReplace = data.replace(/<link\s+rel="import"\s+href="(.*)">/gi, function(matches, m1) {
@@ -34,18 +34,19 @@ var serializeTitle = function(filesrc, tpl) {
         //   if (err) throw err;
         //   console.log(filename + 'OK');
         // })
-      })
+      });
       resolve(htmlStr);
-   });
+    });
   }).then(function(value) {
     var htmlTpl = fs.readFileSync(tpl, 'utf8');
     // htmlTpl = htmlTpl.replace('{{'+htmlList.src[el]+'}}', value);
-    console.log(htmlTpl)
+    console.log(htmlTpl);
   });
-}
+};
 
-var stream=require('stream'),Readable=stream.Readable;
-var rs=new Readable;
+var stream = require('stream'),
+  Readable = stream.Readable;
+var rs = new Readable;
 rs.push('beep ');
 rs.push('boop\n');
 rs.push(null);

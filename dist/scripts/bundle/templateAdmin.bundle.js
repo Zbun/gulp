@@ -107,10 +107,8 @@
 	    window.onbeforeunload = null;
 	  }
 	};
-
 	var bID = $('#businessId').val(),
 	    tID = $('#templateId').val();
-
 	var vm = new Vue({
 	  el: 'body',
 	  data: {
@@ -157,7 +155,7 @@
 	        dragSelector: 'li',
 	        dragBetween: true,
 	        dragEnd: leaveTips.enable,
-	        placeHolderTemplate: "<li></li>"
+	        placeHolderTemplate: '<li></li>'
 	      });
 	    };
 	    drag();
@@ -175,7 +173,10 @@
 	    $.ajax({
 	      type: 'POST',
 	      url: API.menu.get,
-	      data: { businessId: bID, templateId: tID },
+	      data: {
+	        businessId: bID,
+	        templateId: tID
+	      },
 	      dataType: 'JSON',
 	      success: function success(data) {
 	        if (data.success) {
@@ -196,7 +197,9 @@
 	      }
 	    }).done(function () {
 	      //拿活动数据
-	      $.post(API.activity.get, { templateId: tID }, function (data) {
+	      $.post(API.activity.get, {
+	        templateId: tID
+	      }, function (data) {
 	        if (data.success) {
 	          vm.jsonActivity = vm.activity.data = data.data;
 	        } else {
@@ -213,7 +216,7 @@
 	        return;
 	      } else {
 	        $menuName.removeClass('error');
-	      };
+	      }
 	      var $t = $(this),
 	          type = $t.data('menuType');
 	      var name = $t.data('name');
@@ -240,7 +243,6 @@
 	    $('.content-type').on('click', '[data-type]', function () {
 	      var $t = $(this);
 	      var $on = $('.footer.menu').find('.on .on');
-	      var currentType = $on.data('menuType');
 	      var menuType = $t.data('type');
 	      if (vm.menuSet.curType && vm.menuSet.curType !== menuType) {
 	        leaveTips.enable();
@@ -382,16 +384,31 @@
 	      //未知，原生写法有缓存，使用jQuery式写法
 	      var arrMenu1 = [];
 	      var menu1 = $('.footer.menu').children('.item:not(.add-menu1)').get();
+	      var arrErrorList = [];
 	      menu1.forEach(function (element, index) {
+
 	        arrMenu1[index] = {};
 	        var arrMenu2 = [];
 	        var $element = $(element),
 	            $title = $element.children('.title').data('orderId', index + 1);
-	        $element.children('.content').children('.js-toggle').get().forEach(function (el, index1) {
+
+	        var arrChildren = $element.children('.content').children('.js-toggle').get();
+
+	        if (arrChildren.length > 0 && 'APP' === $title.data('menuType') && !$title.data('appDemoUrl')) {
+	          arrErrorList.push($title);
+	        }
+
+	        arrChildren.forEach(function (el, index1) {
 	          arrMenu2[index1] = {};
-	          $(el).data('orderId', index1 + 1);
-	          Object.keys($(el).data()).forEach(function (ele, index2) {
-	            arrMenu2[index1][ele] = $(el).data(ele);
+	          var $el = $(el);
+	          $el.data('orderId', index1 + 1);
+
+	          if ('APP' === $el.data('menuType') && !$el.data('appDemoUrl')) {
+	            arrErrorList.push($el);
+	          }
+
+	          Object.keys($el.data()).forEach(function (ele, index2) {
+	            arrMenu2[index1][ele] = $el.data(ele);
 	          });
 	        });
 	        Object.keys($title.data()).forEach(function (el) {
@@ -399,6 +416,14 @@
 	        });
 	        arrMenu1[index]['subMenuList'] = arrMenu2;
 	      });
+
+	      if (arrErrorList.length > 0) {
+	        arrErrorList.forEach(function (el, index) {
+	          $(el).addClass('error');
+	        });
+	        showTipsWarning('您的菜单中存在已失效的链接，请检查');
+	        return;
+	      }
 
 	      if (arrMenu1.length < 1) {
 	        showTipsWarning('请至少添加一个菜单');
@@ -437,7 +462,7 @@
 	            showTipsWarning('保存失败，请稍候重试');
 	          }
 	        },
-	        error: function error(data) {
+	        error: function error() {
 	          showTipsWarning('保存失败，请稍候重试');
 	        },
 	        complete: function complete() {
@@ -462,14 +487,14 @@
 	    },
 	    iptNameBlur: function iptNameBlur(event) {
 	      var _this = event.target,
-	          _v = _this.value;
+	          _v = _v;
 	      var $on = $('.footer.menu').find('>.on').find('.on');
-	      if (_this.value.UTFlength > 8) {
+	      if (_v.UTFlength > 8) {
 	        if ($on.hasClass('title')) {
-	          _this.value = (0, _cutstring2.default)(_this.value, 8);
+	          _v = (0, _cutstring2.default)(_v, 8);
 	        }
-	        $on.data('name', _this.value || '菜单名称').find('.inner').text(_this.value || '菜单名称');
-	      } else if (/^\s*$/.test(_this.value)) {
+	        $on.data('name', _v || '菜单名称').find('.inner').text(_v || '菜单名称');
+	      } else if (/^\s*$/.test(_v)) {
 	        this.menuSet.isNameReady = false;
 	      }
 	    },
@@ -484,7 +509,7 @@
 	          $on = $('.footer.menu').find('>.on').find('.on');
 	      this.activity.index = i;
 	      var objData = event.target[i].dataset;
-	      Object.keys(objData).forEach(function (el, index) {
+	      Object.keys(objData).forEach(function (el) {
 	        $on.data(el, objData[el]);
 	      });
 	      vm.activity.isAPP = true;
@@ -512,7 +537,7 @@
 	      vm.activity.modelText = objActivity['modelText'];
 
 	      var objData = event.target[event.target.selectedIndex].dataset;
-	      Object.keys(objData).forEach(function (el, index) {
+	      Object.keys(objData).forEach(function (el) {
 	        $on.data(el, objData[el]);
 	      });
 	      vm.activity.appName = objData['appName'];
@@ -587,9 +612,11 @@
 	  //   return this.replace(/[\u4E00-\u9FA5]/g, 'zz').length;
 	  // }
 
-	  Object.defineProperty(String.prototype, 'UTFlength', { get: function get() {
+	  Object.defineProperty(String.prototype, 'UTFlength', {
+	    get: function get() {
 	      return this.replace(/[\u4E00-\u9FA5]/g, 'zz').length;
-	    } });
+	    }
+	  });
 	}();
 
 /***/ },
@@ -713,16 +740,16 @@
 	 * @return {[type]}
 	 */
 	module.exports = function ($) {
-	    if (!$) {
-	        console.warn('需要jQuery赞助哦');
-	        return;
-	    }
+	  if (!$) {
+	    console.warn('需要jQuery赞助哦');
+	    return;
+	  }
 
-	    $('.js-switcher').children('.title').children('.item').on('click', function () {
-	        var $t = $(this),
-	            index = $t.closest('.title').children('.item').index(this);
-	        $t.addClass('on').siblings('.item').removeClass('on').closest('.js-switcher').children('.content').children('.item').removeClass('on').eq(index).addClass('on');
-	    });
+	  $('.js-switcher').children('.title').children('.item').on('click', function () {
+	    var $t = $(this),
+	        index = $t.closest('.title').children('.item').index(this);
+	    $t.addClass('on').siblings('.item').removeClass('on').closest('.js-switcher').children('.content').children('.item').removeClass('on').eq(index).addClass('on');
+	  });
 	}(jQuery);
 
 /***/ },
@@ -768,82 +795,82 @@
 	var Spinner = __webpack_require__(12);
 
 	var spinOpts = {
-	    defaultOpt: {
-	        lines: 10 // The number of lines to draw
+	  defaultOpt: {
+	    lines: 10 // The number of lines to draw
 
-	        , length: 3 // The length of each line
+	    , length: 3 // The length of each line
 
-	        , width: 2 // The line thickness
+	    , width: 2 // The line thickness
 
-	        , radius: 3 // The radius of the inner circle
+	    , radius: 3 // The radius of the inner circle
 
-	        , scale: 1 // Scales overall size of the spinner
+	    , scale: 1 // Scales overall size of the spinner
 
-	        , corners: 1 // Corner roundness (0..1)
+	    , corners: 1 // Corner roundness (0..1)
 
-	        , color: '#333' // #rgb or #rrggbb or array of colors
+	    , color: '#333' // #rgb or #rrggbb or array of colors
 
-	        , opacity: 0.25 // Opacity of the lines
+	    , opacity: 0.25 // Opacity of the lines
 
-	        , rotate: 0 // The rotation offset
+	    , rotate: 0 // The rotation offset
 
-	        , direction: 1 // 1: clockwise, -1: counterclockwise
+	    , direction: 1 // 1: clockwise, -1: counterclockwise
 
-	        , speed: 1 // Rounds per second
+	    , speed: 1 // Rounds per second
 
-	        , trail: 50 // Afterglow percentage
+	    , trail: 50 // Afterglow percentage
 
-	        , fps: 20 // Frames per second when using setTimeout() as a fallback for CSS
+	    , fps: 20 // Frames per second when using setTimeout() as a fallback for CSS
 
-	        , zIndex: 2e9 // The z-index (defaults to 2000000000)
+	    , zIndex: 2e9 // The z-index (defaults to 2000000000)
 
-	        , className: 'spinner' // The CSS class to assign to the spinner
+	    , className: 'spinner' // The CSS class to assign to the spinner
 
-	        , top: '50%' // Top position relative to parent
+	    , top: '50%' // Top position relative to parent
 
-	        , left: '50%' // Left position relative to parent
+	    , left: '50%' // Left position relative to parent
 
-	        , shadow: false // Whether to render a shadow
+	    , shadow: false // Whether to render a shadow
 
-	        , hwaccel: false // Whether to use hardware acceleration
+	    , hwaccel: false // Whether to use hardware acceleration
 
-	        , position: 'absolute' // Element positioning
-	    },
-	    _getLoadMore: function _getLoadMore() {},
-	    loadMore: function loadMore() {
-	        var o = Object.create(this.defaultOpt);
-	        o.className = 'spinner-loadmore';
-	        return o;
-	    }
+	    , position: 'absolute' // Element positioning
+	  },
+	  _getLoadMore: function _getLoadMore() {},
+	  loadMore: function loadMore() {
+	    var o = Object.create(this.defaultOpt);
+	    o.className = 'spinner-loadmore';
+	    return o;
+	  }
 	};
 
 	function SPIN(target, spinType) {
-	    if (typeof Spinner !== 'function') {
-	        console.warn('需要引入spin.js哦');
-	        return;
-	    }
-	    this.init(target, spinType);
-	    return this.spinner;
+	  if (typeof Spinner !== 'function') {
+	    console.warn('需要引入spin.js哦');
+	    return;
+	  }
+	  this.init(target, spinType);
+	  return this.spinner;
 	}
 	SPIN.prototype.init = function (target, spinType) {
-	    this.target = getTarget(target);
-	    if (!this.target) {
-	        return;
-	    }
-	    this.spinOpt = spinType ? spinOpts[spinType]() : spinOpts.defaultOpt;
-	    this.target.classList.add(this.spinOpt.className);
-	    this.spinner = new Spinner(this.spinOpt).spin(this.target);
+	  this.target = getTarget(target);
+	  if (!this.target) {
+	    return;
+	  }
+	  this.spinOpt = spinType ? spinOpts[spinType]() : spinOpts.defaultOpt;
+	  this.target.classList.add(this.spinOpt.className);
+	  this.spinner = new Spinner(this.spinOpt).spin(this.target);
 	};
 	SPIN.prototype.stop = function () {
-	    if (!this.target) {
-	        return;
-	    }
-	    this.target.classList.remove(this.spinOpt.className);
-	    this.spinner.stop();
+	  if (!this.target) {
+	    return;
+	  }
+	  this.target.classList.remove(this.spinOpt.className);
+	  this.spinner.stop();
 	};
 
 	module.exports = function (target, spinType) {
-	    return new SPIN(target, spinType);
+	  return new SPIN(target, spinType);
 	};
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
 
@@ -938,8 +965,8 @@
 	/**
 	 * 滑动删除
 	 * @author Zhao Liubin
-	 * @param { target} 删除目标 
-	 * @param {function} 回调 
+	 * @param { target} 删除目标
+	 * @param {function} 回调
 	 * @type {[type]}
 	 */
 	var getTargets = __webpack_require__(10);

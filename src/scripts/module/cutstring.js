@@ -22,4 +22,4 @@ module.exports = function(string, len) {
       return arrStr.slice(0, i + 1).join('');
     }
   }
-}
+};

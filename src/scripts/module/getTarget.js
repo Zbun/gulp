@@ -12,9 +12,9 @@ module.exports = (target) => {
     } else if (target.nodeName) {
       return target;
     } else {
-      return target[0]
+      return target[0];
     }
   } else {
     return '';
   }
-}
+};

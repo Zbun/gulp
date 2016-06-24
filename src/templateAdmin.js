@@ -14,7 +14,7 @@ import cutString from 'cutstring';
 
 var showTipsWarning = function(content, callback) {
   showTips(content, 'error', callback);
-}
+};
 
 // var jsonMenu = require('simulateData/menu.json');
 // var jsonActivity = require('simulateData/activity.json');
@@ -26,29 +26,27 @@ var API = {
   menu: {
     get: '/templatemenu/list.html',
     set: '/templatemenu/saveOrUpdate.html',
-    del: '',
+    del: ''
   },
   activity: {
     get: '/module/common/modelAppList.html'
   }
-}
+};
 
 var leaveTips = {
   enable() {
     window.onbeforeunload = null;
     window.onbeforeunload = function() {
       return '------------------------------------------------------\n您辛辛苦苦编辑的菜单还没有保存哦，确认操作吗？\n' +
-        '------------------------------------------------------'
-    }
+        '------------------------------------------------------';
+    };
   },
   disable() {
     window.onbeforeunload = null;
   }
-}
-
+};
 var bID = $('#businessId').val(),
   tID = $('#templateId').val();
-
 var vm = new Vue({
   el: 'body',
   data: {
@@ -75,12 +73,12 @@ var vm = new Vue({
       curType: ''
     },
     currentType: 'MESSAGE',
-    hasSubMenu: true,
+    hasSubMenu: true
   },
   computed: {
     activityContent: function() {
       return this.activity.data.length ? this.activity.data[this.activity.index].list : '';
-    },
+    }
   },
   components: {
     'menu-box': vcomMenu
@@ -95,9 +93,9 @@ var vm = new Vue({
         dragSelector: 'li',
         dragBetween: true,
         dragEnd: leaveTips.enable,
-        placeHolderTemplate: "<li></li>"
+        placeHolderTemplate: '<li></li>'
       });
-    }
+    };
     drag();
 
     var initActivity = function() {
@@ -105,15 +103,18 @@ var vm = new Vue({
       Vue.nextTick(function() {
         vm.activity.data = vm.jsonActivity;
         vm.activity.index = 0;
-      })
-    }
+      });
+    };
 
     var s1 = spinZ('.footer.menu');
     //拿菜单数据
     $.ajax({
       type: 'POST',
       url: API.menu.get,
-      data: { businessId: bID, templateId: tID },
+      data: {
+        businessId: bID,
+        templateId: tID
+      },
       dataType: 'JSON',
       success: function(data) {
         if (data.success) {
@@ -123,7 +124,7 @@ var vm = new Vue({
           vmAgent.hasSubMenu = data.data && data.data[0].subMenuList.length > 0 ? true : false;
           setTimeout(function() {
             drag();
-            $('.footer.menu').find('.js-toggle:first').mouseup()
+            $('.footer.menu').find('.js-toggle:first').mouseup();
           }, 0);
         } else {
           console.warn('菜单数据可能没返回，稍等重试吧');
@@ -134,13 +135,15 @@ var vm = new Vue({
       }
     }).done(function() {
       //拿活动数据
-      $.post(API.activity.get, { templateId: tID }, function(data) {
+      $.post(API.activity.get, {
+        templateId: tID
+      }, function(data) {
         if (data.success) {
           vm.jsonActivity = vm.activity.data = data.data;
         } else {
           console.warn('活动数据可能没返回，稍等重试吧');
         }
-      })
+      });
     });
 
     //菜单点击时切换事件
@@ -151,7 +154,7 @@ var vm = new Vue({
         return;
       } else {
         $menuName.removeClass('error');
-      };
+      }
       var $t = $(this),
         type = $t.data('menuType');
       var name = $t.data('name');
@@ -178,7 +181,6 @@ var vm = new Vue({
     $('.content-type').on('click', '[data-type]', function() {
       var $t = $(this);
       var $on = $('.footer.menu').find('.on .on');
-      var currentType = $on.data('menuType');
       var menuType = $t.data('type');
       if (vm.menuSet.curType && vm.menuSet.curType !== menuType) {
         leaveTips.enable();
@@ -286,7 +288,7 @@ var vm = new Vue({
           //真正删除及回调
           slideDel($on, function() {
             !$parent.find('.js-toggle').length && $menu1.find('.wealthy').removeClass('wealthy');
-            vm.menuSet.isNameReady=true;
+            vm.menuSet.isNameReady = true;
             if ($parent.hasClass('menu-l2')) {
               if ($prev.length) {
                 $prev.mouseup();
@@ -318,16 +320,31 @@ var vm = new Vue({
       //未知，原生写法有缓存，使用jQuery式写法
       var arrMenu1 = [];
       var menu1 = $('.footer.menu').children('.item:not(.add-menu1)').get();
+      var arrErrorList = [];
       menu1.forEach(function(element, index) {
+
         arrMenu1[index] = {};
         var arrMenu2 = [];
         var $element = $(element),
           $title = $element.children('.title').data('orderId', index + 1);
-        $element.children('.content').children('.js-toggle').get().forEach(function(el, index1) {
+
+        var arrChildren = $element.children('.content').children('.js-toggle').get();
+
+        if (arrChildren.length > 0 && 'APP' === $title.data('menuType') && !$title.data('appDemoUrl')) {
+          arrErrorList.push($title);
+        }
+
+        arrChildren.forEach(function(el, index1) {
           arrMenu2[index1] = {};
-          $(el).data('orderId', index1 + 1);
-          Object.keys($(el).data()).forEach(function(ele, index2) {
-            arrMenu2[index1][ele] = $(el).data(ele);
+          var $el = $(el);
+          $el.data('orderId', index1 + 1);
+
+          if ('APP' === $el.data('menuType') && !$el.data('appDemoUrl')) {
+            arrErrorList.push($el);
+          }
+
+          Object.keys($el.data()).forEach(function(ele, index2) {
+            arrMenu2[index1][ele] = $el.data(ele);
           });
         });
         Object.keys($title.data()).forEach(function(el) {
@@ -335,6 +352,14 @@ var vm = new Vue({
         });
         arrMenu1[index]['subMenuList'] = arrMenu2;
       });
+
+      if (arrErrorList.length > 0) {
+        arrErrorList.forEach(function(el, index) {
+          $(el).addClass('error');
+        });
+        showTipsWarning('您的菜单中存在已失效的链接，请检查');
+        return;
+      }
 
       if (arrMenu1.length < 1) {
         showTipsWarning('请至少添加一个菜单');
@@ -373,7 +398,7 @@ var vm = new Vue({
             showTipsWarning('保存失败，请稍候重试');
           }
         },
-        error: function(data) {
+        error: function() {
           showTipsWarning('保存失败，请稍候重试');
         },
         complete: function() {
@@ -398,16 +423,15 @@ var vm = new Vue({
     },
     iptNameBlur(event) {
       var _this = event.target,
-        _v = _this.value;
+        _v = _v;
       var $on = $('.footer.menu').find('>.on').find('.on');
-      if (_this.value.UTFlength > 8) {
+      if (_v.UTFlength > 8) {
         if ($on.hasClass('title')) {
-          _this.value = cutString(_this.value, 8);
+          _v = cutString(_v, 8);
         }
-        $on.data('name', _this.value || '菜单名称').find('.inner').text(_this.value || '菜单名称');
-      }
-      else if(/^\s*$/.test(_this.value)){
-        this.menuSet.isNameReady=false;
+        $on.data('name', _v || '菜单名称').find('.inner').text(_v || '菜单名称');
+      } else if (/^\s*$/.test(_v)) {
+        this.menuSet.isNameReady = false;
       }
     },
     iptSite(event) {
@@ -421,7 +445,7 @@ var vm = new Vue({
         $on = $('.footer.menu').find('>.on').find('.on');
       this.activity.index = i;
       var objData = event.target[i].dataset;
-      Object.keys(objData).forEach(function(el, index) {
+      Object.keys(objData).forEach(function(el) {
         $on.data(el, objData[el]);
       });
       vm.activity.isAPP = true;
@@ -449,11 +473,11 @@ var vm = new Vue({
       vm.activity.modelText = objActivity['modelText'];
 
       var objData = event.target[event.target.selectedIndex].dataset;
-      Object.keys(objData).forEach((el, index) => {
+      Object.keys(objData).forEach((el) => {
         $on.data(el, objData[el]);
       });
       vm.activity.appName = objData['appName'];
       leaveTips.enable();
     }
   }
-})
+});
