@@ -16,4 +16,4 @@ module.exports = {
   isObject(obj) {
     return getType(obj) === 'object';
   }
-}
+};

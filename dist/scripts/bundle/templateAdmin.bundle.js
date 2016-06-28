@@ -120,7 +120,12 @@
 	      index: 0,
 	      isAPP: false, //控制选择APP是否显示
 	      modelText: '',
-	      appName: ''
+	      appName: '',
+	      content: {
+	        index: 0,
+	        editShow: false,
+	        target: 9527
+	      }
 	    },
 	    menuSet: {
 	      name: '',
@@ -130,7 +135,8 @@
 	      type: {
 	        message: 'MESSAGE',
 	        own: 'OWN',
-	        app: 'APP'
+	        app: 'APP',
+	        service: 'CUSTOMER_SERVICE'
 	      },
 	      curType: ''
 	    },
@@ -169,6 +175,7 @@
 	    };
 
 	    var s1 = spinZ('.footer.menu');
+
 	    //拿菜单数据
 	    $.ajax({
 	      type: 'POST',
@@ -211,6 +218,7 @@
 	    //菜单点击时切换事件
 	    var $menuName = $('.menu-name');
 	    $('.footer.menu').on('mouseup', '.js-toggle', function () {
+	      vm.activity.content.editShow = false;
 	      if (!vm.menuSet.isNameReady) {
 	        $menuName.addClass('error').focus();
 	        return;
@@ -287,7 +295,7 @@
 	    $('.footer.menu').on('click', '.add-menu1 .add', function () {
 	      if (vmAgent.menu1Length && !checkName()) {
 	        return;
-	      };
+	      }
 	      var $t = $(this),
 	          type = $t.data('menuType');
 	      $t.closest('.menu-l1').before('<div class="item menu-l1 on"><div class="title js-toggle" data-menu-type="MESSAGE" title="菜单名称"><p class="inner">菜单名称</p></div><ul class="content menu-l2"><li class="item add-wrapper"><a href="javascript:;" class="font-bigger add" title="添加菜单" data-menu-type=\'MESSAGE\'>+</a></li></ul></div>');
@@ -300,7 +308,7 @@
 	    }).on('click', '.content .add', function () {
 	      if (vmAgent.menu1Length && !checkName()) {
 	        return;
-	      };
+	      }
 	      var $t = $(this),
 	          type = $t.closest('.menu-l1').children('.title').data('menuType');
 	      var $parent = $t.closest('.menu-l2');
@@ -394,7 +402,7 @@
 
 	        var arrChildren = $element.children('.content').children('.js-toggle').get();
 
-	        if (arrChildren.length > 0 && 'APP' === $title.data('menuType') && !$title.data('appDemoUrl')) {
+	        if (arrChildren.length === 0 && 'APP' === $title.data('menuType') && !$title.data('appDemoUrl')) {
 	          arrErrorList.push($title);
 	        }
 
@@ -407,7 +415,7 @@
 	            arrErrorList.push($el);
 	          }
 
-	          Object.keys($el.data()).forEach(function (ele, index2) {
+	          Object.keys($el.data()).forEach(function (ele) {
 	            arrMenu2[index1][ele] = $el.data(ele);
 	          });
 	        });
@@ -418,7 +426,7 @@
 	      });
 
 	      if (arrErrorList.length > 0) {
-	        arrErrorList.forEach(function (el, index) {
+	        arrErrorList.forEach(function (el) {
 	          $(el).addClass('error');
 	        });
 	        showTipsWarning('您的菜单中存在已失效的链接，请检查');
@@ -487,7 +495,7 @@
 	    },
 	    iptNameBlur: function iptNameBlur(event) {
 	      var _this = event.target,
-	          _v = _v;
+	          _v = _this.value;
 	      var $on = $('.footer.menu').find('>.on').find('.on');
 	      if (_v.UTFlength > 8) {
 	        if ($on.hasClass('title')) {
@@ -504,6 +512,32 @@
 	      $('.footer.menu').find('>.on').find('.on').data('menuContent', _this.value || 'http://www.eqying.com');
 	      leaveTips.enable();
 	    },
+	    editSite: function editSite(event) {
+	      var _this = event.target;
+	      _this.href = _this.dataset['hrefDefault'] + _this.target;
+	      dialog({
+	        title: '编辑页面',
+	        content: '<div style="margin:60px 80px;font-size:15px">请在新打开的窗口中完成页面编辑</div>',
+	        ok: function ok() {
+	          $.post(API.activity.get, {
+	            templateId: tID
+	          }, function (data) {
+	            if (data.success) {
+	              vm.jsonActivity = vm.activity.data = data.data;
+	              setTimeout(function () {
+	                $('#activity').val('WEBSITE');
+	              }, 5);
+	            } else {
+	              console.warn('活动数据可能没返回，稍等重试吧');
+	            }
+	          });
+	        },
+	        okValue: '已完成',
+	        cancelValue: '未完成',
+	        cancel: function cancel() {}
+	      }).showModal();
+	      return false;
+	    },
 	    activityChange: function activityChange(event) {
 	      var i = event.target.selectedIndex,
 	          $on = $('.footer.menu').find('>.on').find('.on');
@@ -515,7 +549,14 @@
 	      vm.activity.isAPP = true;
 	      vm.activity.modelText = objData['modelText'];
 	      var dataNow = vm.activity.data[i];
-	      vm.activity.appName = dataNow.list[0] ? dataNow.list[0]['appName'] : '';
+	      var dataFirst = dataNow.list[0];
+	      vm.activity.appName = dataFirst ? dataFirst['appName'] : '';
+	      if (dataFirst['appType'] === 'WEBSITE' && dataFirst['appTypeValue'] > '0') {
+	        this.activity.content.editShow = true;
+	        this.activity.content.target = dataFirst['appTypeValue'];
+	      } else {
+	        this.activity.content.editShow = false;
+	      }
 	      $on.data({
 	        'appName': dataNow.list[0]['appName'],
 	        'appPicUrl': dataNow.list[0]['appPicUrl'],
@@ -535,8 +576,16 @@
 	        modelType: objActivity.modelType
 	      });
 	      vm.activity.modelText = objActivity['modelText'];
+	      var i = event.target.selectedIndex;
+	      this.activity.content.index = i;
+	      var objData = event.target[i].dataset;
+	      if (objData['appType'] === 'WEBSITE' && objData['appTypeValue'] > '0') {
+	        this.activity.content.editShow = true;
+	        this.activity.content.target = objData['appTypeValue'];
+	      } else {
+	        this.activity.content.editShow = false;
+	      }
 
-	      var objData = event.target[event.target.selectedIndex].dataset;
 	      Object.keys(objData).forEach(function (el) {
 	        $on.data(el, objData[el]);
 	      });
@@ -11167,17 +11216,7 @@
 	if (__vue_template__) {
 	(typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports).template = __vue_template__
 	}
-	if (false) {(function () {  module.hot.accept()
-	  var hotAPI = require("vue-hot-reload-api")
-	  hotAPI.install(require("vue"), false)
-	  if (!hotAPI.compatible) return
-	  var id = "./menu.vue"
-	  if (!module.hot.data) {
-	    hotAPI.createRecord(id, module.exports)
-	  } else {
-	    hotAPI.update(id, module.exports, __vue_template__)
-	  }
-	})()}
+
 
 /***/ },
 /* 20 */
@@ -11186,25 +11225,25 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 	exports.default = {
-	    props: ['menuItem', 'menu1Length'],
-	    data: function data() {
-	        return {
-	            list: []
-	        };
-	    },
+	  props: ['menuItem', 'menu1Length'],
+	  data: function data() {
+	    return {
+	      list: []
+	    };
+	  },
 
-	    ready: function ready() {},
-	    methods: {}
+	  ready: function ready() {},
+	  methods: {}
 	};
 
 /***/ },
 /* 21 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n\n\n<div>\n    <i class=\"ico keyboard\"></i></div>\n<div class=\"item menu-l1\" v-for=\"item of menuItem\" :class=\"{on:$index==0}\">\n    <div class=\"title js-toggle\" :class=\"{'wealthy':item.subMenuList.length>0}\" :data-menu-type=\"item.menuType\" :data-name=\"item.name\" :title=\"item.name\" :data-menu-content=\"item.menuContent\" :data-app-demo-url=\"item.appDemoUrl\" :data-app-pic-url=\"item.appPicUrl\"\n    :data-app-type=\"item.appType\" :data-model-type=\"item.modelType\" :data-model-text=\"item.modelText\" :data-app-name=\"item.appName\">\n        <p class=\"inner\">{{item.name}}</p>\n    </div>\n    <ul class=\"content menu-l2\">\n        <li class=\"item js-toggle\" v-for=\"item of item.subMenuList\" :data-name=\"item.name\" :data-menu-type=\"item.menuType\" :data-name=\"item.name\" :title=\"item.name\" :data-menu-content=\"item.menuContent\" :data-app-demo-url=\"item.appDemoUrl\" :data-app-pic-url=\"item.appPicUrl\"\n        :data-app-type=\"item.appType\" :data-model-type=\"item.modelType\" :data-model-text=\"item.modelText\" :data-app-name=\"item.appName\"><span class=\"inner\">{{item.name}}</span></li>\n        <li class=\"item add-wrapper\" v-show=\"item.subMenuList.length<5\">\n            <a href=\"javascript:;\" class=\"font-bigger add\" :data-menu-type=\"item.menuType\" title=\"添加菜单\">+</a>\n        </li>\n    </ul>\n</div>\n<div class=\"item menu-l1 add-menu1\" v-if=\"menu1Length<3\">\n    <p class=\"item add-wrapper\">\n        <a href=\"javascript:;\" class=\"font-bigger add\" data-menu-type=\"MESSAGE\">+</a>\n    </p>\n</div>\n\n";
+	module.exports = "\n<div>\n  <i class=\"ico keyboard\"></i></div>\n<div class=\"item menu-l1\" v-for=\"item of menuItem\" :class=\"{on:$index==0}\">\n  <div class=\"title js-toggle\" :class=\"{'wealthy':item.subMenuList.length>0}\" :data-menu-type=\"item.menuType\" :data-name=\"item.name\" :title=\"item.name\" :data-menu-content=\"item.menuContent\" :data-app-demo-url=\"item.appDemoUrl\" :data-app-pic-url=\"item.appPicUrl\" :data-app-type=\"item.appType\" :data-app-type-value=\"item.appTypeValue\" :data-model-type=\"item.modelType\" :data-model-text=\"item.modelText\" :data-app-name=\"item.appName\">\n    <p class=\"inner\">{{item.name}}</p>\n  </div>\n  <ul class=\"content menu-l2\">\n    <li class=\"item js-toggle\" v-for=\"item of item.subMenuList\" :data-name=\"item.name\" :data-menu-type=\"item.menuType\" :data-name=\"item.name\" :title=\"item.name\" :data-menu-content=\"item.menuContent\" :data-app-demo-url=\"item.appDemoUrl\" :data-app-pic-url=\"item.appPicUrl\" :data-app-type=\"item.appType\" :data-app-type-value=\"item.appTypeValue\" :data-model-type=\"item.modelType\" :data-model-text=\"item.modelText\" :data-app-name=\"item.appName\"><span class=\"inner\">{{item.name}}</span></li>\n    <li class=\"item add-wrapper\" v-show=\"item.subMenuList.length<5\">\n      <a href=\"javascript:;\" class=\"font-bigger add\" :data-menu-type=\"item.menuType\" title=\"添加菜单\">+</a>\n    </li>\n  </ul>\n</div>\n<div class=\"item menu-l1 add-menu1\" v-if=\"menu1Length<3\">\n  <p class=\"item add-wrapper\">\n    <a href=\"javascript:;\" class=\"font-bigger add\" data-menu-type=\"MESSAGE\">+</a>\n  </p>\n</div>\n";
 
 /***/ }
 /******/ ]);

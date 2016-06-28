@@ -10483,17 +10483,7 @@
 	if (__vue_template__) {
 	(typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports).template = __vue_template__
 	}
-	if (false) {(function () {  module.hot.accept()
-	  var hotAPI = require("vue-hot-reload-api")
-	  hotAPI.install(require("vue"), false)
-	  if (!hotAPI.compatible) return
-	  var id = "./menu.vue"
-	  if (!module.hot.data) {
-	    hotAPI.createRecord(id, module.exports)
-	  } else {
-	    hotAPI.update(id, module.exports, __vue_template__)
-	  }
-	})()}
+
 
 /***/ },
 /* 24 */
@@ -10502,7 +10492,7 @@
 	/* WEBPACK VAR INJECTION */(function(spinZ) {'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _footerMenu = __webpack_require__(25);
@@ -10512,42 +10502,42 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	exports.default = {
-	    props: {
-	        menuList: Array
-	    },
-	    data: function data() {
-	        return {
-	            list: []
-	        };
-	    },
+	  props: {
+	    menuList: Array
+	  },
+	  data: function data() {
+	    return {
+	      list: []
+	    };
+	  },
 
-	    components: {
-	        'footer-menu': _footerMenu2.default
-	    },
-	    methods: {
-	        like: function like(event) {
-	            var $t = $(event.target);
-	            var $container = $t.closest('.item').children('.show').children('.content');
+	  components: {
+	    'footer-menu': _footerMenu2.default
+	  },
+	  methods: {
+	    like: function like(event) {
+	      var $t = $(event.target);
+	      var $container = $t.closest('.item').children('.show').children('.content');
 
-	            var $showImg = $container.find('.show-img'),
-	                $showSite = $container.find('.show-site');
+	      var $showImg = $container.find('.show-img'),
+	          $showSite = $container.find('.show-site');
 
-	            var spin1 = spinZ($container);
+	      var spin1 = spinZ($container);
 
 
-	            var site = 'http://www.uisdc.com/';
+	      var site = 'http://www.uisdc.com/';
 
-	            if ($showSite.attr('src') == site) {
-	                spin1.stop();
-	                return;
-	            }
+	      if ($showSite.attr('src') == site) {
+	        spin1.stop();
+	        return;
+	      }
 
-	            $container.find('.show-site').on('load', function () {
-	                spin1.stop();
-	            }).attr('src', site).show();
-	            setTimeout(function () {}, 5000);
-	        }
+	      $container.find('.show-site').on('load', function () {
+	        spin1.stop();
+	      }).attr('src', site).show();
+	      setTimeout(function () {}, 5000);
 	    }
+	  }
 	};
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(11)))
 
@@ -10567,17 +10557,7 @@
 	if (__vue_template__) {
 	(typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports).template = __vue_template__
 	}
-	if (false) {(function () {  module.hot.accept()
-	  var hotAPI = require("vue-hot-reload-api")
-	  hotAPI.install(require("vue"), false)
-	  if (!hotAPI.compatible) return
-	  var id = "./footerMenu.vue"
-	  if (!module.hot.data) {
-	    hotAPI.createRecord(id, module.exports)
-	  } else {
-	    hotAPI.update(id, module.exports, __vue_template__)
-	  }
-	})()}
+
 
 /***/ },
 /* 26 */
@@ -10618,7 +10598,7 @@
 /* 28 */
 /***/ function(module, exports) {
 
-	module.exports = "\n<section class=\"show title phone\">\n    <h3 class=\"title text-ellipsis\">\n                            易企赢</h3>\n    <div class=\"content\">\n        <div class=\"container img\">\n            <img class=\"show-img\" alt=\"\">\n        </div>\n        <div class=\"container site\">\n            <iframe sandbox class=\"show-site\" frameborder=\"0\" ></iframe>\n        </div>\n    </div>\n    <footer class=\"footer menu dis-flex abs\">\n        <i class=\"ico keyboard\"></i>\n        <div class=\"item menu-l1\" v-for=\"item of menuList\">\n            <footer-menu :menu-item=\"item\"></footer-menu>\n        </div>\n    </footer>\n</section>\n<div class=\"text-center select\">\n    <button class=\"btn btn-primary big like\" v-on:click=\"like\">就选这个</button>\n    <span class=\"pl10 text-muted\">点击菜单预览效果</span>\n</div>\n";
+	module.exports = "\n<section class=\"show title phone\">\n  <h3 class=\"title text-ellipsis\">\n                              易企赢</h3>\n  <div class=\"content\">\n    <div class=\"container img\">\n      <img class=\"show-img\" alt=\"\">\n    </div>\n    <div class=\"container site\">\n      <iframe sandbox class=\"show-site\" frameborder=\"0\"></iframe>\n    </div>\n  </div>\n  <footer class=\"footer menu dis-flex abs\">\n    <i class=\"ico keyboard\"></i>\n    <div class=\"item menu-l1\" v-for=\"item of menuList\">\n      <footer-menu :menu-item=\"item\"></footer-menu>\n    </div>\n  </footer>\n</section>\n<div class=\"text-center select\">\n  <button class=\"btn btn-primary big like\" v-on:click=\"like\">就选这个</button>\n  <span class=\"pl10 text-muted\">点击菜单预览效果</span>\n</div>\n";
 
 /***/ }
 /******/ ]);

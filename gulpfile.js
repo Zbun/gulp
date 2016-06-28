@@ -5,9 +5,9 @@ var gulp = require('gulp'),
   // rename = require('gulp-rename'),
   // revAppend = require('gulp-rev-append'),
   // jshint = require('gulp-jshint'),
+  // cleanCSS = require('gulp-clean-css'),
   gutil = require('gulp-util'),
   minify = require('gulp-minify'),
-  cleanCSS = require('gulp-clean-css'),
   sourcemaps = require('gulp-sourcemaps'),
   uglify = require('gulp-uglify'),
   sass = require('gulp-sass'),
@@ -16,6 +16,7 @@ var gulp = require('gulp'),
 var webpackConfig = Object.create(require('./webpack.config.js'));
 
 var opts = {
+  srcPath: './src/',
   destPath: './dist/',
   minRename: {
     suffix: '.min'
@@ -74,9 +75,9 @@ gulp.task('minify', function() {
     .pipe(gulp.dest(opts.destPath + 'scripts/bundle'));
 });
 
-gulp.task('minifycss', ['sass'], function() {
-  gulp.src(opts.destPath + 'CSS/*.css').pipe(cleanCSS()).pipe(gulp.dest(opts.destPath + 'CSS'));
-});
+// gulp.task('minifycss', ['sass'], function() {
+//   gulp.src(opts.destPath + 'CSS/*.css').pipe(cleanCSS()).pipe(gulp.dest(opts.destPath + 'CSS'));
+// });
 
 //outputStyle:compressed,expanded
 gulp.task('sass', function() {

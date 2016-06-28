@@ -2,7 +2,7 @@ var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
-  entry: { webTempate: './src/main.js', doc: './src/doc.js', templateAdmin: './src/templateAdmin.js' },
+  entry: { /*webTempate: './src/main.js', */ doc: './src/doc.js', templateAdmin: './src/templateAdmin.js' },
   output: {
     path: path.join(__dirname, './dist/scripts/bundle/'),
     filename: '[name].bundle.js',
@@ -49,8 +49,8 @@ module.exports = {
     alias: {
       spin: path.join(__dirname, './dist/scripts/lib/spin.min.js'),
       dialog: path.join(__dirname, './dist/scripts/lib/artdialog/dist/dialog-plus-min.js'),
-      pagination: path.join(__dirname, './dist/scripts/lib/jquery.twbsPagination.min.js'),
-      // jquery:path.join(__dirname,'./dist/scripts/lib/jquery-1.11.3.js')
+      pagination: path.join(__dirname, './dist/scripts/lib/jquery.twbsPagination.min.js')
+        // jquery:path.join(__dirname,'./dist/scripts/lib/jquery-1.11.3.js')
     }
   },
   plugins: [
@@ -61,14 +61,14 @@ module.exports = {
       typeOf: path.join(__dirname, './src/scripts/module/typeOf.js'),
       merge: path.resolve('./src/scripts/module/mergeObject.js'),
       spinZ: path.resolve('./src/scripts/module/spinZ.js'),
-      loading:path.resolve('./src/scripts/module/loading.js'),
-      dialog: 'dialog',
+      loading: path.resolve('./src/scripts/module/loading.js'),
+      dialog: 'dialog'
     })
   ],
   // watch: true,
   externals: {
     //外部引入2，页面中需要预先引入相关库
     jquery: 'jQuery', //此时外部引入
-    $: 'jQuery',
+    $: 'jQuery'
   }
 };

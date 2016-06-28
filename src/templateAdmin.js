@@ -58,7 +58,12 @@ var vm = new Vue({
       index: 0,
       isAPP: false, //控制选择APP是否显示
       modelText: '',
-      appName: ''
+      appName: '',
+      content: {
+        index: 0,
+        editShow: false,
+        target: 9527
+      }
     },
     menuSet: {
       name: '',
@@ -68,7 +73,8 @@ var vm = new Vue({
       type: {
         message: 'MESSAGE',
         own: 'OWN',
-        app: 'APP'
+        app: 'APP',
+        service: 'CUSTOMER_SERVICE'
       },
       curType: ''
     },
@@ -107,6 +113,7 @@ var vm = new Vue({
     };
 
     var s1 = spinZ('.footer.menu');
+
     //拿菜单数据
     $.ajax({
       type: 'POST',
@@ -149,6 +156,7 @@ var vm = new Vue({
     //菜单点击时切换事件
     var $menuName = $('.menu-name');
     $('.footer.menu').on('mouseup', '.js-toggle', function() {
+      vm.activity.content.editShow = false;
       if (!vm.menuSet.isNameReady) {
         $menuName.addClass('error').focus();
         return;
@@ -212,7 +220,7 @@ var vm = new Vue({
       // }
       $on.data('menuType', menuType);
       vmAgent.menuSet.siteURL = $on.data('menuContent');
-    })
+    });
 
     //添加一、二级菜单
     function checkName() {
@@ -225,7 +233,7 @@ var vm = new Vue({
     $('.footer.menu').on('click', '.add-menu1 .add', function() {
       if (vmAgent.menu1Length && !checkName()) {
         return;
-      };
+      }
       var $t = $(this),
         type = $t.data('menuType');
       $t.closest('.menu-l1').before(`<div class="item menu-l1 on"><div class="title js-toggle" data-menu-type="MESSAGE" title="菜单名称"><p class="inner">菜单名称</p></div><ul class="content menu-l2"><li class="item add-wrapper"><a href="javascript:;" class="font-bigger add" title="添加菜单" data-menu-type='MESSAGE'>+</a></li></ul></div>`);
@@ -238,7 +246,7 @@ var vm = new Vue({
     }).on('click', '.content .add', function() {
       if (vmAgent.menu1Length && !checkName()) {
         return;
-      };
+      }
       var $t = $(this),
         type = $t.closest('.menu-l1').children('.title').data('menuType');
       var $parent = $t.closest('.menu-l2');
@@ -256,10 +264,10 @@ var vm = new Vue({
             'appDemoUrl': data0.list[0]['appDemoUrl'],
             'appType': data0.list[0]['appType'],
             'appTypeName': data0.list[0]['appTypeName']
-          })
+          });
           vm.activity.modelText = $on.data('modelText');
           vm.activity.appName = $on.data('appName');
-        })
+        });
       }
 
       if ($parent.children().length > 5) {
@@ -309,7 +317,7 @@ var vm = new Vue({
               vm.menu1Length = $('.footer.menu').children('.item:not(.add-menu1)').length;
             }
             leaveTips.enable();
-          })
+          });
         },
         cancel: function() {}
       }).showModal();
@@ -330,7 +338,7 @@ var vm = new Vue({
 
         var arrChildren = $element.children('.content').children('.js-toggle').get();
 
-        if (arrChildren.length > 0 && 'APP' === $title.data('menuType') && !$title.data('appDemoUrl')) {
+        if (arrChildren.length === 0 && 'APP' === $title.data('menuType') && !$title.data('appDemoUrl')) {
           arrErrorList.push($title);
         }
 
@@ -343,7 +351,7 @@ var vm = new Vue({
             arrErrorList.push($el);
           }
 
-          Object.keys($el.data()).forEach(function(ele, index2) {
+          Object.keys($el.data()).forEach(function(ele) {
             arrMenu2[index1][ele] = $el.data(ele);
           });
         });
@@ -354,7 +362,7 @@ var vm = new Vue({
       });
 
       if (arrErrorList.length > 0) {
-        arrErrorList.forEach(function(el, index) {
+        arrErrorList.forEach(function(el) {
           $(el).addClass('error');
         });
         showTipsWarning('您的菜单中存在已失效的链接，请检查');
@@ -406,7 +414,7 @@ var vm = new Vue({
           $t.removeClass('disabled');
           leaveTips.disable();
         }
-      })
+      });
     },
     iptName(event) {
       var _this = event.target;
@@ -423,7 +431,7 @@ var vm = new Vue({
     },
     iptNameBlur(event) {
       var _this = event.target,
-        _v = _v;
+        _v = _this.value;
       var $on = $('.footer.menu').find('>.on').find('.on');
       if (_v.UTFlength > 8) {
         if ($on.hasClass('title')) {
@@ -440,6 +448,30 @@ var vm = new Vue({
       $('.footer.menu').find('>.on').find('.on').data('menuContent', _this.value || 'http://www.eqying.com');
       leaveTips.enable();
     },
+    editSite(event) {
+      var _this = event.target;
+      _this.href = _this.dataset['hrefDefault'] + _this.target;
+      dialog({
+        title: '编辑页面',
+        content: '<div style="margin:60px 80px;font-size:15px">请在新打开的窗口中完成页面编辑</div>',
+        ok: function() {
+          $.post(API.activity.get, {
+            templateId: tID
+          }, function(data) {
+            if (data.success) {
+              vm.jsonActivity = vm.activity.data = data.data;
+              setTimeout(function() { $('#activity').val('WEBSITE') }, 5);
+            } else {
+              console.warn('活动数据可能没返回，稍等重试吧');
+            }
+          });
+        },
+        okValue: '已完成',
+        cancelValue: '未完成',
+        cancel: function() {}
+      }).showModal();
+      return false;
+    },
     activityChange(event) {
       var i = event.target.selectedIndex,
         $on = $('.footer.menu').find('>.on').find('.on');
@@ -451,7 +483,14 @@ var vm = new Vue({
       vm.activity.isAPP = true;
       vm.activity.modelText = objData['modelText'];
       var dataNow = vm.activity.data[i];
-      vm.activity.appName = dataNow.list[0] ? dataNow.list[0]['appName'] : '';
+      var dataFirst = dataNow.list[0];
+      vm.activity.appName = dataFirst ? dataFirst['appName'] : '';
+      if (dataFirst['appType'] === 'WEBSITE' && dataFirst['appTypeValue'] > '0') {
+        this.activity.content.editShow = true;
+        this.activity.content.target = dataFirst['appTypeValue'];
+      } else {
+        this.activity.content.editShow = false;
+      }
       $on.data({
         'appName': dataNow.list[0]['appName'],
         'appPicUrl': dataNow.list[0]['appPicUrl'],
@@ -471,8 +510,16 @@ var vm = new Vue({
         modelType: objActivity.modelType
       });
       vm.activity.modelText = objActivity['modelText'];
+      var i = event.target.selectedIndex;
+      this.activity.content.index = i;
+      var objData = event.target[i].dataset;
+      if (objData['appType'] === 'WEBSITE' && objData['appTypeValue'] > '0') {
+        this.activity.content.editShow = true;
+        this.activity.content.target = objData['appTypeValue'];
+      } else {
+        this.activity.content.editShow = false;
+      }
 
-      var objData = event.target[event.target.selectedIndex].dataset;
       Object.keys(objData).forEach((el) => {
         $on.data(el, objData[el]);
       });

@@ -16,4 +16,4 @@ module.exports = (function($) {
       index = $t.closest('.title').children('.item').index(this);
     $t.addClass('on').siblings('.item').removeClass('on').closest('.js-switcher').children('.content').children('.item').removeClass('on').eq(index).addClass('on');
   });
-})(jQuery)
+})(jQuery);
