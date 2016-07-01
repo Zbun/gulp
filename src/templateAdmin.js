@@ -460,7 +460,9 @@ var vm = new Vue({
           }, function(data) {
             if (data.success) {
               vm.jsonActivity = vm.activity.data = data.data;
-              setTimeout(function() { $('#activity').val('WEBSITE') }, 5);
+              setTimeout(function() {
+                $('#activity').val('WEBSITE')
+              }, 5);
             } else {
               console.warn('活动数据可能没返回，稍等重试吧');
             }

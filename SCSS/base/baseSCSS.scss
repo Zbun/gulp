@@ -284,6 +284,7 @@ $cursor-disabled:not-allowed!default;
 
 .split {
   >.item {
+    line-height: 32px;
     >.title {
       float: left;
       line-height: inherit;

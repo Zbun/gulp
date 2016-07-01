@@ -61,26 +61,26 @@
   #upload {
     display: none;
   }
-
-.drag{
-  display: inline-block;
-  width: 80px;
-  height: 80px;
-  border: 2px solid #ccc;
-  text-align: center;
-  box-shadow: inset 0 0 50px #999;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
-}
-#drag .title{
-  background: #999;
-  color: #fff;
-  border-bottom: 1px solid #666;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-}
-
+  
+  .drag {
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+    border: 2px solid #ccc;
+    text-align: center;
+    box-shadow: inset 0 0 50px #999;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+  }
+  
+  #drag .title {
+    background: #999;
+    color: #fff;
+    border-bottom: 1px solid #666;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+  }
   </style>
 </head>
 
@@ -296,6 +296,7 @@
     </div>
   </div>
   <script src="../dist/scripts/lib/jquery-1.11.3.js"></script>
+  <!-- <script src="../dist/scripts/lib/jquery.twbsPagination.js"></script> -->
   <!-- <script src="../dist/scripts/lib/vue.js"></script> -->
   <!-- <script src="../dist/scripts/lib/vue-router.js"></script> -->
   <!-- <script src="../dist/scripts/API/simulateData.js"></script> -->
@@ -317,6 +318,12 @@
         waiting.show();
     })
     </script> -->
+  <script>
+  // $('#pagination').twbsPagination({
+  //   totalPages: 15,
+  //   visiblePages: 7
+  // });
+  </script>
 </body>
 
 </html>
