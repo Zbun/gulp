@@ -192,7 +192,7 @@
 
 	var tmpl = function tmpl(addrs) {
 		return '\n<ul>\n' + addrs.map(function (addr) {
-			return '<li><span>' + addr.first + ' \n\t' + addr.last + '</span></li>';
+			return '<li><span>' + addr.first + '\n\t' + addr.last + '</span></li>';
 		}).join('');
 	};
 
@@ -253,6 +253,32 @@
 
 	document.querySelector('#iptSelect').addEventListener('select', function (e) {
 		console.log(e);
+	});
+
+	//预览
+	(function ($) {
+		$.fn.jsPreview = function (container) {
+			container = document.querySelector(container) || document.body;
+			var imgUrl = this.data('src'),
+			    alt = this.data('imgAlt');
+			var mask = document.createElement('div');
+			mask.style = 'position:fixed;left:0;right:0;top:0;bottom:0;text-align:center;padding:20px;background:rgba(0,0,0,.5);z-index:5';
+			mask.innerHTML = '<img style="position:absolute;left:50%;top:50%;max-height:100%;max-width: 90%;transform:translate(-50%,-50%);" src="' + imgUrl + '" alt="' + alt + '" title="' + alt + '">';
+			container.appendChild(mask);
+			mask.addEventListener('click', function () {
+				container.removeChild(mask);
+			}, false);
+			return this;
+		};
+		$('body').on('click', '.js-preview-img', function () {
+			$(this).jsPreview();
+		});
+	})(jQuery);
+
+	//通用计数
+	$('body').on('input', '.js-count .js-count-for', function () {
+		var $t = $(this);
+		$t.closest('.js-count').find('.count').text($t.val().length);
 	});
 
 	//拖动部分事件处理写法
@@ -444,7 +470,7 @@
 	  };
 
 	  Waiting.prototype.init = function (container) {
-	    var container = document.querySelector(container) || document.body;
+	    container = document.querySelector(container) || document.body;
 	    var box = container.querySelector('.PCwaiting');
 	    if (!box) {
 	      var div = document.createElement('div');
@@ -837,10 +863,10 @@
 
 	(function () {
 	  var showTips = function showTips(content, state, callback, time) {
-	    var content = content || '操作成功',
-	        time = parseInt(time) || 3e3;
+	    content = content || '操作成功';
+	    time = parseInt(time) || 2e3;
 	    var box = document.createElement('div');
-	    var styleBox = 'position: fixed;top: 40%;left: 50%;min-width:150px;max-width:300px;padding: 1em 2em;border: 1px solid;font-size:12px;line-height: 1.5;text-align: center;color: #1fb5ac;background: #fff;-webkit-border-radius: 3px;-moz-border-radius: 3px;border-radius: 3px;z-index: 10;-webkit-transform: translate(-50%,-50%);transform: translate(-50%,-50%) rotateX(90deg);transition:.3s;opacity:0;';
+	    var styleBox = 'position: fixed;top: 40%;left: 50%;min-width:150px;max-width:300px;padding: 1em 2em;border: 1px solid;font-size:12px;line-height: 1.5;text-align: center;color: #1fb5ac;background: #fff;-webkit-border-radius: 3px;-moz-border-radius: 3px;border-radius: 3px;z-index: 1028;-webkit-transform: translate(-50%,-50%);transform: translate(-50%,-50%) rotateX(90deg);transition:.3s;opacity:0;';
 	    box.style.cssText = styleBox;
 	    box.classList.add('tips-state');
 

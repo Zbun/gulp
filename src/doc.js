@@ -87,7 +87,7 @@ var spin = require('spinZ.js');
 
 var s1 = spin($('.wrapper'));
 setTimeout(function() {
-  s1.stop()
+  s1.stop();
 }, 2000);
 
 //操作提示，第二个参数为成功与失败，可传'error','false','warning'
@@ -105,7 +105,7 @@ var slideDel = require('slideDelete');
 $('.js-slide-del').on('click', function() {
   var dir = $(this).data('delDirection');
   slideDel(this, function() {
-    console.log('del')
+    console.log('del');
   }, dir);
   return false;
 });
@@ -122,7 +122,7 @@ var obj1 = {
   obj3 = {
     'age': 60,
     'eyeColor': 'Blue'
-  }
+  };
 
 // console.log(merge(obj1, obj2, 'sss', obj3));
 
@@ -137,13 +137,13 @@ $('#pagination').twbsPagination({
 //加载数据时右上角提示，可在show中加回调方法
 loading.show();
 setTimeout(function() {
-  loading.hide()
+  loading.hide();
 }, 3000);
 
 const tmpl = addrs => `
 <ul>
-${addrs.map(addr=>`<li><span>${addr.first} 
-	${addr.last}</span></li>`).join('')}`
+${addrs.map(addr=>`<li><span>${addr.first}
+	${addr.last}</span></li>`).join('')}`;
 
 const a1=[{
 	first:'Jone',
@@ -151,7 +151,7 @@ const a1=[{
 },{
 	first:'Zoe',
 	last:'Cook'
-}]
+}];
 
 //上传文件等操作
 var regExpFilter=/image\/(?:(?:jpe?g)|(?:gif)|(?:png))$/;
@@ -202,9 +202,34 @@ dropZone.addEventListener('dragover', handleDragOver,false);
 dropZone.addEventListener('drop', handleFileSelect,false);
 
 document.querySelector('#iptSelect').addEventListener('select', function(e){
-	console.log(e)
-})
+	console.log(e);
+});
 
+
+//预览
+    (function ($) {
+        $.fn.jsPreview = function (container) {
+            container = document.querySelector(container) || document.body;
+            var imgUrl = this.data('src'), alt = this.data('imgAlt');
+            var mask = document.createElement('div');
+            mask.style = 'position:fixed;left:0;right:0;top:0;bottom:0;text-align:center;padding:20px;background:rgba(0,0,0,.5);z-index:5';
+            mask.innerHTML = '<img style="position:absolute;left:50%;top:50%;max-height:100%;max-width: 90%;transform:translate(-50%,-50%);" src="' + imgUrl + '" alt="' + alt + '" title="' + alt + '">';
+            container.appendChild(mask);
+            mask.addEventListener('click', function () {
+                container.removeChild(mask);
+            }, false);
+            return this;
+        };
+        $('body').on('click', '.js-preview-img', function () {
+            $(this).jsPreview();
+        });
+    })(jQuery);
+
+    //通用计数
+    $('body').on('input', '.js-count .js-count-for', function () {
+        var $t = $(this);
+        $t.closest('.js-count').find('.count').text($t.val().length);
+    });
 
 //拖动部分事件处理写法
 var colsDrag=document.querySelector('#drag').querySelectorAll('.item');

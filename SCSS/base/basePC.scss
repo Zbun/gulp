@@ -192,11 +192,15 @@ a {
 }
 
 .table-bordered-divide {
-  th,
-  td {
-    border-left: 1px solid $color-table-border;
-    &:first-child {
-      border-left: 0;
+  tbody {
+    tr {
+      th,
+      td {
+        border-left: 1px solid $color-table-border;
+        &:first-child {
+          border-left: 0;
+        }
+      }
     }
   }
 }
@@ -220,7 +224,7 @@ a {
   display: inline-block;
   z-index: 2;
   .ipt-search {
-    min-width: 280px;
+    min-width: 260px;
     padding-right: 36px;
     &:focus {
       &+.btn-search {
@@ -228,7 +232,6 @@ a {
       }
     }
     &.ipt-search-btn-text {
-      min-width: 250px;
       padding-right: 4.5em;
       &.col2 {
         padding-right: 4.5em;

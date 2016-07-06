@@ -18,7 +18,7 @@ body {
   min-width: 4.5em;
 }
 
-@import "base/_info_list";
+@import "base/_info_list.scss";
 .info-list {
   >.item {
     >.content.contact {

@@ -498,7 +498,8 @@ var vm = new Vue({
         'appPicUrl': dataNow.list[0]['appPicUrl'],
         'appDemoUrl': dataNow.list[0]['appDemoUrl'],
         'appType': dataNow.list[0]['appType'],
-        'appTypeName': dataNow.list[0]['appTypeName']
+        'appTypeName': dataNow.list[0]['appTypeName'],
+        'appTypeValue': dataNow.list[0]['appTypeValue']
       });
       leaveTips.enable();
     },

@@ -4,14 +4,14 @@
  * 若修改源码时去掉className :local，变为全屏遮罩
  * @author Zhao Liubin
  */
-(function(window,document) {
+(function(window, document) {
   var Waiting = function(container) {
     this.init(container);
     return this;
   };
 
   Waiting.prototype.init = function(container) {
-    var container = document.querySelector(container) || document.body;
+    container = document.querySelector(container) || document.body;
     var box = container.querySelector('.PCwaiting');
     if (!box) {
       var div = document.createElement('div');
@@ -29,18 +29,18 @@
       box.style.position = 'fixed';
     }
     this.waitingBox = box;
-  }
+  };
   Waiting.prototype.show = function() {
     this.waitingContainer.appendChild(this.waitingBox);
     return this;
-  }
+  };
   Waiting.prototype.hide = function() {
     this.remove();
     return this;
-  }
+  };
   Waiting.prototype.remove = function() {
     this.waitingContainer.removeChild(this.waitingBox);
-  }
+  };
 
   // class Waiting {
   //     constructor(container) {
@@ -91,6 +91,6 @@
   };
 
   typeof module === 'object' && module.exports ? module.exports = exportObj : typeof define === 'function' && define.amd ? define(function() {
-    return exportObj
+    return exportObj;
   }) : window.waiting = exportObj;
-})(window,document);
+})(window, document);
