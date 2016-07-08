@@ -1402,6 +1402,10 @@ input.ipt-small {
   display: none;
 }
 
+.tab-switcher > .content > .item:first-child {
+  display: block;
+}
+
 .tab-switcher > .content > .item > .cell {
   display: inline-block;
   min-width: 5em;
@@ -2524,10 +2528,10 @@ select {
   background: #fff;
   -webkit-transform: translate(0, 100%);
   transform: translate(0, 100%);
-  will-change: transform;
 }
 
 .show .footer.menu > .item.expanded > .content {
+  will-change: transform;
   -webkit-transform: translate(0, 0);
   transform: translate(0, 0);
 }

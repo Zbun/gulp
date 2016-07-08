@@ -1402,6 +1402,10 @@ input.ipt-small {
   display: none;
 }
 
+.tab-switcher > .content > .item:first-child {
+  display: block;
+}
+
 .tab-switcher > .content > .item > .cell {
   display: inline-block;
   min-width: 5em;

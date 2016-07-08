@@ -206,7 +206,8 @@ var vm = new Vue({
             'appPicUrl': data0.list[0]['appPicUrl'],
             'appDemoUrl': data0.list[0]['appDemoUrl'],
             'appType': data0.list[0]['appType'],
-            'appTypeName': data0.list[0]['appTypeName']
+            'appTypeName': data0.list[0]['appTypeName'],
+            'appTypeValue': data0.list[0]['appTypeValue']
           });
         }
         vm.activity.modelText = $on.data('modelText');
@@ -263,7 +264,8 @@ var vm = new Vue({
             'appPicUrl': data0.list[0]['appPicUrl'],
             'appDemoUrl': data0.list[0]['appDemoUrl'],
             'appType': data0.list[0]['appType'],
-            'appTypeName': data0.list[0]['appTypeName']
+            'appTypeName': data0.list[0]['appTypeName'],
+            'appTypeValue': data0.list[0]['appTypeValue']
           });
           vm.activity.modelText = $on.data('modelText');
           vm.activity.appName = $on.data('appName');
@@ -461,7 +463,7 @@ var vm = new Vue({
             if (data.success) {
               vm.jsonActivity = vm.activity.data = data.data;
               setTimeout(function() {
-                $('#activity').val('WEBSITE')
+                $('#activity').val('WEBSITE');
               }, 5);
             } else {
               console.warn('活动数据可能没返回，稍等重试吧');
@@ -487,19 +489,19 @@ var vm = new Vue({
       var dataNow = vm.activity.data[i];
       var dataFirst = dataNow.list[0];
       vm.activity.appName = dataFirst ? dataFirst['appName'] : '';
-      if (dataFirst['appType'] === 'WEBSITE' && dataFirst['appTypeValue'] > '0') {
+      if (dataFirst['appType'] === 'WEBSITE' /* && dataFirst['appTypeValue'] > '0'*/ ) {
         this.activity.content.editShow = true;
         this.activity.content.target = dataFirst['appTypeValue'];
       } else {
         this.activity.content.editShow = false;
       }
       $on.data({
-        'appName': dataNow.list[0]['appName'],
-        'appPicUrl': dataNow.list[0]['appPicUrl'],
-        'appDemoUrl': dataNow.list[0]['appDemoUrl'],
-        'appType': dataNow.list[0]['appType'],
-        'appTypeName': dataNow.list[0]['appTypeName'],
-        'appTypeValue': dataNow.list[0]['appTypeValue']
+        'appName': dataFirst['appName'],
+        'appPicUrl': dataFirst['appPicUrl'],
+        'appDemoUrl': dataFirst['appDemoUrl'],
+        'appType': dataFirst['appType'],
+        'appTypeName': dataFirst['appTypeName'],
+        'appTypeValue': dataFirst['appTypeValue']
       });
       leaveTips.enable();
     },
@@ -516,7 +518,7 @@ var vm = new Vue({
       var i = event.target.selectedIndex;
       this.activity.content.index = i;
       var objData = event.target[i].dataset;
-      if (objData['appType'] === 'WEBSITE' && objData['appTypeValue'] > '0') {
+      if (objData['appType'] === 'WEBSITE' /* && objData['appTypeValue'] > '0'*/ ) {
         this.activity.content.editShow = true;
         this.activity.content.target = objData['appTypeValue'];
       } else {

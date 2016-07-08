@@ -7,6 +7,13 @@
 //     ok:function(){}
 // }).showModal();
 
+var pb = require('progressBar.js');
+pb.show();
+setTimeout(function() {
+  pb.hide();
+}, 1000);
+
+
 //请求等待动画，show的参数为容器，此时作为构造方法
 var waiting = require('waiting');
 

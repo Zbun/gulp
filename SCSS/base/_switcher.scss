@@ -41,6 +41,9 @@
     overflow: hidden;
     >.item {
       display: none;
+      &:first-child {
+        display: block;
+      }
       >.cell {
         display: inline-block;
         min-width: 5em;
