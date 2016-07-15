@@ -10,7 +10,7 @@
   }
   P.prototype.show = function() {
     var progress = document.createElement('div');
-    progress.style = 'position:fixed;left:0;top:0;height:2px;width:0;color:#999;background:#FB6362;transition:.5s;transform:top;box-shadow:0 0 5px;will-change:transform;';
+    progress.style = 'position:fixed;left:0;top:0;height:2px;width:0;color:#999;background:#FB6362;transition:.5s;transform:top;box-shadow:0 0 5px;will-change:transform;z-index:8888;';
     if (this.color) {
       progress.style.background = this.color;
     }
@@ -42,8 +42,8 @@
       return this.entity;
     },
     hide() {
-  this.entity.hide();
-}
+      this.entity.hide();
+    }
 
   };
   module.exports = objExports;

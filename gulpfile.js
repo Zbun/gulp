@@ -11,6 +11,7 @@ var gulp = require('gulp'),
   sourcemaps = require('gulp-sourcemaps'),
   uglify = require('gulp-uglify'),
   sass = require('gulp-sass'),
+  less = require('gulp-less'),
   webpack = require('webpack');
 
 var webpackConfig = Object.create(require('./webpack.config.js'));
@@ -81,8 +82,14 @@ gulp.task('minify', function() {
 
 //outputStyle:compressed,expanded
 gulp.task('sass', function() {
-  return gulp.src('./scss/*.scss')
+  gulp.src('./scss/*.scss')
     .pipe(sass({ outputStyle: cssStyle }).on('error', sass.logError))
+    .pipe(gulp.dest(opts.destPath + 'css'));
+});
+
+gulp.task('less', function() {
+  gulp.src(['src/less/*.less', '!src/less/_*.less'])
+    .pipe(less())
     .pipe(gulp.dest(opts.destPath + 'css'));
 });
 

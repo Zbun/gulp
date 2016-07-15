@@ -157,7 +157,6 @@
           z-index: -1;
           @include trf-origin(bottom);
           @include trf-scale(.8);
-          will-change: transform;
           &:after {
             content: '';
             position: absolute;
@@ -182,8 +181,9 @@
         &.on {
           > .content {
             opacity: 1;
-            z-index: 1;
+            z-index: 0;
             @include trf-scale(1);
+            will-change: transform;
           }
           .on {
             position: relative;

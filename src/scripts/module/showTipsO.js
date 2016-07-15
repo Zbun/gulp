@@ -7,26 +7,22 @@
 
 (function() {
   var showTips = function(content, state, callback, time) {
-    content = content || '操作成功';
+    content = content || '你好';
     time = parseInt(time) || 2500;
     var box = document.createElement('div');
-    var styleBox = 'position: fixed;top: 40%;left: 50%;min-width:150px;max-width:300px;padding: 1em 2em;border: 1px solid;font-size:12px;line-height: 1.5;text-align: center;color: #1fb5ac;background: #fff;-webkit-border-radius: 3px;-moz-border-radius: 3px;border-radius: 3px;z-index: 1028;-webkit-transform: translate(-50%,-50%);transform: translate(-50%,-50%) rotateX(90deg);transition:.35s;opacity:0;will-change:transform;';
+    var styleBox = 'position: fixed;bottom: 30%;left: 50%;min-width:100px;max-width:300px;padding: 0.5em 1em;font-size:12px;line-height: 1.5;text-align: center;color: #fff;background:#777;background: rgba(0,0,0,0.5);border-radius: 1px;z-index: 1028;-webkit-transform: translate(-50%,-50%);transform: translate(-50%,-50%);transition:.35s;opacity:0;will-change:transform;';
     box.style.cssText = styleBox;
     box.classList.add('tips-state');
 
-    var htmlIcon = '<span style="display: inline-block;width: 28px;margin-top: 4px;margin-bottom: 8px;border: 1px solid;font-size: 24px;line-height: 26px;font-family:sans-serif;-webkit-border-radius: 100%;border-radius: 100%;">';
-    if (state === 'cancel' || state === 'error') {
-      box.style.color = '#fb6363';
-      htmlIcon += '!</span>';
-    } else {
-      htmlIcon += '&#x2713</span>';
+    if (state === 'cancel' || state === 'error' || state === 'false') {
+      box.style.background = '#e77777';
+      box.style.background = 'rgba(200,0,0,0.5)';
     }
-
-    box.innerHTML = htmlIcon + '<div>' + content + '</div>';
+    box.innerHTML = '<div>' + content + '</div>';
     document.body.appendChild(box);
     setTimeout(function() {
-      box.style.transform = 'translate(-50%,-50%) rotateX(0)';
-      box.style.opacity = 0.95;
+      box.style.bottom = '31%';
+      box.style.opacity = 1;
     }, 30);
 
     // var opDef=0,deg=95;
@@ -45,7 +41,6 @@
     };
 
     setTimeout(function() {
-      box.style.transform = 'translate(-50%,-50%) rotateX(90deg)';
       box.style.opacity = 0.05;
     }, parseInt(time) - 500);
     setTimeout(function() {

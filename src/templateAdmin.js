@@ -131,6 +131,9 @@ var vm = new Vue({
           vmAgent.hasSubMenu = data.data && data.data[0].subMenuList.length > 0 ? true : false;
           setTimeout(function() {
             drag();
+            if (vm.menu1Length == 0) {
+              $('.footer.menu').find('.add-menu1').find('.add').click();
+            }
             $('.footer.menu').find('.js-toggle:first').mouseup();
           }, 0);
         } else {
@@ -187,6 +190,7 @@ var vm = new Vue({
 
     //切换内容类型时，菜单类型选项写入
     $('.content-type').on('click', '[data-type]', function() {
+
       var $t = $(this);
       var $on = $('.footer.menu').find('.on .on');
       var menuType = $t.data('type');
@@ -195,20 +199,23 @@ var vm = new Vue({
       }
       vm.menuSet.curType = menuType;
       if (menuType === 'APP') {
-        initActivity();
-        vm.activity.isAPP = true;
-        if (!$on.data('modelText')) {
-          var data0 = vm.jsonActivity[0];
-          $on.data({
-            'modelText': data0['modelText'],
-            'modelType': data0['modelType'],
-            'appName': data0.list[0]['appName'],
-            'appPicUrl': data0.list[0]['appPicUrl'],
-            'appDemoUrl': data0.list[0]['appDemoUrl'],
-            'appType': data0.list[0]['appType'],
-            'appTypeName': data0.list[0]['appTypeName'],
-            'appTypeValue': data0.list[0]['appTypeValue']
-          });
+        if (!vm.activity.isAPP) {
+          initActivity();
+          vm.activity.isAPP = true;
+          vm.activity.content.editShow = false;
+          if (!$on.data('modelText')) {
+            var data0 = vm.jsonActivity[0];
+            $on.data({
+              'modelText': data0['modelText'],
+              'modelType': data0['modelType'],
+              'appName': data0.list[0]['appName'],
+              'appPicUrl': data0.list[0]['appPicUrl'],
+              'appDemoUrl': data0.list[0]['appDemoUrl'],
+              'appType': data0.list[0]['appType'],
+              'appTypeName': data0.list[0]['appTypeName'],
+              'appTypeValue': data0.list[0]['appTypeValue']
+            });
+          }
         }
         vm.activity.modelText = $on.data('modelText');
         vm.activity.appName = $on.data('appName');
@@ -220,7 +227,10 @@ var vm = new Vue({
       //   $('.menu-site').focus();
       // }
       $on.data('menuType', menuType);
-      vmAgent.menuSet.siteURL = $on.data('menuContent');
+      vmAgent.menuSet.siteURL = $on.data('menuContent') || 'http://www.eqying.com';
+      if (!$on.data('menuContent')) {
+        $on.data('menuContent', 'http://www.eqying.com');
+      }
     });
 
     //添加一、二级菜单

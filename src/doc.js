@@ -14,15 +14,20 @@ setTimeout(function() {
 }, 1000);
 
 
-//请求等待动画，show的参数为容器，此时作为构造方法
+//1、请求等待动画，show的参数为容器，默认body节点
 var waiting = require('waiting');
-
 waiting.show();
 
 setTimeout(function() {
   waiting.hide();
 }, 2500);
 
+//情形2，实例化一个新class，使用select方法
+var w2 = waiting.select('.main');
+w2.show();
+setTimeout(function() {
+  w2.hide();
+}, 5000);
 
 import cutString from 'cutstring';
 
@@ -87,7 +92,7 @@ require('checkAll.js');
 //顶部提示的，目前只有红色框
 var showTipsOnTop = require('showTipsOnTop.js');
 
-showTipsOnTop('未授权，请重试', '.wrapper');
+showTipsOnTop('未授权，请重试', '.main');
 
 //加载数据的操作小菊花
 var spin = require('spinZ.js');
@@ -105,6 +110,10 @@ var showTips = require('showTipsState');
 // })
 
 showTips('网络错误', 'error');
+
+var showTipsO = require('showTipsO');
+
+showTipsO('你好，网络有点问题', 'false');
 
 //侧滑删除、arg1=对象,arg2=回调,arg3=方向(right,up,down),arg4=偏移距离
 var slideDel = require('slideDelete');
@@ -282,8 +291,39 @@ var Drag={
 	}
 };
 
-[].forEach.call(colsDrag,function(el,index){
-	Drag.evtList.forEach(function(evt,index){
+[].forEach.call(colsDrag,function(el){
+	Drag.evtList.forEach(function(evt){
 		el.addEventListener(evt, Drag.handle[evt],false);
-	})
-})
+	});
+});
+
+  var superPow = function(a, b) {
+    if (a && b) {
+      var base = parseInt(a);
+      if (base > 0) {
+        if (base == 1) {
+          console.log(1);
+          return 1;
+        }
+        if (Array.isArray(b)) {
+          var power = parseInt(b.join(''));
+          if (power >= 0) {
+            while (--power > 0) {
+              a *= base;
+            }
+          } else {
+            consle.warn('Arg b is not an array of pure number');
+          }
+          console.log(a);
+          return a;
+        } else {
+          console.warn('Args b is required an array');
+        }
+      } else {
+        console.warn('The first arg is required a number');
+      }
+    } else {
+      console.warn('Two args required');
+    }
+  };
+  superPow(2, [1, 0]);

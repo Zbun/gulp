@@ -1713,14 +1713,6 @@ select {
 }
 
 @-moz-document url-prefix() {
-  .set > .item > .content {
-    float: left;
-  }
-  .set > .item:after {
-    content: '';
-    display: table;
-    clear: both;
-  }
   .info-express {
     padding-left: 0 !important;
   }
@@ -2518,7 +2510,6 @@ select {
   transform-origin: bottom;
   -webkit-transform: scale(0.8);
   transform: scale(0.8);
-  will-change: transform;
 }
 
 .show .footer.menu > .item > .content:after {
@@ -2546,9 +2537,10 @@ select {
 
 .show .footer.menu > .item.on > .content {
   opacity: 1;
-  z-index: 1;
+  z-index: 0;
   -webkit-transform: scale(1);
   transform: scale(1);
+  will-change: transform;
 }
 
 .show .footer.menu > .item.on .on {

@@ -1713,14 +1713,6 @@ select {
 }
 
 @-moz-document url-prefix() {
-  .set > .item > .content {
-    float: left;
-  }
-  .set > .item:after {
-    content: '';
-    display: table;
-    clear: both;
-  }
   .info-express {
     padding-left: 0 !important;
   }
