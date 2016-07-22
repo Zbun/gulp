@@ -9,6 +9,7 @@
   <!-- <script src="../../../scripts/lib/d3/d3.js"></script> -->
   <script src="../../../scripts/lib/d3/d3.v3.min.js"></script>
   <script src="../../../scripts/lib/moment.min.js"></script>
+  <!-- <script src="/src/scripts/kAnalytics.js"></script> -->
   <style>
   .main.d3> .item >.title {
     margin: 0;
@@ -39,6 +40,26 @@
   <a href="http://www.google.com">我是<object><a href="http://www.v2ex.com">我是V2ex</a>
   </object>Google
   </a>
+  <input type="checkbox" id='ckb' value='true'>
+  <script>
+  //加入页面
+  //_ka={c1:'ccc'}，用于自定义一些需要接收的键值对
+  //like:
+  var _ka = [{
+    lt: 0
+  }];
+  _ka.push({
+    ckb: document.getElementById('ckb').value
+  });
+
+  (function() {
+    var _kas = document.createElement('script');
+    _kas.async = true;
+    _kas.src = 'http://localhost:2015/src/scripts/kAnalytics.js?v=' + Math.random(); //要改成kAnalystics路径
+    var s0 = document.getElementsByTagName('script')[0];
+    s0.parentNode.insertBefore(_kas, s0);
+  })();
+  </script>
   <ol class="main d3">
     <li class="item">
       <h3 class="title">Three circles:</h3>Three Three

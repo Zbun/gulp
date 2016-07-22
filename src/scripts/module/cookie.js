@@ -15,7 +15,7 @@ module.exports = {
   set(key, value) {
     if (key && value) {
       document.cookie = key + '=' + value;
-      return document.cookie;
+      return value;
     }
   }
 };

@@ -14,6 +14,7 @@
     var callback = arg.callback || ''; //成功回调
     var errorCallback = arg.errorCallback || ''; //失败回调
     if (obj) {
+      var nodeCopy = obj.cloneNode();
       obj.addEventListener('change', function() {
         //构造加载进度HTML
         var progressBg = document.createElement('div');
@@ -24,7 +25,6 @@
         progressBarInner.style.cssText = 'position:absolute;left:0;top:0;bottom:0;background:#56C7A8;transition:.3s;';
         var progressNum = document.createElement('p');
         var isReady = true;
-        var selfFunc = arguments.callee;
         //FormData上传
         if (window.FormData) {
           if (typeof beforeUpload == 'function') {
@@ -40,17 +40,15 @@
                 progressBg.parentNode.removeChild(progressBg);
                 var data = JSON.parse(xhr.response);
                 typeof callback == 'function' && callback(data);
-                var newNode = obj.cloneNode(true);
-                obj.parentNode.replaceChild(newNode, obj);
+                obj.parentNode.replaceChild(nodeCopy, obj);
                 html5Upload({
-                  obj: newNode,
+                  obj: nodeCopy,
                   url: url,
                   callback: callback,
                   beforeUpload: beforeUpload,
                   name: name,
                   errorCallback: errorCallback
                 });
-                obj.removeEventListener('change', selfFunc);
               } else {
                 typeof errorCallback == 'function' && errorCallback();
                 console.log('上传失败');

@@ -405,8 +405,36 @@
 	      var arrMenu1 = [];
 	      var menu1 = $('.footer.menu').children('.item:not(.add-menu1)').get();
 	      var arrErrorList = [];
-	      menu1.forEach(function (element, index) {
+	      var isDel = false;
+	      $.ajax({
+	        type: 'POST',
+	        url: '/templatemenu/templateIsExist.html',
+	        dataType: 'JSON',
+	        async: false,
+	        data: {
+	          templateId: tID
+	        },
+	        success: function success(data) {
+	          if (data.success) {
+	            isDel = false;
+	          } else {
+	            showTipsWarning(data.msg, 'error');
+	            isDel = true;
+	          }
+	        },
+	        error: function error() {
+	          showTipsWarning('保存失败，请稍候重试');
+	        },
+	        complete: function complete() {
+	          $t.removeClass('disabled');
+	        }
+	      });
 
+	      if (isDel) {
+	        return;
+	      }
+
+	      menu1.forEach(function (element, index) {
 	        arrMenu1[index] = {};
 	        var arrMenu2 = [];
 	        var $element = $(element),
@@ -538,6 +566,14 @@
 	              vm.jsonActivity = vm.activity.data = data.data;
 	              setTimeout(function () {
 	                $('#activity').val('WEBSITE');
+	                setTimeout(function () {
+	                  var $on = $('.footer.menu').find('>.on').find('.on');
+	                  var objData = $('#activityContent')[0].options[0].dataset;
+	                  Object.keys(objData).forEach(function (el) {
+	                    $on.data(el, objData[el]);
+	                  });
+	                  vm.activity.appName = objData['appName'];
+	                }, 10);
 	              }, 5);
 	            } else {
 	              console.warn('活动数据可能没返回，稍等重试吧');
@@ -546,7 +582,28 @@
 	        },
 	        okValue: '已完成',
 	        cancelValue: '未完成',
-	        cancel: function cancel() {}
+	        cancel: function cancel() {
+	          $.post(API.activity.get, {
+	            templateId: tID
+	          }, function (data) {
+	            if (data.success) {
+	              vm.jsonActivity = vm.activity.data = data.data;
+	              setTimeout(function () {
+	                $('#activity').val('WEBSITE');
+	                setTimeout(function () {
+	                  var $on = $('.footer.menu').find('>.on').find('.on');
+	                  var objData = $('#activityContent')[0].options[0].dataset;
+	                  Object.keys(objData).forEach(function (el) {
+	                    $on.data(el, objData[el]);
+	                  });
+	                  vm.activity.appName = objData['appName'];
+	                }, 10);
+	              }, 5);
+	            } else {
+	              console.warn('活动数据可能没返回，稍等重试吧');
+	            }
+	          });
+	        }
 	      }).showModal();
 	      return false;
 	    },

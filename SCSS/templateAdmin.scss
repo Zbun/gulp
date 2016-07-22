@@ -139,9 +139,8 @@
             }
           }
           > .inner {
-            max-width: 10em;
+            max-width: 5em;
             margin: 0 auto;
-            padding: 0 5px;
             @extend .text-ellipsis;
           }
         }
