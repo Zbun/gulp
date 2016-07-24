@@ -1,0 +1,6 @@
+@import '_variables.scss';
+.drag {
+  &.over {
+    border: 2px dashed #777;
+  }
+}

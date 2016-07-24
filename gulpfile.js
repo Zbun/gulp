@@ -4,14 +4,12 @@ var gulp = require('gulp'),
   // del = require('del'),
   // rename = require('gulp-rename'),
   // revAppend = require('gulp-rev-append'),
-  // jshint = require('gulp-jshint'),
   // cleanCSS = require('gulp-clean-css'),
   gutil = require('gulp-util'),
   minify = require('gulp-minify'),
   sourcemaps = require('gulp-sourcemaps'),
   uglify = require('gulp-uglify'),
   sass = require('gulp-sass'),
-  less = require('gulp-less'),
   htmlreplace = require('gulp-html-replace'),
   webpack = require('webpack');
 
@@ -97,11 +95,12 @@ gulp.task('htmlreplace', function() {
     .pipe(gulp.dest(opts.destPath + 'htmls'));
 });
 
-gulp.task('less', function() {
-  gulp.src(['src/less/*.less', '!src/less/_*.less'])
-    .pipe(less())
-    .pipe(gulp.dest(opts.destPath + 'css'));
-});
+// var less = require('gulp-less');
+// gulp.task('less', function() {
+//   gulp.src(['src/less/*.less', '!src/less/_*.less'])
+//     .pipe(less())
+//     .pipe(gulp.dest(opts.destPath + 'css'));
+// });
 
 //PostCSS、未成功
 // var postcss = require('gulp-postcss'),
