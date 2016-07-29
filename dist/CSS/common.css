@@ -172,6 +172,10 @@ img {
   vertical-align: middle;
 }
 
+.m0 {
+  margin: 0;
+}
+
 .m5 {
   margin: 5px;
 }
@@ -604,6 +608,21 @@ button {
   color: #fff;
 }
 
+.btn-ok-o {
+  color: #09BB07;
+  background: #fff;
+  border-color: #08a706;
+}
+
+.btn-ok-o:visited {
+  color: #09BB07;
+}
+
+.btn-ok-o:hover {
+  background: #09BB07;
+  color: #fff;
+}
+
 .btn-warning-o {
   color: #ff9402;
   background: #fff;
@@ -640,6 +659,23 @@ button {
   color: #888;
   background: #eee;
   border-color: #e0e0e0;
+}
+
+.btn-o,
+input.ipt-o {
+  background: transparent;
+  border-color: #fff;
+  color: #fff;
+}
+
+.btn-o:hover, .btn-o:focus, .btn-o:active,
+input.ipt-o:hover,
+input.ipt-o:focus,
+input.ipt-o:active {
+  color: #fff;
+  background: transparent;
+  box-shadow: 0 0 3px;
+  border-color: #fff;
 }
 
 .bg-default {
@@ -1015,6 +1051,19 @@ button {
   width: 2px;
   height: auto;
   margin-left: -1px;
+}
+
+.tags-action.tags-o .tag {
+  border-color: #fff;
+  color: #fff;
+}
+
+.tags-action.tags-o .tag .icon {
+  background: #fff;
+}
+
+.tags-action.tags-o .tag .icon:before, .tags-action.tags-o .tag .icon:after {
+  background: #ff9402;
 }
 
 body {
@@ -2090,6 +2139,63 @@ select {
 
 .pagination .disabled > a:hover {
   background: #fff;
+}
+
+.pagination .prev a,
+.pagination .next a {
+  color: transparent !important;
+}
+
+.pagination .prev a:before, .pagination .prev a:after,
+.pagination .next a:before,
+.pagination .next a:after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  border-style: solid;
+  border-width: 6px 7px 6px 0;
+  border-color: transparent #666;
+  margin-left: -4px;
+  margin-top: -6px;
+}
+
+.pagination .prev a:after,
+.pagination .next a:after {
+  border-color: transparent #fff;
+  margin-left: -2px;
+}
+
+.pagination .prev a:hover:before,
+.pagination .next a:hover:before {
+  border-color: transparent #fff;
+}
+
+.pagination .prev a:hover:after,
+.pagination .next a:hover:after {
+  border-color: transparent #08a7ec;
+}
+
+.pagination .prev.disabled a:before,
+.pagination .next.disabled a:before {
+  border-color: transparent #ccc;
+}
+
+.pagination .prev.disabled a:after,
+.pagination .next.disabled a:after {
+  border-color: transparent #fff;
+}
+
+.pagination .prev.next a:before, .pagination .prev.next a:after,
+.pagination .next.next a:before,
+.pagination .next.next a:after {
+  border-width: 6px 0 6px 7px;
+  margin-left: -3px;
+}
+
+.pagination .prev.next a:after,
+.pagination .next.next a:after {
+  margin-left: -5px;
 }
 
 .pagination .error {

@@ -121,7 +121,7 @@ var pagination = function($, window, document, undefined) {
         listItems.push(this.buildItem('prev', prev));
       }
 
-      listItems.push(this.buildItem('page', 1));
+      this.options.visiblePages > 0 && listItems.push(this.buildItem('page', 1));
 
       if (isSplitShow && pages.numeric[0] > 1) {
         listItems.push(this.buildItem('split'), '');
@@ -135,7 +135,7 @@ var pagination = function($, window, document, undefined) {
         listItems.push(this.buildItem('split'), '');
       }
 
-      this.options.totalPages > 1 && listItems.push(this.buildItem('page', this.options.totalPages));
+      this.options.totalPages > 1 && this.options.visiblePages > 0 && listItems.push(this.buildItem('page', this.options.totalPages));
 
       if (this.options.next) {
         var next = pages.currentPage < this.options.totalPages ? pages.currentPage + 1 : this.options.loop ? 1 : this.options.totalPages;
@@ -339,8 +339,8 @@ var pagination = function($, window, document, undefined) {
     href: false,
     hrefVariable: '{{number}}',
     first: false,
-    prev: 'Prev',
-    next: 'Next',
+    prev: '<',
+    next: '>',
     last: false,
     goVal: 'Go',
     loop: false,

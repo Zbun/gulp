@@ -146,8 +146,10 @@ var obj1 = {
 require('pagination');
 $('#pagination').twbsPagination({
   totalPages: 15,
-  visiblePages: 7
+  visiblePages: 0,
+  goVal: ''
 });
+
 
 
 //加载数据时右上角提示，可在show中加回调方法

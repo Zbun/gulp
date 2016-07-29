@@ -42,6 +42,11 @@
   align-items: center;
 }
 
+@mixin flex-direction-column() {
+  -webkit-flex-direction: column;
+  flex-direction: column;
+}
+
 @mixin flex($r: 1) {
   -webkit-box-flex: $r;
   -webkit-flex: $r;

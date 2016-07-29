@@ -82,7 +82,9 @@ gulp.task('minify', function() {
 //outputStyle:compressed,expanded
 gulp.task('sass', function() {
   gulp.src('./scss/*.scss')
-    .pipe(sass({ outputStyle: cssStyle }).on('error', sass.logError))
+    .pipe(sass({
+      outputStyle: cssStyle
+    }).on('error', sass.logError))
     .pipe(gulp.dest(opts.destPath + 'css'));
 });
 
@@ -134,7 +136,7 @@ gulp.task('browserSync', ['sass', 'webpack'], function() {
     server: {
       baseDir: './'
     },
-    port: 2016
+    port: 2018
   });
   gulp.watch('./scss/**/*.scss', ['sass']);
   gulp.watch('./src/**/*.*', ['webpack']);
