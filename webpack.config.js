@@ -2,7 +2,9 @@ var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
-  entry: { /*webTempate: './src/main.js' */ doc: './src/doc.js' },
+  entry: { /*webTempate: './src/main.js' */
+    doc: './src/doc.js'
+  },
   output: {
     path: path.join(__dirname, './dist/scripts/bundle/'),
     filename: '[name].bundle.js',
