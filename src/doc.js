@@ -171,6 +171,11 @@ const a1=[{
 	last:'Cook'
 }];
 
+
+var formDataUpload=require('formDataUpload.js');
+formDataUpload($('.uploader'));
+
+
 //上传文件等操作
 var regExpFilter=/image\/(?:(?:jpe?g)|(?:gif)|(?:png))$/;
 

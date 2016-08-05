@@ -1,7 +1,7 @@
 @charset "utf-8";
-@import 'baseSCSS';
-@import 'animation';
-@import 'tag';
+@import 'baseSCSS.scss';
+@import '_tag.scss';
+@import '_table.scss';
 $font-size: 12px;
 $line-height: (20/12);
 $btn-line-height:26px;
@@ -9,7 +9,6 @@ $btn-big-font-size:16px;
 $btn-big-line-height:34px;
 $btn-bigger-font-size:18px;
 $btn-bigger-line-height:38px;
-$color-table-anchor:#0990ca;
 ::selection {
   // background:lightcoral;
   // color: #fff;
@@ -44,10 +43,7 @@ select,
 }
 
 .btn {
-  font-size: $font-size;
   line-height: $btn-line-height;
-  padding-top: 0;
-  padding-bottom: 0;
   &.big {
     padding: 0 1em;
     min-width: 5em;
@@ -110,113 +106,6 @@ a {
 .content-small {
   padding-left: 130px;
   padding-right: 130px;
-}
-
-.table {
-  thead {
-    tr {
-      td,
-      th {
-        padding: 0 5px;
-        border: 0;
-        border-bottom: 1px solid $color-border;
-        line-height: 34px;
-        white-space: nowrap;
-        vertical-align: middle;
-      }
-      th {
-        border: 0;
-        font-weight: 400;
-        background: $color-table-thead;
-        color: $color-table-thead-th;
-      }
-    }
-  }
-  tbody {
-    tr {
-      th,
-      td {
-        padding: 6px 4px;
-        border: 0;
-        border-bottom: 1px solid $color-border;
-        line-height: 32px;
-        p {
-          line-height: 24px;
-        }
-      }
-    }
-  }
-  .action-field {
-    white-space: nowrap;
-    .item {
-      margin: 4px;
-      padding: 2px 4px;
-      text-decoration: none;
-      -webkit-border-radius: $border-radius;
-      -moz-border-radius: $border-radius;
-      border-radius: $border-radius;
-      &:hover {
-        background: $color-table-anchor;
-        color: #fff;
-      }
-    }
-  }
-}
-
-.table-radian {
-  border-collapse: separate;
-  border-spacing: 0;
-  -webkit-border-radius: $border-radius;
-  -moz-border-radius: $border-radius;
-  border-radius: $border-radius;
-}
-
-.table-bordered {
-  border: 1px solid $color-table-border;
-  >thead,
-  >tbody {
-    >tr {
-      td {
-        border: 0;
-        border-top: 1px solid $color-table-border;
-      }
-      th {
-        border: 0;
-      }
-    }
-  }
-  th,
-  td {
-    border-top: 1px solid $color-table-border;
-  }
-}
-
-.table-bordered-divide {
-  tbody {
-    tr {
-      th,
-      td {
-        border-left: 1px solid $color-table-border;
-        &:first-child {
-          border-left: 0;
-        }
-      }
-    }
-  }
-}
-
-.table-hover {
-  tr {
-    &:hover {
-      background: $color-table-tr-hover;
-    }
-  }
-}
-
-.table-list {
-  >.table {
-    margin-bottom: 16px;
-  }
 }
 
 .search-field {

@@ -8,7 +8,8 @@
   var html5Upload = function() {
     var arg = arguments[0];
     var obj = arg.obj; //作用于上传按钮对象
-    var name = obj.name || 'image'; //formData 格式
+    var name = arg.key || obj.name || 'image'; //formData 格式
+    // var maxSize = arg.maxSize; // 最大尺寸
     var url = arg.url || ''; //上传服务器
     var beforeUpload = arg.beforeUpload || ''; //上传前执行，需要返回值
     var callback = arg.callback || ''; //成功回调

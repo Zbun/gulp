@@ -1,0 +1,107 @@
+@import "_variables.scss";
+.table {
+  thead {
+    tr {
+      td,
+      th {
+        padding: 0 5px;
+        border: 0;
+        border-bottom: 1px solid $color-border;
+        line-height: 34px;
+        white-space: nowrap;
+        vertical-align: middle;
+      }
+      th {
+        border: 0;
+        font-weight: 400;
+        background: $color-table-thead;
+        color: $color-table-thead-th;
+      }
+    }
+  }
+  tbody {
+    tr {
+      th,
+      td {
+        padding: 6px 4px;
+        border: 0;
+        border-bottom: 1px solid $color-border;
+        line-height: 32px;
+        p {
+          line-height: 24px;
+        }
+      }
+    }
+  }
+  .action-field {
+    white-space: nowrap;
+    .item {
+      margin: 4px;
+      padding: 2px 4px;
+      text-decoration: none;
+      -webkit-border-radius: $border-radius;
+      -moz-border-radius: $border-radius;
+      border-radius: $border-radius;
+      &:hover {
+        background: $color-table-anchor;
+        color: #fff;
+      }
+    }
+  }
+}
+
+.table-radian {
+  border-collapse: separate;
+  border-spacing: 0;
+  -webkit-border-radius: $border-radius;
+  -moz-border-radius: $border-radius;
+  border-radius: $border-radius;
+}
+
+.table-bordered {
+  border: 1px solid $color-table-border;
+  >thead,
+  >tbody {
+    >tr {
+      td {
+        border: 0;
+        border-top: 1px solid $color-table-border;
+      }
+      th {
+        border: 0;
+      }
+    }
+  }
+  th,
+  td {
+    border-top: 1px solid $color-table-border;
+  }
+}
+
+.table-bordered-divide {
+  tbody {
+    tr {
+      th,
+      td {
+        border-left: 1px solid $color-table-border;
+        &:first-child {
+          border-left: 0;
+        }
+      }
+    }
+  }
+}
+
+.table-hover {
+  tr {
+    &:hover {
+      background: $color-table-tr-hover;
+    }
+  }
+}
+
+.table-list {
+  >.table {
+    margin-bottom: 16px;
+  }
+}

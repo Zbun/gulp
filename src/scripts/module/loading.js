@@ -6,6 +6,7 @@
  */
 ;
 (function(window, document) {
+
   function Constructor(content, callback) {
     var content1 = typeof content === 'string' ? content : '数据加载中，请稍等...';
     var box = document.createElement('div');

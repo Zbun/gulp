@@ -97,6 +97,18 @@ gulp.task('htmlreplace', function() {
     .pipe(gulp.dest(opts.destPath + 'htmls'));
 });
 
+//预处理link标签导入通用html
+var preLink = require('gulp-pre-link');
+var htmlConfig = {
+  base: './src/htmls/components/',
+  src: 'htmls/pc/'
+};
+gulp.task('preLink', function() {
+  gulp.src('./src/' + htmlConfig.src + '*.html')
+    .pipe(preLink({ baseUrl: htmlConfig.base }))
+    .pipe(gulp.dest(opts.destPath + htmlConfig.src));
+});
+
 // var less = require('gulp-less');
 // gulp.task('less', function() {
 //   gulp.src(['src/less/*.less', '!src/less/_*.less'])
@@ -130,7 +142,7 @@ gulp.task('webpack', function(callback) {
 // gulp.watch('app/src/**/*.js', ['webpack']);
 
 //根据文件类型变动，自动刷新浏览器
-gulp.task('browserSync', ['sass', 'webpack'], function() {
+gulp.task('browserSync', ['sass', 'webpack', 'preLink'], function() {
   browserSync({
     files: ['**/*.html', '**/*.css', '**/*.js', '!**.less', '!**.coffee', '!**.SCSS', '!node_modules/**.*', '!src/**.*', '!webpack.config.js'],
     server: {
@@ -138,6 +150,7 @@ gulp.task('browserSync', ['sass', 'webpack'], function() {
     },
     port: 2018
   });
+  gulp.watch('./src/htmls/**/*.html', ['preLink']);
   gulp.watch('./scss/**/*.scss', ['sass']);
   gulp.watch('./src/**/*.*', ['webpack']);
   //gulp.watch('./src/scripts/**/*.js', ['rev']);

@@ -221,6 +221,9 @@
 		last: 'Cook'
 	}];
 
+	var formDataUpload = __webpack_require__(18);
+	formDataUpload($('.uploader'));
+
 	//上传文件等操作
 	var regExpFilter = /image\/(?:(?:jpe?g)|(?:gif)|(?:png))$/;
 
@@ -396,6 +399,7 @@
 	 */
 	;
 	(function (window, document) {
+
 	  function Constructor(content, callback) {
 	    var content1 = typeof content === 'string' ? content : '数据加载中，请稍等...';
 	    var box = document.createElement('div');
@@ -972,7 +976,7 @@
 	    content = content || '操作成功';
 	    time = parseInt(time) || 2500;
 	    var box = document.createElement('div');
-	    var styleBox = 'position: fixed;top: 40%;left: 50%;min-width:150px;max-width:300px;padding: 1em 2em;border: 1px solid;font-size:12px;line-height: 1.5;text-align: center;color: #1fb5ac;background: #fff;-webkit-border-radius: 3px;-moz-border-radius: 3px;border-radius: 3px;z-index: 1028;-webkit-transform: translate(-50%,-50%);transform: translate(-50%,-50%) rotateX(90deg);transition:.35s;opacity:0;will-change:transform;';
+	    var styleBox = 'position: fixed;top: 40%;left: 50%;min-width:150px;max-width:300px;padding: 1em 2em;border: 1px solid;font-size:12px;line-height: 1.5;text-align: center;color: #1fb5ac;background: #fff;-webkit-border-radius: 3px;-moz-border-radius: 3px;border-radius: 3px;z-index: 10028;-webkit-transform: translate(-50%,-50%);transform: translate(-50%,-50%) rotateX(90deg);transition:.35s;opacity:0;will-change:transform;';
 	    box.style.cssText = styleBox;
 	    box.classList.add('tips-state');
 
@@ -1145,6 +1149,94 @@
 /***/ function(module, exports) {
 
 	var pagination=function(t,s,i,e){"use strict";var a=t.fn.twbsPagination,o=function(i,e){if(this.$element=t(i),this.options=t.extend({},t.fn.twbsPagination.defaults,e),this.options.startPage<1||this.options.startPage>this.options.totalPages)throw new Error("Start page option is incorrect");if(this.options.totalPages=parseInt(this.options.totalPages),isNaN(this.options.totalPages))throw new Error("Total pages option is not correct!");if(this.options.visiblePages=parseInt(this.options.visiblePages),isNaN(this.options.visiblePages))throw new Error("Visible pages option is not correct!");if(this.options.totalPages<this.options.visiblePages&&(this.options.visiblePages=this.options.totalPages),this.options.onPageClick instanceof Function&&this.$element.first().on("page",this.options.onPageClick),this.options.href){var a,o=this.options.href.replace(/[-\/\\^$*+?.|[\]]/g,"\\$&");o=o.replace(this.options.hrefVariable,"(\\d+)"),null!=(a=new RegExp(o,"i").exec(s.location.href))&&(this.options.startPage=parseInt(a[1],10))}var n="function"==typeof this.$element.prop?this.$element.prop("tagName"):this.$element.attr("tagName");return"UL"===n?this.$listContainer=this.$element:this.$listContainer=t("<ul></ul>"),this.$listContainer.addClass(this.options.paginationClass),this.$go=t('<ul class="page-go" style="position:absolute;margin-left:30px;"/>'),"UL"!==n&&(this.$element.append(this.$listContainer),this.options.goVal&&(this.$go.addClass(this.options.paginationClass).html('<li><input type="number" style="width:4em"/><a class="btn" style="float:none;">'+this.options.goVal+"</a></li>"),this.$element.append(this.$go))),this.render(this.getPages(this.options.startPage)),this.setupEvents(),this.options.initiateStartPageClick&&this.$element.trigger("page",this.options.startPage),this};o.prototype={constructor:o,destroy:function(){return this.$element.empty(),this.$element.removeData("twbs-pagination"),this.$element.off("page"),this.$element.find("input,.btn,select").each(function(){t(this).off()}),this},show:function(t){if(1>t||t>this.options.totalPages)throw new Error("Page is incorrect.");return this.render(this.getPages(t)),this.setupEvents(),this.$element.trigger("page",t),this},buildListItems:function(t){var s=[],i=this.options.totalPages>this.options.visiblePages;if(this.options.prev){var e=t.currentPage>1?t.currentPage-1:this.options.loop?this.options.totalPages:1;s.push(this.buildItem("prev",e))}this.options.visiblePages>0&&s.push(this.buildItem("page",1)),i&&t.numeric[0]>1&&s.push(this.buildItem("split"),"");for(var a=1;a<t.numeric.length-1;a++)s.push(this.buildItem("page",t.numeric[a]));if(i&&t.numeric[a]<this.options.totalPages&&s.push(this.buildItem("split"),""),this.options.totalPages>1&&this.options.visiblePages>0&&s.push(this.buildItem("page",this.options.totalPages)),this.options.next){var o=t.currentPage<this.options.totalPages?t.currentPage+1:this.options.loop?1:this.options.totalPages;s.push(this.buildItem("next",o))}return s},buildItem:function(s,i){var e=t("<li></li>"),a=t("<a></a>"),o=null;switch(s){case"split":o=this.options.split,e.addClass(this.options.splitClass);break;case"page":o=i,e.addClass(this.options.pageClass);break;case"first":o=this.options.first,e.addClass(this.options.firstClass);break;case"prev":o=this.options.prev,e.addClass(this.options.prevClass);break;case"next":o=this.options.next,e.addClass(this.options.nextClass);break;case"last":o=this.options.last,e.addClass(this.options.lastClass)}return e.data("page",i),e.data("page-type",s),"split"!==s?e.append(a.attr("href",this.makeHref(i)).html(o)):e=t('<li class="split" style="padding:0;vertical-align:middle;"><a style="min-width:auto;padding:10px 0 0;border:0;margin:0 8px;line-height:1;color:#333;background:#fff">...</a></li>'),e},getPages:function(t){var s=[],i=Math.floor(this.options.visiblePages/2),e=t-i+1-this.options.visiblePages%2,a=t+i;0>=e&&(e=1,a=this.options.visiblePages),a>this.options.totalPages&&(e=this.options.totalPages-this.options.visiblePages+1,a=this.options.totalPages);for(var o=e;a>=o;)s.push(o),o++;return{currentPage:t,numeric:s}},render:function(s){var i=this;this.$listContainer.children().remove(),this.$listContainer.append(this.buildListItems(s)),this.$listContainer.children().each(function(){var e=t(this),a=e.data("page-type");switch(a){case"page":e.data("page")===s.currentPage&&e.addClass(i.options.activeClass);break;case"first":e.toggleClass(i.options.disabledClass,1===s.currentPage);break;case"last":e.toggleClass(i.options.disabledClass,s.currentPage===i.options.totalPages);break;case"prev":e.toggleClass(i.options.disabledClass,!i.options.loop&&1===s.currentPage);break;case"next":e.toggleClass(i.options.disabledClass,!i.options.loop&&s.currentPage===i.options.totalPages);break;case"split":}})},setupEvents:function(){var s=this;this.$listContainer.find("li").each(function(){var i=t(this);return i.off(),i.hasClass(s.options.disabledClass)||i.hasClass(s.options.activeClass)?void i.on("click",!1):void i.click(function(t){!s.options.href&&t.preventDefault(),parseInt(i.data("page"))&&s.show(parseInt(i.data("page")))})}),this.options.goVal&&(s.$go.find("input,.btn").each(function(){t(this).off()}),this.$go.find(".btn").click(function(){var i=(t(this),parseInt(s.$go.find("input").val()));i>0&&i<=s.options.totalPages?(s.show(i),s.$go.find("input").val(i)):s.$go.find("input").addClass("error").focus()}),this.$go.find("input").keydown(function(i){var e=t(this);e.removeClass("error"),13==i.keyCode&&s.$go.find(".btn").click()}).blur(function(){t(this).removeClass("error")}))},makeHref:function(t){return this.options.href?this.options.href.replace(this.options.hrefVariable,t):"javascript:;"}},t.fn.twbsPagination=function(s){var i,a=Array.prototype.slice.call(arguments,1),n=t(this),l=n.data("twbs-pagination"),r="object"==typeof s&&s;if(l){l.destroy();var p=t.extend({},l.options,r);n.data("twbs-pagination",l=new o(this,p))}else n.data("twbs-pagination",l=new o(this,r));return"string"==typeof s&&(i=l[s].apply(l,a)),i===e?n:i},t.fn.twbsPagination.defaults={totalPages:0,startPage:1,visiblePages:5,initiateStartPageClick:!0,href:!1,hrefVariable:"{{number}}",first:!1,prev:"<",next:">",last:!1,goVal:"Go",loop:!1,onPageClick:null,paginationClass:"pagination",nextClass:"next",prevClass:"prev",lastClass:"last",firstClass:"first",pageClass:"page",pageSize:10,activeClass:"active",disabledClass:"disabled",split:"...",splitClass:"split"},t.fn.twbsPagination.Constructor=o,t.fn.twbsPagination.noConflict=function(){return t.fn.twbsPagination=a,this}};pagination(window.jQuery,window,document),"object"==typeof module&&module.exports?module.exports=pagination(window.jQuery,window,document):"";
+
+/***/ },
+/* 18 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(module) {'use strict';
+
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+
+	/**
+	 * HTML5 formdata upload method
+	 * @author Zhao Liubin
+	 * @date   2016-05-19
+	 * @return {[type]}
+	 */
+	(function () {
+	  var html5Upload = function html5Upload() {
+	    var arg = arguments[0];
+	    var obj = arg.obj; //作用于上传按钮对象
+	    var name = arg.key || obj.name || 'image'; //formData 格式
+	    // var maxSize = arg.maxSize; // 最大尺寸
+	    var url = arg.url || ''; //上传服务器
+	    var beforeUpload = arg.beforeUpload || ''; //上传前执行，需要返回值
+	    var callback = arg.callback || ''; //成功回调
+	    var errorCallback = arg.errorCallback || ''; //失败回调
+	    if (obj) {
+	      var nodeCopy = obj.cloneNode();
+	      obj.addEventListener('change', function () {
+	        //构造加载进度HTML
+	        var progressBg = document.createElement('div');
+	        progressBg.style.cssText = 'position:fixed;left:50%;top:50%;padding:10px 40px 0;border:1px solid #666;box-shadow:inset 0 0 1px #fff;border-radius:4px;text-align:center;color:#fff;background:rgba(0,0,0,.5);z-index:123;transform:translate(-50%,-50%);';
+	        var progressBarOuter = document.createElement('div');
+	        progressBarOuter.style.cssText = 'position:relative;height:6px;width:100px;border-radius:6px;border:1px solid #ddd;';
+	        var progressBarInner = document.createElement('span');
+	        progressBarInner.style.cssText = 'position:absolute;left:0;top:0;bottom:0;background:#56C7A8;transition:.3s;';
+	        var progressNum = document.createElement('p');
+	        var isReady = true;
+	        //FormData上传
+	        if (window.FormData) {
+	          if (typeof beforeUpload == 'function') {
+	            isReady = beforeUpload(obj);
+	          }
+	          if (isReady) {
+	            var formData = new FormData();
+	            formData.append(name, obj.files[0]);
+	            var xhr = new XMLHttpRequest();
+	            xhr.open('POST', url);
+	            xhr.onload = function () {
+	              if (xhr.status === 200) {
+	                progressBg.parentNode.removeChild(progressBg);
+	                var data = JSON.parse(xhr.response);
+	                typeof callback == 'function' && callback(data);
+	                obj.parentNode.replaceChild(nodeCopy, obj);
+	                html5Upload({
+	                  obj: nodeCopy,
+	                  url: url,
+	                  callback: callback,
+	                  beforeUpload: beforeUpload,
+	                  name: name,
+	                  errorCallback: errorCallback
+	                });
+	              } else {
+	                typeof errorCallback == 'function' && errorCallback();
+	                console.log('上传失败');
+	              }
+	            };
+
+	            //加载进度事件
+	            xhr.upload.onprogress = function (event) {
+	              if (event.lengthComputable) {
+	                document.body.appendChild(progressBg);
+	                var complete = (event.loaded / event.total * 100 | 0) + '%';
+	                progressBarInner.style.width = complete;
+	                progressNum.innerHTML = '已完成：' + complete;
+	                progressBarOuter.innerHTML = progressBarInner.outerHTML;
+	                progressBg.innerHTML = progressBarOuter.outerHTML + progressNum.outerHTML;
+	              }
+	            };
+	            xhr.send(formData);
+	          }
+	        }
+	      });
+	    }
+	  };
+
+	  ( false ? 'undefined' : _typeof(module)) == 'object' && module.exports ? module.exports = html5Upload : window.html5Upload = html5Upload;
+	})();
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)(module)))
 
 /***/ }
 /******/ ]);

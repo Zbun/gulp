@@ -10,7 +10,6 @@
   <link rel="stylesheet" href="../dist/css/common.css">
   <style>
   .row {
-    padding: 10px;
     counter-reset: contentTitleL2;
   }
   
@@ -63,7 +62,7 @@
 </head>
 
 <body>
-  <div class="wrapper">
+  <div class="wrapper limited">
     <article class="main">
       <div class="row">
         <h2 class="content-title">
@@ -74,13 +73,14 @@
       </div>
       <section class="body">
         <div class="row">
-          <h2 class="content-title">按钮篇</h2>
+          <h2 class="content-title">按钮篇 (<span class="text-danger">_btn.scss</span>)</h2>
           <div class="l2">
             <h3 class="content-title-l2">
                         单纯的按钮
                     </h3>
             <div class="btn-group mt5">
               <div class="fr search-field">
+                <span class="text-danger">  (basePC.scss:)</span>
                 <input type="search" class='ipt-search kw' required>
                 <button class="btn-search icon-search"><i class="fa fa-search"></i></button>
               </div>
@@ -153,7 +153,42 @@
           <hr>
         </div>
         <div class="row">
-          <h2 class="content-title">输入区</h2>
+          <h2 class="content-title">
+                    标签类  （<span class="text-warning">_tag.scss</span>）
+                </h2>
+          <div class="l2">
+            <h3 class="content-title-l2">
+                        <span>小标签</span>
+                    </h3>
+            <div class="tags mt5">
+              <span class="tag">标签</span>
+              <span class="tag tag-warning">警告类</span>
+              <span class="tag tag-danger">危险类</span>
+              <span class="tag tag-info">信息</span>
+              <span class="tag tag-danger-o">危险-空</span>
+              <span class="tag tag-info-o">信息-空</span>
+              <span class="tag tag tag-warning-o">警告-空</span>
+            </div>
+          </div>
+          <div class="l2">
+            <h3 class="content-title-l2"><span>带删除按钮标签</span></h3>
+            <div class="tags tags-action mt5">
+              <span class="tag">
+                            分类1
+                            <i class="icon"></i>
+                        </span><span class="tag">
+                            分类2
+                            <i class="icon"></i>
+                        </span><span class="tag">
+                            等级3
+                            <i class="icon"></i>
+                        </span>
+            </div>
+          </div>
+          <hr>
+        </div>
+        <div class="row">
+          <h2 class="content-title">输入区(<span class="text-danger">basePC.scss</span>)</h2>
           <div class="input-area mt5">
             <input type="search">
             <input type="text" class='error'>
@@ -173,7 +208,7 @@
           <hr>
         </div>
         <div class="row">
-          <h2 class="content-title">文本色</h2>
+          <h2 class="content-title">文本色(<span class="text-danger">_text.scss</span>)</h2>
           <div class="text-area">
             <h3 class="p10 text-info">信息类</h3>
             <h4 class="p5 text-warning">警示类</h4>
@@ -182,11 +217,97 @@
           <hr>
         </div>
         <div class="row">
-          <h2 class="content-title">背景区</h2>
+          <h2 class="content-title">背景区(<span class="text-danger">_bg.scss</span>)</h2>
           <div class="bg-area">
             <h3 class="bg bg-info p10 text-center">居中信息类</h3>
             <h3 class="bg bg-warning p10  mt5">靠左警示类</h3>
             <h3 class="bg bg-danger p10 text-center mt5">危险类</h3>
+          </div>
+          <hr>
+        </div>
+        <div class="row">
+          <h2 class="content-title">
+                    表格类  （<span class="text-warning">_table.scss</span>）
+                </h2>
+          <div class="l2">
+            <h3 class="content-title-l2">
+                        <span>正常表格</span>
+                    </h3>
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>表头</th>
+                  <th>表头</th>
+                  <th>表头</th>
+                  <th>表头</th>
+                  <th>表头</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>表内容</td>
+                  <td>表内容</td>
+                  <td>表内容</td>
+                  <td>表内容</td>
+                  <td>表内容</td>
+                </tr>
+                <tr>
+                  <td>表内容</td>
+                  <td>表内容</td>
+                  <td>表内容</td>
+                  <td>表内容</td>
+                  <td>表内容</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="l2">
+            <h3 class="content-title-l2"><span>带边框表格</span></h3>
+            <table class="table table-bordered text-center">
+              <thead>
+                <tr>
+                  <th>带边框表头</th>
+                  <th>带边框表头</th>
+                  <th>带边框表头</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>表内容</td>
+                  <td>表内容</td>
+                  <td>表内容</td>
+                </tr>
+                <tr>
+                  <td>表内容</td>
+                  <td>表内容</td>
+                  <td>表内容</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="l2">
+            <h3 class="content-title-l2"><span>圆角带边框表格</span></h3>
+            <table class="table table-bordered text-center table-radian">
+              <thead>
+                <tr>
+                  <th>带边框表头</th>
+                  <th>带边框表头</th>
+                  <th>带边框表头</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>表内容</td>
+                  <td>表内容</td>
+                  <td>表内容</td>
+                </tr>
+                <tr>
+                  <td>表内容</td>
+                  <td>表内容</td>
+                  <td>表内容</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
           <hr>
         </div>
@@ -198,7 +319,7 @@
           <hr>
         </div>
         <div class="row">
-          <h2 class="content-title">分页（引用jQuery，pagination插件，结构不用写，只用样式）</h2>
+          <h2 class="content-title">分页（引用jQuery，pagination插件，结构不用写，只用样式）(<span class="text-danger">_pagination.scss</span>)</h2>
           <div id="pagination" class="text-center">
             <ul class="pagination">
               <li class="first disabled"><a href="javascript:;">首页</a></li>
@@ -217,7 +338,7 @@
           <hr>
         </div>
         <div class="row">
-          <h2 class="content-title">进度</h2>
+          <h2 class="content-title">进度(<span class="text-danger">_progress.scss</span>)</h2>
           <section class="progress col5">
             <dl class="item">
               <dt class="bar">
@@ -281,7 +402,7 @@
           <hr>
         </div>
         <div class="row">
-          <h2 class="content-title">信息展示带按钮</h2>
+          <h2 class="content-title">信息展示带按钮(<span class="text-danger">_info_list.scss</span>)</h2>
           <div class="info-list">
             <section class="item info-warning">
               <header class="title">
@@ -389,7 +510,7 @@
         </div>
         <div class="row">
           <h2 class="content-title">
-                    不带按钮设置
+                    不带按钮设置(<span class="text-danger">_info_list.scss</span>)
                 </h2>
           <div class="div info-list thin">
             <section class="item">
@@ -432,42 +553,7 @@
           </div>
         </div>
         <div class="row">
-          <h2 class="content-title">
-                    标签类
-                </h2>
-          <div class="l2">
-            <h3 class="content-title-l2">
-                        <span>小标签</span>
-                    </h3>
-            <div class="tags mt5">
-              <span class="tag">标签</span>
-              <span class="tag tag-warning">警告类</span>
-              <span class="tag tag-danger">危险类</span>
-              <span class="tag tag-info">信息</span>
-              <span class="tag tag-danger-o">危险-空</span>
-              <span class="tag tag-info-o">信息-空</span>
-              <span class="tag tag tag-warning-o">警告-空</span>
-            </div>
-          </div>
-          <div class="l2">
-            <h3 class="content-title-l2"><span>带删除按钮标签</span></h3>
-            <div class="tags tags-action mt5">
-              <span class="tag">
-                            分类1
-                            <i class="icon"></i>
-                        </span><span class="tag">
-                            分类2
-                            <i class="icon"></i>
-                        </span><span class="tag">
-                            等级3
-                            <i class="icon"></i>
-                        </span>
-            </div>
-          </div>
-          <hr>
-        </div>
-        <div class="row">
-          <h2 class="content-title">左右两侧设置</h2>
+          <h2 class="content-title">左右两侧设置(<span class="text-danger">_set.scss</span>)</h2>
           <div class="set">
             <dl class='item'>
               <dt class="title">商品名称</dt>
@@ -555,7 +641,7 @@
           </div>
         </div>
         <div class="row">
-          <h2 class="content-title">弹窗样式（修改artDialog为中文，外边不用套）</h2>
+          <h2 class="content-title">弹窗样式（修改artDialog为中文，外边不用套）(<span class="text-danger">_dialog.scss</span>)</h2>
           <div style='position: relative;height: 350px;background: rgba(0,0,0,.5);'>
             <div tabindex="-1" aria-labelledby="title:1457487245873" aria-describedby="content:1457487245873" class="ui-popup ui-popup-modal ui-popup-show ui-popup-focus" role="alertdialog" style="position: absolute!important; outline: 0px; left: 30%; top: 10px; z-index: 1026;">
               <div i="dialog" class="ui-dialog">
@@ -669,7 +755,7 @@
         </div>
         <div class="row">
           <h2 class="content-title">
-                    标签切换
+                    标签切换(<span class="text-danger">_switcher.scss</span>)
                 </h2>
           <div class="clearfix">
             <div class="fr search-field">
@@ -689,7 +775,7 @@
         </div>
         <div class="row">
           <h3 class="content-title">
-                单复选框及动态切换
+                单复选框及动态切换(<span class="text-danger">_radio-check.scss</span>)
             </h3>
           <div>
             <label class="radio">
