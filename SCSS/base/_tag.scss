@@ -1,5 +1,5 @@
-@import 'variables';
-@import 'mixin';
+@import '_variables.scss';
+@import '_mixin.scss';
 .tags {
   .tag {
     padding: 0 6px;

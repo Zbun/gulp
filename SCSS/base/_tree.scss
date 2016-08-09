@@ -1,7 +1,7 @@
 /*成品对应左侧树结构地址：http://weixin.eqying.com/forward/menus.html?id=203010*/
 
-@import 'variables';
-@import 'mixin';
+@import '_variables.scss';
+@import '_mixin.scss';
 .tree {
   line-height: 30px;
   white-space: nowrap;

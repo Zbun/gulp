@@ -1,5 +1,5 @@
-@import 'variables';
-@import 'mixin';
+@import '_variables.scss';
+@import '_mixin.scss';
 .btn {
   position: relative;
   display: inline-block;

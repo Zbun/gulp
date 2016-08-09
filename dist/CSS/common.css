@@ -942,6 +942,10 @@ input.ipt-o:active {
   color: #fff;
 }
 
+.table-fixed {
+  table-layout: fixed;
+}
+
 .table-radian {
   border-collapse: separate;
   border-spacing: 0;

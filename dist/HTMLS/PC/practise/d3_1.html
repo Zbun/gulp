@@ -55,7 +55,8 @@
   (function() {
     var _kas = document.createElement('script');
     _kas.async = true;
-    _kas.src = 'http://localhost:2015/src/scripts/kAnalytics.js?v=' + Math.random(); //要改成kAnalystics路径
+    var lt = location.host;
+    _kas.src = 'http://' + lt + '/src/scripts/module/kAnalytics.js?v=' + Math.random(); //要改成kAnalystics路径
     var s0 = document.getElementsByTagName('script')[0];
     s0.parentNode.insertBefore(_kas, s0);
   })();

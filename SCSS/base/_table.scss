@@ -1,4 +1,4 @@
-@import "_variables.scss";
+@import '_variables.scss';
 .table {
   thead {
     tr {
@@ -48,6 +48,10 @@
       }
     }
   }
+}
+
+.table-fixed {
+  table-layout: fixed;
 }
 
 .table-radian {

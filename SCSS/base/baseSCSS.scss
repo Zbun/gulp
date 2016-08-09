@@ -1,6 +1,6 @@
 @charset "utf-8";
-@import "variables";
-@import "mixin";
+@import '_variables.scss';
+@import '_mixin.scss';
 *,
 :before,
 :after {
