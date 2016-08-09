@@ -10,10 +10,9 @@ var gulp = require('gulp'),
   sourcemaps = require('gulp-sourcemaps'),
   uglify = require('gulp-uglify'),
   sass = require('gulp-sass'),
-  htmlreplace = require('gulp-html-replace'),
   webpack = require('webpack');
 
-var webpackConfig = Object.create(require('./webpack.config.js'));
+var webpackConfig = require('./webpack.config.js');
 
 var opts = {
   srcPath: './src/',
@@ -47,10 +46,6 @@ gulp.task('default', ['browserSync'], function() {
 //     .pipe(revAppend())
 //     .pipe(gulp.dest(opts.destPath + 'htmls/pc/'));
 // })
-
-gulp.task('greet', function() {
-  console.log('Hello World!');
-});
 
 // gulp.task('jshint', function() {
 //   gulp.src(opts.destPath + 'scripts/*.js').pipe(jshint());
@@ -88,14 +83,15 @@ gulp.task('sass', function() {
     .pipe(gulp.dest(opts.destPath + 'css'));
 });
 
-gulp.task('htmlreplace', function() {
-  gulp.src('index.html')
-    .pipe(htmlreplace({
-      'css': 'dist/css/bootstrap.css',
-      'js': 'dist/scripts/lib/jquery-1.11.3.js'
-    }))
-    .pipe(gulp.dest(opts.destPath + 'htmls'));
-});
+// var htmlreplace = require('gulp-html-replace');
+// gulp.task('htmlreplace', function() {
+//   gulp.src('index.html')
+//     .pipe(htmlreplace({
+//       'css': 'dist/css/bootstrap.css',
+//       'js': 'dist/scripts/lib/jquery-1.11.3.js'
+//     }))
+//     .pipe(gulp.dest(opts.destPath + 'htmls'));
+// });
 
 //预处理link标签导入通用html
 var preLink = require('gulp-pre-link');
@@ -139,7 +135,6 @@ gulp.task('webpack', function(callback) {
       // console.log(err);
     });
 });
-// gulp.watch('app/src/**/*.js', ['webpack']);
 
 //根据文件类型变动，自动刷新浏览器
 gulp.task('browserSync', ['sass', 'webpack', 'preLink'], function() {
@@ -152,6 +147,6 @@ gulp.task('browserSync', ['sass', 'webpack', 'preLink'], function() {
   });
   gulp.watch('./src/htmls/**/*.html', ['preLink']);
   gulp.watch('./scss/**/*.scss', ['sass']);
-  gulp.watch('./src/**/*.*', ['webpack']);
+  gulp.watch('./src/scripts/**/*.*', ['webpack']);
   //gulp.watch('./src/scripts/**/*.js', ['rev']);
 });
