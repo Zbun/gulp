@@ -51,7 +51,8 @@ module.exports = {
     alias: {
       spin: path.join(__dirname, './dist/scripts/lib/spin.min.js'),
       dialog: path.join(__dirname, './dist/scripts/lib/artdialog/dist/dialog-plus-min.js'),
-      pagination: path.join(__dirname, './dist/scripts/lib/jquery.twbsPagination.min.js')
+      pagination: path.join(__dirname, './dist/scripts/lib/jquery.twbsPagination.min.js'),
+      vues: path.join(__dirname, './src/scripts/vues')
         // jquery:path.join(__dirname,'./dist/scripts/lib/jquery-1.11.3.js')
     }
   },

@@ -1,30 +1,49 @@
-var jsonMenu = require('simulateData/menu.json');
+import Vue from 'vue';
+import config from './config.js';
+import YqyGuide from 'vues/guide';
+import YqyToolbar from 'vues/toolbar';
+import YqyChart from 'vues/chart';
+import yqyCase from 'vues/case.vue';
+import yqyOperation from 'vues/operation.vue';
+import yqyBigOffice from 'vues/spread.vue';
+import YqyScroll from 'vues/directives/scroll';
 
-var Vue = require('vue');
-var vcomMenu = require('vue/components/menu.vue');
 
-var vm = new Vue({
-  el: 'body',
+const BANNERSTATUS = {
+  show: 1,
+  hide: 0
+};
+new Vue({
+  el: '#app',
   data: {
-    menulist: []
+    bannerStatus: BANNERSTATUS.hide
   },
-  components: {
-    'menu-box': vcomMenu
-  }
+  methods: {
+    caseExpand() {
+      var vm = this;
+      vm.bannerStatus = +!+vm.bannerStatus;
+      if (window.localStorage) {
+        localStorage.bannerStatus = vm.bannerStatus;
+      } else {
+        $.post(config.case.API.setShow, {
+          isShow: vm.bannerStatus
+        });
+      }
+    }
+  },
+  ready: function() {
+    var vm = this;
+    if (window.localStorage) {
+      vm.bannerStatus = localStorage.bannerStatus == undefined ? localStorage.bannerStatus = 1 : localStorage.bannerStatus;
+    } else {
+      $.get(config.case.API.isHide, function(data) {
+        vm.bannerStatus = data.data.isShow;
+      }, 'JSON');
+    }
+
+  },
+  components: { YqyGuide, YqyToolbar, YqyChart, yqyCase, yqyOperation, yqyBigOffice },
+  directives: { YqyScroll }
 });
 
-var spin1 = spinZ($('.show-list'));
-setTimeout(function() {
-  spin1.stop();
-  vm.menulist = jsonMenu;
-  console.log(vm.menulist);
-}, 1000);
-
-$('body').on('click', '.footer.menu .js-toggle', function() {
-  var $t = $(this);
-  $t.closest('.menu-l1').toggleClass('expanded').siblings('.item').removeClass('expanded');
-  $t.addClass('on').siblings('.item').removeClass('on');
-  if (!$t.hasClass('wealthy')) {
-    $t.closest('.menu-l1').addClass('on').siblings('.item').removeClass('on');
-  }
-});
+require('tabSwitcher');

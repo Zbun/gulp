@@ -1017,6 +1017,7 @@ select,
 .com-ipt {
   line-height: 22px;
   font-size: 12px;
+  font-family: "Microsoft Yahei", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 ::-webkit-input-placeholder {
