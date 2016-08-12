@@ -2,7 +2,7 @@
   <div class="content" :class="{on:status==1}">
     <div class="js-hover-fadein">
       <div class="title">
-        <a :href="item.url" @mouseenter="fadeIn" @mouseleave="loop" class="item" :data-index='index' :class="{on:index==cur}" v-for="(index,item) of list" v-cloak>
+        <a :href="item.url" @mouseenter="fadeIn(index)" @mouseleave="loop" class="item" :data-index='index' :class="{on:index==cur}" v-for="(index,item) of list" v-cloak>
           <div class="inner">
             <i class="icon" :class="item.icon"></i>
             <p>
@@ -30,9 +30,9 @@ export default {
   },
   computed: {},
   methods: {
-    fadeIn: function(event) {
+    fadeIn: function(i) {
       this.loopEnd();
-      this.cur = $(event.target).data('index');
+      this.cur = i;
     },
     loop: function() {
       var vm = this;
