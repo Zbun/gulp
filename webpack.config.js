@@ -21,7 +21,9 @@ module.exports = {
         }
       }, {
         test: /.vue$/,
-        loader: 'vue'
+        loader: 'vue',
+        include: [path.resolve('./src')],
+        exclude: /(node_modules|bower_components)/
       }
 
       // {
