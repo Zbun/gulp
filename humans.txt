@@ -1,0 +1,33 @@
+/* TEAM */
+  Manager: Qi jie
+  Email: qi.jie@zol.com.cn
+  From: Zhengzhou, Henan, China
+
+  Chief: Ding Lianfu
+  Email: ding.lianfu@zol.com.cn
+  From: Zhengzhou, Henan, China
+
+  Back end: Yao ning
+  Email: yao.ning@zol.com.cn
+  From: Zhengzhou, Henan, China
+
+  Front end developer:Zhao Liubin
+  Email: zhao.liubin@zol.com.cn
+  From: Zhengzhou, Henan, China
+
+  Front end developer:Wen Yongjiang
+  Email: wen.yongjiang@zol.com.cn
+  From: Zhengzhou, Henan, China
+
+  UI developer: Xue Xiaojia
+  Email: xue.xiaojia@zol.com.cn
+  From: Zhengzhou, Henan, China
+
+/* THANKS */
+  ZOl
+
+/* SITE */
+  Last update: 2017/01/01
+  Language: Chinese
+  Doctype: HTML5
+  IDE: Sublime Text, Visual Studio, Photoshop

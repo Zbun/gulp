@@ -1,0 +1,170 @@
+@import 'base/_variables';
+.set {
+  >.item {
+    padding: 6px 0;
+    line-height: $height-input;
+    &:after {
+      content: '';
+      display: table;
+      clear: both;
+    }
+    >.title,
+    >.name {
+      float: left;
+      min-width: 5em;
+      margin-right: 8px;
+      font-weight: 400;
+      line-height: inherit;
+      text-align: right;
+      white-space: nowrap;
+    }
+    >.content {
+      position: relative;
+      overflow: hidden;
+      line-height: inherit;
+      text-align: left;
+      .ipt-large {
+        min-width: 260px;
+      }
+      .ipt-small {
+        min-width: 100px;
+      }
+      &.area-box {
+        overflow: initial;
+      }
+    }
+  }
+  &.w6em {
+    >.item {
+      >.title {
+        min-width: 6em;
+      }
+    }
+  }
+  &.w7em {
+    >.item {
+      >.title {
+        min-width: 7em;
+      }
+    }
+  }
+  &.w8em {
+    >.item {
+      >.title {
+        min-width: 8em;
+      }
+    }
+  }
+  &.text-left {
+    >.item {
+      >.title,
+      >.name {
+        min-width: auto;
+        text-align: left;
+      }
+    }
+  }
+  &.thin {
+    >.item {
+      line-height: 20px;
+      padding: 5px 0;
+    }
+  }
+}
+
+.action-box {
+  position: relative;
+  display: inline-block;
+  line-height: 1;
+  font-size: inherit;
+  .com-ipt {
+    margin: 0;
+    padding-right: 24px;
+    font-size: inherit;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+  }
+  .add,
+  .minus {
+    position: absolute;
+    right: 1px;
+    top: 1px;
+    width: 20px;
+    height: 50%;
+    border-left: 1px solid $color-border;
+    border-bottom: 1px solid $color-border;
+    text-indent: -100px;
+    overflow: hidden;
+    &:before {
+      content: '';
+      position: absolute;
+      top: 5px;
+      right: 6px;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 0 3px 4px;
+      border-color: #999 transparent;
+    }
+    &:hover {
+      &:before {
+        border-color: #666 transparent;
+      }
+    }
+  }
+  .minus {
+    bottom: 1px;
+    top: auto;
+    border-bottom: 0;
+    &:before {
+      top: 6px;
+      border-width: 4px 3px 0;
+    }
+  }
+  &.style2 {
+    vertical-align: 2px;
+    margin-top: 6px;
+    .com-ipt {
+      padding: 0 22px;
+      line-height: 12px;
+      text-align: center;
+    }
+    .add,
+    .minus {
+      position: absolute;
+      left: 0;
+      top: 1px;
+      bottom: 1px;
+      width: 20px;
+      height: auto;
+      line-height: 16px;
+      text-align: center;
+      border: 0;
+      border-right: 1px solid $color-border;
+      text-decoration: none;
+      text-indent: 0;
+      &:before {
+        content: '';
+        border: 0;
+      }
+    }
+    .add {
+      right: 1px;
+      left: auto;
+      border: 0;
+      border-left: 1px solid $color-border;
+    }
+  }
+}
+
+//火狐HACK
+@-moz-document url-prefix() {
+  .set {
+    >.item {
+      >.content {
+        display: inline-block;
+      }
+    }
+  }
+}

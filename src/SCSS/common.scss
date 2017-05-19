@@ -1,0 +1,26 @@
+@charset "utf-8";
+$bgPath:'/images';
+$bgGroup:'#{$bgPath}/bg-group.png';
+@import 'base/basePC.scss'; //PC基础
+@import 'common/_dialog.scss'; //弹窗对话框
+@import 'common/_pagination.scss'; //分页
+// @import 'common/_progress.scss'; //进度条
+@import 'common/_set.scss'; //左右两栏设置
+// @import 'base/_iconfont.scss'; //部分字体图标、引入fa样式时不引
+@import "base/_info_list.scss";
+@import 'base/_radio-check.scss'; //重写的单复选及多选中
+// @import 'base/_btn_tag.scss'; //按钮型标签
+// @import 'base/_arrow_down.scss'; //下拉选框，未全部完成，需配JS
+@import 'base/_switcher.scss'; //选项卡切换
+// @import 'base/_animation.scss'; //部分动画
+@import 'base/_tooltips.scss'; //提示类
+@import "base/_bg.scss"; //带颜色背景区
+@import 'common/_zmmtips.scss'; //弹出提示框显示样式
+@import 'common/_justShow.scss'; //两列展示型
+body {
+  background: #F0F0F0;
+}
+
+.main {
+  background: #fff;
+}

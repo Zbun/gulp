@@ -1,0 +1,64 @@
+@import '_variables.scss';
+@import '_mixin.scss';
+@each $bg,
+$bg-color,
+$bg-text-color in(bg-default, $color-bg-default, $color-bg-default-text),
+(bg-primary, $color-bg-primary, $color-bg-primary-text),
+(bg-ok, $color-bg-ok, $color-bg-ok-text),
+(bg-info, $color-bg-info, $color-bg-info-text),
+(bg-warning, $color-bg-warning, $color-bg-warning-text),
+(bg-danger, $color-bg-danger, $color-bg-danger-text) {
+  .#{$bg} {
+    border: 1px solid darken($bg-color, 8%);
+    background-color: $bg-color;
+    color: #333;
+  }
+}
+
+.bg {
+  position: relative;
+  padding: 0 10px;
+  line-height: 28px;
+  font-size: 12px;
+  font-weight: 400;
+  &.with-icon {
+    padding-left: 40px;
+    .icon {
+      position: absolute;
+      left: 10px;
+      top: 4px;
+      background: url($bgGroup) -37px -128px;
+    }
+    >.content {
+      padding-left: 16px;
+      border-left: 1px solid darken($color-bg-warning, 6%);
+      &:before,
+      &:after {
+        content: '';
+        position: absolute;
+        top: 8px;
+        left: 34px;
+        border-style: solid;
+        border-width: 7px 7px 7px 0;
+        border-color: transparent darken($color-bg-warning, 6%);
+      }
+      &:after {
+        left: 35px;
+        border-color: transparent $color-bg-warning;
+      }
+    }
+  }
+}
+
+$color-bg-warning-pure:#FFFEE7;
+.bg-muted {
+  background: #fdfdfd;
+}
+
+.bg-muted-light {
+  background: #FDFDFD;
+}
+
+.bg-warning-pure {
+  background: $color-bg-warning-pure;
+}

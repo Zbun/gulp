@@ -61,13 +61,13 @@ var pagination = function($, window, document, undefined) {
 
     this.$listContainer.addClass(this.options.paginationClass);
 
-    this.$go = $('<ul class="page-go" style="position:absolute;margin-left:30px;"/>');
+    this.$go = $('<ul class="page-go"/>');
 
 
     if (tagName !== 'UL') {
       this.$element.append(this.$listContainer);
       if (this.options.goVal) {
-        this.$go.addClass(this.options.paginationClass).html('<li><input type="number" style="width:4em"/><a class="btn" style="float:none;">' + this.options.goVal + '</a></li>');
+        this.$go.addClass(this.options.paginationClass).html('<li>到<input type="number" style="width:4em"/>页<a class="btn">' + this.options.goVal + '</a></li>');
         this.$element.append(this.$go);
       }
     }
@@ -189,7 +189,7 @@ var pagination = function($, window, document, undefined) {
       if (type !== 'split') {
         $itemContainer.append($itemContent.attr('href', this.makeHref(page)).html(itemText));
       } else {
-        $itemContainer = $('<li class="split" style="padding:0;vertical-align:middle;"><a style="min-width:auto;padding:10px 0 0;border:0;margin:0 8px;line-height:1;color:#333;background:#fff">...</a></li>');
+        $itemContainer = $('<li class="split"><a>...</a></li>');
         // $itemContainer.append(itemText);
       }
 

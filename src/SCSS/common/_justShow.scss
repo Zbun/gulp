@@ -1,0 +1,26 @@
+.justshow {
+  width: 100%;
+  th {
+    border: 0!important;
+    padding: 0 !important;
+    color: #333 !important;
+    background: initial!important;
+    font-weight: 400;
+    text-align: right;
+    white-space: nowrap;
+    vertical-align: top;
+  }
+  td {
+    border: 0!important;
+    padding: 0 !important;
+    color: #666;
+  }
+  // &.style2 {
+  //   th {
+  //     color: #666!important;
+  //   }
+  //   td {
+  //     color: #333;
+  //   }
+  // }
+}

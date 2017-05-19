@@ -1,0 +1,335 @@
+@charset "utf-8";
+@import '_variables.scss';
+@import '_mixin.scss';
+*,
+:before,
+:after {
+  box-sizing: border-box;
+}
+
+hr {
+  height: 1px;
+  border: 0;
+  background: $color-border;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+p,
+ul,
+ol,
+dl,
+dt,
+dd,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+i,
+em,
+label {
+  font-style: normal;
+  font-weight: 400;
+}
+
+$color-input-border:#e0e0e0!default;
+$color-input-focus-border:$color-primary!default;
+$color-input-invalid:$color-warning!default;
+input[type=search],
+input[type=text],
+input[type=tel],
+input[type=submit],
+input[type=password],
+input[type=number],
+input[type=date],
+input[type=color],
+input[type=time],
+input[type=url],
+input:not([type]),
+button,
+textarea,
+select,
+.com-input {
+  border: 1px solid $color-input-border;
+  padding: 6px;
+  font-size: inherit;
+  -webkit-appearance: none;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  vertical-align: middle;
+  // background-color: #fff;
+  @include tap-highlight-color(rgba(0, 0, 0, 0));
+  &:focus {
+    border-color: $color-input-focus-border;
+    outline: 0;
+    &:invalid {
+      background: #FFF1F1;
+      //border-color: $color-input-invalid;
+    }
+  }
+  &:active {
+    box-shadow: inset 0 1px 3px rgba(56, 56, 56, .2);
+  }
+  &.error {
+    border-color: $color-input-invalid;
+  }
+}
+
+input[readonly] {
+  background: transparent;
+  &:focus,
+  &:active {
+    border-color: $color-border;
+  }
+}
+
+input.ipt-s {
+  width: 100px;
+}
+
+select {
+  max-width: 18em;
+  -webkit-appearance: menulist;
+}
+
+input[type=checkbox],
+input[type=radio] {
+  vertical-align: -2px;
+}
+
+.align-ipt,
+.align-btn {
+  line-height: 28px;
+  .btn.small {
+    margin-top: -1px;
+  }
+}
+
+img {
+  border: 0;
+  vertical-align: middle;
+}
+
+@for $i from 5 through 9 {
+  .w#{$i*10}p {
+    width: $i*10%;
+  }
+}
+
+@for $i from 0 through 6 {
+  .p#{$i*5} {
+    padding: $i*5px;
+  }
+  .pl#{$i*5} {
+    padding-left: $i*5px;
+  }
+  .pr#{$i*5} {
+    padding-right: $i*5px;
+  }
+  .m#{$i*5} {
+    margin: $i*5px;
+  }
+  .mt#{$i*5} {
+    margin-top: $i*5px;
+  }
+  .mb#{$i*5} {
+    margin-bottom: $i*5px;
+  }
+  .ml#{$i*5} {
+    margin-left: $i*5px;
+  }
+  .mr#{$i*5} {
+    margin-right: $i*5px;
+  }
+}
+
+.fl {
+  float: left;
+}
+
+.fr {
+  float: right;
+}
+
+.row {
+  // padding: 10px;
+}
+
+[hidden],
+template,
+.hidden {
+  display: none;
+}
+
+.clearfix:after {
+  display: table;
+  content: "";
+  clear: both;
+}
+
+.dis-flex {
+  @include dis-flex;
+  >.item {
+    @include flex;
+    margin: 0;
+  }
+}
+
+.flex-center {
+  @include flex-center;
+}
+
+.dis-inline-block {
+  display: inline-block;
+}
+
+.block {
+  display: block;
+  width: 100%;
+}
+
+.table {
+  width: 100%;
+  >.item {
+    display: table-cell;
+  }
+}
+
+.col2 {
+  >.col-item {
+    width: 50%;
+  }
+}
+
+.main {
+  position: relative;
+}
+
+.required-mark {
+  &:before {
+    margin: 1px;
+    content: '*';
+    color: $color-danger;
+  }
+}
+
+.simplehidden {
+  position: absolute!important;
+  width: 1px!important;
+  height: 1px!important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  z-index: -3;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  line-height: 0 !important;
+  opacity: 0!important;
+  overflow: hidden!important;
+  pointer-events: none;
+}
+
+.superhidden {
+  @extend .simplehidden;
+  clip: rect(0, 0, 0, 0)!important;
+  visibility: hidden!important;
+}
+
+$cursor-disabled:not-allowed!default;
+.disabled {
+  opacity: .7;
+  pointer-events: none;
+}
+
+.split {
+  >.item {
+    line-height: 32px;
+    >.title {
+      float: left;
+      line-height: inherit;
+      font-weight: 400;
+    }
+    >.content {
+      display: block;
+      overflow: hidden;
+      font-weight: 400;
+      line-height: inherit;
+    }
+  }
+}
+
+//展开、折叠
+.folder {
+  @include trf-style();
+  >.folder-content {
+    // display: none;
+    height: 0;
+    overflow: hidden;
+    opacity: 0;
+    @include trans(.2s);
+    @include trf-origin(top);
+    @include trf-rotateX(-90deg);
+    will-change: transform;
+  }
+  &.on {
+    >.folder-content {
+      // display: block;
+      height: auto;
+      opacity: 1;
+      @include trf-rotateX(0);
+    }
+  }
+}
+
+//vue 数据区域编译前隐藏
+[v-cloak] {
+  display: none;
+}
+
+html {
+  min-height: 100%;
+  font-size: 100%;
+}
+
+@-webkit-keyframes loading {
+  0%,
+  40% {
+    content: '.'
+  }
+  41%,
+  66% {
+    content: '..'
+  }
+  70%,
+  100% {
+    content: '...'
+  }
+}
+
+@keyframes loading {
+  0%,
+  40% {
+    content: '.'
+  }
+  41%,
+  66% {
+    content: '..'
+  }
+  70%,
+  100% {
+    content: '...'
+  }
+}
+
+@import "_btn.scss";
+@import "_text.scss";

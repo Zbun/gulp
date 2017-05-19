@@ -1,0 +1,167 @@
+<div class="main">
+  <h1 class="content-title">
+        查看采购单
+        </h1>
+  <div class="content-field invoices">
+    <h2 class="header">采购单</h2>
+    <p class="invoices-summary">
+      <strong class="ml20 text-warning">合同编号：{{@datalist.Code}}</strong>
+    </p>
+    <div class="invoices-detail">
+      <div>
+        <table class="table-intro">
+          <tbody>
+            <tr>
+              <td>
+                <span class="title">
+                    单据类型：
+                  </span>
+                <span class="content">
+                    采购销售
+                  </span>
+              </td>
+              <td>
+                <span class="title">
+                    供应商家：
+                  </span>
+                <span class="content">
+                    {datalist.SupplierName}
+                  </span>
+              </td>
+              <td>
+                <span class="title">
+                    收款账号：
+                  </span>
+                <span class="content">
+                    {datalist.SupplierBank}
+                  </span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <span class="title">
+                    本次应付：
+                  </span>
+                <span class="content">
+                    ￥{datalist.TotalPrice}
+                  </span>
+              </td>
+              <td>
+                <span class="title">
+                    付款账号：
+                  </span>
+                <span class="content">
+                    {datalist.PayBank}
+                  </span>
+              </td>
+              <td>
+                <span class="title">
+                    付款方式：
+                  </span>
+                <span class="content">
+                    {datalist.PayType}
+                  </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="table-list">
+        <table class="table table-bordered table-hover  text-center">
+          <thead>
+            <tr>
+              <th>商品编号</th>
+              <th>商品名称</th>
+              <th>数量</th>
+              <th>单价</th>
+              <th>折让比例</th>
+              <th>折让后金额</th>
+              <th>总金额</th>
+              <th>备注</th>
+            </tr>
+          </thead>
+          <tfoot>
+            <tr>
+              <td><b>合计</b></td>
+              <td></td>
+              <td><b>{datalist.Details.length}</b></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td><b>{datalist.TotalPrice}</b></td>
+              <td></td>
+            </tr>
+          </tfoot>
+          <tbody>
+            {#list datalist.Details as dl}
+            <tr>
+              <td>{dl.ProId}</td>
+              <td>{dl.ProName}</td>
+              <td>{dl.ProCount}</td>
+              <td>{dl.ProPrice1}</td>
+              <td>{dl.DiscountRate}%</td>
+              <td>{dl.ProPrice}</td>
+              <td>{(dl.ProPrice * dl.ProCount).toFixed(2)}</td>
+              <td>{dl.Description?dl.Description:'暂无'}</td>
+            </tr>
+            {/list}
+          </tbody>
+        </table>
+      </div>
+      <div class="made-info">
+        <table class="table-intro">
+          <tr>
+            <td>
+              <span class="title">
+                    制单人：
+                  </span>
+              <span class="content">
+                    {datalist.UserNameAdded}
+                  </span>
+            </td>
+            <td>
+              <span class="title">制单日期：</span>
+              <span class="content">{datalist.DateAdded|datetime}</span>
+            </td>
+            <td>
+              <span class="title">
+                    摘要：
+                  </span>
+              <span class="content">
+                    {datalist.Description?datalist.Description:'暂无'}
+                  </span>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="audit-flow">
+        <span class="title">
+              审核流程：
+            </span>
+        <span class="content list">
+              <span class="item on">
+                赵总
+              </span>
+        <span class="item">
+                赵总
+              </span>
+        <span class="item">
+                赵总
+              </span>
+        </span>
+      </div>
+      <p style="margin-left:5em;margin-top:14px;"><a class="font-small highlight" href="javascript:;">查看审核记录</a></p>
+    </div>
+  </div>
+</div>
+<script>
+GObj.fns.fetchData({
+  url: 'api/PO/PCPreview',
+  para: {
+    'code': 'PU111281719497046'
+  },
+  callback(data) {
+    console.log(data);
+  }
+});
+</script>

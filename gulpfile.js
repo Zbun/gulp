@@ -1,19 +1,29 @@
+// var path = require('path');
 var gulp = require('gulp'),
   browserSync = require('browser-sync'),
   // concat = require('gulp-concat'),
-  // del = require('del'),
+  del = require('del'),
   // rename = require('gulp-rename'),
-  // revAppend = require('gulp-rev-append'),
+  revAppend = require('gulp-rev-append'),
   // cleanCSS = require('gulp-clean-css'),
   gutil = require('gulp-util'),
+  include = require('gulp-html-tag-include'),
   minify = require('gulp-minify'),
-  sourcemaps = require('gulp-sourcemaps'),
+  // sourcemaps = require('gulp-sourcemaps'),
   uglify = require('gulp-uglify'),
   sass = require('gulp-sass'),
+  watch = require('gulp-watch'),
   webpack = require('webpack');
+// WebpackDevServer = require('webpack-dev-server');
 
 var webpackConfig = require('./webpack.config.js');
 
+//彩色输入操作成功控件台
+function fnConsole(v) {
+  console.log(gutil.colors.bgGreen(v));
+}
+
+var isBuild = false; //是否是生产环境配置，webpack时用到
 var opts = {
   srcPath: './src/',
   destPath: './dist/',
@@ -22,43 +32,20 @@ var opts = {
   }
 };
 var cssStyles = ['compressed', 'expanded'],
-  cssStyle = cssStyles[1];
+  cssStyle = cssStyles[1]; //生成css格式，压缩、展开
 
 //清理文件
 // gulp.task('clean', function(cb) {
 //   del([driDist + 'css/', dirDist + 'scripts/bundle/'], cb);
 // });
 
-//构建
-gulp.task('build', ['uglify'], function() {
-  console.log('Good Job!');
-});
-
-//默认启动任务
-gulp.task('default', ['browserSync'], function() {
-  // gulp.start('minify','cleancss')
-  console.log('Enjoy!');
-});
-
-//文件添加版本号，在HTML中写入**.js?rev=@hash
-// gulp.task('rev', function() {
-//   gulp.src('./src/htmls/pc/*.html')
-//     .pipe(revAppend())
-//     .pipe(gulp.dest(opts.destPath + 'htmls/pc/'));
-// })
-
-// gulp.task('jshint', function() {
-//   gulp.src(opts.destPath + 'scripts/*.js').pipe(jshint());
-// });
 
 //压缩、链接资源类
 gulp.task('uglify', function() {
   gulp.src(opts.destPath + 'scripts/bundle/*.js')
-    .pipe(sourcemaps.init())
     .pipe(uglify())
     .pipe(gulp.dest(opts.destPath + 'scripts/bundle'));
   // .pipe(rename({suffix:'.min'}))
-  // .pipe(sourcemaps.write('../maps'))
 });
 
 gulp.task('minify', function() {
@@ -69,84 +56,168 @@ gulp.task('minify', function() {
     }))
     .pipe(gulp.dest(opts.destPath + 'scripts/bundle'));
 });
-
-// gulp.task('minifycss', ['sass'], function() {
-//   gulp.src(opts.destPath + 'CSS/*.css').pipe(cleanCSS()).pipe(gulp.dest(opts.destPath + 'CSS'));
-// });
-
+//文件添加版本号， 在HTML中写入 ** .js ? rev = @hash
+function fnRev() {
+  console.log('打下版本号');
+  gulp.src('./index.html')
+    .pipe(revAppend())
+    .pipe(gulp.dest('.'));
+  fnConsole('打好了');
+}
+gulp.task('rev', fnRev);
 //outputStyle:compressed,expanded
-gulp.task('sass', function() {
-  gulp.src('./scss/*.scss')
+function fnSass() {
+  gulp.src(opts.srcPath + 'scss/*.scss')
     .pipe(sass({
       outputStyle: cssStyle
     }).on('error', sass.logError))
     .pipe(gulp.dest(opts.destPath + 'css'));
-});
+  //文档目录生成
+  if (!isBuild) {
+    gulp.src(opts.srcPath + 'scss/common.scss')
+      .pipe(sass({
+        outputStyle: cssStyle
+      }).on('error', sass.logError))
+      .pipe(gulp.dest('./docs/'));
+  }
+}
+gulp.task('preSass', fnSass);
+gulp.task('sass', ['preSass'], fnRev);
 
-// var htmlreplace = require('gulp-html-replace');
-// gulp.task('htmlreplace', function() {
-//   gulp.src('index.html')
-//     .pipe(htmlreplace({
-//       'css': 'dist/css/bootstrap.css',
-//       'js': 'dist/scripts/lib/jquery-1.11.3.js'
-//     }))
-//     .pipe(gulp.dest(opts.destPath + 'htmls'));
-// });
-
-//预处理link标签导入通用html
-var preLink = require('gulp-pre-link');
+//组装HTML（加版本号，include标签引入文件）
 var htmlConfig = {
   base: './src/htmls/components/',
   src: 'htmls/pc/'
 };
-gulp.task('preLink', function() {
-  gulp.src('./src/' + htmlConfig.src + '*.html')
-    .pipe(preLink({ baseUrl: htmlConfig.base }))
-    .pipe(gulp.dest(opts.destPath + htmlConfig.src));
-});
 
-// var less = require('gulp-less');
-// gulp.task('less', function() {
-//   gulp.src(['src/less/*.less', '!src/less/_*.less'])
-//     .pipe(less())
-//     .pipe(gulp.dest(opts.destPath + 'css'));
-// });
-
-//PostCSS、未成功
-// var postcss = require('gulp-postcss'),
-//   cssnext = require('postcss-cssnext'),
-//   precss = require('precss');
-// var processors = [cssnext];
-// gulp.task('postcss', function() {
-//   return gulp.src('./src/postCSS/**/*.css')
-//     .pipe(postcss(processors))
-//     .pipe(gulp.dest(opts.destPath + 'css'));
-// });
+function fnAssembleHTML() {
+  console.log('组装HTML开始');
+  del([opts.destPath + htmlConfig.src + '*.html']).then(function() {
+    gulp.src('./src/' + htmlConfig.src + '*.html')
+      .pipe(include())
+      // .pipe(revAppend())
+      .pipe(gulp.dest('./'));
+    fnConsole('组装HTML结束');
+    setTimeout(fnRev, 2000);
+  });
+}
+gulp.task('preAssembleHTML', fnAssembleHTML);
+gulp.task('assembleHTML', ['preAssembleHTML'], function() {});
 
 //传给webpack用
-gulp.task('webpack', function(callback) {
-  webpack(
-    webpackConfig,
-    function(err, stats) {
-      if (err) throw new gutil.PluginError('webpack', err);
-      // gutil.log('[webpack]',stats.toString({}))
-      stats.compilation.errors[0] && console.log(stats.compilation.errors[0].error);
-      callback();
-      // console.log(err);
-    });
+function fnWebpack(callback) {
+  console.log('Webapck 开始');
+  var newConfig = webpackConfig;
+  // [opts.destPath + '/scripts/bundle/*.*']
+  del(['dist/scripts/bundle/*.*', '!dist/scripts/bundle/APP.bundle.js']).then(function() {
+    webpack(
+      newConfig,
+      function(err, stats) {
+        if (err) throw new gutil.PluginError('webpack', err);
+        // gutil.log('[webpack]',stats.toString({}))
+        stats.compilation.errors[0] && console.log(stats.compilation.errors[0].error);
+        typeof callback == 'function' && callback();
+        // console.log(err);
+      });
+  });
+}
+gulp.task('webpack', ['sass'], function() {
+  fnWebpack(function() {
+    fnConsole('webpack 结束');
+    fnAssembleHTML();
+  });
 });
 
+// webpack 热启，暂没法用。。。
+// gulp.task('webpack-dev-server', function(callback) {
+//   // Start a webpack-dev-server
+//   console.log('Webapck 开始');
+//   var newConfig = webpackConfig;
+
+//   var compiler = webpack(
+//     newConfig,
+//     function(err, stats) {
+//       if (err) throw new gutil.PluginError('webpack', err);
+//       // gutil.log('[webpack]',stats.toString({}))
+//       stats.compilation.errors[0] && console.log(stats.compilation.errors[0].error);
+//       typeof callback == 'function' && callback();
+//       // console.log(err);
+//     });
+
+//   new WebpackDevServer(compiler, {
+//     // server and middleware options
+//     quiet: true,
+//     noInfo: true,
+//     hot: true
+//   }).listen(8080, 'localhost', function(err) {
+//     if (err) throw new gutil.PluginError('webpack-dev-server', err);
+//     // Server listening
+//     // gutil.log('[webpack-dev-server]', 'http://localhost:8080/webpack-dev-server/index.html');
+
+//     // callback();
+//     fnConsole('webpack 结束');
+//   });
+// });
+
+var fnWatchFilesChangedThenWebpack = function() {
+  watch('./src/scripts/**/*.*', function() {
+    fnWebpack(function() {
+      fnConsole('webpack 结束');
+      fnRev();
+    });
+  });
+};
 //根据文件类型变动，自动刷新浏览器
-gulp.task('browserSync', ['sass', 'webpack', 'preLink'], function() {
+function fnBrowserSync() {
   browserSync({
-    files: ['**/*.html', '**/*.css', '**/*.js', '!**.less', '!**.coffee', '!**.SCSS', '!node_modules/**.*', '!src/**.*', '!webpack.config.js'],
+    // files: ['**/*.html', '**/*.css', '**/*.js', '!**.less', '!**.coffee', '!**.SCSS', '!node_modules/**.*', '!src/**.*', '!webpack.config.js'],
+    files: ['./dist/css/*.css', './dist/scripts/bundle/app.bundle.js', './dist/htmls/**/*.html', '!**.scss', '!node_modules/**.*'],
     server: {
       baseDir: './'
     },
-    port: 2018
+    port: 2019,
+    codeSync: false,
+    ghostMode: false
   });
-  gulp.watch('./src/htmls/**/*.html', ['preLink']);
-  gulp.watch('./scss/**/*.scss', ['sass']);
-  gulp.watch('./src/scripts/**/*.*', ['webpack']);
-  //gulp.watch('./src/scripts/**/*.js', ['rev']);
+  gulp.watch('./src/htmls/**/*.html', fnAssembleHTML);
+  gulp.watch('./src/scss/**/*.scss', fnSass);
+  gulp.watch('./dist/css/*.css', fnRev);
+  if (!webpackConfig.watch) {
+    fnWatchFilesChangedThenWebpack();
+  }
+  // gulp.watch('./src/htmls/**/*.html', ['assembleHTML', 'webpack']);
+}
+gulp.task('browserSync', ['webpack'], fnBrowserSync);
+
+//构建、上线前压缩下JS，压缩CSS
+function fnPreBuild() {
+  cssStyle = cssStyles[0];
+  isBuild = true;
+  webpackConfig.plugins.push(
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false,
+      }
+    }));
+  webpackConfig.devtool = 'cheap-module-source-map';
+}
+gulp.task('preBuild', fnPreBuild);
+//上线启动
+gulp.task('build', ['preBuild', 'browserSync'], function() {
+  fnConsole('Builded successfully, enjoy!');
+});
+
+//默认启动任务
+gulp.task('default', ['browserSync'], function() {
+  // gulp.start('minify','cleancss')
+  fnConsole('开启默认任务，此时不启动webpack自带watch,用gulp watch可处理新加文件。enjoy!');
+});
+
+//启动webpack,watch:true,此时不用gulp-watch之后再webpack,速度快，但webpack不能处理新加文件
+function fnPreWatch() {
+  webpackConfig.watch = true;
+}
+gulp.task('preWatch', fnPreWatch);
+gulp.task('ww', ['preWatch', 'browserSync'], function() {
+  fnConsole('此时开启webpack自带watch选项，不能处理新加模块，如需处理启动gulp默认任务。。enjoy!');
 });
