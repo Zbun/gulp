@@ -76,8 +76,7 @@ $color-bg-dialog-title:#EAEAEA;
       @extend %scrollbar-white-w;
       .ui-dialog-content {
         min-width: 200px;
-        font-size: 14px;
-        // max-height: 500px;
+        font-size: 14px; // max-height: 500px;
         // overflow-x: hidden;
         &::-webkit-scrollbar {
           width: 6px;
@@ -250,20 +249,15 @@ $color-bg-dialog-title:#EAEAEA;
   bottom: 0;
   padding: 40px;
   z-index: 100;
-  background: rgba(50, 50, 50, .6);
-  // display: table-cell;
+  background: rgba(50, 50, 50, .6); // display: table-cell;
   // vertical-align: middle;
   >.content {
     position: absolute;
     left: 50%;
     top: 5%;
-    // height: 80%;
     bottom: 10%;
-    // position: relative;
-    // margin-top: 50px;
-    margin-left: 20px;
-    max-width: 900px;
-    // padding: 40px 0 70px;
+    margin-left: -20px;
+    max-width: 1500px;
     z-index: 150;
     @include dis-flex();
     @include flex-center();
@@ -273,11 +267,7 @@ $color-bg-dialog-title:#EAEAEA;
     -webkit-animation: popup-zoom2 .2s ease-out;
     animation: popup-zoom2 .2s ease-out;
     >.title {
-      // position: absolute;
-      // left: 0;
-      // top: 0;
-      // right: 0;
-      // margin-top: -40px;
+      position: relative;
       padding: 0 14px;
       border-bottom: 1px solid $color-border;
       font-weight: 700;
@@ -289,6 +279,30 @@ $color-bg-dialog-title:#EAEAEA;
       -webkit-border-radius: 2px 2px 0 0;
       -moz-border-radius: 2px 2px 0 0;
       border-radius: 2px 2px 0 0;
+      &.style-show {
+        background-image: linear-gradient(to right top, #4fc7ff, #1F9DF2);
+        color: #fff;
+        line-height: 70px;
+        font-size: 18px;
+        text-shadow: 0 1px 3px #666;
+        font-weight: 400;
+        letter-spacing: 1px;
+        border: 0;
+        padding-left: 30px;
+        &:before {
+          position: absolute;
+          content: '';
+          left: 5px;
+          top: 5px;
+          right: 5px;
+          bottom: 0;
+          border: 1px solid #62c0ff;
+          border-bottom: 0;
+        }
+        .close {
+          display: none;
+        }
+      }
       .close {
         float: right;
         padding: 7px;
@@ -296,7 +310,7 @@ $color-bg-dialog-title:#EAEAEA;
         height: 22px;
         margin-top: 10px;
         line-height: 1;
-        font-size: 24px;
+        font-size: 0;
         font-weight: 400;
         color: transparent;
         text-decoration: none;
@@ -340,12 +354,17 @@ $color-bg-dialog-title:#EAEAEA;
       }
     }
     >.footer {
+      position: relative;
       display: table;
       width: 100%;
       padding: 20px 0;
       padding-top: 10px;
+      margin-top: -1px;
       text-align: center;
       background: #fff;
+      -webkit-border-radius: 0 0 2px 2px;
+      -moz-border-radius: 0 0 2px 2px;
+      border-radius: 0 0 2px 2px;
       .btn {
         margin-right: 12px;
       }

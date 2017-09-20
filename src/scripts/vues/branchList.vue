@@ -31,7 +31,7 @@
                   </td>
                   <td>
                     <div class="action">
-                      <a href="javascript:;" @click="add_Click(item);" class="item">添加</a>
+                      <a href="javascript:;" @click="add_Click(item);" class="item">选择</a>
                     </div>
                   </td>
                 </tr>

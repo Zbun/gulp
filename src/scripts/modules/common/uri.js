@@ -16,7 +16,7 @@ module.exports = {
         return '';
       }
       loc = loc.split('#')[0];
-      return loc.slice(loc.indexOf(key + '=') + key.length + 1).split('&')[0];
+      return decodeURIComponent(loc.slice(loc.indexOf(key + '=') + key.length + 1).split('&')[0]);
     },
     set(key, value, top) {
       var loc = this.loc;
@@ -62,11 +62,11 @@ module.exports = {
       }
     }
   },
-  origin(){
-  	if (location.origin) {
-        return location.origin;
+  origin() {
+    if (location.origin) {
+      return location.origin;
     } else {
-        return window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port : '');
+      return window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port : '');
     }
   }
 };

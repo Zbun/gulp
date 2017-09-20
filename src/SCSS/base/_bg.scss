@@ -15,6 +15,14 @@ $bg-text-color in(bg-default, $color-bg-default, $color-bg-default-text),
   }
 }
 
+.bg-white {
+  background-color: #fff;
+}
+
+.bg-match {
+  background-color: #ff0;
+}
+
 .bg {
   position: relative;
   padding: 0 10px;

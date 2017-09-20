@@ -1,6 +1,7 @@
 @import '_variables.scss';
 $color-odd:#FDFDFD!default;
 $color-table-border-outer:#dcdcdc;
+$color-table-on:#FDE9E2!default;
 .table {
   border-spacing: 0;
   display: table;
@@ -18,8 +19,8 @@ $color-table-border-outer:#dcdcdc;
         text-align: inherit;
       }
       th {
-        // border-bottom: 1px solid $color-table-border;
-        font-weight: 400;
+        border-bottom: 1px solid $color-table-border;
+        font-weight: 700;
         background: $color-table-thead;
         color: $color-table-thead-th;
         .com-ipt {
@@ -54,7 +55,7 @@ $color-table-border-outer:#dcdcdc;
     input {
       margin: -3px 0;
       font-size: 12px;
-      color: #666;
+      color: #333;
     }
   }
   >tbody,
@@ -62,12 +63,11 @@ $color-table-border-outer:#dcdcdc;
     tr {
       th,
       td {
-        color: #666;
+        color: #333;
         padding: 8px 5px;
         line-height: 20px;
         border-style: solid;
-        border-color: $color-table-border;
-        // border-width: 1px 0 0;
+        border-color: $color-table-border; // border-width: 1px 0 0;
         border-width: 0;
         &.color-odd {
           background: $color-odd;
@@ -115,16 +115,20 @@ $color-table-border-outer:#dcdcdc;
     th,
     td {
       position: relative;
-      &.td-danger {
-        padding: 0;
-        background-color: $color-bg-danger;
-      }
-      &.td-ok {
-        padding: 0;
-        background-color: $color-bg-ok;
-      }
-      &.td-warning-pure {
-        background-color: #FFFEE7;
+      font-size: 12px;
+    }
+    .td-danger {
+      background-color: $color-bg-danger;
+    }
+    .td-ok {
+      background-color: $color-bg-ok;
+    }
+    .td-warning-pure {
+      background-color: #FFFEE7;
+    }
+    &.on {
+      td {
+        background-color: $color-table-on;
       }
     }
   }
@@ -252,8 +256,7 @@ $color-table-border-outer:#dcdcdc;
       td,
       th {
         border-style: solid;
-        border-width: 1px 0 0 1px;
-        // border: 1px solid $color-table-border;
+        border-width: 1px 0 0 1px; // border: 1px solid $color-table-border;
         border-color: $color-table-border;
         &:first-child {
           // border-left-width: 0;

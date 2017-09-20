@@ -19,7 +19,7 @@
                       {{item.Name}}
                     </td>
                     <td>
-                      <a href="javascript:;" class="highlight" @click="addItem_Click(item)">添加</a>
+                      <a href="javascript:;" class="highlight" @click="addItem_Click(item)">选择</a>
                     </td>
                   </tr>
                 </tbody>

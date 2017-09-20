@@ -53,6 +53,11 @@ $color-check-border:#aaa;
   &+& {
     margin-left: 20px;
   }
+  &.font-small {
+    .icon {
+      top: 2px;
+    }
+  }
 }
 
 .radio-simulate {

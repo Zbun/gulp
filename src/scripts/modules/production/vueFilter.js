@@ -1,4 +1,14 @@
 //---------------------------------------------------------------------------------
+//字符串截取
+Vue.filter('substr', (v, n = 20) => {
+  if (v) {
+    if (v.length <= n) {
+      return v;
+    }
+    return v.substr(0, n) + '...';
+  }
+
+});
 //常用过滤器
 //千位分隔小方法 zhao.liubin@zol.com.cn
 function splitThousand(num) {
@@ -30,13 +40,16 @@ Vue.filter('currency', function(value) {
   if (!value) {
     value = 0;
   }
+  if (!parseFloat(value)) {
+    return value;
+  }
   return splitThousand(parseFloat(value).toFixed(2));
 });
 //货币双向过滤必填
 Vue.filter('currencyIn', {
   read(value) {
     let number = parseFloat(value);
-    return isNaN(number) ? '' : number.toFixed(2);
+    return isNaN(number) ? '' : 0 == number ? 0 : number.toFixed(2);
   },
   write(value, oldVal) {
     let number = parseFloat(value);
@@ -110,7 +123,7 @@ Vue.filter('numberInNotRequired', {
       return '';
     }
     let number = parseInt(value);
-    return isNaN(number) ? (oldVal || 0) : number;
+    return isNaN(number) ? (oldVal || '') : number;
   }
 });
 //正整数双向包括零
@@ -143,7 +156,7 @@ Vue.filter('posNumberInNotRequired', {
       return '';
     }
     let number = parseInt(value);
-    return isNaN(number) ? (oldVal || 1) : (number <= 0 ? 1 : number);
+    return isNaN(number) ? (oldVal || '') : (number <= 0 ? 1 : number);
   }
 });
 //双向浮点
@@ -156,27 +169,55 @@ Vue.filter('floatIn', {
     return isNaN(number) ? (oldVal || 0.01) : number;
   }
 });
+
+//通用处理时间戳
+function resetTimeStamp(value) {
+  value = value.split('.')[0];
+  value = (value + 'Z').replace(/\//g, '-').replace(/[\u4E00-\u9FA5]/g, '').replace(/-(\d+)-(\d+)/, function(all, a, b) {
+    /^\d$/.test(a) && (a = '0' + a);
+    /^\d$/.test(b) && (b = '0' + b);
+    return '-' + a + '-' + b;
+  }).replace(/(\d+):(\d+):(\d+)/, function(all, a, b, c) {
+    let arrTemp = [];
+    /^\d$/.test(a) && (a = '0' + a);
+    /^\d$/.test(b) && (b = '0' + b);
+    /^\d$/.test(c) && (c = '0' + c);
+    arrTemp.push(a, b, c);
+    return arrTemp.join(':');
+  }).replace(/\d(\s+)\d/, function(all, a) {
+    if (/^\s+$/.test(a)) {
+      return all.replace(a, 'T');
+    }
+  }); //强制把时间格式加T
+  var dt = new Date(new Date(value).toUTCString().replace('GMT', ''));
+  var year = dt.getFullYear();
+  var month = parseInt(dt.getMonth()) + 1;
+  var day = parseInt(dt.getDate());
+  var hours = parseInt(dt.getHours());
+  var minutes = parseInt(dt.getMinutes());
+  var seconds = parseInt(dt.getSeconds());
+
+  month = month < 10 ? '0' + month : month;
+  day = day < 10 ? '0' + day : day;
+  hours = hours < 10 ? '0' + hours : hours;
+  minutes = minutes < 10 ? '0' + minutes : minutes;
+  seconds = seconds < 10 ? '0' + seconds : seconds;
+  return {
+    year: year,
+    month: month,
+    day: day,
+    hours: hours,
+    minutes: minutes,
+    seconds: seconds
+  };
+}
 //日期过滤器： 传入 2016-07-07T10:27:13  过滤成： 2016-07-07
 Vue.filter('date', {
   //value = value.replace('T', ' ');
   read(value) {
     if (!value) return '';
-    value = value.split('.')[0];
-    value = (value + 'Z').replace(/\//g, '-').replace(/[\u4E00-\u9FA5]/g, '').replace(/-(\d+)-(\d+)/, function(all, a, b) {
-      /^\d$/.test(a) && (a = '0' + a);
-      /^\d$/.test(b) && (b = '0' + b);
-      return '-' + a + '-' + b;
-    }).replace(/\d(\s+)\d/, function(all, a) {
-      if (/^\s+$/.test(a)) {
-        return all.replace(a, 'T');
-      }
-    }); //强制把时间格式加T
-    var dt = new Date(new Date(value).toUTCString().replace('GMT', ''));
-    var month = parseInt(dt.getMonth()) + 1;
-    var day = parseInt(dt.getDate());
-    month = month < 10 ? '0' + month : month;
-    day = day < 10 ? '0' + day : day;
-    return dt.getFullYear() + '-' + month + '-' + day;
+    var dt = resetTimeStamp(value);
+    return dt.year + '-' + dt.month + '-' + dt.day;
   },
   write(value) {
     return value;
@@ -193,37 +234,9 @@ Vue.filter('datetime', {
   //value = value.replace('T', ' ');
   read(value) {
     if (!value) return '';
-    value = value.split('.')[0];
-    value = (value + 'Z').replace(/\//g, '-').replace(/[\u4E00-\u9FA5]/g, '').replace(/-(\d+)-(\d+)/, function(all, a, b) {
-      /^\d$/.test(a) && (a = '0' + a);
-      /^\d$/.test(b) && (b = '0' + b);
-      return '-' + a + '-' + b;
-    }).replace(/(\d+):(\d+):(\d+)/, function(all, a, b, c) {
-      let arrTemp = [];
-      /^\d$/.test(a) && (a = '0' + a);
-      /^\d$/.test(b) && (b = '0' + b);
-      /^\d$/.test(c) && (c = '0' + c);
-      arrTemp.push(a, b, c);
-      return arrTemp.join(':');
-    }).replace(/\d(\s+)\d/, function(all, a) {
-      if (/^\s+$/.test(a)) {
-        return all.replace(a, 'T');
-      }
-    }); //强制把时间格式加T
-    var dt = new Date(new Date(value).toUTCString().replace('GMT', ''));
-    var month = parseInt(dt.getMonth()) + 1;
-    var day = parseInt(dt.getDate());
-    var hours = parseInt(dt.getHours());
-    var minutes = parseInt(dt.getMinutes());
-    var seconds = parseInt(dt.getSeconds());
+    var dt = resetTimeStamp(value);
 
-    month = month < 10 ? '0' + month : month;
-    day = day < 10 ? '0' + day : day;
-    hours = hours < 10 ? '0' + hours : hours;
-    minutes = minutes < 10 ? '0' + minutes : minutes;
-    seconds = seconds < 10 ? '0' + seconds : seconds;
-
-    return dt.getFullYear() + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
+    return dt.year + '-' + dt.month + '-' + dt.day + ' ' + dt.hours + ':' + dt.minutes + ':' + dt.seconds;
   },
   write(value) {
     return value;
@@ -235,36 +248,35 @@ Vue.filter('datetime1', {
   //value = value.replace('T', ' ');
   read(value) {
     if (!value) return '';
-    value = (value + 'Z').replace(/\//g, '-').replace(/[\u4E00-\u9FA5]/g, '').replace(/-(\d+)-(\d+)/, function(all, a, b) {
-      /^\d$/.test(a) && (a = '0' + a);
-      /^\d$/.test(b) && (b = '0' + b);
-      return '-' + a + '-' + b;
-    }).replace(/(\d+):(\d+):(\d+)/, function(all, a, b, c) {
-      let arrTemp = [];
-      /^\d$/.test(a) && (a = '0' + a);
-      /^\d$/.test(b) && (b = '0' + b);
-      /^\d$/.test(c) && (c = '0' + c);
-      arrTemp.push(a, b, c);
-      return arrTemp.join(':');
-    }).replace(/\d(\s+)\d/, function(all, a) {
-      if (/^\s+$/.test(a)) {
-        return all.replace(a, 'T');
-      }
-    }); //强制把时间格式加T
-    var dt = new Date(new Date(value).toUTCString().replace('GMT', ''));
-    var month = parseInt(dt.getMonth()) + 1;
-    var day = parseInt(dt.getDate());
-    var hours = parseInt(dt.getHours());
-    var minutes = parseInt(dt.getMinutes());
-    var seconds = parseInt(dt.getSeconds());
+    var dt = resetTimeStamp(value);
 
-    month = month < 10 ? '0' + month : month;
-    day = day < 10 ? '0' + day : day;
-    hours = hours < 10 ? '0' + hours : hours;
-    minutes = minutes < 10 ? '0' + minutes : minutes;
-    seconds = seconds < 10 ? '0' + seconds : seconds;
+    return dt.year + '-' + dt.month + '-' + dt.day + ' ' + dt.hours + ':' + dt.minutes;
+  },
+  write(value) {
+    return value;
+  }
+});
 
-    return dt.getFullYear() + '-' + month + '-' + day + ' ' + hours + ':' + minutes;
+//日期过滤器： 传入 2016-07-07T10:27:13  过滤成： 2016-07-07
+Vue.filter('year', {
+  //value = value.replace('T', ' ');
+  read(value) {
+    if (!value) return '';
+    var dt = resetTimeStamp(value);
+    return dt.year;
+  },
+  write(value) {
+    return value;
+  }
+});
+
+//日期过滤器： 传入 2016-07-07T10:27:13  过滤成： 2016-07-07
+Vue.filter('month', {
+  //value = value.replace('T', ' ');
+  read(value) {
+    if (!value) return '';
+    var dt = resetTimeStamp(value);
+    return dt.month;
   },
   write(value) {
     return value;
@@ -379,7 +391,7 @@ Vue.filter('costChangeType', (value) => {
 Vue.filter('SNStandard', (value) => {
   return dictionary['SNStandard'][value];
 });
-//分仓属性
+//仓库属性
 Vue.filter('storeType', (value) => {
   return dictionary['storeType'][value];
 });
@@ -398,4 +410,45 @@ Vue.filter('priceAvgType', (value) => {
 //加权调价类型
 Vue.filter('flowStatus', (value) => {
   return dictionary['flowStatus'][value];
+});
+//是否
+Vue.filter('isOrNo', (value) => {
+  return dictionary['isOrNo'][value];
+});
+//采购保价明细状态
+Vue.filter('purchaseProtectDetailStatus', (value) => {
+  return dictionary['purchaseProtectDetailStatus'][value];
+});
+//抵扣名细类别
+Vue.filter('finacePayKind', (value) => {
+  return dictionary['finacePayKind'][value];
+});
+//财务付款类别
+Vue.filter('finacePayType', (value) => {
+  return dictionary['finacePayType'][value];
+});
+//财务收款类别
+Vue.filter('finaceProceedsType', (value) => {
+  return dictionary['finaceProceedsType'][value];
+});
+//凭证类别
+Vue.filter('VoucherType', (value) => {
+  return dictionary['VoucherType'][value];
+});
+//财务付款方式
+Vue.filter('finacePayMethod', (value) => {
+  return dictionary['finacePayMethod'][value];
+});
+//数据对接模块
+Vue.filter('dataConnectSourceType', (value) => {
+  return dictionary['dataConnectSourceType'][value];
+});
+Vue.filter('VarType', v => dictionary['VarType'][v]);
+Vue.filter('triggerNode', v => dictionary['EmitNode'][v]);
+//B2B同步类型
+Vue.filter('DIType', (value) => {
+  return dictionary['DIType'][value];
+});
+Vue.filter('disabled', (value) => {
+  return dictionary['disabled'][value];
 });

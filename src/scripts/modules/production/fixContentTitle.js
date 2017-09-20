@@ -12,8 +12,8 @@ module.exports = function() {
       style = document.createElement('style');
       style.id = 'attachStyle';
     }
-    var menuHeight = localStorage.token && localStorage.token.length > 0 ? 50 : 0;
-    style.innerHTML = '#main-box >.main{min-height:' + (document.documentElement.clientHeight - 120 - menuHeight) + 'px}';
+    // var menuHeight = localStorage.token && localStorage.token.length > 0 ? 50 : 0;
+    style.innerHTML = '#main-box >.main{min-height:' + (document.documentElement.clientHeight - 155) + 'px}';
     document.head.appendChild(style);
   };
   //内容区撑开页面高度，使版权信息刚好在页面底部
@@ -32,7 +32,7 @@ module.exports = function() {
     let $p = null;
     let pNode = null;
     let $t = [];
-    $(document).on('mousedown', '.popup>.content>.title', function(e) {
+    $(document).on('mousedown', '.popup>.content>.title,.popup>.content>.footer', function(e) {
       isDraging = true;
       $t = $(this);
       $p = $t.parent();
@@ -63,7 +63,7 @@ module.exports = function() {
         let pOffset = $p.offset();
         let tOffset = $t.offset();
         ($p.is(':visible') && tOffset.top < 1) && $p.css('top', pOffset.top - tOffset.top + 10);
-        ($p.is(':visible') && pOffset.left < 1) && $p.css('left', 10);
+        // ($p.is(':visible') && pOffset.left < 1) && $p.css('left', 10);
       }
     }).on('mousemove', function(e) {
       if (!isDraging) return;
@@ -96,9 +96,19 @@ module.exports = function() {
     }).on('click', '.show-history .action-show', function() {
       $('.show-history .history-price').hide();
       $(this).closest('.show-history').find('.history-price').show();
+    }).on('click', '.gototop', function() {
+      window.scrollTo(0, 0);
     });
     window.onblur = function() {
       isDraging = false;
+    };
+    window.onscroll = function() {
+      let top = document.documentElement.scrollTop || document.body.scrollTop;
+      if (top > 100) {
+        $('.gototop').show();
+      } else {
+        $('.gototop').hide();
+      }
     };
   }
 };

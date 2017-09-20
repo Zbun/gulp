@@ -31,7 +31,7 @@
                         <td>{{item.BranchName}}</td>
                         <td>
                           <p class="text-nowrap">
-                            <a href="javascript:;" class="highlight" @click.stop="add_Click(item)">添加</a>
+                            <a href="javascript:;" class="highlight" @click.stop="add_Click(item)">选择</a>
                           </p>
                         </td>
                       </tr>

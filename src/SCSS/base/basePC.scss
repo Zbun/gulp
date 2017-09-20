@@ -37,17 +37,23 @@ textarea,
 select,
 .com-ipt {
   line-height: 16px;
-  font-size: $font-size;
+  font-size: 12px;
   font-family: $font-family;
 }
 
 .com-ipt {
   &.width,
   &.large {
-    min-width: 200px;
+    min-width: 180px;
   }
   &.x-large {
     min-width: 340px;
+  }
+  &.xx-large {
+    min-width: 450px;
+  }
+  &.xxx-large {
+    min-width: 550px;
   }
   &.small {
     width: 100px;
@@ -85,8 +91,7 @@ select,
   &.high {
     height: 40px;
     font-size: 16px;
-  }
-  //with background color
+  } //with background color
   &.ipt-warning {
     background: $color-bg-warning;
     border-color: #FBD9CD;
@@ -163,17 +168,39 @@ select,
   &.icon-trend {
     background-position: -225px -390px;
   }
-  &.icon-down {
-    background-position: -169px -409px;
+  &.icon-plus {
+    background-position: -243px -410px;
+  }
+  &.icon-down,
+  &.icon-up {
+    filter: grayscale(100%);
+    background-position: -169px -368px;
+    &:hover {
+      filter: grayscale(0);
+    }
   }
   &.icon-up {
-    background-position: -188px -389px;
+    -ms-background-position-x: -188px;
+    background-position-x: -188px;
   }
   &.icon-error-circle {
     background-position: -237px -440px;
   }
   &.icon-ok-circle {
     background-position: -237px -464px;
+  }
+  &.icon-receipt {
+    height: 18px;
+    background-position: -261px -441px;
+  }
+  &.icon-log {
+    background-position: -266px -390px;
+  }
+  &.icon-totop {
+    background-position: -266px -409px;
+  }
+  &.icon-minus-circle {
+    background-position: -246px -392px;
   }
 }
 
@@ -308,8 +335,7 @@ a {
   position: relative;
   display: inline-block;
   >input {
-    width: 106px;
-    // padding-right: 26px;
+    width: 106px; // padding-right: 26px;
     background: #fff;
   }
   &.width {
@@ -328,7 +354,7 @@ a {
     background-image: url($bgGroup);
     background-position: -70px -28px;
     pointer-events: none;
-    :before {
+     :before {
       content: '';
     }
   }

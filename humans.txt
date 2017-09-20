@@ -11,11 +11,11 @@
   Email: yao.ning@zol.com.cn
   From: Zhengzhou, Henan, China
 
-  Front end developer:Zhao Liubin
+  Front end developer: Zhao Liubin
   Email: zhao.liubin@zol.com.cn
   From: Zhengzhou, Henan, China
 
-  Front end developer:Wen Yongjiang
+  Front end developer: Wen Yongjiang
   Email: wen.yongjiang@zol.com.cn
   From: Zhengzhou, Henan, China
 
@@ -30,4 +30,4 @@
   Last update: 2017/01/01
   Language: Chinese
   Doctype: HTML5
-  IDE: Sublime Text, Visual Studio, Photoshop
+  IDE: Sublime Text, VS Code

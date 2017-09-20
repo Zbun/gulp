@@ -2,8 +2,7 @@
 @import '_mixin.scss';
 .btn {
   position: relative;
-  display: inline-block;
-  // padding: 4px 12px;
+  display: inline-block; // padding: 4px 12px;
   padding: 0 14px;
   margin-bottom: 0;
   font-family: $font-family;
@@ -39,6 +38,15 @@
   &.thin {
     padding: 0 10px;
   }
+  &.fat {
+    padding: 0 70px;
+  }
+}
+
+.btn-radial {
+  -webkit-border-radius: 99em;
+  -moz-border-radius: 99em;
+  border-radius: 99em;
 }
 
 .btn-align-ipt {
@@ -82,13 +90,14 @@ $btn-color in (btn-info:$color-info, btn-primary:$color-primary, btn-ok:$color-o
 
 .btn-default {
   color: $color;
-  background: #f8f8f8;
+  background: #fff;
   border: 1px solid $color-border;
   &:hover {
-    background: #dcdcdc;
+    background: #fff;
+    border-color: $color-primary;
   }
   &:focus {
-    border-color: $color-border;
+    border-color: $color-primary;
   }
 }
 
@@ -142,7 +151,7 @@ $btn-color in (btn-primary-o:$color-primary, btn-info-o:$color-info, btn-ok-o:$c
   pointer-events: none;
   color: #999;
   background: #eaeaea;
-  border-color: #eaeaea;
+  border-color: $color-border;
 }
 
 .btn-o,

@@ -4,33 +4,35 @@ var webpack = require('webpack');
 module.exports = {
   entry: {
     APP: './src/scripts/entry/APP.js'
-      // doc: './src/scripts/doc.js'
+    // doc: './src/scripts/doc.js'
   },
   output: {
     path: path.join(__dirname, './dist/scripts/bundle/'),
     filename: '[name].bundle.js',
     publicPath: '/dist/scripts/bundle/',
-    chunkFilename: '[id].[chunkhash].js'
+    chunkFilename: '[id].chunk.[hash:8].js'
   },
   module: {
-    rules: [{
+    loaders: [{
         test: /\.jsx?$/,
-        // loader: 'babel-loader',
-        include: [path.join(__dirname, './src/scripts')],
-        exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['es2015']
-          }
+        loader: 'babel',
+        include: [path.resolve('./src/scripts')],
+        exclude: /(node_modules|bower_components)/,
+        query: {
+          presets: ['es2015']
         }
-
       }, {
         test: /\.vue$/,
-        loader: 'vue-loader',
+        loader: 'vue',
         include: [path.resolve('./src/scripts')],
-        exclude: /node_modules/
+        exclude: /(node_modules|bower_components)/
       }
+      // , {
+      //   test: /\.html$/,
+      //   loader: 'html',
+      //   include: [path.resolve('./src')],
+      //   exclude: /(node_modules|bower_components)/
+      // }
 
       // {
       //shimming，用于不符合规范的模块（如一些直接返回全局变更的插件）进行shimi处理
@@ -38,26 +40,35 @@ module.exports = {
       //用法   require('./dist.../swiper.s')
       // test:require.resolve('./dist/scripts/lib/swiper3/swiper-3.3.1.min.js'),loaders:'exports?swiper'
       // }
+      // { test: /\.less$/, loader: 'style!css!less' }, // use ! to chain loaders
       // { test:/\.s[ac]ss$/,loaders:['style','css','sass']},
       // { test: /\.css$/, loader: 'style!css' },
       // { test: /\.(png|jpg)$/, loader: 'url-loader?limit=8192' } // inline base64 URLs for <=8k images, direct URLs for the rest
     ]
   },
+  // vue: {
+  //   loaders: {
+  //     css: 'style!css!less'
+  //   }
+  // },
+  // babel:{
+  //   presets:['es2015'],
+  //   plugins:['transform-runtime']
+  // },
   devtool: 'source-map',
   resolve: {
-    // root: path.resolve('./src/scripts'),
-    modules: [
-      path.join(__dirname, './src/scripts'),
-      'node_modules'
-    ],
-    // extensions: ['.vue'],
+    root: path.resolve('./src/scripts'),
+    extensions: ['', '.vue', '.js'],
     alias: {
       htmls: path.join(__dirname, './src/htmls'), //htmls模块路径
       libs: path.join(__dirname, './src/scripts/lib/'), //通用库文件路径
       commonScripts: path.join(__dirname, './src/scripts/modules/common'), //通用JS模块路径
       commonVues: path.join(__dirname, './src/scripts/vues'), //通用vue模块路径
       views: path.join(__dirname, './src/scripts/SPA/views/'), //独立的单页路径
+      B2b: path.join(__dirname, './src/scripts/SPA/B2b/'), //B2b独立的单页路径
+      mixins: path.join(__dirname, './src/scripts/modules/production/mixins/'),
       images: path.join(__dirname, './imgages')
+      // jquery:path.join(__dirname,'./dist/scripts/lib/jquery-1.11.3.js')
     }
   },
   plugins: [
@@ -75,17 +86,21 @@ module.exports = {
       fetchData: path.join(__dirname, './src/scripts/modules/production/fetchData.js'), //获取数据
       areaSelector: path.join(__dirname, './src/scripts/modules/production/areaSelector.js'), //区域选择
       initPage: path.join(__dirname, './src/scripts/modules/production/pagination.js'), //分页总方法
-      createOrderNum: path.join(__dirname, './src/scripts/modules/production/createOrderNum.js'), //生成单号方法
-      dictionary: path.join(__dirname, './src/scripts/modules/production/SysDictionary.js') //字典数据
+      // webConfig: path.join(__dirname, './src/scripts/config/webConfig.js'), //网站通用部分配置
+      dictionary: path.join(__dirname, './src/scripts/modules/production/SysDictionary.js'), //字典数据
+      createOrderNum: path.join(__dirname, './src/scripts/modules/production/createOrderNum.js'), //创建单号
+      G_APILIST: path.join(__dirname, './src/scripts/config/APILIST.js'), //全局接口地址
     })
   ],
   // watch: true,
+  //
   watchOptions: {
     ignored: /node_modules/,
     aggregateTimeout: 300,
     poll: 1000
   },
   externals: {
+    //外部引入2，页面中需要预先引入相关库
     // Vue: 'Vue',
     _: 'lodash',
     jquery: 'jQuery', //此时外部引入

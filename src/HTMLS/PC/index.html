@@ -19,11 +19,16 @@
 <body>
   <e-header></e-header>
   <e-menu></e-menu>
-  <article id="main-box">
-    <router-view></router-view>
-  </article>
-  <footer id="footer" class="row">&copy; 2016-2017 Z管家
-  </footer>
+  <div id="content-box">
+    <tab-bar></tab-bar>
+    <article id="main-box">
+      <e-home></e-home>
+      <!-- <router-view></router-view> -->
+    </article>
+  </div>
+  <!--   <footer id="footer" class="row">&copy; 2016-2017 Z管家
+  </footer> -->
+  <e-corner></e-corner>
   <include src="../components/scripts.html"></include>
 </body>
 

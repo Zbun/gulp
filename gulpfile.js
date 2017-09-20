@@ -1,6 +1,6 @@
 // var path = require('path');
 var gulp = require('gulp'),
-  browserSync = require('browser-sync'),
+  browserSync = require('browser-sync').create(),
   // concat = require('gulp-concat'),
   del = require('del'),
   // rename = require('gulp-rename'),
@@ -8,14 +8,13 @@ var gulp = require('gulp'),
   // cleanCSS = require('gulp-clean-css'),
   gutil = require('gulp-util'),
   include = require('gulp-html-tag-include'),
-  minify = require('gulp-minify'),
+  // minify = require('gulp-minify'),
   // sourcemaps = require('gulp-sourcemaps'),
-  uglify = require('gulp-uglify'),
+  // uglify = require('gulp-uglify'),
   sass = require('gulp-sass'),
   watch = require('gulp-watch'),
   webpack = require('webpack');
 // WebpackDevServer = require('webpack-dev-server');
-
 var webpackConfig = require('./webpack.config.js');
 
 //彩色输入操作成功控件台
@@ -34,32 +33,49 @@ var opts = {
 var cssStyles = ['compressed', 'expanded'],
   cssStyle = cssStyles[1]; //生成css格式，压缩、展开
 
+//复制文件至目标目录
+var copyFiles = function() {
+  gulp.src('./src/staticResources/scripts/**')
+    .pipe(gulp.dest(opts.destPath + '/scripts/'));
+
+  gulp.src('./src/staticResources/images/**')
+    .pipe(gulp.dest(opts.destPath + '/images/'));
+
+  gulp.src('./src/staticResources/fonts/**')
+    .pipe(gulp.dest(opts.destPath + '/fonts/'));
+
+  gulp.src('./src/staticResources/files/**')
+    .pipe(gulp.dest(opts.destPath + '/files/'));
+
+  gulp.src('./src/staticResources/css/*.css')
+    .pipe(gulp.dest(opts.destPath + '/css/'));
+};
+
 //清理文件
 // gulp.task('clean', function(cb) {
 //   del([driDist + 'css/', dirDist + 'scripts/bundle/'], cb);
 // });
 
-
 //压缩、链接资源类
-gulp.task('uglify', function() {
-  gulp.src(opts.destPath + 'scripts/bundle/*.js')
-    .pipe(uglify())
-    .pipe(gulp.dest(opts.destPath + 'scripts/bundle'));
-  // .pipe(rename({suffix:'.min'}))
-});
+// gulp.task('uglify', function() {
+//   gulp.src(opts.destPath + 'scripts/bundle/*.js')
+//     .pipe(uglify())
+//     .pipe(gulp.dest(opts.destPath + 'scripts/bundle'));
+//   // .pipe(rename({suffix:'.min'}))
+// });
 
-gulp.task('minify', function() {
-  gulp.src(opts.destPath + 'scripts/bundle/*.js')
-    .pipe(minify({
-      exclude: ['tasks'],
-      ignoreFiles: ['.combo.js', '-min.js']
-    }))
-    .pipe(gulp.dest(opts.destPath + 'scripts/bundle'));
-});
+// gulp.task('minify', function() {
+//   gulp.src(opts.destPath + 'scripts/bundle/*.js')
+//     .pipe(minify({
+//       exclude: ['tasks'],
+//       ignoreFiles: ['.combo.js', '-min.js']
+//     }))
+//     .pipe(gulp.dest(opts.destPath + 'scripts/bundle'));
+// });
 //文件添加版本号， 在HTML中写入 ** .js ? rev = @hash
 function fnRev() {
   console.log('打下版本号');
-  gulp.src('./index.html')
+  gulp.src('./*.html')
     .pipe(revAppend())
     .pipe(gulp.dest('.'));
   fnConsole('打好了');
@@ -128,38 +144,7 @@ gulp.task('webpack', ['sass'], function() {
   });
 });
 
-// webpack 热启，暂没法用。。。
-// gulp.task('webpack-dev-server', function(callback) {
-//   // Start a webpack-dev-server
-//   console.log('Webapck 开始');
-//   var newConfig = webpackConfig;
-
-//   var compiler = webpack(
-//     newConfig,
-//     function(err, stats) {
-//       if (err) throw new gutil.PluginError('webpack', err);
-//       // gutil.log('[webpack]',stats.toString({}))
-//       stats.compilation.errors[0] && console.log(stats.compilation.errors[0].error);
-//       typeof callback == 'function' && callback();
-//       // console.log(err);
-//     });
-
-//   new WebpackDevServer(compiler, {
-//     // server and middleware options
-//     quiet: true,
-//     noInfo: true,
-//     hot: true
-//   }).listen(8080, 'localhost', function(err) {
-//     if (err) throw new gutil.PluginError('webpack-dev-server', err);
-//     // Server listening
-//     // gutil.log('[webpack-dev-server]', 'http://localhost:8080/webpack-dev-server/index.html');
-
-//     // callback();
-//     fnConsole('webpack 结束');
-//   });
-// });
-
-var fnWatchFilesChangedThenWebpack = function() {
+var fnGulpWatchFilesChangedThenWebpack = function() {
   watch('./src/scripts/**/*.*', function() {
     fnWebpack(function() {
       fnConsole('webpack 结束');
@@ -169,12 +154,11 @@ var fnWatchFilesChangedThenWebpack = function() {
 };
 //根据文件类型变动，自动刷新浏览器
 function fnBrowserSync() {
-  browserSync({
+  copyFiles();
+  browserSync.init({
     // files: ['**/*.html', '**/*.css', '**/*.js', '!**.less', '!**.coffee', '!**.SCSS', '!node_modules/**.*', '!src/**.*', '!webpack.config.js'],
-    files: ['./dist/css/*.css', './dist/scripts/bundle/app.bundle.js', './dist/htmls/**/*.html', '!**.scss', '!node_modules/**.*'],
-    server: {
-      baseDir: './'
-    },
+    files: ['dist/css/*.css', 'dist/scripts/bundle/APP.bundle.js', './dist/htmls/**/*.html', '!**.scss', '!node_modules/**.*'],
+    server: { baseDir: './' },
     port: 2019,
     codeSync: false,
     ghostMode: false
@@ -183,7 +167,7 @@ function fnBrowserSync() {
   gulp.watch('./src/scss/**/*.scss', fnSass);
   gulp.watch('./dist/css/*.css', fnRev);
   if (!webpackConfig.watch) {
-    fnWatchFilesChangedThenWebpack();
+    fnGulpWatchFilesChangedThenWebpack();
   }
   // gulp.watch('./src/htmls/**/*.html', ['assembleHTML', 'webpack']);
 }

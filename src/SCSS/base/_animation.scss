@@ -122,6 +122,7 @@ $am-ic:1!default;
   }
 }
 
+// 心跳
 .am-pulse-one {
   @include anim(pulse-one .5s linear);
 }
@@ -164,4 +165,36 @@ $am-ic:1!default;
 
 .am-ease-show {
   @include anim(ease-show .4s linear);
+}
+
+@keyframes blink {
+  0,
+  25% {
+    opacity: 0;
+  }
+  25.1%,
+  75% {
+    opacity: 1;
+  }
+  75.1%,
+  100% {
+    opacity: 0;
+  }
+  // 0% {
+  //   opacity: 0;
+  // }
+  // 10% {
+  //   opacity: .2;
+  // }
+  // 90% {
+  //   opacity: 1;
+  // }
+  // 100% {
+  //   opacity: 0;
+  // }
+}
+
+//闪烁
+.am-blink {
+  @include anim(blink 1s linear infinite);
 }

@@ -34,6 +34,10 @@ ol {
   list-style: none;
 }
 
+.list-decimal {
+  list-style: decimal;
+}
+
 i,
 em,
 label {
@@ -66,15 +70,13 @@ select,
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
   border-radius: 2px;
-  vertical-align: middle;
-  // background-color: #fff;
+  vertical-align: middle; // background-color: #fff;
   @include tap-highlight-color(rgba(0, 0, 0, 0));
   &:focus {
     border-color: $color-input-focus-border;
     outline: 0;
     &:invalid {
-      background: #FFF1F1;
-      //border-color: $color-input-invalid;
+      background: #FFF1F1; //border-color: $color-input-invalid;
     }
   }
   &:active {
@@ -86,7 +88,8 @@ select,
 }
 
 input[readonly] {
-  background: transparent;
+  background: #fcfcfc;
+  color: #666;
   &:focus,
   &:active {
     border-color: $color-border;
@@ -199,7 +202,7 @@ template,
 }
 
 .table {
-  width: 100%;
+  min-width: 100%;
   >.item {
     display: table-cell;
   }
@@ -217,10 +220,19 @@ template,
 
 .required-mark {
   &:before {
-    margin: 1px;
     content: '*';
     color: $color-danger;
   }
+}
+
+.ovh-x {
+  overflow-x: hidden;
+  @extend %scrollbar-white;
+}
+
+.ovh-y {
+  overflow-y: hidden;
+  @extend %scrollbar-white;
 }
 
 .simplehidden {
@@ -247,7 +259,7 @@ template,
 
 $cursor-disabled:not-allowed!default;
 .disabled {
-  opacity: .7;
+  opacity: .5;
   pointer-events: none;
 }
 

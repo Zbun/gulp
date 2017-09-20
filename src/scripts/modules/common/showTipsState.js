@@ -15,6 +15,9 @@ var showTips = function(content, state, callback, time) {
   if (state === 'cancel' || state === 'error') {
     htmlIcon = '<i class="icon p-error"></i>';
     realTime = parseInt(time) || 2500;
+  } else if (state == 'warning') {
+    htmlIcon = '<i class="icon p-warning"></i>';
+    realTime = parseInt(time) || 2500;
   }
   box.innerHTML = htmlIcon + '<div class="content">' + content + '</div>';
   document.body.appendChild(box);

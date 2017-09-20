@@ -60,6 +60,10 @@
       //   transform: rotate(45deg);
       // }
     }
+    &.p-warning {
+      -ms-background-position-y: -557px;
+      background-position-y: -557px;
+    }
   }
   .content {
     // text-align: left;
