@@ -49,6 +49,8 @@ var copyFiles = function() {
 
   gulp.src('./src/staticResources/css/*.css')
     .pipe(gulp.dest(opts.destPath + '/css/'));
+
+  fnConsole('静态文件复制完成');
 };
 
 //清理文件
@@ -112,9 +114,10 @@ function fnAssembleHTML() {
     gulp.src('./src/' + htmlConfig.src + '*.html')
       .pipe(include())
       // .pipe(revAppend())
-      .pipe(gulp.dest('./'));
-    fnConsole('组装HTML结束');
-    setTimeout(fnRev, 2000);
+      .pipe(gulp.dest('./')).on('end', function() {
+        fnConsole('组装HTML结束');
+        fnRev();
+      });
   });
 }
 gulp.task('preAssembleHTML', fnAssembleHTML);
@@ -165,7 +168,10 @@ function fnBrowserSync() {
   });
   gulp.watch('./src/htmls/**/*.html', fnAssembleHTML);
   gulp.watch('./src/scss/**/*.scss', fnSass);
-  gulp.watch('./dist/css/*.css', fnRev);
+  gulp.watch('./dist/css/*.css', function() {
+    fnConsole('SCSS编译结束，刷新页面查看');
+    // setTimeout(fnRev, 10);
+  });
   if (!webpackConfig.watch) {
     fnGulpWatchFilesChangedThenWebpack();
   }
