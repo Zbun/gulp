@@ -2,7 +2,7 @@
 @import 'baseSCSS.scss';
 @import '_tag.scss';
 @import '_table.scss';
-$font-size: 14px;
+$font-size: 12px;
 $line-height: 1.5;
 $btn-line-height:28px;
 $btn-big-font-size:16px;
@@ -53,7 +53,7 @@ select,
     min-width: 450px;
   }
   &.xxx-large {
-    min-width: 550px;
+    min-width: 500px;
   }
   &.small {
     width: 100px;
@@ -123,7 +123,6 @@ select,
 .btn {
   line-height: $btn-line-height;
   &.big {
-    min-width: 5em;
     font-size: $btn-big-font-size;
     line-height: $btn-big-line-height;
     +.btn.big {
@@ -446,62 +445,4 @@ input.ipt-small {
   }
 }
 
-// .attach {
-//   position: fixed;
-//   width: 30px;
-//   bottom: 118px;
-//   right: 0;
-//   text-align: center;
-//   >.item {
-//     a {
-//       display: block;
-//       position: relative;
-//       line-height: 30px;
-//       text-decoration: none;
-//       &:before {
-//         content: '';
-//         position: absolute;
-//         left: 50%;
-//         top: 50%;
-//         @include trf-translate(-50%, -50%);
-//         width: 0;
-//         height: 0;
-//       }
-//     }
-//   }
-// }
-//弹出层包裹器，用于先行隐藏弹出屋中的HTML
-// .popup-html {
-//   display: none!important;
-//   position: absolute !important;
-//   height: 0 !important;
-//   width: 0 !important;
-//   visibility: hidden !important;
-//   overflow: hidden !important;
-//   clip: rect(0, 0, 0, 0)!important;
-// }
-// .popup-spread {
-//   padding: 10px 20px;
-//   ol {
-//     padding: 8px 24px;
-//     line-height: 2;
-//     list-style: decimal;
-//   }
-//   .qrcode {
-//     width: 130px;
-//     height: 130px;
-//     margin: 1em;
-//     margin-right: 0;
-//   }
-//   .copy {
-//     position: relative;
-//     padding-right: 86px;
-//     .btn-copy {
-//       position: absolute;
-//       right: -8px;
-//       top: 2px;
-//     }
-//   }
-// }
-//兼容IE之类
 // @import '_compat';

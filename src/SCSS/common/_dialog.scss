@@ -1,400 +1,90 @@
 @import '../base/_variables';
-@import '../base/_scrollbar.scss';
-$color-bg-dialog-title:#EAEAEA;
-.ui-popup-backdrop {
-  background: #333!important;
-  opacity: .6!important;
-}
-
-.ui-popup-show {
-  -webkit-animation: popup-zoom .2s ease-out;
-  animation: popup-zoom .2s ease-out;
-  box-shadow: 0 0 6px #666;
-  table {
-    border-spacing: 0;
-  }
-  .ui-dialog {
-    background: #fff;
-    font-family: $font-family;
-    -webkit-border-radius: 2px;
-    -moz-border-radius: 2px;
-    border-radius: 2px;
-    overflow: hidden;
-    .ui-dialog-header {
-      position: relative;
-      height: 40px;
-      padding: 0 14px;
-      line-height: 40px;
-      font-size: 14px;
-      background: $color-bg-dialog-title;
-      border-bottom: 1px solid $color-border;
-      cursor: move;
-      -webkit-border-radius: $border-radius;
-      -moz-border-radius: $border-radius;
-      border-radius: $border-radius;
-      .ui-dialog-title {
-        padding: 0;
-        padding-right: 28px;
-        line-height: inherit;
-        font-weight: 700;
-        color: $color;
-      }
-      .ui-dialog-close {
-        position: absolute;
-        right: 14px;
-        top: 10px;
-        top: 3px\0;
-        height: 20px;
-        width: 20px;
-        padding: 0;
-        border: 0;
-        line-height: 1;
-        font-weight: 400;
-        font-size: 24px;
-        color: transparent;
-        background: transparent;
-        opacity: 1;
-        background-image: url($bgGroup);
-        background-repeat: no-repeat;
-        overflow: hidden;
-        background-position: -98px -386px;
-        &:hover {
-          // color: $color-primary;
-          -ms-background-position-y: -407px;
-          background-position-y: -407px;
-        }
-        &:active {
-          box-shadow: none;
-        }
-      }
-    }
-    .ui-dialog-body {
-      position: relative;
-      padding: 40px 60px;
-      text-align: center;
-      overflow-x: hidden;
-      @extend %scrollbar-white-w;
-      .ui-dialog-content {
-        min-width: 200px;
-        font-size: 14px; // max-height: 500px;
-        // overflow-x: hidden;
-        &::-webkit-scrollbar {
-          width: 6px;
-          height: 6px;
-          background: $color-border;
-          &:hover {
-            background: #ddd;
-          }
-        }
-        &::-webkit-scrollbar-thumb {
-          background: #bbb;
-          &:hover {
-            background: #999;
-          }
-          &:active {
-            background: #777;
-          }
-        }
-      }
-    }
-    .ui-dialog-footer {
-      padding: 10px;
-      padding-top: 0;
-      .ui-dialog-button {
-        float: none;
-        margin-bottom: 10px;
-        text-align: center;
-        direction: rtl;
-        button {
-          float: none;
-          padding: 0 16px;
-          margin: 5px 10px;
-          margin-top: 0;
-          border: 0;
-          line-height: 30px;
-          font-size: 14px;
-          font-family: $font-family;
-          color: $color;
-          background: #f8f8f8;
-          border: 1px solid $color-border;
-          -webkit-border-radius: $border-radius;
-          -moz-border-radius: $border-radius;
-          border-radius: $border-radius;
-          &:hover {
-            background: #dcdcdc;
-          }
-        }
-        [i-id=ok],
-        .ui-dialog-autofocus {
-          color: #fff;
-          background: $color-primary;
-          border-color: $color-primary;
-          &:hover {
-            background: darken($color-primary, 12%);
-            border-color: darken($color-primary, 12%);
-          }
-        }
-      }
-    }
-    &.mini,
-    &.mini-tips {
-      .ui-dialog-header {
-        display: block !important;
-        background-color: transparent;
-      }
-      .ui-dialog-title {
-        height: 36px;
-        background: transparent;
-        text-indent: -99999px;
-        overflow: hidden;
-      }
-      .ui-dialog-content {
-        text-align: center;
-      }
-      .ui-dialog-footer {
-        .ui-dialog-button {
-          margin-bottom: 4px;
-          button {
-            margin: 6px;
-            font-size: 12px;
-            line-height: 26px;
-          }
-        }
-      }
-    }
-    &.mini-tips {
-      //position: fixed;
-      //top: 30%;
-      // left: 50%;
-      //@include trf-translate(-50%,0);
-      // @include trans(.2s);
-      // transform-origin:center;
-    }
-  }
-}
-
-@-webkit-keyframes ui-dialog-loading {
-  0% {
-    -webkit-transform: rotate(0deg);
-  }
-  100% {
-    -webkit-transform: rotate(360deg);
-  }
-}
-
-@keyframes ui-dialog-loading {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-.ui-dialog-loading {
-  position: relative;
-  display: inline-block;
-  width: 32px;
-  height: 32px;
-  overflow: hidden;
-  text-indent: -999em;
-  &:after {
-    content: '';
-    position: absolute;
-    left: 0;
-    width: 3px;
-    height: 3px;
-    margin: 14.5px 0 0 14.5px;
-    border-radius: 100%;
-    box-shadow: 0 -10px 0 1px #ccc, 10px 0px #ccc, 0 10px #ccc, -10px 0 #ccc, -7px -7px 0 0.5px #ccc, 7px -7px 0 1.5px #ccc, 7px 7px #ccc, -7px 7px #ccc;
-    -webkit-transform: rotate(360deg);
-    -webkit-animation: ui-dialog-loading 1.5s infinite linear;
-    transform: rotate(360deg);
-    animation: ui-dialog-loading 1.5s infinite linear;
-  }
-}
-
-@-webkit-keyframes popup-zoom {
-  from {
-    opacity: 0;
-    -webkit-transform: translate(0, -10px);
-    transform: translate(0, -10px);
-  }
-  to {
-    -webkit-transform: translate(0, 0);
-    transform: translate(0, 0);
-    opacity: 1;
-  }
-}
-
-@keyframes popup-zoom {
-  from {
-    opacity: 0;
-    -webkit-transform: translate(0, -10px);
-    transform: translate(0, -10px);
-  }
-  to {
-    -webkit-transform: translate(0, 0);
-    transform: translate(0, 0);
-    opacity: 1;
-  }
-}
-
-//页面内弹窗样式，非dialog构造型对话框
 .popup {
   position: fixed;
   left: 0;
   right: 0;
   top: 0;
   bottom: 0;
-  padding: 40px;
   z-index: 100;
-  background: rgba(50, 50, 50, .6); // display: table-cell;
-  // vertical-align: middle;
-  >.content {
+  background-color: rgba(0, 0, 0, 0.5);
+  .wrapper {
     position: absolute;
-    left: 50%;
-    top: 5%;
-    bottom: 10%;
-    margin-left: -20px;
-    max-width: 1500px;
-    z-index: 150;
-    @include dis-flex();
-    @include flex-center();
-    @include flex-direction-column();
-    justify-content: center;
-    @include trf(translate(-50%, 0));
-    -webkit-animation: popup-zoom2 .2s ease-out;
-    animation: popup-zoom2 .2s ease-out;
-    >.title {
-      position: relative;
-      padding: 0 14px;
-      border-bottom: 1px solid $color-border;
-      font-weight: 700;
-      font-size: 14px;
-      background: $color-bg-dialog-title;
-      line-height: 40px;
-      cursor: move;
-      width: 100%;
-      -webkit-border-radius: 2px 2px 0 0;
-      -moz-border-radius: 2px 2px 0 0;
-      border-radius: 2px 2px 0 0;
-      &.style-show {
-        background-image: linear-gradient(to right top, #4fc7ff, #1F9DF2);
-        color: #fff;
-        line-height: 70px;
-        font-size: 18px;
-        text-shadow: 0 1px 3px #666;
-        font-weight: 400;
-        letter-spacing: 1px;
+    top: 35%;
+    left: 7%;
+    right: 7%;
+    padding: 10px;
+    margin: 0 10px;
+    margin-top: -10px;
+    text-align: center;
+    background: #fff;
+    color: #333;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    .close {
+      position: absolute;
+      right: 0;
+      top: 0;
+      padding: 3px 10px;
+      font-size: 30px;
+      line-height: 1;
+      color: #ddd;
+    }
+    .btns {
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: flex;
+      .btn-wrapper {
+        display: block;
+        display: -webkit-flex;
+        display: flex;
         border: 0;
-        padding-left: 30px;
-        &:before {
-          position: absolute;
-          content: '';
-          left: 5px;
-          top: 5px;
-          right: 5px;
-          bottom: 0;
-          border: 1px solid #62c0ff;
-          border-bottom: 0;
-        }
-        .close {
-          display: none;
-        }
-      }
-      .close {
-        float: right;
-        padding: 7px;
-        width: 22px;
-        height: 22px;
-        margin-top: 10px;
-        line-height: 1;
-        font-size: 0;
-        font-weight: 400;
-        color: transparent;
-        text-decoration: none;
-        background-image: url($bgGroup);
-        background-repeat: no-repeat;
+        padding: 10px;
         overflow: hidden;
-        background-position: -98px -386px;
-        &:hover {
-          -ms-background-position-y: -407px;
-          background-position-y: -407px;
-        }
+        -webkit-box-flex: 1;
+        -webkit-box-flex: 1;
+        -webkit-flex: 1;
+        flex: 1;
+        align-items: center;
       }
-    }
-    >.body {
-      width: 100%;
-      max-height: 100%;
-      min-height: 280px;
-      min-width: 320px;
-      background: #fff;
-      overflow-x: hidden;
-      -webkit-border-radius: 0 0 2px 2px;
-      -moz-border-radius: 0 0 2px 2px;
-      border-radius: 0 0 2px 2px;
-      @extend %scrollbar-white-w;
-      &.mini {
-        min-height: 0;
-      }
-      .tab-switcher {
-        >.title {
-          >.item {
-            line-height: 2;
-          }
-        }
-      }
-      >.content {
-        padding: 20px;
-        padding-top: 14px;
-        max-height: 100%;
-        overflow-x: hidden;
-        @extend %scrollbar-white-w;
-      }
-    }
-    >.footer {
-      position: relative;
-      display: table;
-      width: 100%;
-      padding: 20px 0;
-      padding-top: 10px;
-      margin-top: -1px;
-      text-align: center;
-      background: #fff;
-      -webkit-border-radius: 0 0 2px 2px;
-      -moz-border-radius: 0 0 2px 2px;
-      border-radius: 0 0 2px 2px;
       .btn {
-        margin-right: 12px;
+        width: 100%;
+        padding: 0 4px;
+        border: 0;
+        line-height: 42px;
+        font-size: 16px;
+        text-decoration: none;
+        color: #333;
+        background: #FCFCFC;
+        border: 1px solid $color-border;
+        &.ok {
+          background: $color-primary;
+          border-color: $color-primary;
+          color: #fff;
+        }
       }
     }
   }
-}
-
-@-webkit-keyframes popup-zoom2 {
-  from {
-    opacity: 0;
-    -webkit-transform: translate(-50%, -10px);
-    transform: translate(-50%, -10px);
+  .content {
+    position: relative;
+    padding: 10px 15px;
+    margin-top: 20px;
+    font-size: 16px;
+    text-align: center;
+    color: #333;
   }
-  to {
-    -webkit-transform: translate(-50%, 0);
-    transform: translate(-50%, 0);
-    opacity: 1;
-  }
-}
-
-@keyframes popup-zoom2 {
-  from {
-    opacity: 0;
-    opacity: 0;
-    -webkit-transform: translate(-50%, -10px);
-    transform: translate(-50%, -10px);
-  }
-  to {
-    -webkit-transform: translate(-50%, 0);
-    transform: translate(-50%, 0);
-    opacity: 1;
+  &.isOk {
+    .content {
+      color: $color-primary;
+      &:before {
+        display: block;
+        width: 60px;
+        height: 60px;
+        margin: 5px auto;
+        content: '';
+        background-image: url("/dist/images/icon/icon-ok.png");
+        -webkit-background-size: 100%;
+        background-size: 100%;
+      }
+    }
   }
 }

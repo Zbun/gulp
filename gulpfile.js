@@ -27,17 +27,17 @@ var num = {
 
 
 function fnConsoleBegin(v) {
-  v = '<!-- ' + v + ' -->';
+  v = '<!-- ' + v + '于' + (new Date().toLocaleTimeString()) + ' -->';
   console.log(gutil.colors.bgYellow(v));
 }
 
 function fnConsoleError(v) {
-  v = '<!-- ' + v + ' -->';
+  v = '<!-- ' + v + '于' + (new Date().toLocaleTimeString()) + ' -->';
   console.log(gutil.colors.bgRed(v));
 }
 //彩色输入操作成功控件台
 function fnConsole(v) {
-  v = '<!-- ' + v + ' -->';
+  v = '<!-- ' + v + '于' + (new Date().toLocaleTimeString()) + ' -->';
   console.log(gutil.colors.bgGreen(v));
 }
 
@@ -174,7 +174,7 @@ gulp.task('webpack', ['sass'], function() {
 var fnGulpWatchFilesChangedThenWebpack = function() {
   watch('./src/scripts/**/*.*', function() {
     fnWebpack(function() {
-      fnConsole('webpack 结束' + num.webpack++);
+      fnConsole('webpack 结束-v' + num.webpack++);
       fnRev();
     });
   });
@@ -183,12 +183,13 @@ var fnGulpWatchFilesChangedThenWebpack = function() {
 function fnBrowserSync() {
   copyFiles();
   browserSync.init({
-    // files: ['**/*.html', '**/*.css', '**/*.js', '!**.less', '!**.coffee', '!**.SCSS', '!node_modules/**.*', '!src/**.*', '!webpack.config.js'],
-    files: ['dist/css/*.css', 'dist/scripts/bundle/APP.bundle.js', './dist/htmls/**/*.html', '!**.scss', '!node_modules/**.*'],
+    // files: ['dist/css/*.css', 'dist/scripts/bundle/APP.bundle.js', './dist/htmls/**/*.html', '!**.scss', '!node_modules/**.*'],
+    files: ['dist/css/*.css'], //只热更新CSS样式
     server: { baseDir: './' },
-    port: 2019,
-    codeSync: false,
-    ghostMode: false
+    port: 3018,
+    // codeSync: false,
+    ghostMode: false,
+    // https: true
   });
   gulp.watch('./src/htmls/**/*.html', fnAssembleHTML);
   gulp.watch('./src/scss/**/*.scss', fnSass);

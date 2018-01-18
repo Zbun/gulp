@@ -1,7 +1,4 @@
-// import 'commonLib/jquery.twbsPagination.js';
-
-// import showTips from 'commonScripts/showTipsState.js';
-import URI from 'commonScripts/uri.js';
+// import URI from 'commonScripts/uri.js';
 /**
  * 获取数据通用方法
  * @date   2016-11-28
@@ -9,27 +6,24 @@ import URI from 'commonScripts/uri.js';
  * @param  {[Object]} 传入{target:'需要禁用当前点击按钮时传入当前按钮对象',cmd:'URL',para:{},callback:function(){}}
  * @return {[type]}
  */
-// var server = apiServer();
+
+// import loading from 'commonScripts/loading.js';
 var server = window.APISERVER || localStorage.APIServer; //临时调试接口地址，本地存储，随时修改
-var server2B = window.APISERVER2 || localStorage.APIServer2; //2B调试接口地址，本地存储，随时修改
 localStorage.APIServer = /\/$/.test(server) ? server : server + '/';
-localStorage.APIServer2 = /\/$/.test(server2B) ? server2B : server2B + '/';
-var token = URI.query.get('token') || localStorage.token;
-localStorage.token = token || '';
-history.replaceState({}, '');
 
 function fetchData(arg) {
   // var api = arg.api;
   var tokenReal = localStorage.token || '';
-  var api = (arg.API2 || arg.api2 || arg.API2B || arg.api2b || arg.API || arg.api || '').replace(/\s*/g, '');
+  var api = (arg.API || arg.api || '').replace(/\s*/g, '');
   var hideLoading = arg.hideLoading; //隐藏加载动画
-  var hideTips = arg.hideTips; //隐藏操作成功的提示
+  var hideTips = arg.hideTips; //隐藏弹窗提示
+  var hideOkTips = arg.hideOkTips; //隐藏操作成功的提示
   api = /^\//.test(api) ? api.substr(1) : api; //过滤以'/开头的API'
   if (!api) {
     console.warn('需要传入API地址，如：API:"/p/list/"');
     return;
   }
-  var finalServer = (arg.API2 || arg.api2 || arg.API2B || arg.api2b) ? (localStorage.APIServer2 || server2B) : (localStorage.APIServer || server); //最终请求服务器，有API时请求管家，有api2时请求
+  var finalServer = localStorage.APIServer || server; //最终请求服务器，有API时请求管家，有api2时请求
   var finalUrl = ''; //最终接口地址
   if (arg.url) {
     finalUrl = arg.url;
@@ -69,9 +63,12 @@ function fetchData(arg) {
       switch (parseInt(d.ResponseID)) {
         case 0:
           {
-            if (!hideTips && d.Message) {
-              showTips(d.Message);
+            if (!hideOkTips) {
+              if (!hideTips && d.Message) {
+                showTips(d.Message);
+              }
             }
+
             //处理服务器返回消息，一般用于登录页面
             if (d.Message && typeof arg.handlerMessage == 'function') {
               arg.handlerMessage(d.Message);
@@ -96,7 +93,8 @@ function fetchData(arg) {
             localStorage.userName = '';
             localStorage.referrerHash = location.hash;
             setTimeout(function() {
-              top.window.location = window.G_LOGINHREF;
+              top.window.location = '/login.html';
+              // location.reload();
             }, 200);
             break;
           }
@@ -125,7 +123,7 @@ function fetchData(arg) {
     // },
     headers: {},
     data: para,
-    dataType: 'JSON',
+    dataType: 'json',
     success: callback,
     complete() {
       // fnFinish();

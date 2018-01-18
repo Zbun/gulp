@@ -55,15 +55,15 @@ $color-table-on:#FDE9E2!default;
     input {
       margin: -3px 0;
       font-size: 12px;
-      color: #333;
+      color: #666;
     }
   }
   >tbody,
   >tfoot {
-    tr {
-      th,
-      td {
-        color: #333;
+    >tr {
+      >th,
+      >td {
+        color: #666;
         padding: 8px 5px;
         line-height: 20px;
         border-style: solid;
@@ -85,7 +85,7 @@ $color-table-on:#FDE9E2!default;
       &.table-bg-default {
         td {
           background: #F6F6F6;
-          color: #333;
+          color: #666;
         }
       }
       &.table-border-default {
@@ -236,6 +236,34 @@ $color-table-on:#FDE9E2!default;
   -webkit-border-radius: $border-radius;
   -moz-border-radius: $border-radius;
   border-radius: $border-radius;
+}
+
+.table-bordered-bottom {
+  >thead,
+  >tbody {
+    >tr {
+      >td,
+      >th {
+        background: #fff;
+        line-height: 28px;
+        border-bottom: 1px solid #f6f6f6;
+      }
+    }
+  }
+  >thead {
+    >tr {
+      >th {
+        background: #F6F6F6;
+        border-bottom: 0;
+      }
+    }
+  }
+}
+
+.table-data-empty {
+  padding: 20px;
+  text-align: center;
+  font-size: 14px;
 }
 
 .table.table-bordered,

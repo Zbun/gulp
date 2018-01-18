@@ -1,6 +1,6 @@
 module.exports = {
   CUSTOMER: {
-    DROPDOWNLIST: '/API/Customer/CustomerList', //不分页，下拉时用
+    DROPDOWNLIST: '/API/Customer/AccountList', //不分页，下拉时用
   },
   SUPPLIER: {
     LIST: '/Api/Supplier/LIST', //供应商列表

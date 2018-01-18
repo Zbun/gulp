@@ -10,20 +10,20 @@ module.exports = {
     path: path.join(__dirname, './dist/scripts/bundle/'),
     filename: '[name].bundle.js',
     publicPath: '/dist/scripts/bundle/',
-    chunkFilename: '[id].chunk.[hash:8].js'
+    chunkFilename: 'chunk[id].[hash].js'
   },
   module: {
-    loaders: [{
+    rules: [{
         test: /\.jsx?$/,
-        loader: 'babel',
+        loader: 'babel-loader',
         include: [path.resolve('./src/scripts')],
         exclude: /(node_modules|bower_components)/,
-        query: {
+        options: {
           presets: ['es2015']
         }
       }, {
         test: /\.vue$/,
-        loader: 'vue',
+        loader: 'vue-loader',
         include: [path.resolve('./src/scripts')],
         exclude: /(node_modules|bower_components)/
       }
@@ -51,34 +51,29 @@ module.exports = {
   //     css: 'style!css!less'
   //   }
   // },
-  // babel:{
-  //   presets:['es2015'],
-  //   plugins:['transform-runtime']
-  // },
   devtool: 'source-map',
   resolve: {
-    root: path.resolve('./src/scripts'),
-    extensions: ['', '.vue', '.js'],
+    modules: ['node_modules/', path.join(__dirname, './src/scripts')],
+    extensions: ['.vue', '.js'],
     alias: {
+      'rdist': path.join(__dirname, './'), //根相对目录
       htmls: path.join(__dirname, './src/htmls'), //htmls模块路径
       libs: path.join(__dirname, './src/scripts/lib/'), //通用库文件路径
       commonScripts: path.join(__dirname, './src/scripts/modules/common'), //通用JS模块路径
       commonVues: path.join(__dirname, './src/scripts/vues'), //通用vue模块路径
       views: path.join(__dirname, './src/scripts/SPA/views/'), //独立的单页路径
-      B2b: path.join(__dirname, './src/scripts/SPA/B2b/'), //B2b独立的单页路径
-      mixins: path.join(__dirname, './src/scripts/modules/production/mixins/'),
-      images: path.join(__dirname, './imgages')
-      // jquery:path.join(__dirname,'./dist/scripts/lib/jquery-1.11.3.js')
+      mixins: path.join(__dirname, './src/scripts/modules/production/mixins/')
     }
   },
   plugins: [
     new webpack.ProvidePlugin({
-      dialog: path.resolve(__dirname, './src/scripts/lib/artdialog/dist/dialog-plus-min.js'), //弹窗对话框
+      // dialog: path.resolve(__dirname, './src/scripts/lib/artdialog/dist/dialog-plus-min.js'), //弹窗对话框
       getTarget: path.join(__dirname, './src/scripts/modules/common/getTarget.js'), //获取真实节点功能
       getType: path.join(__dirname, './src/scripts/modules/common/getType.js'),
       typeOf: path.join(__dirname, './src/scripts/modules/common/typeOf.js'), //获取变量typeOF
       spinZ: path.resolve('./src/scripts/modules/common/spinZ.js'), //封装了spin，依赖spin
-      loading: path.resolve('./src/scripts/modules/common/zWaiting.js'), //加载数据时，右上角等待提示
+      loading: path.resolve('./src/scripts/modules/common/waiting.js'), //加载数据时，右上角等待提示
+      dialog: path.resolve(__dirname, './src/scripts/modules/common/zpopupMobile.js'), //手机弹窗
       showTips: path.resolve(__dirname, './src/scripts/modules/common/showTipsState.js'), //弹窗提示框
       validatorManu: path.resolve(__dirname, './src/scripts/modules/common/validatorManu.js'), //手动校验数据完整性
       zmm_validator: path.resolve(__dirname, './src/scripts/modules/common/validator.js'), //数据完整性验证
@@ -86,10 +81,8 @@ module.exports = {
       fetchData: path.join(__dirname, './src/scripts/modules/production/fetchData.js'), //获取数据
       areaSelector: path.join(__dirname, './src/scripts/modules/production/areaSelector.js'), //区域选择
       initPage: path.join(__dirname, './src/scripts/modules/production/pagination.js'), //分页总方法
-      // webConfig: path.join(__dirname, './src/scripts/config/webConfig.js'), //网站通用部分配置
       dictionary: path.join(__dirname, './src/scripts/modules/production/SysDictionary.js'), //字典数据
-      createOrderNum: path.join(__dirname, './src/scripts/modules/production/createOrderNum.js'), //创建单号
-      G_APILIST: path.join(__dirname, './src/scripts/config/APILIST.js'), //全局接口地址
+      G_APILIST: path.join(__dirname, './src/scripts/config/APILIST.js') //全局接口地址
     })
   ],
   // watch: true,

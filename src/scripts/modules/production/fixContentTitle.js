@@ -13,7 +13,7 @@ module.exports = function() {
       style.id = 'attachStyle';
     }
     // var menuHeight = localStorage.token && localStorage.token.length > 0 ? 50 : 0;
-    style.innerHTML = '#main-box >.main{min-height:' + (document.documentElement.clientHeight - 155) + 'px}';
+    style.innerHTML = '#main-box >.main{min-height:' + (document.documentElement.clientHeight - 156) + 'px}';
     document.head.appendChild(style);
   };
   //内容区撑开页面高度，使版权信息刚好在页面底部
@@ -53,8 +53,11 @@ module.exports = function() {
       // var $p = $(this).parent();
       // $t.unbind();
       // openSelect();
+
+      top.window.document.getElementById('context-tab-bar') && (top.window.document.getElementById('context-tab-bar').style.display = 'none'); //选项卡上下文
+
       if (!$(e.target).closest('.intelligent-match').length) {
-        $('.intelligent-match').find('.list').hide();
+        $('.intelligent-match').find('.list-match').hide();
       }
       if (!$(e.target).closest('.show-history').length) {
         $('.show-history').find('.history-price').hide();
@@ -92,7 +95,7 @@ module.exports = function() {
         e.stopPropagation();
       }
     }).on('focus', '.intelligent-match input', function() { //客户下拉智能感知
-      $(this).closest('.intelligent-match').find('.list').show();
+      $(this).closest('.intelligent-match').find('.list-match').show();
     }).on('click', '.show-history .action-show', function() {
       $('.show-history .history-price').hide();
       $(this).closest('.show-history').find('.history-price').show();
@@ -104,7 +107,7 @@ module.exports = function() {
     };
     window.onscroll = function() {
       let top = document.documentElement.scrollTop || document.body.scrollTop;
-      if (top > 100) {
+      if (top > 300) {
         $('.gototop').show();
       } else {
         $('.gototop').hide();

@@ -12,10 +12,10 @@ var showTips = function(content, state, callback, time) {
   box.className = 'popup-tips';
 
   var htmlIcon = '<i class="icon"></i>';
-  if (state === 'cancel' || state === 'error') {
+  if (/cancel|error/i.test(state)) { //错误提示参数:'error'||'cancel'
     htmlIcon = '<i class="icon p-error"></i>';
     realTime = parseInt(time) || 2500;
-  } else if (state == 'warning') {
+  } else if (/warning/i.test(state)) {
     htmlIcon = '<i class="icon p-warning"></i>';
     realTime = parseInt(time) || 2500;
   }

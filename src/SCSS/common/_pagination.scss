@@ -2,21 +2,24 @@
 .pagination {
   display: inline-block;
   margin: 16px 0;
+  color: #999;
   >li {
     display: table-cell;
     >a {
       display: inline-block;
       position: relative;
       min-width: 30px;
-      padding: 0 11px;
-      margin-left: -1px;
+      padding: 0 10px;
+      margin: 0 3px;
       border: 1px solid #dcdcdc;
-      border-width: 1px 0;
       background: #fcfcfc;
       line-height: 28px;
       text-align: center;
-      color: #999;
+      color: inherit;
       text-decoration: none;
+      -webkit-border-radius: 2px;
+      -moz-border-radius: 2px;
+      border-radius: 2px;
       &:hover {
         background: #fff;
       }
@@ -135,8 +138,7 @@
           border-color: transparent #fff;
         }
       }
-    }
-    // &.disabled {
+    } // &.disabled {
     //   a {
     //     &:before {
     //       border-color: transparent #ccc;
@@ -162,10 +164,6 @@
   }
   .first {
     a {
-      border-right-width: 0;
-      -webkit-border-radius: 2px 0 0 2px;
-      -moz-border-radius: 2px 0 0 2px;
-      border-radius: 2px 0 0 2px;
       &:before {
         margin-left: -6px;
       }
@@ -176,9 +174,6 @@
   }
   .last {
     a {
-      -webkit-border-radius: 0 2px 2px 0;
-      -moz-border-radius: 0 2px 2px 0;
-      border-radius: 0 2px 2px 0;
       &:before {
         margin-left: 2px;
       }
@@ -194,15 +189,14 @@
 
 .page-go {
   display: inline-block;
-  margin: 10px 0 10px 10px;
+  margin-right: 0;
+  margin-left: 10px;
   input {
     width: 4em;
     text-align: center;
-    margin: 0 5px;
+    margin: 0 5px!important;
     vertical-align: middle;
-    -webkit-border-radius: 0;
-    -moz-border-radius: 0;
-    border-radius: 0;
+    color: inherit;
   }
   .btn {
     float: none;
@@ -210,9 +204,6 @@
     margin-left: 10px;
     padding: 0 8px;
     line-height: 28px;
-    -webkit-border-radius: 0;
-    -moz-border-radius: 0;
-    border-radius: 0;
     vertical-align: middle;
     cursor: pointer;
     &:hover {
@@ -225,7 +216,7 @@
 
 .text-center {
   .page-go {
-    position: absolute;
+    // position: absolute;
   }
 }
 

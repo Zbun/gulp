@@ -29,42 +29,15 @@ $bg-text-color in(bg-default, $color-bg-default, $color-bg-default-text),
   line-height: 28px;
   font-size: 12px;
   font-weight: 400;
-  &.with-icon {
-    padding-left: 40px;
-    .icon {
-      position: absolute;
-      left: 10px;
-      top: 4px;
-      background: url($bgGroup) -37px -128px;
-    }
-    >.content {
-      padding-left: 16px;
-      border-left: 1px solid darken($color-bg-warning, 6%);
-      &:before,
-      &:after {
-        content: '';
-        position: absolute;
-        top: 8px;
-        left: 34px;
-        border-style: solid;
-        border-width: 7px 7px 7px 0;
-        border-color: transparent darken($color-bg-warning, 6%);
-      }
-      &:after {
-        left: 35px;
-        border-color: transparent $color-bg-warning;
-      }
-    }
-  }
 }
 
 $color-bg-warning-pure:#FFFEE7;
 .bg-muted {
-  background: #fdfdfd;
+  background: $color-bg-muted;
 }
 
 .bg-muted-light {
-  background: #FDFDFD;
+  background: $color-bg-muted;
 }
 
 .bg-warning-pure {

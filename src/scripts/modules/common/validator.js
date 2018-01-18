@@ -14,25 +14,26 @@
    }
    其中form 为，需要校验的输入框的外层总盒
   validator 为import 或require 进的方法名
+* modified 2017.12.25 添加一个输入框内显示提示文字的字符串:mobile，此时提示文字大输入框内位置，会自动消失
  */
 // let _regExp = require('./regExp.js');
 let fn = require('./validatorManu.js');
 module.exports = function(el) {
 
   let objMsg = {
-    empty: '该数据项为必填项，请填写',
-    phone: '手机号码格式不正确，请检查',
-    telnum: '格式不正确，请检查',
-    email: '邮箱格式不正确，请检查',
-    money: '金额格式为最多两位小数，请检查',
-    money1: '金额格式为最多两位小数，请检查',
+    empty: '请填写此项',
+    phone: '手机号码格式有误，请检查',
+    telnum: '格式有误，请检查',
+    email: '邮箱格式有误，请检查',
+    money: '金额格式为正数且最多两位小数，请检查',
+    money1: '金额格式为最多两位小数，请检查', //允许负值
     integer: '需要输入整数，请检查',
     posInteger: '需要输入正整数，请检查',
     notPositive: '需要输入非负数，请检查',
     notPositiveInteger: '需要输入非负整数，请检查',
     integer1: '需要输入整数，请检查',
     percent: '百分数格式为整数，请检查',
-    url: '链接格式不正确，请检查'
+    url: '链接格式有误，请检查'
   };
   // mySelf(arg, regExp) {
   //   return _check(regExp)(arg);
@@ -50,6 +51,7 @@ module.exports = function(el) {
   var curNode = '';
   var pos = 'r';
   var indexStrShowtips = -1;
+  var isMobile = false;
   if (box) {
     let els = box.querySelectorAll('[data-validate]');
     for (let i = 0; i < els.length; i++) {
@@ -58,6 +60,7 @@ module.exports = function(el) {
       //获取需要验证的元素，即含有data-validate属性的元素
       let vad = els[i].getAttribute('data-validate').toLowerCase();
       // let keys = Object.keys(vs);
+      isMobile = vad.indexOf('mobile') > -1;
       let val = els[i].value;
       indexStrShowtips = vad.indexOf('show'); //是否弹出窗口提示
       if (vad.indexOf('down') > -1) { //提示文字是否在下一行
@@ -187,8 +190,18 @@ module.exports = function(el) {
       if (pos == 'd') {
         nodeTips = document.createElement('p');
       }
+
       nodeTips.className = 'tips error';
       nodeTips.innerHTML = msg;
+      if (isMobile) { //判断是是否，显示错误在输入框内
+        if (window.getComputedStyle(parent, null).getPropertyValue('position') == 'static') {
+          parent.style.position = 'relative';
+        }
+        nodeTips.style.cssText = 'position:absolute;top:50%;right:0;max-width:100%;white-space:nowrap;transform:translate(0,-50%);';
+        setTimeout(function() {
+          parent.removeChild(nodeTips);
+        }, 1000);
+      }
       if (next) {
         if (next.classList.contains('error')) {
           next.innerHTML = msg;
@@ -200,6 +213,7 @@ module.exports = function(el) {
           }
         }
       } else {
+
         parent.appendChild(nodeTips);
       }
     } else {

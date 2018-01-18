@@ -1,4 +1,4 @@
-$border-radius:2px!default;
+$border-radius:5px!default;
 $font-size:12px!default;
 $line-height: (20/14)!default;
 $font-family:'Microsoft Yahei',
@@ -9,15 +9,17 @@ sans-serif!default;
 $color:#333!default;
 $color-body-bg:#f0f0f0!default;
 $color-muted:#777!default;
+$color-muteder:#ccc!default;
 $color-default:#333!default;
-$color-primary:#23A8F5!default;
+$color-primary:#378CEE!default;
 $color-info:#1fb5ac!default;
 $color-ok:#2CBA80!default;
-$color-warning:#F06C3C!default;
-$color-danger:#fb6361!default;
+$color-warning:#F97523!default;
+$color-danger:#DE3400!default;
+$color-btn-warning:#FFAC2C!default; //后期增量添加
 $color-btn-default:#fff!default;
 $color-btn-hover:#e8e8e8!default;
-$color-border:#dcdcdc!default;
+$color-border:#EAEAEA!default;
 //Table area color
 $color-table-thead:#F6F6F6!default;
 $color-table-thead-th:#333!default;
@@ -26,7 +28,7 @@ $color-table-border:#eaeaea!default;
 $color-table-anchor:#0990ca!default;
 //Anchor area color
 $color-anchor:#333!default;
-$color-anchor-highlight:#1c8bcc!default;
+$color-anchor-highlight:#378CEE!default;
 $color-anchor-visited:#609!default;
 $color-anchor-hover:$color-anchor-highlight!default;
 $color-anchor-active:$color-danger!default;
@@ -35,7 +37,7 @@ $color-bg-default:#eee!default;
 $color-bg-default-text:#555!default;
 $color-bg-muted:#FDFDFD!default;
 $color-bg-primary:#fff2ec!default;
-$color-bg-primary-text:#a94442!default;
+$color-bg-primary-text:#DE3400!default;
 $color-bg-ok:#dff0d8!default;
 $color-bg-ok-text:#3c763d!default;
 $color-bg-info:#effffe!default;
@@ -71,7 +73,7 @@ $size-font-big-mobile:16px!default;
 $size-font-bigger-mobile:18px!default;
 $size-font-biggest-mobile:34px!default;
 $size-font-title-mobile:17px!default;
-$color-muted-mobile:#999!default;
+$color-muted-mobile:#666!default;
 //z-index
 $z-index-header:100!default;
 $z-index-share:255!default;

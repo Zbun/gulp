@@ -11,7 +11,7 @@
     var content1 = typeof content === 'string' ? content : '数据加载中，请稍等...';
     var box = document.createElement('div');
     box.innerHTML = content1;
-    box.style.cssText = 'position:fixed;right:4px;top:0;padding:3px 4px;line-height:1;color:#fff;background-color:#fb6361;z-index:5;';
+    box.style.cssText = 'position:fixed;right:0;top:0;padding:3px;line-height:1;color:#fff;background-color:rgba(50,50,50,.5);z-index:5;font-size:12px';
     document.body.appendChild(box);
     this.loadingBox = box;
     this.loadingEndCallback = typeof content === 'function' ? content : callback;

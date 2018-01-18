@@ -3,21 +3,22 @@
   Email: qi.jie@zol.com.cn
   From: Zhengzhou, Henan, China
 
-  Chief: Ding Lianfu
-  Email: ding.lianfu@zol.com.cn
+  Chief: li dafei
+  Email: 878934@qq.com
   From: Zhengzhou, Henan, China
 
-  Back end: Yao ning
-  Email: yao.ning@zol.com.cn
+  Back end: li dafei
+  Email: li.dafei@zol.com.cn
   From: Zhengzhou, Henan, China
 
-  Front end developer: Zhao Liubin
-  Email: zhao.liubin@zol.com.cn
+  Back end: zhang lei
+  Email: zhang.lei1@zol.com
   From: Zhengzhou, Henan, China
 
-  Front end developer: Wen Yongjiang
-  Email: wen.yongjiang@zol.com.cn
-  From: Zhengzhou, Henan, China
+
+  Front end developer: zhou xuexin
+  Email: zhou.xuexin@zol.com.cn
+  From: Zhengzhou, Henan, China 
 
   UI developer: Xue Xiaojia
   Email: xue.xiaojia@zol.com.cn
@@ -27,7 +28,7 @@
   ZOl
 
 /* SITE */
-  Last update: 2017/01/01
+  Last update: 2017/11/24
   Language: Chinese
   Doctype: HTML5
   IDE: Sublime Text, VS Code

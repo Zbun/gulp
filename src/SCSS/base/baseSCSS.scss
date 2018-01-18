@@ -112,7 +112,7 @@ input[type=radio] {
 
 .align-ipt,
 .align-btn {
-  line-height: 28px;
+  line-height: 30px;
   .btn.small {
     margin-top: -1px;
   }
@@ -223,16 +223,6 @@ template,
     content: '*';
     color: $color-danger;
   }
-}
-
-.ovh-x {
-  overflow-x: hidden;
-  @extend %scrollbar-white;
-}
-
-.ovh-y {
-  overflow-y: hidden;
-  @extend %scrollbar-white;
 }
 
 .simplehidden {

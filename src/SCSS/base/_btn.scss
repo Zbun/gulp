@@ -8,7 +8,7 @@
   font-family: $font-family;
   font-size: 14px;
   font-weight: 400;
-  border: 1px solid $color-border;
+  border: 0;
   background: $color-btn-default;
   color: $color;
   text-align: center;
@@ -66,13 +66,11 @@ button {
   cursor: pointer;
 }
 
-$color-warning2:#F9AA33;
 @each $btn-each,
-$btn-color in (btn-info:$color-info, btn-primary:$color-primary, btn-ok:$color-ok, btn-warning:$color-warning2, btn-danger:$color-danger) {
+$btn-color in (btn-info:$color-info, btn-primary:$color-primary, btn-ok:$color-ok, btn-warning:$color-btn-warning, btn-danger:$color-danger) {
   .#{$btn-each} {
     color: #fff;
     background: $btn-color;
-    border-color: $btn-color;
     &:visited {
       color: #fff;
     }
@@ -82,7 +80,6 @@ $btn-color in (btn-info:$color-info, btn-primary:$color-primary, btn-ok:$color-o
     &:active:focus {
       color: #fff;
       background: darken($btn-color, 12%);
-      border-color: darken($btn-color, 12%);
       outline: 0;
     }
   }
@@ -91,7 +88,6 @@ $btn-color in (btn-info:$color-info, btn-primary:$color-primary, btn-ok:$color-o
 .btn-default {
   color: $color;
   background: #fff;
-  border: 1px solid $color-border;
   &:hover {
     background: #fff;
     border-color: $color-primary;
@@ -105,9 +101,7 @@ $btn-color in (btn-info:$color-info, btn-primary:$color-primary, btn-ok:$color-o
   background: #FCFCFC;
   color: $color-anchor-highlight;
   &:focus,
-  &:active {
-    border-color: $color-border;
-  }
+  &:active {}
 }
 
 $color-btn-cancel:#f8f8f8;
@@ -115,13 +109,11 @@ $color-btn-cancel:#f8f8f8;
 .btn-cancel {
   color: #fff;
   background: #b0b0b0;
-  border-color: #b0b0b0;
   &:hover,
   &:active,
   &:focus {
     color: #fff;
     background: darken(#b0b0b0, 12%);
-    border-color: darken(#b0b0b0, 12%);
   }
   &:visited {
     color: #fff;
@@ -133,7 +125,6 @@ $btn-color in (btn-primary-o:$color-primary, btn-info-o:$color-info, btn-ok-o:$c
   .#{$btn} {
     color: $btn-color;
     background: #fff;
-    border-color: darken($btn-color, 12%);
     &:visited {
       color: $btn-color;
     }
@@ -141,9 +132,7 @@ $btn-color in (btn-primary-o:$color-primary, btn-info-o:$color-info, btn-ok-o:$c
       background: $btn-color;
       color: #fff;
     }
-    &:focus {
-      border-color: $btn-color;
-    }
+    &:focus {}
   }
 }
 
@@ -151,13 +140,11 @@ $btn-color in (btn-primary-o:$color-primary, btn-info-o:$color-info, btn-ok-o:$c
   pointer-events: none;
   color: #999;
   background: #eaeaea;
-  border-color: $color-border;
 }
 
 .btn-o,
 input.ipt-o {
   background: transparent;
-  border-color: #fff;
   color: #fff;
   &:hover,
   &:focus,
@@ -165,6 +152,5 @@ input.ipt-o {
     color: #fff;
     background: transparent;
     box-shadow: 0 0 3px;
-    border-color: #fff;
   }
 }

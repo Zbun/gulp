@@ -35,13 +35,13 @@ module.exports = (vm, totalPages, totalRows, callback, startPage) => {
     if (totalRows > 0) {
       $pagerBox.show();
       $pagerBox.twbsPagination({
-        first: '<',
-        last: '>',
+        // first: '<',
+        // last: '>',
         startPage: StartPage,
         totalPages: totalPages,
         visiblePages: 5,
         initiateStartPageClick: false,
-        goVal: false,
+        goVal: 'Go',
         onPageClick(event, page) {
           if (typeof callback === 'function') {
             $(vm).find('.chks').find(':checkbox').prop('checked', false);
