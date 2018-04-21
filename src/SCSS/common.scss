@@ -3,8 +3,10 @@ $bgPath:'/images';
 $bgGroup:'#{$bgPath}/bg-group.png';
 @import 'base/basePC.scss'; //PC基础
 @import 'common/_dialog.scss'; //弹窗对话框
+@import 'base/_table.scss';
+@import 'base/_tag.scss'; //标签类全套
 @import 'common/_pagination.scss'; //分页
-// @import 'common/_progress.scss'; //进度条
+@import 'common/_progress.scss'; //进度条
 @import 'common/_set.scss'; //左右两栏设置
 // @import 'base/_iconfont.scss'; //部分字体图标、引入fa样式时不引
 @import "base/_info_list.scss";

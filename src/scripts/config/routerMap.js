@@ -1,10 +1,13 @@
 /**
  * 路由表
- * 请使用配置好的views目录：view
+ * 请使用配置好的pages目录：pages
  * 路由名区分大小写，请注意
  */
 
-export default [{
+import routerHMM from './routerMapHMM.js';
+import routerJDH from './routerMapJDH.js';
+
+let routerB = [{ //基础配置路由
     path: '/',
     name: 'default',
     meta: {
@@ -12,6 +15,16 @@ export default [{
     },
     component(resolve) {
       require(['commonVues/elements/eHome.vue'], resolve);
+    }
+  },
+  { //基础配置路由
+    path: '/building',
+    name: 'building',
+    meta: {
+      title: '功能建设中',
+    },
+    component(resolve) {
+      require(['pages/building.vue'], resolve);
     }
   },
   {
@@ -25,104 +38,144 @@ export default [{
     }
   },
   {
-    path: '/home',
-    name: 'home',
+    path: '/bc/feedback',
+    name: 'feedback',
     meta: {
-      title: '首页',
+      title: '意见反馈',
     },
     component(resolve) {
-      require(['commonVues/elements/eHome.vue'], resolve);
+      require(['pages/baseConfig/feedback.vue'], resolve);
     }
   },
   {
-    path: '/orderIn',
-    name: 'orderIn',
+    path: '/bc/feedbackDispose',
+    name: 'feedbackDispose',
     meta: {
-      title: '开单',
-    },
-    query: {
-      categoryId: '', //分类
-      name: '', //商品名
+      title: '处理意见反馈'
     },
     component(resolve) {
-      require(['views/orderIn.vue'], resolve);
+      require(['pages/baseConfig/feedbackDispose.vue'], resolve);
     }
-  }, {
-    path: '/orderList',
-    name: 'orderList',
+  },  
+  {
+    path: '/bc/ms',
+    name: 'menuSet',
     meta: {
-      title: '开单记录',
+      title: '菜单管理',
     },
     component(resolve) {
-      require(['views/orderList.vue'], resolve);
-    }
-  }, {
-    path: '/orderDetail/:code',
-    name: 'orderDetail',
-    meta: {
-      title: '订单详情',
-    },
-    component(resolve) {
-      require(['views/orderDetail.vue'], resolve);
+      require(['pages/baseConfig/menuSet.vue'], resolve);
     }
   },
   {
-    path: '/addGoods',
-    name: 'addGoods',
+    path: '/bc/departmentList',
+    name: 'departmentList',
     meta: {
-      title: '选择商品',
+      title: '部门列表',
     },
     component(resolve) {
-      require(['views/addGoods.vue'], resolve);
-    }
-  }, {
-    path: '/searchGoods',
-    name: 'searchGoods',
-    query: {
-      to: '', //确定后转向页面路由key
-    },
-    meta: {
-      title: '搜索',
-    },
-    component(resolve) {
-      require(['views/searchGoods.vue'], resolve);
-    }
-  }, {
-    path: '/userInfo',
-    name: 'userInfo',
-    meta: {
-      title: '店员',
-    },
-    component(resolve) {
-      require(['views/userInfo.vue'], resolve);
-    }
-  }, {
-    path: '/rewardRecord',
-    name: 'rewardRecord',
-    meta: {
-      title: '奖励',
-    },
-    component(resolve) {
-      require(['views/rewardRecord.vue'], resolve);
-    }
-  }, {
-    path: '/stock',
-    name: 'stock',
-    meta: {
-      title: '库存',
-    },
-    component(resolve) {
-      require(['views/stock.vue'], resolve);
+      require(['pages/baseConfig/system/departmentList.vue'], resolve);
     }
   },
   {
-    path: '/qrCode/:code',
-    name: 'qrCode',
+    path: '/bc/roleList',
+    name: 'roleList',
     meta: {
-      title: '向商家付款',
+      title: '角色列表',
     },
     component(resolve) {
-      require(['views/qrCode.vue'], resolve);
+      require(['pages/baseConfig/system/roleList.vue'], resolve);
+    }
+  },
+  {
+    path: '/bc/userList',
+    name: 'userList',
+    meta: {
+      title: '用户列表',
+    },
+    component(resolve) {
+      require(['pages/baseConfig/system/userList.vue'], resolve);
+    }
+  },
+  //商品部分
+  {
+    path: '/bc/goods/category',
+    name: 'bcGoodsCategory',
+    meta: {
+      title: '商品品类',
+    },
+    component(resolve) {
+      require(['pages/baseConfig/goods/category/category.vue'], resolve);
+    }
+  },
+  {
+    path: '/bc/goods/brandManage',
+    name: 'bcGoodsBrandManage',
+    meta: {
+      title: '商品品牌',
+    },
+    component(resolve) {
+      require(['pages/baseConfig/goods/brandManage.vue'], resolve);
+    }
+  }, {
+    path: '/bc/goods/labelManage',
+    name: 'bcGoodslabelManage',
+    meta: {
+      title: '商品标签',
+    },
+    component(resolve) {
+      require(['pages/baseConfig/goods/labelManage.vue'], resolve);
+    }
+  },
+  {
+    path: '/bc/goods/categoryAttr',
+    name: 'bcGoodscategoryAttr',
+    meta: {
+      title: '分类属性设置',
+    },
+    component(resolve) {
+      require(['pages/baseConfig/goods/categoryAttr.vue'], resolve);
+    }
+  }, {
+    path: '/bc/goods/goodsSKU',
+    name: 'bcGoodsSKU',
+    meta: {
+      title: '商品SKU添加',
+    },
+    component(resolve) {
+      require(['pages/baseConfig/goods/goodsSKUAdd.vue'], resolve);
+    }
+  }, {
+    path: '/bc/goods/goodsSKU/:SpuId',
+    name: 'bcGoodsSKUEdit',
+    meta: {
+      title: '商品SKU编辑',
+    },
+    component(resolve) {
+      require(['pages/baseConfig/goods/goodsSKUEdit.vue'], resolve);
+    }
+  }, {
+    path: '/bc/goods/goodsList',
+    name: 'bcGoodsList',
+    meta: {
+      title: '商品库',
+    },
+    component(resolve) {
+      require(['pages/baseConfig/goods/goodsList.vue'], resolve);
+    }
+  },
+
+  //会员相关
+  {
+    path: '/bc/user/supplierList',
+    name: 'bcSupplierList',
+    meta: {
+      title: '入库商列表',
+    },
+    component(resolve) {
+      require(['pages/baseConfig/user/supplierList.vue'], resolve);
     }
   },
 ];
+
+export default [...routerHMM, ...routerJDH, ...routerB];

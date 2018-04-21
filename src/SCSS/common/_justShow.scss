@@ -1,26 +1,42 @@
 .justshow {
-  width: 100%;
-  th {
-    border: 0!important;
-    padding: 0 !important;
-    color: #333 !important;
-    background: initial!important;
-    font-weight: 400;
-    text-align: right;
-    white-space: nowrap;
-    vertical-align: top;
+  &.thin {
+    >tbody {
+      >tr {
+        >th,
+        >td {
+          line-height: 20px;
+        }
+      }
+    }
   }
-  td {
-    border: 0!important;
-    padding: 0 !important;
-    color: #666;
+  >tbody {
+    >tr {
+      >th {
+        border: 0!important;
+        padding: 5px 0 !important;
+        color: #666 !important;
+        background: initial!important;
+        font-weight: 400;
+        text-align: right;
+        white-space: nowrap;
+        vertical-align: top;
+        line-height: 30px;
+      }
+      >td {
+        line-height: 30px;
+        border: 0!important;
+        padding: 5px 0 !important;
+        padding-left: 14px !important;
+        color: #333;
+      }
+    }
   }
-  // &.style2 {
-  //   th {
-  //     color: #666!important;
-  //   }
-  //   td {
-  //     color: #333;
-  //   }
-  // }
+  &.style2 {
+    th {
+      color: #666!important;
+    }
+    td {
+      color: #333;
+    }
+  }
 }

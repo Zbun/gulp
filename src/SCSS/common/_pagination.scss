@@ -11,22 +11,21 @@
       min-width: 30px;
       padding: 0 10px;
       margin: 0 3px;
-      border: 1px solid #dcdcdc;
-      background: #fcfcfc;
-      line-height: 28px;
+      border: 0;
+      background: #F3F4F6;
+      line-height: 30px;
       text-align: center;
       color: inherit;
       text-decoration: none;
-      -webkit-border-radius: 2px;
-      -moz-border-radius: 2px;
-      border-radius: 2px;
+      -webkit-border-radius: $border-radius;
+      -moz-border-radius: $border-radius;
+      border-radius: $border-radius;
       &:hover {
-        background: #fff;
+        background: #ddd;
       }
       &:focus {
         border-color: #e0e0e0;
         color: #333;
-        background: #fff;
       }
     }
     &:first-child {
@@ -41,9 +40,9 @@
       }
     }
     &.active>a {
-      color: #333;
-      background: #ddd;
-      border-color: #ddd;
+      color: #fff;
+      background: #999999;
+      border-color: #f6f6f6;
       z-index: 1;
     }
     &.active {
@@ -63,9 +62,6 @@
       color: #ccc!important;
       border-color: #e0e0e0!important;
       cursor: not-allowed;
-      &:hover {
-        background: #fff;
-      }
     }
   }
   .first,
@@ -123,14 +119,7 @@
         border-color: transparent #fcfcfc;
         margin-left: -2px;
       }
-      &:hover {
-        // &:before {
-        //   border-color: transparent #fff;
-        // }
-        // &:after {
-        //   border-color: transparent $color-primary;
-        // }
-      }
+      &:hover {}
     }
     &:hover {
       a {
@@ -192,18 +181,18 @@
   margin-right: 0;
   margin-left: 10px;
   input {
-    width: 4em;
-    text-align: center;
+    width: 4.5em;
+    text-align: left;
     margin: 0 5px!important;
     vertical-align: middle;
     color: inherit;
+    background: #fff;
   }
   .btn {
     float: none;
     min-width: 32px;
     margin-left: 10px;
     padding: 0 8px;
-    line-height: 28px;
     vertical-align: middle;
     cursor: pointer;
     &:hover {
@@ -215,9 +204,7 @@
 }
 
 .text-center {
-  .page-go {
-    // position: absolute;
-  }
+  .page-go {}
 }
 
 .page-size {

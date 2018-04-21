@@ -3,52 +3,58 @@
   top: 50%;
   left: 50%;
   margin-top: -50px;
-  width: 60%;
-  max-width: 350px;
-  padding: 15px;
+  max-width: 300px;
+  padding: 50px;
+  padding-left: 110px;
   font-size: 14px;
+  font-weight: 700;
   line-height: 1.5;
   color: #333;
   background: #fff;
-  box-shadow: 0 0 20px #f2f2f2;
+  box-shadow: 0 0 10px #ddd;
   z-index: 10028;
-  text-align: center;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
+  text-align: left;
+  word-break: break-all;
+  -webkit-border-radius: $border-radius;
+  -moz-border-radius: $border-radius;
+  border-radius: $border-radius;
   transition: .35s;
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
   -webkit-animation: popuptips .3s;
   animation: popuptips .3s;
   .icon {
-    display: inline-block;
-    margin-bottom: 10px;
-    font-size: 36px;
+    position: absolute;
+    top: 50%;
+    left: 30px;
+    margin-top: -30px;
+    width: 60px;
+    height: 60px;
+    font-size: 60px;
+    line-height: 60px;
     font-family: sans-serif;
     -webkit-border-radius: 100%;
     border-radius: 100%;
     text-align: center;
-    font: normal normal normal 14px/1 FontAwesome;
-    font-size: 36px;
-    color: $color-ok;
-    &:before {
-      content: "\f058";
-    }
+    background: 0;
+    color: $color-input-focus-border; // &:before {
+    //   content: "\e67d";
+    // }
     &.p-error {
-      &:before {
-        content: "\f057";
-        color: $color-danger;
-      }
+      color: $color-danger; // &:before {
+      //   content: "\e67e";
+      // }
     }
     &.p-warning {
-      &:before {
-        content: "\f05a";
-        color: $color-warning;
-      }
+      color: $color-warning; // &:before {
+      //   content: "\e72a";
+      // }
     }
   }
-  .content {}
+  .content {
+
+    overflow: hidden;
+  }
 }
 
 @-webkit-keyframes popuptips {
@@ -90,10 +96,13 @@ $color-circle:#179c6a;
     .svg {
       -webkit-animation: am-waiting 0.7s linear infinite;
       animation: am-waiting 0.7s linear infinite;
+      .circle {
+        stroke: $color-primary!important;
+      }
     }
     &.inner {
-      left: 13px;
-      top: 13px;
+      left: 12px;
+      top: 12px;
       -webkit-transform: rotate(-45deg);
       transform: rotate(-45deg);
       .svg {

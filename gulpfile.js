@@ -1,3 +1,9 @@
+/**
+ * gulp 配置文件，总共3个命令
+ * 1、gulp 默认命令
+ * 3、gulp build: 压缩生成CSS及JS，此时没用sourcemap文件，上线时使用，速度最慢
+ */
+
 // var path = require('path');
 var gulp = require('gulp'),
   browserSync = require('browser-sync').create(),
@@ -25,7 +31,6 @@ var num = {
   SCSS: 0
 };
 
-
 function fnConsoleBegin(v) {
   v = '<!-- ' + v + '于' + (new Date().toLocaleTimeString()) + ' -->';
   console.log(gutil.colors.bgYellow(v));
@@ -40,6 +45,7 @@ function fnConsole(v) {
   v = '<!-- ' + v + '于' + (new Date().toLocaleTimeString()) + ' -->';
   console.log(gutil.colors.bgGreen(v));
 }
+
 
 var isBuild = false; //是否是生产环境配置，webpack时用到
 var opts = {
@@ -99,7 +105,7 @@ function fnRev() {
   gulp.src('./*.html')
     .pipe(revAppend())
     .pipe(gulp.dest('.'));
-  fnConsole('版本号打好啦-v' + num.version++);
+  fnConsole('版本号打好啦-V' + num.version++);
 }
 gulp.task('rev', fnRev);
 //outputStyle:compressed,expanded
@@ -134,7 +140,7 @@ function fnAssembleHTML() {
       .pipe(include())
       // .pipe(revAppend())
       .pipe(gulp.dest('./')).on('end', function() {
-        fnConsole('组装HTML结束-v' + num.HTML++);
+        fnConsole('组装HTML结束-V' + num.HTML++);
         fnRev();
       });
   });
@@ -155,54 +161,53 @@ function fnWebpack(callback) {
         // gutil.log('[webpack]',stats.toString({}))
         if (stats.compilation.errors[0]) {
           var numError = num.webpackError++;
-          fnConsoleError('webpack编译出错-v' + numError + '，↓↓↓↓↓');
+          fnConsoleError('webpack编译出错-V' + numError + '，↓↓↓↓↓');
           console.log(stats.compilation.errors[0].error);
-          fnConsoleError('webpack编译出错-v' + numError + '，↑↑↑↑↑↑');
+          fnConsoleError('webpack编译出错-V' + numError + '，↑↑↑↑↑↑');
         } else {
           typeof callback == 'function' && callback();
         }
       });
   });
 }
-gulp.task('webpack', ['sass'], function() {
+gulp.task('webpack', function() {
   fnWebpack(function() {
-    fnConsole('webpack 结束-v' + num.webpack++);
+    fnConsole('webpack 结束-V' + num.webpack++);
     fnAssembleHTML();
   });
 });
 
-var fnGulpWatchFilesChangedThenWebpack = function() {
-  watch('./src/scripts/**/*.*', function() {
-    fnWebpack(function() {
-      fnConsole('webpack 结束-v' + num.webpack++);
-      fnRev();
-    });
-  });
-};
+// var fnGulpWatchFilesChangedThenWebpack = function() {
+//   watch('./src/scripts/**/*.*', function() {
+//     fnWebpack(function() {
+//       fnConsole('webpack 结束-V' + num.webpack++);
+//       fnRev();
+//     });
+//   });
+// };
 //根据文件类型变动，自动刷新浏览器
 function fnBrowserSync() {
   copyFiles();
   browserSync.init({
     // files: ['dist/css/*.css', 'dist/scripts/bundle/APP.bundle.js', './dist/htmls/**/*.html', '!**.scss', '!node_modules/**.*'],
-    files: ['dist/css/*.css'], //只热更新CSS样式
+    files: ['dist/css/*.css'],
     server: { baseDir: './' },
-    port: 3018,
+    port: 2019,
     // codeSync: false,
-    ghostMode: false,
-    // https: true
+    ghostMode: false
   });
   gulp.watch('./src/htmls/**/*.html', fnAssembleHTML);
   gulp.watch('./src/scss/**/*.scss', fnSass);
   gulp.watch('./dist/css/*.css', function() {
-    fnConsole('SCSS编译结束，刷新页面查看-v' + num.SCSS++);
+    fnConsole('SCSS编译结束-V' + num.SCSS++);
     // setTimeout(fnRev, 10);
   });
-  if (!webpackConfig.watch) {
-    fnGulpWatchFilesChangedThenWebpack();
-  }
+  // if (!webpackConfig.watch) {
+  //   fnGulpWatchFilesChangedThenWebpack();
+  // }
   // gulp.watch('./src/htmls/**/*.html', ['assembleHTML', 'webpack']);
 }
-gulp.task('browserSync', ['webpack'], fnBrowserSync);
+gulp.task('browserSync', ['sass', 'webpack'], fnBrowserSync);
 
 //构建、上线前压缩下JS，压缩CSS
 function fnPreBuild() {
@@ -225,14 +230,14 @@ gulp.task('build', ['preBuild', 'browserSync'], function() {
 //默认启动任务
 gulp.task('default', ['browserSync'], function() {
   // gulp.start('minify','cleancss')
-  fnConsole('开启默认任务，此时不启动webpack自带watch,用gulp watch可处理新加文件。enjoy!');
+  fnConsole('开启默认任务，开启webpack watch属性。enjoy!');
 });
 
 //启动webpack,watch:true,此时不用gulp-watch之后再webpack,速度快，但webpack不能处理新加文件
-function fnPreWatch() {
-  webpackConfig.watch = true;
-}
-gulp.task('preWatch', fnPreWatch);
-gulp.task('ww', ['preWatch', 'browserSync'], function() {
-  fnConsole('此时开启webpack自带watch选项，不能处理新加模块，如需处理启动gulp默认任务。。enjoy!');
+// function fnPreWatch() {
+//   webpackConfig.watch = true;
+// }
+// gulp.task('preWatch', fnPreWatch);
+gulp.task('ww', ['browserSync'], function() {
+  fnConsole('此时开启webpack自带watch选项，最新webpack已可处理新加文件，直接使用命令gulp处理即可。enjoy!');
 });

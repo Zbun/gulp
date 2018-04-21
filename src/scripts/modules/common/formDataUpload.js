@@ -11,7 +11,7 @@
     if (obj) {
       var name = arg.name || arg.key || obj.name || 'image'; //formData 格式
       var size = (arg.size || 0) + ''; // 最大尺寸，默认K，可传如'3M'格式;
-      var type = arg.type || ''; //文件类型，jpg,gif 逗号隔开后缀名
+      var type = (arg.type || '').replace('.', ''); //文件类型，jpg,gif 逗号隔开后缀名
       var rules = arg.rules || ''; //自定义规则
       // size = (size + '').replace(/k|m/i, '');
       var url = arg.url || ''; //上传服务器
@@ -34,7 +34,7 @@
       obj.addEventListener('change', function() {
         //构造加载进度HTML
         var progressBg = document.createElement('div');
-        progressBg.style.cssText = 'position:fixed;left:50%;top:50%;padding:10px 40px 0;border:1px solid #666;box-shadow:inset 0 0 1px #fff;border-radius:4px;text-align:center;color:#fff;background:rgba(0,0,0,.5);z-index:123;transform:translate(-50%,-50%);';
+        progressBg.style.cssText = 'position:fixed;left:50%;top:50%;padding:10px 40px 0;border:1px solid #666;box-shadow:inset 0 0 1px #fff;border-radius:4px;text-align:center;color:#fff;background:rgba(0,0,0,.5);z-index:1234;transform:translate(-50%,-50%);';
         var progressBarOuter = document.createElement('div');
         progressBarOuter.style.cssText = 'position:relative;height:6px;width:100px;border-radius:6px;border:1px solid #ddd;';
         var progressBarInner = document.createElement('span');
@@ -119,16 +119,16 @@
             }
           };
           //加载进度事件
-          // xhr.upload.onprogress = function(event) {
-          //   if (event.lengthComputable) {
-          //     document.body.appendChild(progressBg);
-          //     var complete = (event.loaded / event.total * 100 | 0) + '%';
-          //     progressBarInner.style.width = complete;
-          //     progressNum.innerHTML = '已完成：' + complete;
-          //     progressBarOuter.innerHTML = progressBarInner.outerHTML;
-          //     progressBg.innerHTML = progressBarOuter.outerHTML + progressNum.outerHTML;
-          //   }
-          // };
+          xhr.upload.onprogress = function(event) {
+            if (event.lengthComputable) {
+              document.body.appendChild(progressBg);
+              var complete = (event.loaded / event.total * 100 | 0) + '%';
+              progressBarInner.style.width = complete;
+              progressNum.innerHTML = '已完成：' + complete;
+              progressBarOuter.innerHTML = progressBarInner.outerHTML;
+              progressBg.innerHTML = progressBarOuter.outerHTML + progressNum.outerHTML;
+            }
+          };
           xhr.open('post', url, true);
           // xhr.setRequestHeader('Content-Type', 'multipart/form-data');
           xhr.send(formData);

@@ -7,41 +7,41 @@
   <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
   <title>所有SCSS文件模块，根据需要引入</title>
   <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
-  <link rel="stylesheet" href="common.css">
+  <link rel="stylesheet" href="doc.css">
   <style>
   .row {
     counter-reset: contentTitleL2;
   }
-  
+
   .content-title {
     font-weight: 700;
   }
-  
+
   .row .content-title-l2 {
     font-weight: 400;
     margin: 5px;
     margin-left: 10px;
   }
-  
+
   .row .content-title-l2+div {
     margin-left: 20px;
     margin-bottom: 10px;
   }
-  
+
   .row .content-title-l2:before {
     counter-increment: contentTitleL2;
     content: counter(contentTitle)'.'counter(contentTitleL2)' ';
   }
-  
+
   .main .body {
     counter-reset: contentTitle;
   }
-  
+
   .main .body .content-title:before {
     counter-increment: contentTitle;
     content: counter(contentTitle)'. ';
   }
-  
+
   .pie {
     display: inline-block;
     width: 60px;
@@ -51,7 +51,7 @@
     -moz-border-radius: 100%;
     border-radius: 100%;
   }
-  
+
   .pie:before {
     content: '';
     display: block;
@@ -63,7 +63,7 @@
     border-radius: 100%;
     transform: rotate(.2turn);
   }
-  
+
   .intro ol {
     list-style: decimal;
   }
@@ -102,47 +102,47 @@
               <button class="btn btn-ok-o">成功-透</button>
               <a href="http://www.zhihu.com" class="btn btn-info-o">信息-透明</a>
               <button class="btn btn-warning-o">提示-空</button>
-              <button class="btn big btn-info">大信息</button>
+              <button class="btn large btn-info">大信息</button>
               <a class="btn btn-danger-o">警告-空</a>
-              <button class="btn big btn-primary">大首选</button>
-              <button class="btn big btn-del">删除</button>
-              <button class="btn btn-primary bigger">更大首选</button>
+              <button class="btn large btn-primary">大首选</button>
+              <button class="btn large btn-del">删除</button>
+              <button class="btn btn-primary x-large">更大首选</button>
             </div>
           </div>
-          <!--   <div class="l2">
-              <h3 class="content-title-l2">
+          <div class="l2">
+            <h3 class="content-title-l2">
               带选中状态标签型按钮
               </h3>
-              <div class="mt5">
-                <div class="btn-tag btn-tag-info">
-                  实型标签可选中1
-                </div>
-                <div class="btn-tag btn-tag-primary on">
-                  实型首选中2
-                </div>
-                <div class="btn-tag btn-tag-info on">
-                  实型信息选中3
-                </div>
-                <div class="btn-tag btn-tag-warning on">
-                  实型警示选中4
-                </div>
-                <div class="btn-tag btn-tag-danger on">
-                  实型危险选中5
-                </div>
-                <div class="btn-tag  btn-tag-info btn-tag-info-o">
-                  空型未选中1
-                </div>
-                <div class="btn-tag btn-tag-info btn-tag-info-o on">
-                  空型信息选中2
-                </div>
-                <div class="btn-tag  btn-tag-primary btn-tag-primary-o">
-                  空型首未选中2
-                </div>
-                <div class="btn-tag  btn-tag-primary btn-tag-primary-o on">
-                  空型选中信息2
-                </div>...
+            <div class="mt5">
+              <div class="btn-tag btn-tag-info">
+                实型标签可选中1
               </div>
-            </div> -->
+              <div class="btn-tag btn-tag-primary on">
+                实型首选中2
+              </div>
+              <div class="btn-tag btn-tag-info on">
+                实型信息选中3
+              </div>
+              <div class="btn-tag btn-tag-warning on">
+                实型警示选中4
+              </div>
+              <div class="btn-tag btn-tag-danger on">
+                实型危险选中5
+              </div>
+              <div class="btn-tag  btn-tag-info btn-tag-info-o">
+                空型未选中1
+              </div>
+              <div class="btn-tag btn-tag-info btn-tag-info-o on">
+                空型信息选中2
+              </div>
+              <div class="btn-tag  btn-tag-primary btn-tag-primary-o">
+                空型首未选中2
+              </div>
+              <div class="btn-tag  btn-tag-primary btn-tag-primary-o on">
+                空型选中信息2
+              </div>...
+            </div>
+          </div>
           <!--           <div class="l2">
               <h3 class="content-title-l2">
               几个透明型按钮
@@ -159,28 +159,28 @@
             </div> -->
           <hr>
         </div>
-        <!--  <div class="row">
-            <h2 class="content-title">
+        <div class="row">
+          <h2 class="content-title">
             标签类  （<span class="text-warning">_tag.scss</span>）
             </h2>
-            <div class="l2">
-              <h3 class="content-title-l2">
+          <div class="l2">
+            <h3 class="content-title-l2">
               <span>小标签</span>
               </h3>
-              <div class="tags mt5">
-                <span class="tag">标签</span>
-                <span class="tag tag-warning">警告类</span>
-                <span class="tag tag-danger">危险类</span>
-                <span class="tag tag-info">信息</span>
-                <span class="tag tag-danger-o">危险-空</span>
-                <span class="tag tag-info-o">信息-空</span>
-                <span class="tag tag tag-warning-o">警告-空</span>
-              </div>
+            <div class="tags mt5">
+              <span class="tag">标签</span>
+              <span class="tag tag-warning">警告类</span>
+              <span class="tag tag-danger">危险类</span>
+              <span class="tag tag-info">信息</span>
+              <span class="tag tag-danger-o">危险-空</span>
+              <span class="tag tag-info-o">信息-空</span>
+              <span class="tag tag tag-warning-o">警告-空</span>
             </div>
-            <div class="l2">
-              <h3 class="content-title-l2"><span>带删除按钮标签</span></h3>
-              <div class="tags tags-action mt5">
-                <span class="tag">
+          </div>
+          <div class="l2">
+            <h3 class="content-title-l2"><span>带删除按钮标签</span></h3>
+            <div class="tags tags-action mt5">
+              <span class="tag">
                   分类1
                   <i class="icon"></i>
                 </span><span class="tag">
@@ -190,10 +190,10 @@
               等级3
               <i class="icon"></i>
             </span>
+            </div>
           </div>
+          <hr>
         </div>
-        <hr>
-      </div> -->
         <div class="row">
           <h2 class="content-title">输入区(<span class="text-danger">basePC.scss</span>)</h2>
           <div class="l2">
@@ -262,10 +262,10 @@
         <div class="row">
           <h2 class="content-title">文本颜色、对齐方式及字体大小(<span class="text-danger">_text.scss</span>)</h2>
           <div class="text-area">
-            <p class="text-ok font-small">首选绿色小文字</p>
-            <p class="p10 text-right text-bold font-big">加粗（.text-bold)居右（.text-right) 大字体(.font-big)</p>
-            <p class="p5 text-warning font-bigger text-left">居左更大（.font-bigger)警示类</p>
-            <h2 class="p5 text-danger text-center font-biggest">居中最大（.font-biggest)危险类</h2>
+            <p class="text-ok text-small">首选绿色小文字</p>
+            <p class="p10 text-right text-bold text-large">加粗（.text-bold)居右（.text-right) 大字体(.text-large)</p>
+            <p class="p5 text-warning text-x-large text-left">居左更大（.text-x-large)警示类</p>
+            <h2 class="p5 text-danger text-center text-biggest">居中最大（.text-biggest)危险类</h2>
             <p class="text-nowrap text-muted">不折行（.text-nowrap)，非着重着色（.text-muted)</p>
             <p class="text-ellipsis text-muted-light">文本不折行省略号展示（.text-ellipsis)，非着重着色2（text-muted-light)</p>
           </div>
@@ -288,7 +288,7 @@
             <p class="bg-muted-light mt5">
               更浅说明区(.bg-light-muted)
             </p>
-            <!-- <h3 class="bg bg-danger p10 text-center mt5">危险类</h3> -->
+            <h3 class="bg bg-danger p10 text-center mt5">危险类</h3>
           </div>
           <hr>
         </div>
@@ -451,7 +451,7 @@
         </div>
         <!--         <div class="row">
         <h2 class="content-title">部分字体图标</h2>
-        <div class="font-bigger text-danger">
+        <div class="text-x-large text-danger">
           <i class="fa fa-user"></i>
         </div>
         <hr>
@@ -570,42 +570,42 @@
           </div>
           <hr>
         </div>
-        <!--         <div class="row">
+        <div class="row">
           <h2 class="content-title">进度(<span class="text-danger">_progress.scss</span>)</h2>
           <section class="progress col5">
             <dl class="item">
               <dt class="bar">
               </dt>
               <dd class="tips">
-              买家下单
+                买家下单
               </dd>
             </dl>
             <dl class="item now">
               <dt class="bar">
               </dt>
               <dd class="tips">
-              买家付款
+                买家付款
               </dd>
             </dl>
             <dl class="item">
               <dt class="bar">
               </dt>
               <dd class="tips">
-              发货
+                发货
               </dd>
             </dl>
             <dl class="item">
               <dt class="bar">
               </dt>
               <dd class="tips">
-              确认收货
+                确认收货
               </dd>
             </dl>
             <dl class="item">
               <dt class="bar">
               </dt>
               <dd class="tips">
-              评价
+                评价
               </dd>
             </dl>
           </section>
@@ -633,7 +633,7 @@
             </p>
           </section>
           <hr>
-        </div> -->
+        </div>
         <div class="row">
           <h2 class="content-title">信息展示带(<span class="text-danger">_info_list.scss</span>)</h2>
           <div class="info-list">
@@ -694,7 +694,7 @@
             <section class="item">
               <header class="title">
                 <b>收货信息/自提信息</b>
-                <span class='tag'>运单号：<sub class="text-danger font-biggest">92656444646445</sub></span>
+                <span class='tag'>运单号：<sub class="text-danger text-biggest">92656444646445</sub></span>
                 <span class="tag">申通</span>
                 <a href="javascript:;" class="tag">查看物流信息</a>
               </header>
@@ -742,7 +742,7 @@
             <section class="item">
               <header class="title">
                 自提地址设置
-                <span class='text-muted font-small ml5'>(设置后，将在卖家自提商品订单内显示)</span>
+                <span class='text-muted text-small ml5'>(设置后，将在卖家自提商品订单内显示)</span>
               </header>
               <div class="content contact">
                 <div class='item'>
@@ -765,7 +765,7 @@
             <section class="item">
               <header class="title">
                 新增订单提醒设置
-                <span class='text-muted font-small ml5'>(当有新订单时，发送短信提醒)</span>
+                <span class='text-muted text-small ml5'>(当有新订单时，发送短信提醒)</span>
               </header>
               <div class="content">
                 <label>
@@ -786,7 +786,7 @@
               <dd class="content">
                 <input type="text" required placeholder='请输入商品名称'>
                 <span class="text-warning">不可为空</span>
-                <p class="text-muted text-tips font-small">（最多50字）</p>
+                <p class="text-muted text-tips text-small">（最多50字）</p>
               </dd>
             </dl>
             <dl class='item'>
@@ -794,7 +794,7 @@
               <dd class="content">
                 <input type="text" required placeholder='请输入商品名称'>
                 <span class="text-warning">不可为空</span>
-                <p class="text-muted text-tips font-small">（最多50字）</p>
+                <p class="text-muted text-tips text-small">（最多50字）</p>
               </dd>
             </dl>
           </div>
@@ -830,7 +830,7 @@
               <dd class="content"><span class='upload-wrapper'>
                   <button class="btn">上传</button>
                 <input type="file" class='btn' value='上传'></span>
-                <span class="ml5 text-muted font-small">（最多上传5张图片，大小请不要超过1M，支持jpg、gif、png格式）</span>
+                <span class="ml5 text-muted text-small">（最多上传5张图片，大小请不要超过1M，支持jpg、gif、png格式）</span>
                 <div class="img-list upload mt10">
                   <div class="img-wrapper">
                     <img src="" alt="图1">
@@ -952,7 +952,7 @@
                                 <ol>
                                   <li class="clearfix">
                                     <img src="" alt="二维码" class="fr qrcode"> 下载二维码
-                                    <p class="text-muted font-s">
+                                    <p class="text-muted text-s">
                                       下载活动二维码，通过打印张贴或其他渠道发放
                                     </p>
                                   </li>
@@ -1076,16 +1076,16 @@
                     </h3>
           <div class="l2">
             <h3 class="content-title-l2">
-                      带箭头指示类：
+                      气泡指示类：
                       </h3>
             <div class="mt5">
-              <span class="tooltips-i tooltips-l">左箭头显示提示
+              <span class="bubble-box bubble-l">左箭头显示提示
                         </span> &nbsp;&nbsp;&nbsp;
-              <span class="tooltips-i tooltips-r">右箭头显示提示
+              <span class="bubble-box bubble-r">右箭头显示提示
                         </span>&nbsp;&nbsp;&nbsp;
-              <span class="tooltips-i tooltips-t">上箭头显示提示
+              <span class="bubble-box bubble-t">上箭头显示提示
                         </span>&nbsp;&nbsp;&nbsp;
-              <span class="tooltips-i tooltips-b">下箭头显示提示
+              <span class="bubble-box bubble-b">下箭头显示提示
                         </span>
             </div>
           </div>

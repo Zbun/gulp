@@ -1,13 +1,11 @@
 //环境变量
-window.APISERVER = 'http://192.168.1.234:300/';
-// window.APISERVER = 'http://192.168.1.251:300/';
+// window.APISERVER = 'http://192.168.1.6:885/';
+window.APISERVER = 'http://192.168.1.250:885/';
+
+// window.UPLOADSERVER = 'http://192.168.1.210:900/api/UploadFile/UploadFiles'; //文件资源站
+window.UPLOADSERVER = 'http://tstpic.jdhui.com.cn/api/UploadFile/UploadFiles'; //文件资源站
 
 window._WEBCONFIG = {
-  //测试环境
-  appid: 'wx835fbf5cd3d8d705',
-  appsecret: 'a5f3d2b385703cdec2236b8dfe28c297',
-
-  //正式环境
-  // appid:'wx7df179b162843b25',
-  // appsecret:'82a89fbbe53871924b94d8837905c78a',
+  Version: '1PC-1.0.0', //软件版本
+  // Version: 'iOS100', //软件版本
 };

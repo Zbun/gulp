@@ -252,15 +252,6 @@ Vue.filter('datetime', function(value) {
 
   return dt.year + '-' + dt.month + '-' + dt.day + ' ' + dt.hours + ':' + dt.minutes + ':' + dt.seconds;
 
-  // read(value) {
-  //   if (!value) return '';
-  //   var dt = resetTimeStamp(value);
-
-  //   return dt.year + '-' + dt.month + '-' + dt.day + ' ' + dt.hours + ':' + dt.minutes + ':' + dt.seconds;
-  // },
-  // write(value) {
-  //   return value;
-  // }
 });
 
 //  时间过滤器不带秒钟： 传入 2016-07-07T10:27:13  过滤成： 2016-07-07 10:27
@@ -277,31 +268,7 @@ Vue.filter('datetime1', {
   }
 });
 
-//日期过滤器： 传入 2016-07-07T10:27:13  过滤成： 2016-07-07
-Vue.filter('year', {
-  //value = value.replace('T', ' ');
-  read(value) {
-    if (!value) return '';
-    var dt = resetTimeStamp(value);
-    return dt.year;
-  },
-  write(value) {
-    return value;
-  }
-});
 
-//日期过滤器： 传入 2016-07-07T10:27:13  过滤成： 2016-07-07
-Vue.filter('month', {
-  //value = value.replace('T', ' ');
-  read(value) {
-    if (!value) return '';
-    var dt = resetTimeStamp(value);
-    return dt.month;
-  },
-  write(value) {
-    return value;
-  }
-});
-Vue.filter('retailOrderStatus', (value) => {
-  return dictionary['retailOrderStatus'][value];
-})
+for (let key in dictionary) { //以词典全部生成过滤器
+  Vue.filter(key, (value) => dictionary[key][value]);
+}

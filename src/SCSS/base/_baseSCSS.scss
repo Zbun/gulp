@@ -1,0 +1,299 @@
+@charset "utf-8";
+@import '_variables.scss';
+@import '_mixin.scss';
+*,
+:before,
+:after {
+  box-sizing: border-box;
+}
+
+hr {
+  height: 1px;
+  border: 0;
+  background: $color-border;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+p,
+ul,
+ol,
+dl,
+dt,
+dd,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+.list-decimal {
+  list-style: decimal;
+}
+
+i,
+em,
+label {
+  font-style: normal;
+  font-weight: 400;
+}
+
+$color-input-border:#e0e0e0!default;
+$color-input-invalid:$color-danger!default;
+input[type=search],
+input[type=text],
+input[type=tel],
+input[type=submit],
+input[type=password],
+input[type=number],
+input[type=date],
+input[type=color],
+input[type=time],
+input[type=url],
+input:not([type]),
+button,
+textarea,
+select,
+.com-ipt {
+  border: 1px solid $color-input-border;
+  padding: 6px;
+  font-size: inherit;
+  -webkit-appearance: none;
+  -webkit-border-radius: $border-radius;
+  -moz-border-radius: $border-radius;
+  border-radius: $border-radius;
+  vertical-align: middle; // background-color: #fff;
+  @include tap-highlight-color(rgba(0, 0, 0, 0));
+  &:focus {
+    border-color: $color-input-focus-border;
+    outline: 0;
+    &:invalid {
+      background: #FFF1F1; //border-color: $color-input-invalid;
+    }
+  }
+  &:active {
+    box-shadow: inset 0 1px 3px rgba(56, 56, 56, .2);
+  }
+  &.error {
+    border-color: $color-input-invalid;
+  }
+}
+
+input[readonly] {
+  background: #fcfcfc;
+  color: #666;
+  &:focus,
+  &:active {
+    border-color: $color-border;
+  }
+}
+
+input.ipt-s {
+  width: 100px;
+}
+
+select {
+  max-width: 18em;
+  -webkit-appearance: menulist!important;
+}
+
+input[type=checkbox],
+input[type=radio] {
+  vertical-align: -2px;
+}
+
+
+a {
+  color: $color-anchor;
+  text-decoration: none;
+  &:visited {
+    color: $color-anchor;
+  }
+  &:hover {
+    color: $color-anchor-hover;
+    text-decoration: underline;
+  }
+  &:active {
+    color: $color-anchor-hover;
+  }
+  &.highlight {
+    color: $color-anchor-hover;
+    .icon,
+    .iconfont {
+      color: inherit;
+    }
+  }
+}
+
+.align-ipt,
+.align-btn {
+  line-height: 30px;
+  .btn.small {
+    margin-top: -1px;
+  }
+}
+
+img {
+  border: 0;
+  vertical-align: middle;
+}
+
+@for $i from 5 through 9 {
+  .w#{$i*10}p {
+    width: $i*10%;
+  }
+}
+
+@for $i from 0 through 6 {
+  .p#{$i*5} {
+    padding: $i*5px;
+  }
+  .pl#{$i*5} {
+    padding-left: $i*5px;
+  }
+  .pr#{$i*5} {
+    padding-right: $i*5px;
+  }
+  .m#{$i*5} {
+    margin: $i*5px;
+  }
+  .mt#{$i*5} {
+    margin-top: $i*5px;
+  }
+  .mb#{$i*5} {
+    margin-bottom: $i*5px;
+  }
+  .ml#{$i*5} {
+    margin-left: $i*5px;
+  }
+  .mr#{$i*5} {
+    margin-right: $i*5px;
+  }
+}
+
+.fl {
+  float: left;
+}
+
+.fr {
+  float: right;
+}
+
+.row {
+  // padding: 10px;
+}
+
+[hidden],
+template,
+.hidden {
+  display: none;
+}
+
+.clearfix:after {
+  display: table;
+  content: "";
+  clear: both;
+}
+
+.dis-flex {
+  @include dis-flex;
+  >.item {
+    @include flex;
+    margin: 0;
+  }
+}
+
+.flex-center {
+  @include flex-center;
+}
+
+.dis-inline-block {
+  display: inline-block;
+}
+
+.block {
+  display: block;
+  width: 100%;
+}
+
+.table {
+  min-width: 100%;
+  >.item {
+    display: table-cell;
+  }
+}
+
+.col2 {
+  >.col-item {
+    width: 50%;
+  }
+}
+
+.main {
+  position: relative;
+}
+
+.required-mark {
+  &:before {
+    content: '*';
+    color: $color-danger;
+  }
+}
+
+.ovh-x {
+  overflow-x: hidden;
+  @extend %scrollbar-white;
+}
+
+.ovh-y {
+  overflow-y: hidden;
+  @extend %scrollbar-white;
+}
+
+.simplehidden {
+  position: absolute!important;
+  width: 1px!important;
+  height: 1px!important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  z-index: -3;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  line-height: 0 !important;
+  opacity: 0!important;
+  overflow: hidden!important;
+  pointer-events: none;
+}
+
+.superhidden {
+  @extend .simplehidden;
+  clip: rect(0, 0, 0, 0)!important;
+  visibility: hidden!important;
+}
+
+$cursor-disabled:not-allowed!default;
+.disabled {
+  opacity: .5;
+  pointer-events: none;
+}
+
+//vue 数据区域编译前隐藏
+[v-cloak] {
+  display: none;
+}
+
+html {
+  min-height: 100%;
+  font-size: 100%;
+}
+
+@import "_btn.scss";
+@import "_text.scss";

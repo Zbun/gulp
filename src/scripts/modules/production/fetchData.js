@@ -7,7 +7,7 @@
  * @return {[type]}
  */
 
-// import loading from 'commonScripts/loading.js';
+import loading from 'commonScripts/zWaiting.js';
 var server = window.APISERVER || localStorage.APIServer; //临时调试接口地址，本地存储，随时修改
 localStorage.APIServer = /\/$/.test(server) ? server : server + '/';
 
@@ -32,6 +32,7 @@ function fetchData(arg) {
   }
   var argPara = arg.para || {};
   var para = $.extend({ token: tokenReal }, argPara);
+  para.Version = window._WEBCONFIG.Version || ''; //软件版本
   var dataList = [];
   var target = arg.target || ''; //防止多次点击时，传当前点击按钮节点
   var async = true;
@@ -81,7 +82,7 @@ function fetchData(arg) {
               }
               arg.callback(dataList);
             } else {
-              console.warn('callback 需要方法类型，请检查');
+              // console.warn('callback 需要方法类型，请检查');
             }
             break;
           }
@@ -109,13 +110,14 @@ function fetchData(arg) {
             }
             //请求成功，但可能需要处理错误时回调方法 errorCallbak
             if (typeof arg.errorCallback == 'function') {
-              arg.errorCallback();
+              arg.errorCallback(d);
             }
           }
       }
     }
   };
-  $.ajax({
+
+  return $.ajax({
     url: finalUrl,
     type: 'POST',
     // beforeSend: function(request) {
@@ -134,7 +136,5 @@ function fetchData(arg) {
     },
     async: async
   });
-
-  return dataList;
 }
 module.exports = fetchData;

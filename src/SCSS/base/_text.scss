@@ -65,21 +65,25 @@
 }
 
 //size
-.font-small {
-  font-size: $size-font-small;
+.text-small {
+  font-size: $size-text-small;
   line-height: 1;
 }
 
-.font-big {
-  font-size: $size-font-big;
+.text-middle {
+  font-size: $size-text-middle;
 }
 
-.font-bigger {
-  font-size: $size-font-bigger;
+.text-large {
+  font-size: $size-text-large;
 }
 
-.font-biggest {
-  font-size: $size-font-biggest;
+.text-x-large {
+  font-size: $size-text-x-large;
+}
+
+.text-xx-large {
+  font-size: $size-text-xx-large;
 }
 
 //weight

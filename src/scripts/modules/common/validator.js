@@ -29,6 +29,7 @@ module.exports = function(el) {
     money1: '金额格式为最多两位小数，请检查', //允许负值
     integer: '需要输入整数，请检查',
     posInteger: '需要输入正整数，请检查',
+    positive: '需要输入正数，请检查',
     notPositive: '需要输入非负数，请检查',
     notPositiveInteger: '需要输入非负整数，请检查',
     integer1: '需要输入整数，请检查',
@@ -59,6 +60,7 @@ module.exports = function(el) {
       valid = true;
       //获取需要验证的元素，即含有data-validate属性的元素
       let vad = els[i].getAttribute('data-validate').toLowerCase();
+      let text = els[i].getAttribute('data-validate-text'); //自定义提示文字
       // let keys = Object.keys(vs);
       isMobile = vad.indexOf('mobile') > -1;
       let val = els[i].value;
@@ -70,7 +72,8 @@ module.exports = function(el) {
       }
       if (vad.indexOf('required') > -1) {
         if (fn.isEmpty(val)) {
-          msg = objMsg.empty;
+          msg = text || objMsg.empty;
+
           valid = false;
           curNode = els[i];
           break;
@@ -84,10 +87,6 @@ module.exports = function(el) {
         if (!fn.isEmpty(val) && !fn.isPhone(val)) {
           msg = objMsg.phone;
         }
-      } else if (vad.indexOf('posinteger') > -1) {
-        if (!fn.isEmpty(val) && !fn.isPosInteger(val)) {
-          msg = objMsg.posInteger;
-        }
       } else if (vad.indexOf('notpositiveinteger') > -1) {
         if (!fn.isEmpty(val) && !fn.isNotPositiveInteger(val)) {
           msg = objMsg.notPositiveInteger;
@@ -95,6 +94,10 @@ module.exports = function(el) {
       } else if (vad.indexOf('notpositive') > -1) {
         if (!fn.isEmpty(val) && !fn.isNotPositive(val)) {
           msg = objMsg.notPositive;
+        }
+      } else if (vad.indexOf('posinteger') > -1) {
+        if (!fn.isEmpty(val) && !fn.isPosInteger(val)) {
+          msg = objMsg.posInteger;
         }
       } else if (vad.indexOf('integer1') > -1) {
         if (!fn.isEmpty(val) && !fn.isInteger1(val)) {
@@ -117,6 +120,10 @@ module.exports = function(el) {
           if (('' + val).length > 16) {
             msg = '输入金额不合法，请重新填写';
           }
+        }
+      } else if (vad.indexOf('positive') > -1) {
+        if (!fn.isEmpty(val) && !fn.isPositive(val)) {
+          msg = objMsg.positive;
         }
       } else if (vad.indexOf('percent') > -1) {
         if (!fn.isEmpty(val) && !fn.isPercent(val)) {

@@ -34,6 +34,24 @@
   }
 }
 
+%scrollbar-thin {
+  &::-webkit-scrollbar {
+    height: 4px;
+    width: 4px;
+  }
+  &::-webkit-scrollbar-thumb {
+    width: 4px;
+    height: 4px;
+    background: #ddd;
+    &:hover {
+      background: #CFD0D2;
+    }
+    &:active {
+      background: #bbb;
+    }
+  }
+}
+
 %scrollbar-white-w {
   &::-webkit-scrollbar {
     width: 8px;

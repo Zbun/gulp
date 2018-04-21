@@ -6,20 +6,20 @@
  */
 module.exports = function() {
 
-  var resize = () => {
-    let style = $('#attachStyle')[0];
-    if (!style) {
-      style = document.createElement('style');
-      style.id = 'attachStyle';
-    }
-    // var menuHeight = localStorage.token && localStorage.token.length > 0 ? 50 : 0;
-    style.innerHTML = '#main-box >.main{min-height:' + (document.documentElement.clientHeight - 156) + 'px}';
-    document.head.appendChild(style);
-  };
-  //内容区撑开页面高度，使版权信息刚好在页面底部
-  resize();
-  //页面缩放时再调整大小
-  window.onresize = resize;
+  // var resize = () => {
+  //   let style = $('#attachStyle')[0];
+  //   if (!style) {
+  //     style = document.createElement('style');
+  //     style.id = 'attachStyle';
+  //   }
+  //   // var menuHeight = localStorage.token && localStorage.token.length > 0 ? 50 : 0;
+  //   style.innerHTML = '#app >.main{min-height:' + (document.documentElement.clientHeight - 80) + 'px}';
+  //   document.head.appendChild(style);
+  // };
+  // //内容区撑开页面高度，使版权信息刚好在页面底部
+  // resize();
+  // //页面缩放时再调整大小
+  // window.onresize = resize;
 
   {
     let isDraging = false;

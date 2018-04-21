@@ -11,7 +11,7 @@ $bg-text-color in(bg-default, $color-bg-default, $color-bg-default-text),
   .#{$bg} {
     border: 1px solid darken($bg-color, 8%);
     background-color: $bg-color;
-    color: #333;
+    color: $bg-text-color;
   }
 }
 
@@ -27,8 +27,9 @@ $bg-text-color in(bg-default, $color-bg-default, $color-bg-default-text),
   position: relative;
   padding: 0 10px;
   line-height: 28px;
-  font-size: 12px;
-  font-weight: 400;
+  -webkit-border-radius: $border-radius;
+  -moz-border-radius: $border-radius;
+  border-radius: $border-radius;
 }
 
 $color-bg-warning-pure:#FFFEE7;

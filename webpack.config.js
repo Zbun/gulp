@@ -19,7 +19,8 @@ module.exports = {
         include: [path.resolve('./src/scripts')],
         exclude: /(node_modules|bower_components)/,
         options: {
-          presets: ['es2015']
+          presets: ['es2015'],
+          cacheDirectory: true
         }
       }, {
         test: /\.vue$/,
@@ -51,7 +52,8 @@ module.exports = {
   //     css: 'style!css!less'
   //   }
   // },
-  devtool: 'source-map',
+  // devtool: 'source-map',
+  devtool: 'cheap-module-eval-source-map',
   resolve: {
     modules: ['node_modules/', path.join(__dirname, './src/scripts')],
     extensions: ['.vue', '.js'],
@@ -61,32 +63,30 @@ module.exports = {
       libs: path.join(__dirname, './src/scripts/lib/'), //通用库文件路径
       commonScripts: path.join(__dirname, './src/scripts/modules/common'), //通用JS模块路径
       commonVues: path.join(__dirname, './src/scripts/vues'), //通用vue模块路径
-      views: path.join(__dirname, './src/scripts/SPA/views/'), //独立的单页路径
+      pages: path.join(__dirname, './src/scripts/SPA/pages/'), //独立的单页路径
       mixins: path.join(__dirname, './src/scripts/modules/production/mixins/')
     }
   },
   plugins: [
     new webpack.ProvidePlugin({
-      // dialog: path.resolve(__dirname, './src/scripts/lib/artdialog/dist/dialog-plus-min.js'), //弹窗对话框
+      dialog: path.resolve(__dirname, './src/scripts/lib/artdialog/dist/dialog-plus-min.js'), //弹窗对话框
       getTarget: path.join(__dirname, './src/scripts/modules/common/getTarget.js'), //获取真实节点功能
       getType: path.join(__dirname, './src/scripts/modules/common/getType.js'),
       typeOf: path.join(__dirname, './src/scripts/modules/common/typeOf.js'), //获取变量typeOF
       spinZ: path.resolve('./src/scripts/modules/common/spinZ.js'), //封装了spin，依赖spin
-      loading: path.resolve('./src/scripts/modules/common/waiting.js'), //加载数据时，右上角等待提示
-      dialog: path.resolve(__dirname, './src/scripts/modules/common/zpopupMobile.js'), //手机弹窗
+      // dialog: path.resolve(__dirname, './src/scripts/modules/common/zpopupMobile.js'), //手机弹窗
       showTips: path.resolve(__dirname, './src/scripts/modules/common/showTipsState.js'), //弹窗提示框
       validatorManu: path.resolve(__dirname, './src/scripts/modules/common/validatorManu.js'), //手动校验数据完整性
       zmm_validator: path.resolve(__dirname, './src/scripts/modules/common/validator.js'), //数据完整性验证
       zmm_date: path.resolve(__dirname, './src/scripts/modules/common/date.js'), //常用的日期选择
       fetchData: path.join(__dirname, './src/scripts/modules/production/fetchData.js'), //获取数据
-      areaSelector: path.join(__dirname, './src/scripts/modules/production/areaSelector.js'), //区域选择
+      // areaSelector: path.join(__dirname, './src/scripts/modules/production/areaSelector.js'), //区域选择
       initPage: path.join(__dirname, './src/scripts/modules/production/pagination.js'), //分页总方法
       dictionary: path.join(__dirname, './src/scripts/modules/production/SysDictionary.js'), //字典数据
-      G_APILIST: path.join(__dirname, './src/scripts/config/APILIST.js') //全局接口地址
     })
   ],
-  // watch: true,
   //
+  watch: true,
   watchOptions: {
     ignored: /node_modules/,
     aggregateTimeout: 300,
@@ -94,7 +94,7 @@ module.exports = {
   },
   externals: {
     //外部引入2，页面中需要预先引入相关库
-    // Vue: 'Vue',
+    Vue: 'Vue',
     _: 'lodash',
     jquery: 'jQuery', //此时外部引入
     $: 'jQuery',
