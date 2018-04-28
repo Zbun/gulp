@@ -74,8 +74,12 @@ $table-text-line-height:24px;
   >tbody {
     font-size: 12px;
     img {
-      max-height: 20px;
+      max-height: 24px;
       max-width: 100px;
+      border: 1px solid $color-border;
+      -webkit-border-radius: $border-radius;
+      -moz-border-radius: $border-radius;
+      border-radius: $border-radius;
     }
     input {
       margin: -3px 0;

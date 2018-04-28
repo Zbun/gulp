@@ -7,18 +7,14 @@
 // var path = require('path');
 var gulp = require('gulp'),
   browserSync = require('browser-sync').create(),
-  // concat = require('gulp-concat'),
   del = require('del'),
   // rename = require('gulp-rename'),
   revAppend = require('gulp-rev-append'),
-  // cleanCSS = require('gulp-clean-css'),
   gutil = require('gulp-util'),
   include = require('gulp-html-tag-include'),
-  // minify = require('gulp-minify'),
   // sourcemaps = require('gulp-sourcemaps'),
-  // uglify = require('gulp-uglify'),
   sass = require('gulp-sass'),
-  watch = require('gulp-watch'),
+  // watch = require('gulp-watch'),
   webpack = require('webpack');
 // WebpackDevServer = require('webpack-dev-server');
 var webpackConfig = require('./webpack.config.js');
@@ -33,7 +29,8 @@ var num = {
 
 function fnConsoleBegin(v) {
   v = '<!-- ' + v + '于' + (new Date().toLocaleTimeString()) + ' -->';
-  console.log(gutil.colors.bgYellow(v));
+  // console.log(gutil.colors.bgYellow(v));
+  console.log(v);
 }
 
 function fnConsoleError(v) {
@@ -45,7 +42,6 @@ function fnConsole(v) {
   v = '<!-- ' + v + '于' + (new Date().toLocaleTimeString()) + ' -->';
   console.log(gutil.colors.bgGreen(v));
 }
-
 
 var isBuild = false; //是否是生产环境配置，webpack时用到
 var opts = {
@@ -83,22 +79,7 @@ var copyFiles = function() {
 //   del([driDist + 'css/', dirDist + 'scripts/bundle/'], cb);
 // });
 
-//压缩、链接资源类
-// gulp.task('uglify', function() {
-//   gulp.src(opts.destPath + 'scripts/bundle/*.js')
-//     .pipe(uglify())
-//     .pipe(gulp.dest(opts.destPath + 'scripts/bundle'));
-//   // .pipe(rename({suffix:'.min'}))
-// });
 
-// gulp.task('minify', function() {
-//   gulp.src(opts.destPath + 'scripts/bundle/*.js')
-//     .pipe(minify({
-//       exclude: ['tasks'],
-//       ignoreFiles: ['.combo.js', '-min.js']
-//     }))
-//     .pipe(gulp.dest(opts.destPath + 'scripts/bundle'));
-// });
 //文件添加版本号， 在HTML中写入 ** .js ? rev = @hash
 function fnRev() {
   fnConsoleBegin('打下版本号');
@@ -117,7 +98,7 @@ function fnSass() {
     .pipe(gulp.dest(opts.destPath + 'css'));
   //文档目录生成
   if (!isBuild) {
-    gulp.src(opts.srcPath + 'scss/common.scss')
+    gulp.src(opts.srcPath + 'scss/doc.scss')
       .pipe(sass({
         outputStyle: cssStyle
       }).on('error', sass.logError))
@@ -202,6 +183,7 @@ function fnBrowserSync() {
     fnConsole('SCSS编译结束-V' + num.SCSS++);
     // setTimeout(fnRev, 10);
   });
+
   // if (!webpackConfig.watch) {
   //   fnGulpWatchFilesChangedThenWebpack();
   // }

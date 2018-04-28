@@ -18,11 +18,9 @@
   -webkit-border-radius: $border-radius;
   -moz-border-radius: $border-radius;
   border-radius: $border-radius;
-  transition: .35s;
   -webkit-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-  -webkit-animation: popuptips .3s;
-  animation: popuptips .3s;
+  transform: translate(-50%, -50%); // -webkit-animation: popuptips .3s;
+  // animation: popuptips .3s;
   .icon {
     position: absolute;
     top: 50%;
@@ -96,6 +94,7 @@ $color-circle:#179c6a;
     .svg {
       -webkit-animation: am-waiting 0.7s linear infinite;
       animation: am-waiting 0.7s linear infinite;
+      will-change: transform;
       .circle {
         stroke: $color-primary!important;
       }

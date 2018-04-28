@@ -80,7 +80,7 @@ module.exports = {
       zmm_validator: path.resolve(__dirname, './src/scripts/modules/common/validator.js'), //数据完整性验证
       zmm_date: path.resolve(__dirname, './src/scripts/modules/common/date.js'), //常用的日期选择
       fetchData: path.join(__dirname, './src/scripts/modules/production/fetchData.js'), //获取数据
-      // areaSelector: path.join(__dirname, './src/scripts/modules/production/areaSelector.js'), //区域选择
+      areaSelector: path.join(__dirname, './src/scripts/modules/production/areaSelector.js'), //区域选择
       initPage: path.join(__dirname, './src/scripts/modules/production/pagination.js'), //分页总方法
       dictionary: path.join(__dirname, './src/scripts/modules/production/SysDictionary.js'), //字典数据
     })

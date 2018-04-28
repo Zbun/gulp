@@ -1,6 +1,6 @@
 @import '_variables.scss';
 @import '_mixin.scss';
-$color-tag-border:$color-input-focus-border!default;
+$color-tag-border:$color-primary!default;
 .tag {
   display: inline-block;
   padding: 0 8px;

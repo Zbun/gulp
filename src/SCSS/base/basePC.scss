@@ -41,7 +41,7 @@ select,
     min-width: 180px;
   }
   &.x-large {
-    min-width: 340px;
+    min-width: 250px;
   }
   &.xx-large {
     min-width: 450px;
@@ -212,9 +212,9 @@ select {
     width: 106px; // padding-right: 26px;
     background: #fff;
   }
-  &.width {
+  &.col2 {
     >input {
-      width: 145px;
+      width: 118px;
     }
   }
   .icon {

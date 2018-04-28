@@ -86,7 +86,8 @@ select,
   }
 }
 
-input[readonly] {
+[readonly],
+[disabled] {
   background: #fcfcfc;
   color: #666;
   &:focus,
@@ -118,7 +119,7 @@ a {
   }
   &:hover {
     color: $color-anchor-hover;
-    text-decoration: underline;
+    text-decoration: none;
   }
   &:active {
     color: $color-anchor-hover;
@@ -128,6 +129,9 @@ a {
     .icon,
     .iconfont {
       color: inherit;
+    }
+    &:hover {
+      text-decoration: none;
     }
   }
 }

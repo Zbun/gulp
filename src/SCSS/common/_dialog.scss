@@ -8,6 +8,7 @@ $color-bg-dialog-title:#F7F8FA;
 .ui-popup-show {
   -webkit-animation: popup-zoom .2s ease-out;
   animation: popup-zoom .2s ease-out; // box-shadow: 0 0 6px #666;
+  will-change: transform;
   table {
     border-spacing: 0;
   }
@@ -244,6 +245,7 @@ $color-bg-dialog-title:#F7F8FA;
     @include trf(translate(-50%, 0));
     -webkit-animation: popup-zoom2 .2s ease-out;
     animation: popup-zoom2 .2s ease-out;
+    will-change: transform;
     >.title {
       position: relative;
       padding: 0 20px;
@@ -287,8 +289,7 @@ $color-bg-dialog-title:#F7F8FA;
         min-height: 0;
       }
       >.content {
-        padding: 20px;
-        padding-top: 14px;
+        padding: 14px 20px;
         max-height: 100%;
         overflow-x: hidden;
         @extend %scrollbar-white-w;
@@ -299,6 +300,7 @@ $color-bg-dialog-title:#F7F8FA;
       display: table;
       width: 100%;
       padding: 14px;
+      padding-top: 0;
       margin-top: -1px;
       text-align: right;
       background: #fff;

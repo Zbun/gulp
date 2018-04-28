@@ -1,7 +1,9 @@
 @import '_variables.scss';
 .tab-switcher {
   >.title {
-    line-height: 28px;
+    line-height: 30px;
+    border-bottom: 1px solid $color-border;
+
     >.item {
       display: inline-block;
       margin-right: 8px;
@@ -30,7 +32,6 @@
     }
   }
   >.content {
-    border-top: 1px solid $color-border;
     overflow: hidden;
     >.item {
       display: none; // &:first-child {
