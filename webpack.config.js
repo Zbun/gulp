@@ -2,10 +2,10 @@ var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
-  entry: {
-    APP: './src/scripts/entry/APP.js'
+  entry: [
+    './src/scripts/entry/main.js'
     // doc: './src/scripts/doc.js'
-  },
+  ],
   output: {
     path: path.join(__dirname, './dist/scripts/bundle/'),
     filename: '[name].bundle.js',
@@ -54,6 +54,7 @@ module.exports = {
   // },
   // devtool: 'source-map',
   devtool: 'cheap-module-eval-source-map',
+  mode: 'development',
   resolve: {
     modules: ['node_modules/', path.join(__dirname, './src/scripts')],
     extensions: ['.vue', '.js'],
@@ -86,7 +87,7 @@ module.exports = {
     })
   ],
   //
-  watch: true,
+  // watch: true,
   watchOptions: {
     ignored: /node_modules/,
     aggregateTimeout: 300,

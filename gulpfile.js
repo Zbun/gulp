@@ -1,7 +1,7 @@
 /**
- * gulp 配置文件，总共3个命令
- * 1、gulp 默认命令
- * 3、gulp build: 压缩生成CSS及JS，此时没用sourcemap文件，上线时使用，速度最慢
+ * gulp 配置文件，总共2个命令
+ * 1、gulp 默认命令，启用browserSync服务器+webpack middleware热模块加载
+ * 2、gulp build: 压缩生成CSS及JS，此时没用sourcemap文件，上线时使用，速度最慢
  */
 
 // var path = require('path');
@@ -12,11 +12,12 @@ var gulp = require('gulp'),
   revAppend = require('gulp-rev-append'),
   gutil = require('gulp-util'),
   include = require('gulp-html-tag-include'),
-  // sourcemaps = require('gulp-sourcemaps'),
+
   sass = require('gulp-sass'),
-  // watch = require('gulp-watch'),
+  watch = require('gulp-watch'),
   webpack = require('webpack');
-// WebpackDevServer = require('webpack-dev-server');
+var webpackDevMiddleware = require('webpack-dev-middleware');
+var webpackHotMiddleware = require('webpack-hot-middleware');
 var webpackConfig = require('./webpack.config.js');
 
 var num = {
@@ -74,11 +75,6 @@ var copyFiles = function() {
   fnConsole('静态文件复制完成');
 };
 
-//清理文件
-// gulp.task('clean', function(cb) {
-//   del([driDist + 'css/', dirDist + 'scripts/bundle/'], cb);
-// });
-
 
 //文件添加版本号， 在HTML中写入 ** .js ? rev = @hash
 function fnRev() {
@@ -126,13 +122,12 @@ function fnAssembleHTML() {
       });
   });
 }
-gulp.task('preAssembleHTML', fnAssembleHTML);
-gulp.task('assembleHTML', ['preAssembleHTML'], function() {});
 
 //传给webpack用
 function fnWebpack(callback) {
   fnConsoleBegin('Webapck 开始');
   var newConfig = webpackConfig;
+  newConfig.watch = true;
   // [opts.destPath + '/scripts/bundle/*.*']
   del(['dist/scripts/bundle/*.*', '!dist/scripts/bundle/APP.bundle.js']).then(function() {
     webpack(
@@ -147,6 +142,8 @@ function fnWebpack(callback) {
           fnConsoleError('webpack编译出错-V' + numError + '，↑↑↑↑↑↑');
         } else {
           typeof callback == 'function' && callback();
+          fnConsole('webpack 结束-V' + num.webpack++);
+          fnAssembleHTML();
         }
       });
   });
@@ -158,50 +155,73 @@ gulp.task('webpack', function() {
   });
 });
 
-// var fnGulpWatchFilesChangedThenWebpack = function() {
-//   watch('./src/scripts/**/*.*', function() {
-//     fnWebpack(function() {
-//       fnConsole('webpack 结束-V' + num.webpack++);
-//       fnRev();
-//     });
-//   });
-// };
+
 //根据文件类型变动，自动刷新浏览器
 function fnBrowserSync() {
   copyFiles();
+  fnAssembleHTML();
+  var middleware = [];
+  if (isBuild) { //上线环境，切换wbpack配置及选项
+    gutil.colors.bgRed('当前为生产环境，已压缩CSS及JS');
+    webpackConfig.mode = 'production';
+    delete webpackConfig.devtool;
+    webpackConfig.plugins.unshift(
+      // new webpack.DefinePlugin({ 'process.env.NODE_ENV': JSON.stringify('production') }),
+      // new webpack.optimize.ModuleConcatenationPlugin(),
+      // new webpack.NoEmitOnErrorsPlugin()
+    );
+    fnWebpack();
+  } else { //开发环境
+    del(['dist/scripts/bundle/*.*']);
+    webpackConfig.entry.unshift('webpack/hot/dev-server',
+      'webpack-hot-middleware/client?quiet=true&noInfo=true');
+    webpackConfig.plugins.unshift(
+      new webpack.optimize.OccurrenceOrderPlugin(),
+      new webpack.HotModuleReplacementPlugin(),
+      new webpack.NoEmitOnErrorsPlugin());
+    var bundler = webpack(webpackConfig);
+    middleware = [
+      webpackDevMiddleware(bundler, {
+        // IMPORTANT: dev middleware can't access config, so we should
+        // provide publicPath by ourselves
+        publicPath: webpackConfig.output.publicPath,
+        logLevel: 'error',
+        logTime: true,
+        writeToDisk: true, //写入硬盘文件，但还是从内存访问数据^-^
+        // pretty colored output
+        stats: { colors: true },
+
+        // for other settings see
+        // http://webpack.github.io/docs/webpack-dev-middleware.html
+      }),
+
+      // bundler should be the same as above
+      webpackHotMiddleware(bundler)
+    ];
+  }
+
   browserSync.init({
     // files: ['dist/css/*.css', 'dist/scripts/bundle/APP.bundle.js', './dist/htmls/**/*.html', '!**.scss', '!node_modules/**.*'],
     files: ['dist/css/*.css'],
-    server: { baseDir: './' },
+    server: { baseDir: './', middleware, },
     port: 2019,
     // codeSync: false,
     ghostMode: false
   });
-  gulp.watch('./src/htmls/**/*.html', fnAssembleHTML);
-  gulp.watch('./src/scss/**/*.scss', fnSass);
+  watch('./src/htmls/**/*.html', fnAssembleHTML);
+  watch('./src/scss/**/*.scss', fnSass);
   gulp.watch('./dist/css/*.css', function() {
     fnConsole('SCSS编译结束-V' + num.SCSS++);
     // setTimeout(fnRev, 10);
   });
 
-  // if (!webpackConfig.watch) {
-  //   fnGulpWatchFilesChangedThenWebpack();
-  // }
-  // gulp.watch('./src/htmls/**/*.html', ['assembleHTML', 'webpack']);
 }
-gulp.task('browserSync', ['sass', 'webpack'], fnBrowserSync);
+gulp.task('browserSync', ['sass'], fnBrowserSync);
 
 //构建、上线前压缩下JS，压缩CSS
 function fnPreBuild() {
   cssStyle = cssStyles[0];
   isBuild = true;
-  webpackConfig.plugins.push(
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false,
-      }
-    }));
-  webpackConfig.devtool = 'cheap-module-source-map';
 }
 gulp.task('preBuild', fnPreBuild);
 //上线启动
@@ -212,14 +232,5 @@ gulp.task('build', ['preBuild', 'browserSync'], function() {
 //默认启动任务
 gulp.task('default', ['browserSync'], function() {
   // gulp.start('minify','cleancss')
-  fnConsole('开启默认任务，开启webpack watch属性。enjoy!');
-});
-
-//启动webpack,watch:true,此时不用gulp-watch之后再webpack,速度快，但webpack不能处理新加文件
-// function fnPreWatch() {
-//   webpackConfig.watch = true;
-// }
-// gulp.task('preWatch', fnPreWatch);
-gulp.task('ww', ['browserSync'], function() {
-  fnConsole('此时开启webpack自带watch选项，最新webpack已可处理新加文件，直接使用命令gulp处理即可。enjoy!');
+  fnConsole('开启默认任务，启用webpack middleware 热加载。enjoy!');
 });
