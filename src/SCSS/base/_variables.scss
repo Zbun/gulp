@@ -17,7 +17,7 @@ $color-primary:#F38000!default;
 $color-info:#52b67a!default;
 $color-ok:#2CBA80!default;
 $color-warning:#F38000!default;
-$color-danger:#DE3400!default;
+$color-danger:#E12E0D!default;
 $color-btn-default:#fff!default;
 $color-btn-hover:#fcfcfc!default;
 $color-border:#D9DDE0!default;
@@ -27,6 +27,7 @@ $color-table-thead-th:#333!default;
 $color-table-tr-hover:#FEF6EB!default;
 $color-table-border:#E6EAED!default;
 $color-table-anchor:#0990ca!default;
+$color-table-on:#FEF2E6 !default;
 //Anchor area color
 $color-anchor:#333!default;
 $color-anchor-highlight:#0170B7!default;
@@ -64,6 +65,8 @@ $size-text-middle:14px;
 $size-text-large:16px;
 $size-text-x-large:18px;
 $size-text-xx-large:20px;
+$size-text-xxx-large:28px;
+
 //Height
 $height-input:30px;
 $height-btn:28px;

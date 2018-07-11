@@ -25,6 +25,9 @@ module.exports = {
   isPhone(arg) {
     return this._check(this._regExp.phone)(arg);
   },
+  isTelnum(arg) {
+    return this._check(this._regExp.telnum)(arg);
+  },
   isEmail(arg) {
     return this._check(this._regExp.email)(arg);
   },
@@ -42,6 +45,9 @@ module.exports = {
   },
   isPosInteger(arg) { //正整数
     return this._check(this._regExp.integer)(arg) && arg > 0;
+  },
+  isPositive(arg) { //正数
+    return !isNaN(arg) && arg > 0;
   },
   isNotPositive(arg) { //非负
     return !isNaN(arg) && arg >= 0;

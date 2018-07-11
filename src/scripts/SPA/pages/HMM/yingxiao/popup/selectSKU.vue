@@ -87,7 +87,7 @@ export default {
     initPageData(pageIndex) {
       let para = this.dataOut.search;
       para.pageIndex = this.pageIndex = pageIndex = pageIndex || 1;
-      para.pageSize = 15;
+      para.pageSize = 8;
       fetchData({
         hideLoading: true,
         API: '/api/Goods/SGetSkuListAndPaging',

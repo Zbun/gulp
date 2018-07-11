@@ -1,4 +1,5 @@
 @import 'base/_variables';
+$progress-bg:#999;
 .progress {
   @include dis-flex;
   position: relative;
@@ -10,16 +11,14 @@
     @include flex();
     counter-increment: steps;
     transition: .2s;
-    transform-origin: left;
-    // -webkit-animation: progress-item-am .2s;
+    transform-origin: left; // -webkit-animation: progress-item-am .2s;
     // -o-animation: progress-item-am .2s;
     // animation: progress-item-am .2s;
     >.bar {
       display: block;
       position: relative;
-      height: 8px;
-      width: 100%;
-      // width: 0;
+      height: 2px;
+      width: 100%; // width: 0;
       background: transparent;
       &:before {
         content: counter(steps);
@@ -40,9 +39,9 @@
       &:after {
         content: '';
         position: absolute;
-        left: 0;
+        left: 22px;
         top: 0;
-        right: 0;
+        right: 22px;
         bottom: 0;
         background: $color-primary;
         transition: .3s;
@@ -52,8 +51,8 @@
         transform: scaleX(0);
         -webkit-animation-name: progress-bar-am;
         animation-name: progress-bar-am;
-        -webkit-animation-duration: .5s;
-        animation-duration: .5s;
+        -webkit-animation-duration: .2s;
+        animation-duration: .2s;
         -webkit-animation-fill-mode: forwards;
         animation-fill-mode: forwards;
       }
@@ -68,9 +67,9 @@
     }
     >.tips {
       position: absolute;
-      bottom: -45px;
-      color: #999;
-      font-size: 18px;
+      bottom: -42px;
+      color: $color-primary;
+      font-size: 14px;
       -webkit-transform: translate(-50%, 0);
       transform: translate(-50%, 0);
     }
@@ -80,13 +79,16 @@
       &~.item>.bar:after,
       &~.item>.bar:before {
         background: $progress-bg;
-        color: #999;
+        color: #fff;
       }
       &.item>.bar,
       &~.item>.bar {
         &:after {
           background: $progress-bg;
         }
+      }
+      &~.item>.tips {
+        color: #333;
       }
     }
     &:last-child {
@@ -96,26 +98,6 @@
       white-space: nowrap;
       -webkit-transform: translate(-50%, 0);
       transform: translate(-50%, 0);
-    }
-  }
-  &.col3 {
-    >.item {
-      width: 50%;
-    }
-  }
-  &.col4 {
-    >.item {
-      width: 33.333%;
-    }
-  }
-  &.col5 {
-    >.item {
-      width: 25%;
-    }
-  }
-  &.col6 {
-    >.item {
-      width: 20%;
     }
   }
 }

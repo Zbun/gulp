@@ -5,7 +5,12 @@
       <img src="/dist/images/logo.png" alt="">
     </a>
       <div class="action">
-        <a href="javascript:;" class="item">{{computedUserInfo.RealName}}</a>
+                <div class="dropdown-list mr20" @click="toggleDrop" :class="{on:isShowDrop}">
+        <a href="javascript:;" class="item">{{computedUserInfo.RealName}}<i class="triggle"></i></a>
+        <ul>
+          <li><a href="apply.html?#/changePwd">修改密码</a></li>
+        </ul>
+        </div>
         <a href="/" class="item" title="首页"><i class="iconfont icon-shouye"></i></a>
         <a href="javascript:;" class="item" title="安全退出系统" @click="logout"><i class="iconfont icon-tuichu"></i></a>
       </div>
@@ -39,6 +44,7 @@ export default {
   data() {
     return {
       isShowInfo: false,
+      isShowDrop:false,
       arrDataMenu: [],
       arrCurMenu: []
     }
@@ -52,28 +58,40 @@ export default {
   methods: {
     initPageData() {
       fetchData({
+        hideLoading: true,
         api: '/api/UserAuth/GetUserMenu',
         para: {},
         callback: data => {
           setTimeout(() => { //展开菜单方法，拐弯取到了当前路由
-            data.forEach((item, i) => {
-              item._on = false;
+            let isHited = false;
+            let isInitedCurMenu = false;
+            data.forEach((itemRoot, i) => {
+              itemRoot._on = false;
               if (i == 0) {
-                item._on = true;
+                itemRoot._on = true;
               }
-              item.Child.forEach(item0 => {
+              itemRoot.Child.forEach(item0 => {
                 item0._spread = false;
                 item0.Child.forEach(item => {
                   item._on = false;
                   if (item.MenuUrl == this.$store.state.currentRoute.path) { //判断是否命中当前路由
                     item0._spread = true;
                     item._on = true;
+                    data[0]._on = false;
+                    itemRoot._on = true;
+                    isHited = true;
                   }
                 })
               })
+              if (isHited && !isInitedCurMenu) {
+                this.arrCurMenu = itemRoot.Child;
+                isInitedCurMenu = true;
+              }
             })
             this.arrDataMenu = data;
-            this.arrCurMenu = data[0].Child;
+            if (!isHited) {
+              this.arrCurMenu = data[0].Child;
+            }
           }, 100);
 
         }
@@ -88,6 +106,9 @@ export default {
     },
     spreadMenu(item) {
       item._spread = !item._spread;
+    },
+    toggleDrop(){
+       this.isShowDrop=!this.isShowDrop;
     },
     clickLink(item) {
       this.arrCurMenu.forEach(item => {

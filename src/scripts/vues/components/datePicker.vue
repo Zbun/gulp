@@ -1,7 +1,7 @@
 <template>
   <span>
 		  <span class="date-field ml5">
-        <input type="text" v-model="StartDate" readonly="" placeholder="开始时间" id="startDate" onclick="WdatePicker({onpicked:function(){updateDate()},maxDate: '#F{$dp.$D(\'endDate\')}'})">
+        <input type="text" v-model="StartDate" readonly="" placeholder="开始时间" id="startDate" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'})">
         <i class="fa fa-calendar icon"></i>
       </span>
   <span> - </span>
@@ -10,12 +10,8 @@
         <i class="fa fa-calendar icon"></i>
       </span>
   </span>
-  </span>
 </template>
 <script>
-function updateDate() {
-  alert(3);
-}
 export default {
   props: {
     dataOut: {

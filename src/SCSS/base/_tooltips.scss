@@ -7,11 +7,8 @@ $color-tooltips-border:$color-border;
 .tooltips-i {
   position: relative;
   display: inline-block;
-  z-index: 3;
+  z-index: 8;
   .icon-tips {
-    position: absolute;
-    top: -22px;
-    right: 9px;
     text-align: center;
     line-height: 1;
     width: 12px;
@@ -28,14 +25,33 @@ $color-tooltips-border:$color-border;
     }
     &:focus {
       ~.txt {
-        display: block;
+        display: initial;
+      }
+    }
+  }
+  >.target {
+    ~.txt {
+      display: none;
+    }
+    &:focus {
+      ~.txt {
+        display: initial;
+      }
+    }
+  }
+  &.tooltips-hover {
+    >.target {
+      &:hover {
+        ~.txt {
+          display: block;
+        }
       }
     }
   }
   .txt {
-    position: relative;
+    position: absolute;
     display: inline-block;
-    width: 200px;
+    min-width: 200px;
     padding: 8px 10px;
     border: 1px solid $color-tooltips-border;
     color: $color-tooltips;
@@ -46,6 +62,8 @@ $color-tooltips-border:$color-border;
     -moz-border-radius: $border-radius;
     border-radius: $border-radius;
     box-shadow: 0 0 3px #eee;
+    font-weight: 400;
+    white-space: initial;
     &:before,
     &:after {
       content: '';
@@ -63,7 +81,6 @@ $color-tooltips-border:$color-border;
       left: -5px;
     }
   }
-
   &.tooltips-l {}
   &.tooltips-r {
     .txt {
@@ -78,8 +95,11 @@ $color-tooltips-border:$color-border;
       }
     }
   }
-  &.tooltips-t {
+  &.tooltips-t,
+  &.tooltips-tl {
     .txt {
+      right: -10px;
+      margin-top: 5px;
       &:before,
       &:after {
         left: auto;
@@ -96,9 +116,26 @@ $color-tooltips-border:$color-border;
       }
     }
   }
-  &.tooltips-b {
-    margin-bottom: 5px;
+  &.tooltips-tl {
     .txt {
+      right: auto;
+      left: -10px;
+      &:before,
+      &:after {
+        right: auto;
+        left: 15px;
+      }
+    }
+  }
+  &.tooltips-b {
+    .txt {
+      bottom: 34px;
+      margin-left: -5px;
+      -webkit-transform: translate(-50%, 0);
+      -moz-transform: translate(-50%, 0);
+      -ms-transform: translate(-50%, 0);
+      -o-transform: translate(-50%, 0);
+      transform: translate(-50%, 0);
       &:before,
       &:after {
         left: 50%;

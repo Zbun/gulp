@@ -19,7 +19,7 @@ var showTips = function(content, state, callback, time) {
     htmlIcon = '<i class="icon p-warning  iconfont icon-tishi"></i>';
     realTime = parseInt(time) || 2500;
   }
-  box.innerHTML = htmlIcon + '<div class="content">' + content + '</div>';
+  box.innerHTML = '<div class="pop-inner">' + htmlIcon + '<div class="content">' + content + '</div></div>';
   document.body.appendChild(box);
 
   // var opDef=0,deg=95;

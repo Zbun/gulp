@@ -1,13 +1,13 @@
 <template>
   <div>
     <input type="file" class="import-img hidden" :accept="uploadAcceptImg">
-    <script ref="ueditor" type="text/plain" id="myEditor" style="height:150px;width:680px;">
+    <script ref="ueditor" type="text/plain" id="myEditor" style="height:150px;" :style="{width:width||'680px'}">
     </script>
   </div>
 </template>
 <script>
 /**
- * uEditor上传组件
+ * uEdito 编辑器组件
  */
 import formDataUpload from 'commonScripts/formDataUpload.js';
 export default {
@@ -16,7 +16,8 @@ export default {
     content: {
       type: String,
       default: ''
-    }
+    },
+    width: '',
   },
   model: {
     prop: 'content',

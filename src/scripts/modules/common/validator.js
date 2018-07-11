@@ -23,10 +23,10 @@ module.exports = function(el) {
   let objMsg = {
     empty: '请填写此项',
     phone: '手机号码格式有误，请检查',
-    telnum: '格式有误，请检查',
+    telnum: '电话格式有误，请检查',
     email: '邮箱格式有误，请检查',
-    money: '金额格式为正数且最多两位小数，请检查',
-    money1: '金额格式为最多两位小数，请检查', //允许负值
+    money: '此项要求输入数字且最多两位小数，请检查',
+    money1: '此项要求输入数字且最多两位小数，请检查', //允许负值
     integer: '需要输入整数，请检查',
     posInteger: '需要输入正整数，请检查',
     positive: '需要输入正数，请检查',
@@ -54,23 +54,29 @@ module.exports = function(el) {
   var indexStrShowtips = -1;
   var isMobile = false;
   if (box) {
-    let els = box.querySelectorAll('[data-validate]');
+    //获取需要验证的元素，即含有data-validate属性的元素
+    let els = box.querySelectorAll('[data-validate]:not([disabled]):not([readonly])');
     for (let i = 0; i < els.length; i++) {
       msg = '';
       valid = true;
-      //获取需要验证的元素，即含有data-validate属性的元素
-      let vad = els[i].getAttribute('data-validate').toLowerCase();
+      let attrValidate = els[i].getAttribute('data-validate').toLowerCase();
       let text = els[i].getAttribute('data-validate-text'); //自定义提示文字
+      if (!text) {
+        text = els[i].getAttribute('placeholder'); //没有填写提示文字，读取占位符
+        if (els[i].tagName == 'SELECT') {
+          text = '请选择此项';
+        }
+      }
       // let keys = Object.keys(vs);
-      isMobile = vad.indexOf('mobile') > -1;
+      isMobile = attrValidate.indexOf('mobile') > -1;
       let val = els[i].value;
-      indexStrShowtips = vad.indexOf('show'); //是否弹出窗口提示
-      if (vad.indexOf('down') > -1) { //提示文字是否在下一行
+      indexStrShowtips = attrValidate.indexOf('show'); //是否弹出窗口提示
+      if (attrValidate.indexOf('down') > -1) { //提示文字是否在下一行
         pos = 'd';
       } else {
         pos = 'r';
       }
-      if (vad.indexOf('required') > -1) {
+      if (attrValidate.indexOf('required') > -1) {
         if (fn.isEmpty(val)) {
           msg = text || objMsg.empty;
 
@@ -79,68 +85,69 @@ module.exports = function(el) {
           break;
         }
       }
-      if (vad.indexOf('email') > -1) {
+      if (attrValidate.indexOf('email') > -1) {
         if (!fn.isEmpty(val) && !fn.isEmail(val)) {
           msg = objMsg.email;
         }
-      } else if (vad.indexOf('phone') > -1) {
+      } else if (attrValidate.indexOf('phone') > -1) {
         if (!fn.isEmpty(val) && !fn.isPhone(val)) {
           msg = objMsg.phone;
         }
-      } else if (vad.indexOf('notpositiveinteger') > -1) {
+      } else if (attrValidate.indexOf('notpositiveinteger') > -1) {
         if (!fn.isEmpty(val) && !fn.isNotPositiveInteger(val)) {
           msg = objMsg.notPositiveInteger;
         }
-      } else if (vad.indexOf('notpositive') > -1) {
+      } else if (attrValidate.indexOf('notpositive') > -1) {
         if (!fn.isEmpty(val) && !fn.isNotPositive(val)) {
           msg = objMsg.notPositive;
         }
-      } else if (vad.indexOf('posinteger') > -1) {
+      } else if (attrValidate.indexOf('posinteger') > -1) {
         if (!fn.isEmpty(val) && !fn.isPosInteger(val)) {
           msg = objMsg.posInteger;
         }
-      } else if (vad.indexOf('integer1') > -1) {
+      } else if (attrValidate.indexOf('integer1') > -1) {
         if (!fn.isEmpty(val) && !fn.isInteger1(val)) {
           msg = objMsg.integer1;
         }
-      } else if (vad.indexOf('integer') > -1) {
+      } else if (attrValidate.indexOf('integer') > -1) {
         if (!fn.isEmpty(val) && !fn.isInteger(val)) {
           msg = objMsg.integer;
           if (val > 65535) {
             msg = '最大整数不能超过65535，请重新填写';
           }
         }
-      } else if (vad.indexOf('money1') > -1) {
+      } else if (attrValidate.indexOf('money1') > -1) {
         if (!fn.isEmpty(val) && !fn.isMoney1(val)) {
           msg = objMsg.money1;
         }
-      } else if (vad.indexOf('money') > -1) {
+      } else if (attrValidate.indexOf('money') > -1) {
         if (!fn.isEmpty(val) && !fn.isMoney(val)) {
-          msg = objMsg.money;
+          msg = els[i].getAttribute('data-validate-text') || objMsg.money;
           if (('' + val).length > 16) {
             msg = '输入金额不合法，请重新填写';
           }
         }
-      } else if (vad.indexOf('positive') > -1) {
+      } else if (attrValidate.indexOf('positive') > -1) {
         if (!fn.isEmpty(val) && !fn.isPositive(val)) {
           msg = objMsg.positive;
         }
-      } else if (vad.indexOf('percent') > -1) {
+      } else if (attrValidate.indexOf('percent') > -1) {
         if (!fn.isEmpty(val) && !fn.isPercent(val)) {
           msg = objMsg.percent;
         }
-      } else if (vad.indexOf('telnum') > -1) {
+      } else if (attrValidate.indexOf('telnum') > -1) {
         if (!fn.isEmpty(val) && !fn.isTelnum(val)) {
           msg = objMsg.telnum;
         }
-      } else if (vad.indexOf('url') > -1) {
+      } else if (attrValidate.indexOf('url') > -1) {
         if (!fn.isEmpty(val) && !fn.isUrl(val)) {
           msg = objMsg.url;
         }
       }
 
-      //验证可能存在的最小长度
+
       if (!msg) {
+        //验证可能存在的最小长度
         var lengthRequired = els[i].getAttribute('data-validate-length');
         if (lengthRequired) {
           if (val.length < lengthRequired) {
@@ -148,26 +155,24 @@ module.exports = function(el) {
           }
         }
       }
-      //验证自定义规则data-validate-rules="[{rule:/\d/,msg:'请填写中文'}]"
-      // if (!msg) {
-      //   let arrRules = els[i].getAttribute('data-validate-rules');
-      //   if (arrRules && arrRules.length) {
-      //     var JSONRules = '';
-      //     try {
-      //       JSONRules = JSON.parse(els[i].getAttribute('data-validate-rules'));
-      //     } catch (err) {}
-      //     if (JSONRules) {
-      //       for (let k = 0; k < JSONRules.length; k++) {
-      //         var rule = JSONRules[k].rule;
-      //         if (rule.test(val)) {
-      //           msg = rule.msg;
-      //           break;
-      //         }
-      //       }
-      //     }
+      if (!msg) {
+        //验证可能存在的最大长度
+        var lengthRequiredMax = els[i].getAttribute('data-validate-maxlength');
+        if (lengthRequiredMax) {
+          if (val.length > lengthRequiredMax) {
+            msg = '该项要求最大长度为：' + lengthRequiredMax + '，请检查';
+          }
+        }
+      }
 
-      //   }
-      // }
+      if (!msg) {
+        var min = parseFloat(els[i].getAttribute('data-validate-min')); //最小值
+        var max = parseFloat(els[i].getAttribute('data-validate-max')); //最大值
+        if ((min && val < min) || (max && val > max)) {
+          msg = text; //一步到位，写进data-validate-text，不做更麻烦的写法了
+        }
+      }
+
       if (msg) {
         valid = false;
         curNode = els[i];
@@ -176,23 +181,23 @@ module.exports = function(el) {
     }
   }
 
-  var getNextNode = function(node) {
-    var next = node.nextSibling;
-    while (next && next.nodeType != 1) {
-      next = next.nextSibling;
-    }
-    if (next && next.nodeType != 1) {
-      next = '';
-    }
-    return next;
-  };
+  // var getNextNode = function (node) {
+  //   var next = node.nextSibling;
+  //   while (next && next.nodeType != 1) {
+  //     next = next.nextSibling;
+  //   }
+  //   if (next && next.nodeType != 1) {
+  //     next = '';
+  //   }
+  //   return next;
+  // };
 
   if (curNode) {
     let parent = curNode.parentNode;
     let next = '';
     let nodeTips = '';
-    if (indexStrShowtips == -1) {
-      next = getNextNode(curNode);
+    if (indexStrShowtips == -1) { //非弹出窗口提示
+      next = parent.querySelector('.error.tips');
       nodeTips = document.createElement('span');
       if (pos == 'd') {
         nodeTips = document.createElement('p');
@@ -213,18 +218,14 @@ module.exports = function(el) {
         if (next.classList.contains('error')) {
           next.innerHTML = msg;
         } else {
-          if (next.classList.contains('area')) {
-            showTips('请选择区域', 'error');
-          } else {
-            parent.insertBefore(nodeTips, next);
-          }
+          // parent.insertBefore(nodeTips, next);
+          parent.appendChild(nodeTips);
         }
       } else {
-
         parent.appendChild(nodeTips);
       }
     } else {
-      showTips(msg, 'error', function() {
+      showTips(msg, 'warning', function() {
         curNode.focus();
       }, 1000);
     }
@@ -232,7 +233,7 @@ module.exports = function(el) {
     curNode.focus();
     curNode.addEventListener('input', function() {
       this.classList.remove('error');
-      let next = getNextNode(this);
+      let next = this.parentNode.querySelector('.error');
       if (next) {
         if (next.classList.contains('error')) {
           this.parentNode.removeChild(next);

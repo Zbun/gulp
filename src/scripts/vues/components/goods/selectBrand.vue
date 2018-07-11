@@ -23,7 +23,7 @@ export default {
   },
   components: {},
   methods: {
-    getBrandList() { //获取品牌列表
+    getBrandList() { //卖家获取品牌列表
       fetchData({
         hideLoading: true,
         API: '/api/Goods/GetBrandListBySelectControl',

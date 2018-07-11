@@ -83,7 +83,7 @@ module.exports = function() {
       pNode.style.top = mdt + set + 'px';
       pNode.style.height = pHeight + 'px';
       pNode.style.bottom = 'auto';
-      pNode.style.marginLeft = pWidth / 2 + 'px';
+      // pNode.style.marginLeft = pWidth / 2 + 'px';
     }).on('keydown', function(e) {
       if (e.keyCode == 37) {
         $(this).find('.pageBox:visible').eq(0).find('[rel=prev]').click();
@@ -101,6 +101,8 @@ module.exports = function() {
       $(this).closest('.show-history').find('.history-price').show();
     }).on('click', '.gototop', function() {
       window.scrollTo(0, 0);
+    }).on('click', '.details-box>.summary', function() {
+      $(this).toggleClass('on');
     });
     window.onblur = function() {
       isDraging = false;

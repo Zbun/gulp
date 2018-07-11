@@ -59,70 +59,8 @@ Vue.filter('currencyIn', {
     return isNaN(number) ? (oldVal || '') : (/\.\d{3,}$/.test(number) ? number.toFixed(2) : number);
   }
 });
-//非负货币双向过滤必填
-Vue.filter('posCurrencyIn', {
-  read(value) {
-    let number = parseFloat(value);
-    return isNaN(number) ? 0 : (/\.\d{3,}$/.test(number) ? number.toFixed(2) : (number <= 0 ? 0.01 : number));
-  },
-  write(value, oldVal) {
-    let number = parseFloat(value);
-    return isNaN(number) ? (oldVal || 0) : (/\.\d{3,}$/.test(number) ? number.toFixed(2) : (number <= 0 ? 0.01 : number));
-  }
-});
-//非负货币双向过滤必填2，可以为零零零
-Vue.filter('posCurrencyIn2', {
-  read(value) {
-    return value;
-  },
-  write(value, oldVal) {
-    let number = parseFloat(value);
-    return isNaN(number) ? oldVal : (/\.\d{3,}$/.test(number) ? number.toFixed(2) : (number <= 0 ? 0 : number).toFixed(2));
-  }
-});
-//非负货币双向过滤,非必填
-Vue.filter('posCurrencyInNotRequired', {
-  read(value) {
-    return value;
-  },
-  write(value, oldVal) {
-    let n = parseFloat(value);
-    // return isNaN(number) ? oldVal : (/\.\d{3,}$/.test(number) ? number.toFixed(2) : (number < 0 ? '' : number));
-    if (isNaN(n)) {
-      return '';
-    } else if (n < 0) {
-      return '';
-    } else {
-      return n.toFixed(2);
-    }
-  }
-});
-//货币双向过滤非必填
-Vue.filter('currencyInNotRequired', {
-  read(value) {
-    return value;
-  },
-  write(value, oldVal) {
-    if (/^\s*$/.test(value)) {
-      return '';
-    }
-    let number = parseFloat(value);
-    return isNaN(number) ? (oldVal || '') : (/\.\d{3,}$/.test(number) ? number.toFixed(2) : number);
-  }
-});
-//正整数百分比双向过滤
-Vue.filter('posPercentIntegerIn', {
-  read(value) {
-    return value;
-  },
-  write(value, oldVal) {
-    if (/^\s*$/.test(value)) {
-      return 0;
-    }
-    let number = parseInt(value);
-    return isNaN(number) ? (oldVal || 0) : (number < 0 ? 0 : number);
-  }
-});
+
+
 //整数双向
 Vue.filter('numberIn', {
   read(value) {
@@ -133,29 +71,7 @@ Vue.filter('numberIn', {
     return isNaN(number) ? (oldVal || 0) : number;
   }
 });
-//非必填整数双向
-Vue.filter('numberInNotRequired', {
-  read(value) {
-    return value;
-  },
-  write(value, oldVal) {
-    if (/^\s*$/.test(value)) {
-      return '';
-    }
-    let number = parseInt(value);
-    return isNaN(number) ? (oldVal || '') : number;
-  }
-});
-//正整数双向包括零
-Vue.filter('posNumberInWithZero', {
-  read(value) {
-    return value;
-  },
-  write(value, oldVal) {
-    let number = parseInt(value);
-    return isNaN(number) ? (oldVal || 0) : (number < 0 ? 0 : number);
-  }
-});
+
 //正整数双向
 Vue.filter('posNumberIn', {
   read(value) {
@@ -163,22 +79,10 @@ Vue.filter('posNumberIn', {
   },
   write(value, oldVal) {
     let number = parseInt(value);
-    return isNaN(number) ? (oldVal || 1) : (number <= 0 ? 1 : number);
+    return isNaN(number) || number < 1 ? (oldVal || 1) : number;
   }
 });
-//非必填正整数双向
-Vue.filter('posNumberInNotRequired', {
-  read(value) {
-    return value;
-  },
-  write(value, oldVal) {
-    if (/^\s*$/.test(value)) {
-      return '';
-    }
-    let number = parseInt(value);
-    return isNaN(number) ? (oldVal || '') : (number <= 0 ? 1 : number);
-  }
-});
+
 //双向浮点
 Vue.filter('floatIn', {
   read(value) {
@@ -239,14 +143,9 @@ Vue.filter('date', function(value) {
 
 });
 
-//  2016-07-07T10:27:13
-//  2016-07-07 10:27:13
-//  2016-07-07 10:27
-//  2016/07/07 10:27:13
 //  2016-07-07
 //  时间过滤器完整： 传入 2016-07-07T10:27:13  过滤成： 2016-07-07 10:27:13
 Vue.filter('datetime', function(value) {
-
   if (!value) return '';
   var dt = resetTimeStamp(value);
 
@@ -254,17 +153,25 @@ Vue.filter('datetime', function(value) {
 
 });
 
-//  时间过滤器不带秒钟： 传入 2016-07-07T10:27:13  过滤成： 2016-07-07 10:27
-Vue.filter('datetime1', {
-  //value = value.replace('T', ' ');
-  read(value) {
-    if (!value) return '';
-    var dt = resetTimeStamp(value);
-
-    return dt.year + '-' + dt.month + '-' + dt.day + ' ' + dt.hours + ':' + dt.minutes;
-  },
-  write(value) {
-    return value;
+/**
+ * 通用过滤图片src，需要服务器返回以,分隔的多张图片字符串
+ * @date   2018-04-24
+ * @author zhao.liubin@zol.com.cn
+ * @param  {[type]}
+ * @return {[type]}
+ */
+Vue.filter('imagesLink', function(value) {
+  if (!value || value.length == 0) {
+    return '/dist/images/goodsDefault.jpg';
+  } else {
+    return value.split(',')[0];
+  }
+});
+Vue.filter('imageLink', function(value) {
+  if (!value || value.length == 0) {
+    return '/dist/images/goodsDefault.jpg';
+  } else {
+    return value.split(',')[0];
   }
 });
 

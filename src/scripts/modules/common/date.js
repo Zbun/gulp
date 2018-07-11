@@ -45,7 +45,7 @@ function lastX({ x = 7, splitSign = '-' }) { //获取过去x天的日期----年�
   return getTheDay({ x: y });
 }
 
-function getTheDay({ x = -7, splitSign = '-' }) { //获取过去x天，或者未来x天的年月日，默认获取过去第7天。默认分隔符是-
+function getTheDay( x, splitSign ) { //获取过去x天，或者未来x天的年月日，默认获取过去第7天。默认分隔符是-
   let now = new Date();
   let theDay = now.getTime() + x * 24 * 60 * 60 * 1000;
   theDay = new Date(now.setTime(theDay));

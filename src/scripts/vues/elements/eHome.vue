@@ -5,7 +5,6 @@
     </div>
     <div class="content-field">
       <router-link class="item" :to="{name:'default'}">首页</router-link>
-      <router-link class="item" :to="{name:'menuSet'}">菜单管理</router-link>
     </div>
   </div>
 </template>
@@ -17,7 +16,6 @@ export default {
       curItem: {},
       support: {},
       dataIn: {
-
       },
     }
   },

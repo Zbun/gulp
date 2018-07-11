@@ -1,18 +1,21 @@
 @import '_variables.scss';
 $color-odd:#FDFDFD !default;
 $color-table-border-outer:#F6F6F6;
-$color-table-on:#FEF2E6 !default;
+
 $table-line-height:50px;
 $table-text-line-height:24px;
+table {
+  border-spacing: 0;
+}
+
 .table {
   border-spacing: 0;
   display: table;
   border-collapse: collapse;
-  line-height: $table-text-line-height;
-  td,
-  th {
-    padding: ($table-line-height - $table-text-line-height) / 2 20px;
-  }
+  line-height: $table-text-line-height; // td,
+  // th {
+  //   padding: ($table-line-height - $table-text-line-height) / 2 20px;
+  // }
   .img-thumb {
     width: 30px;
     height: 30px;
@@ -32,6 +35,7 @@ $table-text-line-height:24px;
         vertical-align: middle;
         color: #333;
         text-align: inherit;
+        padding: ($table-line-height - $table-text-line-height) / 2 20px;
         background-color: $color-table-thead;
         &:first-child {
           -webkit-border-top-left-radius: $border-radius;
@@ -74,15 +78,15 @@ $table-text-line-height:24px;
   >tbody {
     font-size: 12px;
     img {
-      max-height: 24px;
-      max-width: 100px;
+      height: 24px;
+      width: 24px;
       border: 1px solid $color-border;
       -webkit-border-radius: $border-radius;
       -moz-border-radius: $border-radius;
       border-radius: $border-radius;
     }
-    input {
-      margin: -3px 0;
+    input,
+    textarea {
       font-size: 12px; // padding: 4px;
       //vertical-align: top;
       color: #666;
@@ -94,6 +98,7 @@ $table-text-line-height:24px;
       >th,
       >td {
         color: #666;
+        padding: ($table-line-height - $table-text-line-height) / 2 20px;
         line-height: inherit;
         border-style: solid;
         border-color: $color-table-border; // border-width: 1px 0 0;
@@ -177,18 +182,6 @@ $table-text-line-height:24px;
       }
     }
   }
-  >tr {
-    th {
-      font-weight: 400;
-      background-color: $color-table-thead;
-    }
-    &:first-child {
-      td,
-      th {
-        border-top: 0;
-      }
-    }
-  }
   .action,
   .action-field {
     white-space: nowrap;
@@ -196,6 +189,7 @@ $table-text-line-height:24px;
       margin-right: 10px;
       color: $color-anchor-highlight;
       text-decoration: none;
+      cursor: pointer;
       &:hover {}
     }
   }
@@ -215,10 +209,34 @@ $table-text-line-height:24px;
     }
   }
   &.thin {
-    td,
-    th {
-      line-height: 30px;
-      padding: 10px;
+    >tbody,
+    >thead,
+    >tfoot {
+      >tr {
+        >td,
+        >th {
+          line-height: 30px;
+          padding: 10px;
+        }
+      }
+    }
+  }
+  &.small {
+    >thead {
+      th,
+      td {
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+    }
+    >tbody {
+      >tr {
+        >td,
+        {
+          line-height: 24px;
+          padding: 10px;
+        }
+      }
     }
   }
 }
@@ -357,6 +375,7 @@ td>.data-empty {
 }
 
 .table-bordered-all {
+  border-collapse: separate;
   caption {
     line-height: 40px;
     border: 1px solid $color-table-border-outer;
@@ -369,10 +388,10 @@ td>.data-empty {
       >td,
       >th {
         border-style: solid;
-        border-width: 1px; // border: 1px solid $color-table-border;
+        border-width: 0 1px 1px 0; // border: 1px solid $color-table-border;
         border-color: #F3F4F6;
         &:first-child {
-          // border-left-width: 0;
+          border-left-width: 1px;
         }
         &:only-child {
           border-left-width: 1px;
@@ -383,22 +402,28 @@ td>.data-empty {
       }
     }
   }
-  tbody {
+  >tbody {
     >tr {
       &:first-child {
         >td,
         >th {
-          // border-top-width: 0;
+          border-top-width: 1px;
+          &:first-child {
+            border-top-left-radius: $border-radius;
+          }
+          &:last-child {
+            border-top-right-radius: $border-radius;
+          }
         }
       }
       &:last-child {
         >td,
         >th {
           &:first-child {
-            // border-bottom-left-radius: $border-radius;
+            border-bottom-left-radius: $border-radius;
           }
           &:last-child {
-            // border-bottom-right-radius: $border-radius;
+            border-bottom-right-radius: $border-radius;
           }
         }
       }
@@ -409,7 +434,13 @@ td>.data-empty {
       &:first-child {
         >td,
         >th {
-          // border-top-width: 1px;
+          border-top-width: 0;
+          &:first-child {
+            border-top-left-radius: 0;
+          }
+          &:last-child {
+            border-top-right-radius: 0;
+          }
         }
       }
     }

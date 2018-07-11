@@ -92,7 +92,7 @@
               progressBg.parentNode && progressBg.parentNode.removeChild(progressBg);
               var data = JSON.parse(xhr.response);
 
-              //只处理ZMM响应信息部分，其它忽略或修改
+              //只处理服务器响应信息部分，其它忽略或修改
               if (data.ResponseID == -1) {
                 if (data.Message) {
                   showTips(data.Message, 'error');

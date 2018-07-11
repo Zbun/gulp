@@ -46,8 +46,9 @@ function fnConsole(v) {
 
 var isBuild = false; //是否是生产环境配置，webpack时用到
 var opts = {
-  srcPath: './src/',
+  srcPath: './src/', //源文件目录
   destPath: './dist/',
+
   minRename: {
     suffix: '.min'
   }
@@ -102,23 +103,29 @@ function fnSass() {
   }
 }
 gulp.task('preSass', fnSass);
-gulp.task('sass', ['preSass'], fnRev);
+gulp.task('sass', ['preSass'], function() {
+
+});
 
 //组装HTML（加版本号，include标签引入文件）
 var htmlConfig = {
-  base: './src/htmls/components/',
-  src: 'htmls/pc/'
+  base: './src/htmls/components/', //html模块
+  src: './src/htmls/pc/', //html模板源目录
+  dir: './', //生成的html目录
 };
 
-function fnAssembleHTML() {
+function fnAssembleHTML(callback) {
   fnConsoleBegin('组装HTML开始');
-  del([opts.destPath + htmlConfig.src + '*.html']).then(function() {
-    gulp.src('./src/' + htmlConfig.src + '*.html')
+  del([htmlConfig.dir + '*.html']).then(function() {
+    gulp.src(htmlConfig.src + '*.html')
       .pipe(include())
       // .pipe(revAppend())
-      .pipe(gulp.dest('./')).on('end', function() {
+      .pipe(gulp.dest(htmlConfig.dir)).on('end', function() {
         fnConsole('组装HTML结束-V' + num.HTML++);
-        fnRev();
+        if (isBuild) { //生产环境上线再打版本号
+          fnRev();
+        }
+        typeof callback == 'function' && callback();
       });
   });
 }
@@ -129,7 +136,7 @@ function fnWebpack(callback) {
   var newConfig = webpackConfig;
   newConfig.watch = true;
   // [opts.destPath + '/scripts/bundle/*.*']
-  del(['dist/scripts/bundle/*.*', '!dist/scripts/bundle/APP.bundle.js']).then(function() {
+  del(['dist/scripts/bundle/*.*', '!dist/scripts/bundle/APP.bundle.js', '!dist/scripts/bundle/main.bundle.js']).then(function() {
     webpack(
       newConfig,
       function(err, stats) {
@@ -143,7 +150,11 @@ function fnWebpack(callback) {
         } else {
           typeof callback == 'function' && callback();
           fnConsole('webpack 结束-V' + num.webpack++);
-          fnAssembleHTML();
+          fnAssembleHTML(function() {
+            setTimeout(function() {
+              console.log(gutil.colors.bgMagenta('可以打包上线了，还要给后台写个提示，啥都不懂。'));
+            }, 10);
+          });
         }
       });
   });
@@ -154,7 +165,6 @@ gulp.task('webpack', function() {
     fnAssembleHTML();
   });
 });
-
 
 //根据文件类型变动，自动刷新浏览器
 function fnBrowserSync() {
@@ -168,7 +178,6 @@ function fnBrowserSync() {
     webpackConfig.plugins.unshift(
       // new webpack.DefinePlugin({ 'process.env.NODE_ENV': JSON.stringify('production') }),
       // new webpack.optimize.ModuleConcatenationPlugin(),
-      // new webpack.NoEmitOnErrorsPlugin()
     );
     fnWebpack();
   } else { //开发环境
@@ -204,12 +213,12 @@ function fnBrowserSync() {
     // files: ['dist/css/*.css', 'dist/scripts/bundle/APP.bundle.js', './dist/htmls/**/*.html', '!**.scss', '!node_modules/**.*'],
     files: ['dist/css/*.css'],
     server: { baseDir: './', middleware, },
-    port: 2019,
+    port: 2020,
     // codeSync: false,
     ghostMode: false
   });
   watch('./src/htmls/**/*.html', fnAssembleHTML);
-  watch('./src/scss/**/*.scss', fnSass);
+  gulp.watch('./src/scss/**/*.scss', fnSass);
   gulp.watch('./dist/css/*.css', function() {
     fnConsole('SCSS编译结束-V' + num.SCSS++);
     // setTimeout(fnRev, 10);
