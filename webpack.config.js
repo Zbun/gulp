@@ -49,24 +49,27 @@ module.exports = {
   //     chunks: 'all', //打包通用模块
   //   }
   // },
-  plugins: [
-    function() {
-      this.plugin('watch-run', function(watching, callback) {
-        var d1 = new Date();
-        console.log('webpack building begin at ' + d1.getHours() + ':' + d1.getMinutes() + ':' + d1.getSeconds());
-        callback();
-      });
-    },
-    new webpack.ProvidePlugin({
-      dialog: path.resolve(__dirname, './src/scripts/lib/artdialog/dist/dialog-plus-min.js'), //弹窗对话框
-      showTips: path.resolve(__dirname, './src/scripts/modules/common/showTipsState.js'), //弹窗提示框
-      validatorManu: path.resolve(__dirname, './src/scripts/modules/common/validatorManu.js'), //手动校验数据完整性
-      zmm_validator: path.resolve(__dirname, './src/scripts/modules/common/validator.js'), //数据完整性验证
-      zmm_date: path.resolve(__dirname, './src/scripts/modules/common/date.js'), //常用的日期选择
-      fetchData: path.join(__dirname, './src/scripts/modules/production/fetchData.js'), //获取数据
-      initPage: path.join(__dirname, './src/scripts/modules/production/pagination.js'), //分页总方法
-      dictionary: path.join(__dirname, './src/scripts/modules/production/SysDictionary.js'), //字典数据
-    })
+  plugins: [function () {
+    this.plugin('watch-run', function (watching, callback) {
+      var d1 = new Date();
+      console.log('webpack building begin at ' + d1.toLocaleTimeString());
+      callback();
+    });
+  },
+  new webpack.ProvidePlugin({
+    dialog: path.resolve(__dirname, './src/scripts/lib/artdialog/dist/dialog-plus-min.js'), //弹窗对话框
+    // getTarget: path.join(__dirname, './src/scripts/modules/common/getTarget.js'), //获取真实节点功能
+    // getType: path.join(__dirname, './src/scripts/modules/common/getType.js'),
+    // typeOf: path.join(__dirname, './src/scripts/modules/common/typeOf.js'), //获取变量typeOF
+    // dialog: path.resolve(__dirname, './src/scripts/modules/common/zpopupMobile.js'), //手机弹窗
+    showTips: path.resolve(__dirname, './src/scripts/modules/common/showTipsState.js'), //弹窗提示框
+    validatorManu: path.resolve(__dirname, './src/scripts/modules/common/validatorManu.js'), //手动校验数据完整性
+    zmm_validator: path.resolve(__dirname, './src/scripts/modules/common/validator.js'), //数据完整性验证
+    zmm_date: path.resolve(__dirname, './src/scripts/modules/common/date.js'), //常用的日期选择
+    fetchData: path.join(__dirname, './src/scripts/modules/production/fetchData.js'), //获取数据
+    initPage: path.join(__dirname, './src/scripts/modules/production/pagination.js'), //分页总方法
+    dictionary: path.join(__dirname, './src/scripts/modules/production/SysDictionary.js'), //字典数据
+  })
   ],
   //
   // watch: true,
@@ -80,6 +83,7 @@ module.exports = {
     Vue: 'Vue',
     _: 'lodash',
     jquery: 'jQuery', //此时外部引入
+    $: 'jQuery',
     'window.jQuery': 'jquery'
   }
 };

@@ -135,7 +135,7 @@ $color-check-border:#aaa;
       ~.icon {
         opacity: .5;
         pointer-events: none;
-         :before {
+        :before {
           border-color: $color-border;
         }
       }
@@ -146,10 +146,9 @@ $color-check-border:#aaa;
 //带指示标记多选
 .checkbox-plus,
 .radio-plus {
-  margin-right: 6px;
+  margin-right: 8px;
   display: inline-block;
   cursor: default;
-
   input[type=checkbox],
   input[type=radio] {
     display: none;
@@ -178,7 +177,7 @@ $color-check-border:#aaa;
     position: relative;
     display: inline-block;
     padding: 0 10px;
-    line-height: 28px;
+    line-height: 30px;
     font-size: 12px;
     color: #666;
     border: 1px solid $color-border;
@@ -230,6 +229,8 @@ $color-check-border:#aaa;
 //开关，模拟安卓等
 .switcher {
   position: relative;
+  display: inline-block;
+  width: 28px;
   input[type=checkbox] {
     opacity: 0;
     &~.icon {
@@ -248,9 +249,9 @@ $color-check-border:#aaa;
         left: 0;
         right: 0;
         background: #ccc;
-        -webkit-border-radius: 7px;
-        -moz-border-radius: 7px;
-        border-radius: 7px;
+        -webkit-border-radius: 2em;
+        -moz-border-radius: 2em;
+        border-radius: 2em;
         @include trans(.3s);
       }
       &:after {

@@ -18,7 +18,7 @@
  */
 // let _regExp = require('./regExp.js');
 let fn = require('./validatorManu.js');
-module.exports = function(el) {
+module.exports = function (el) {
 
   let objMsg = {
     empty: '请填写此项',
@@ -210,7 +210,7 @@ module.exports = function(el) {
           parent.style.position = 'relative';
         }
         nodeTips.style.cssText = 'position:absolute;top:50%;right:0;max-width:100%;white-space:nowrap;transform:translate(0,-50%);';
-        setTimeout(function() {
+        setTimeout(function () {
           parent.removeChild(nodeTips);
         }, 1000);
       }
@@ -225,13 +225,13 @@ module.exports = function(el) {
         parent.appendChild(nodeTips);
       }
     } else {
-      showTips(msg, 'warning', function() {
+      showTips(msg, 'warning', function () {
         curNode.focus();
       }, 1000);
     }
     curNode.classList.add('error');
     curNode.focus();
-    curNode.addEventListener('input', function() {
+    curNode.addEventListener('input', function () {
       this.classList.remove('error');
       let next = this.parentNode.querySelector('.error');
       if (next) {

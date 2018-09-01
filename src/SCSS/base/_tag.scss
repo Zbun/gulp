@@ -1,6 +1,6 @@
 @import '_variables.scss';
 @import '_mixin.scss';
-$color-tag-border:$color-primary!default;
+$color-tag-border:$color-input-focus-border !default;
 .tag {
   display: inline-block;
   padding: 0 8px;
@@ -73,4 +73,10 @@ $color-tag-border:$color-primary!default;
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
   border-radius: 2px;
+  white-space: nowrap;
+}
+
+.tag-danger {
+  background: $color-danger;
+  color: #fff;
 }

@@ -3,20 +3,30 @@
  * @author Zhao Liubin
  * @type {Object}
  */
+
 module.exports = {
   query: {
     locTop: top.window.location.href,
     loc: window.location.href,
     get(key, top) {
+      key = key.toLowerCase();
       var loc = this.loc;
       if (top === 'top') {
         loc = this.locTop;
       }
-      if (!key || loc.indexOf(key + '=') < 0) {
+      if (!key || loc.toLocaleLowerCase().indexOf(key + '=') < 0) {
         return '';
       }
       loc = loc.split('#')[0];
-      return decodeURIComponent(loc.slice(loc.indexOf(key + '=') + key.length + 1).split('&')[0]);
+      var arrQuery = loc.split('?')[1].split('&'), l = arrQuery.length;
+      while (l > 0) {
+        var arrTemp = arrQuery[l - 1].split('=');
+        if (arrTemp[0].toLocaleLowerCase() == key) {
+          return arrTemp[1];
+        }
+        l--;
+      }
+      return '';
     },
     set(key, value, top) {
       var loc = this.loc;
@@ -28,7 +38,6 @@ module.exports = {
       }
       if (value) {
         var query = this.get(key);
-        console.log(query);
         if (query) {
           return loc.replace(this.get(key), value);
         } else {

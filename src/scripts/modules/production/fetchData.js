@@ -23,7 +23,7 @@ function fetchData(arg) {
     console.warn('需要传入API地址，如：API:"/p/list/"');
     return;
   }
-  var finalServer = localStorage.APIServer || server; //最终请求服务器，有API时请求管家，有api2时请求
+  var finalServer = localStorage.APIServer || server; //最终请求服务器
   var finalUrl = ''; //最终接口地址
   if (arg.url) {
     finalUrl = arg.url;
@@ -36,7 +36,7 @@ function fetchData(arg) {
   var dataList = [];
   var target = arg.target || ''; //防止多次点击时，传当前点击按钮节点
   var async = true;
-  if (typeof(arg.async) != void 0) {
+  if (typeof (arg.async) != void 0) {
     async = arg.async;
   }
 
@@ -51,13 +51,13 @@ function fetchData(arg) {
   if (!hideLoading) {
     l1 = loading.show();
   }
-  var fnFinish = function() {
+  var fnFinish = function () {
     if (!hideLoading) {
       l1.hide();
     }
     (target.nodeType && target.nodeType == 1) && target.classList.remove('disabled');
   };
-  var callback = function(data) {
+  var callback = function (data) {
     fnFinish();
     var d = data;
     if (d) {
@@ -93,7 +93,7 @@ function fetchData(arg) {
             localStorage.token = '';
             localStorage.userName = '';
             localStorage.referrerHash = location.hash;
-            setTimeout(function() {
+            setTimeout(function () {
               top.window.location = '/login.html';
               // location.reload();
             }, 200);

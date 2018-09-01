@@ -6,12 +6,12 @@
  * @param  {[type]}
  * @return {Function}
  */
-var fn = function(d, o) {
+var fn = function (d, o) {
   var f = {
-    box: function() {
+    box: function () {
       return document.querySelector(o);
     },
-    zero: function(n) {
+    zero: function (n) {
       var n = parseInt(n, 10);
       if (n > 0) {
         if (n <= 9) {
@@ -22,9 +22,9 @@ var fn = function(d, o) {
         return "0";
       }
     },
-    dv: function() {
+    dv: function () {
       d = d || Date.UTC(2020, 0, 1); //如果未定义时间，则我们设定倒计时日期是2050年1月1日
-      var future = new Date(d) - 0,
+      var future = new Date(new Date(d + 'Z').toUTCString().replace('GMT', '')) - 0,
         now = new Date() - 0;
       //现在将来秒差值
       var dur = Math.floor((future - now) / 1000),
@@ -44,7 +44,7 @@ var fn = function(d, o) {
       }
       return pms;
     },
-    ui: function() {
+    ui: function () {
       var str = '';
       var strSplit = ': ';
       str += '<span class="item">' + f.dv().day + '</span>' + '天';

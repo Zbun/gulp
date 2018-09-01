@@ -10,7 +10,7 @@ let _regExp = require('./regExp.js');
 module.exports = {
   _regExp,
   _check(pattern) {
-    return function(arg) {
+    return function (arg) {
       return pattern.test(arg);
     };
   },

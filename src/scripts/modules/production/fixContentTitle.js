@@ -4,7 +4,7 @@
  * @author zhao.liubin@zol.com.cn
  * @return {[type]}
  */
-module.exports = function() {
+module.exports = function () {
 
   // var resize = () => {
   //   let style = $('#attachStyle')[0];
@@ -32,7 +32,7 @@ module.exports = function() {
     let $p = null;
     let pNode = null;
     let $t = [];
-    $(document).on('mousedown', '.popup>.content>.title,.popup>.content>.footer', function(e) {
+    $(document).on('mousedown', '.popup>.content>.title,.popup>.content>.footer', function (e) {
       isDraging = true;
       $t = $(this);
       $p = $t.parent();
@@ -47,7 +47,7 @@ module.exports = function() {
       // banSelect();
       // this.setCapture && this.setCapture();
       return false;
-    }).on('mouseup', function(e) {
+    }).on('mouseup', function (e) {
       isDraging = false;
       // var $t = $(this);
       // var $p = $(this).parent();
@@ -68,7 +68,7 @@ module.exports = function() {
         ($p.is(':visible') && tOffset.top < 1) && $p.css('top', pOffset.top - tOffset.top + 10);
         // ($p.is(':visible') && pOffset.left < 1) && $p.css('left', 10);
       }
-    }).on('mousemove', function(e) {
+    }).on('mousemove', function (e) {
       if (!isDraging) return;
       var mdl = e.clientX - sml;
       var mdt = e.clientY - smt;
@@ -84,30 +84,30 @@ module.exports = function() {
       pNode.style.height = pHeight + 'px';
       pNode.style.bottom = 'auto';
       // pNode.style.marginLeft = pWidth / 2 + 'px';
-    }).on('keydown', function(e) {
+    }).on('keydown', function (e) {
       if (e.keyCode == 37) {
         $(this).find('.pageBox:visible').eq(0).find('[rel=prev]').click();
       } else if (e.keyCode == 39) {
         $(this).find('.pageBox:visible').eq(0).find('[rel=next]').click();
       }
-    }).on('keydown', 'input,textarea', function(e) {
+    }).on('keydown', 'input,textarea', function (e) {
       if (e.keyCode == 37 || e.keyCode == 39) {
         e.stopPropagation();
       }
-    }).on('focus', '.intelligent-match input', function() { //客户下拉智能感知
+    }).on('focus', '.intelligent-match input', function () { //客户下拉智能感知
       $(this).closest('.intelligent-match').find('.list-match').show();
-    }).on('click', '.show-history .action-show', function() {
+    }).on('click', '.show-history .action-show', function () {
       $('.show-history .history-price').hide();
       $(this).closest('.show-history').find('.history-price').show();
-    }).on('click', '.gototop', function() {
+    }).on('click', '.gototop', function () {
       window.scrollTo(0, 0);
-    }).on('click', '.details-box>.summary', function() {
+    }).on('click', '.details-box>.summary', function () {//通用展开折叠
       $(this).toggleClass('on');
     });
-    window.onblur = function() {
+    window.onblur = function () {
       isDraging = false;
     };
-    window.onscroll = function() {
+    window.onscroll = function () {
       let top = document.documentElement.scrollTop || document.body.scrollTop;
       if (top > 300) {
         $('.gototop').show();

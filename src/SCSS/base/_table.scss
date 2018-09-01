@@ -1,7 +1,6 @@
 @import '_variables.scss';
 $color-odd:#FDFDFD !default;
 $color-table-border-outer:#F6F6F6;
-
 $table-line-height:50px;
 $table-text-line-height:24px;
 table {
@@ -232,7 +231,7 @@ table {
     >tbody {
       >tr {
         >td,
-        {
+          {
           line-height: 24px;
           padding: 10px;
         }

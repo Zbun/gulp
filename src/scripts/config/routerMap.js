@@ -4,8 +4,9 @@
  * 路由名区分大小写，请注意
  */
 
-import routerHMM from './routerMapHMM.js';
-import routerJDH from './routerMapJDH.js';
+import routerHMM from './routerMapHMM.js'; //慧买卖分路由，
+import routerJDH from './routerMapJDH.js'; //家电汇分路由
+
 let routerB = [{ //基础配置路由
     path: '/',
     name: 'default',
@@ -26,7 +27,6 @@ let routerB = [{ //基础配置路由
       require(['pages/building.vue'], resolve);
     }
   },
-
   {
     path: '/login',
     name: 'login',
@@ -37,139 +37,77 @@ let routerB = [{ //基础配置路由
       require(['commonVues/elements/eLogin.vue'], resolve);
     }
   },
-
   {
-    path: '/auditProgress',
-    name: 'auditProgress',
+    path: '/findPwd',
+    name: 'findPwd',
     meta: {
-      title: '个人审核进度',
+      title: '找回密码',
     },
     component(resolve) {
-      require(['commonVues/elements/auditProgress.vue'], resolve);
-    }
-  },
-
-  {
-    path: '/cAuditProgress',
-    name: 'cAuditProgress',
-    meta: {
-      title: '企业审核进度',
-    },
-    component(resolve) {
-      require(['commonVues/elements/cAuditProgress.vue'], resolve);
+      require(['commonVues/elements/findPwd.vue'], resolve);
     }
   },
   {
-    path: '/supplyInfo',
-    name: 'supplyInfo',
+    path: '/changePwd',
+    name: 'changePwd',
     meta: {
-      title: '补充资料',
+      title: '修改密码',
     },
     component(resolve) {
-      require(['commonVues/elements/supplyInfo.vue'], resolve);
+      require(['commonVues/elements/changePwd.vue'], resolve);
     }
   },
-
-  //基础管理组
+  //服务中心组
   {
-    path: '/bc/baseConfig/regInfo',
-    name: 'BCregInfo',
+    path: '/bc/feedback',
+    name: 'feedback',
     meta: {
-      title: '注册信息',
+      title: '意见反馈',
     },
     component(resolve) {
-      require(['pages/baseConfig/baseConfig/regInfo.vue'], resolve);
-    }
-  },
-  {
-    path: '/bc/baseConfig/shopInfo',
-    name: 'BCshopInfo',
-    meta: {
-      title: '商铺信息',
-    },
-    component(resolve) {
-      require(['pages/baseConfig/baseConfig/shopInfo.vue'], resolve);
+      require(['pages/baseConfig/serviceCenter/feedback.vue'], resolve);
     }
   },
   {
-    path: '/bc/baseConfig/afterSale',
-    name: 'BCafterSale',
+    path: '/bc/feedbackDispose',
+    name: 'feedbackDispose',
     meta: {
-      title: '售后服务模板',
+      title: '处理意见反馈'
     },
     component(resolve) {
-      require(['pages/baseConfig/baseConfig/afterSale.vue'], resolve);
-    }
-  },
-  {
-    path: '/bc/baseConfig/carriageTemp',
-    name: 'BCcarriageTemp',
-    meta: {
-      title: '运费模板列表',
-    },
-    component(resolve) {
-      require(['pages/baseConfig/baseConfig/carriageTemp.vue'], resolve);
+      require(['pages/baseConfig/serviceCenter/feedbackDispose.vue'], resolve);
     }
   }, {
-    path: '/bc/baseConfig/carriageTempAdd',
-    name: 'BCcarriageTempAdd',
+    path: '/bc/expressManage',
+    name: 'expressManage',
     meta: {
-      title: '运费模板添加',
+      title: '物流管理'
     },
     component(resolve) {
-      require(['pages/baseConfig/baseConfig/carriageTempAdd.vue'], resolve);
+      require(['pages/baseConfig/serviceCenter/expressManage.vue'], resolve);
     }
   },
   {
-    path: '/bc/baseConfig/carriageTempEdit/:id',
-    name: 'BCcarriageTempEdit',
+    path: '/bc/accountBind',
+    name: 'accountBind',
     meta: {
-      title: '运费模板编辑',
+      title: '账号绑定管理'
     },
     component(resolve) {
-      require(['pages/baseConfig/baseConfig/carriageTempEdit.vue'], resolve);
+      require(['pages/baseConfig/serviceCenter/accountBind.vue'], resolve);
     }
   },
+  //系统配置组
   {
-    path: '/bc/baseConfig/feedbackInfoAdd',
-    name: 'feedbackInfoAdd',
+    path: '/bc/ms',
+    name: 'menuSet',
     meta: {
-      title: '添加反馈信息',
+      title: '菜单管理',
     },
     component(resolve) {
-      require(['pages/baseConfig/baseConfig/feedbackInfoAdd.vue'], resolve);
-    }
-  }, {
-    path: '/bc/bc/lt',
-    name: 'logisticsTool',
-    meta: {
-      title: '物流工具',
-    },
-    component(resolve) {
-      require(['pages/baseConfig/baseConfig/logisticsTool.vue'], resolve);
+      require(['pages/baseConfig/system/menuSet.vue'], resolve);
     }
   },
-  //供应管理组
-  {
-    path: '/bc/supply/supplierList',
-    name: 'BCsupplierList',
-    meta: {
-      title: '供应商管理',
-    },
-    component(resolve) {
-      require(['pages/baseConfig/supplyManage/supplierList.vue'], resolve);
-    }
-  }, {
-    path: '/bc/supply/storeList',
-    name: 'BCstoreList',
-    meta: {
-      title: '仓库管理',
-    },
-    component(resolve) {
-      require(['pages/baseConfig/supplyManage/storeList.vue'], resolve);
-    }
-  },
-  /**部门、用户、角色 */
   {
     path: '/bc/departmentList',
     name: 'departmentList',
@@ -177,7 +115,7 @@ let routerB = [{ //基础配置路由
       title: '部门列表',
     },
     component(resolve) {
-      require(['pages/baseConfig/userManage/departmentList.vue'], resolve);
+      require(['pages/baseConfig/system/departmentList.vue'], resolve);
     }
   },
   {
@@ -187,7 +125,7 @@ let routerB = [{ //基础配置路由
       title: '角色列表',
     },
     component(resolve) {
-      require(['pages/baseConfig/userManage/roleList.vue'], resolve);
+      require(['pages/baseConfig/system/roleList.vue'], resolve);
     }
   },
   {
@@ -197,132 +135,260 @@ let routerB = [{ //基础配置路由
       title: '用户列表',
     },
     component(resolve) {
-      require(['pages/baseConfig/userManage/userList.vue'], resolve);
+      require(['pages/baseConfig/system/userList.vue'], resolve);
+    }
+  },
+  {
+    path: '/bc/msConfig',
+    name: '系统配置',
+    meta: {
+      title: '配置信息',
+    },
+    component(resolve) {
+      require(['pages/baseConfig/system/msConfig.vue'], resolve);
+    }
+  },
+  {
+    path: '/bc/payConfig',
+    name: '支付配置',
+    meta: {
+      title: '配置信息',
+    },
+    component(resolve) {
+      require(['pages/baseConfig/system/payConfig.vue'], resolve);
+    }
+  }, {
+    path: '/bc/sensitiveWordList',
+    name: '敏感词汇',
+    meta: {
+      title: '敏感词汇',
+    },
+    component(resolve) {
+      require(['pages/baseConfig/system/sensitiveWordList.vue'], resolve);
     }
   },
 
-  //客户服务组
+  //商品部分
   {
-    path: '/bc/cs/supplierService',
-    name: 'supplierService',
+    path: '/bc/goods/category',
+    name: 'bcGoodsCategory',
     meta: {
-      title: '在线客服-入驻商（QQ）',
+      title: '商品分类',
     },
     component(resolve) {
-      require(['pages/baseConfig/customerService/supplierService.vue'], resolve);
+      require(['pages/baseConfig/goods/category/category.vue'], resolve);
     }
   },
   {
-    path: '/bc/cs/qqServiceHelp',
-    name: 'qqServiceHelp',
+    path: '/bc/goods/brandManage',
+    name: 'bcGoodsBrandManage',
     meta: {
-      title: '客服使用说明',
+      title: '商品品牌',
     },
     component(resolve) {
-      require(['pages/baseConfig/customerService/qqServiceHelp.vue'], resolve);
+      require(['pages/baseConfig/goods/brandManage.vue'], resolve);
+    }
+  }, {
+    path: '/bc/goods/labelManage',
+    name: 'bcGoodslabelManage',
+    meta: {
+      title: '商品标签',
+    },
+    component(resolve) {
+      require(['pages/baseConfig/goods/labelManage.vue'], resolve);
     }
   },
   {
-    path: '/bc/cs/selfService',
-    name: 'selfService',
+    path: '/bc/goods/categoryAttr',
+    name: 'bcGoodscategoryAttr',
     meta: {
-      title: '在线客服-自营（小能客服）',
+      title: '分类属性设置',
     },
     component(resolve) {
-      require(['pages/baseConfig/customerService/selfService.vue'], resolve);
+      require(['pages/baseConfig/goods/categoryAttr.vue'], resolve);
+    }
+  }, {
+    path: '/bc/goods/goodsSKU',
+    name: 'bcGoodsSKU',
+    meta: {
+      title: '商品SKU添加',
+    },
+    component(resolve) {
+      require(['pages/baseConfig/goods/goodsSKUAdd.vue'], resolve);
+    }
+  }, {
+    path: '/bc/goods/goodsSKU/:SpuId',
+    name: 'bcGoodsSKUEdit',
+    meta: {
+      title: '商品SKU编辑',
+    },
+    component(resolve) {
+      require(['pages/baseConfig/goods/goodsSKUEdit.vue'], resolve);
+    }
+  }, {
+    path: '/bc/goods/goodsList',
+    name: 'bcGoodsList',
+    meta: {
+      title: '商品库',
+    },
+    component(resolve) {
+      require(['pages/baseConfig/goods/goodsList.vue'], resolve);
+    }
+  },
+
+  //用户管理组
+  {
+    path: '/bc/user/supplierList',
+    name: 'bcSupplierList',
+    meta: {
+      title: '入驻商列表',
+    },
+    component(resolve) {
+      require(['pages/baseConfig/user/supplierList.vue'], resolve);
     }
   },
   {
-    path: '/bc/cs/phoneService',
-    name: 'phoneService',
+    path: '/bc/user/supplierInfo/:UserSN',
+    name: 'bcSupplierInfo',
     meta: {
-      title: '电话',
+      title: '入驻商审核',
     },
     component(resolve) {
-      require(['pages/baseConfig/customerService/phoneService.vue'], resolve);
+      require(['pages/baseConfig/user/supplierInfo.vue'], resolve);
+    }
+  }, {
+    path: '/bc/user/memberList',
+    name: 'memberList',
+    meta: {
+      title: '会员审核',
+    },
+    component(resolve) {
+      require(['pages/baseConfig/user/memberList.vue'], resolve);
+    }
+  }, {
+    path: '/bc/user/memberInfo/:userSn',
+    name: 'memberInfo',
+    meta: {
+      title: '会员审核信息',
+    },
+    query: {
+
+    },
+    component(resolve) {
+      require(['pages/baseConfig/user/memberInfo.vue'], resolve);
+    }
+  },
+  {
+    path: '/bc/user/hmmSupplierList',
+    name: 'hmmSupplierList',
+    meta: {
+      title: '慧买卖入驻商列表',
+    },
+    component(resolve) {
+      require(['pages/baseConfig/user/hmmSupplierList.vue'], resolve);
+    }
+  },
+  {
+    path: '/bc/user/hmmSupplierInfo/:hmmRzsId',
+    name: 'hmmSupplierInfo',
+    meta: {
+      title: '慧买卖入驻商基本资料',
+    },
+    component(resolve) {
+      require(['pages/baseConfig/user/hmmSupplierInfo.vue'], resolve);
+    }
+  },
+  {
+    path: '/bc/user/hmmOrderList',
+    name: 'hmmOrderList',
+    meta: {
+      title: '慧买卖入驻商订单列表',
+    },
+    component(resolve) {
+      require(['pages/baseConfig/user/hmmOrderList.vue'], resolve);
+    }
+  },
+  {
+    path: '/bc/user/hmmMemberList',
+    name: 'hmmMemberList',
+    meta: {
+      title: '慧买卖会员列表',
+    },
+    component(resolve) {
+      require(['pages/baseConfig/user/hmmMemberList.vue'], resolve);
+    }
+  },
+  {
+    path: '/bc/user/hmmMemberInfo/:hmmHyId',
+    name: 'hmmMemberInfo',
+    meta: {
+      title: '慧买卖会员信息',
+    },
+    component(resolve) {
+      require(['pages/baseConfig/user/hmmMemberInfo.vue'], resolve);
+    }
+  },
+  {
+    path: '/bc/user/accreditList',
+    name: 'accreditList',
+    meta: {
+      title: '个人授权码',
+    },
+    component(resolve) {
+      require(['pages/baseConfig/user/accreditList.vue'], resolve);
+    }
+  },
+  {
+    path: '/bc/user/paymentList',
+    name: 'paymentList',
+    meta: {
+      title: '线下缴费列表',
+    },
+    component(resolve) {
+      require(['pages/baseConfig/user/paymentList.vue'], resolve);
+    }
+  },
+  //平台2.0
+  {
+    path: '/bc/user/sellerManage',
+    name: 'bcSellerManage',
+    meta: {
+      title: '卖家管理列表',
+    },
+    component(resolve) {
+      require(['pages/baseConfig/user/sellerManage.vue'], resolve);
+    }
+  },
+  {
+    path: '/bc/user/sellerManageDetail/:SellerSN/:os',
+    name: 'bcSellerManageDetail',
+    meta: {
+      title: '卖家管理详情',
+    },
+    component(resolve) {
+      require(['pages/baseConfig/user/sellerManageDetail.vue'], resolve);
+    }
+  },
+  {
+    path: '/bc/user/memberShopManage',
+    name: 'bcmemberShopManage',
+    meta: {
+      title: '会员店管理列表',
+    },
+    component(resolve) {
+      require(['pages/baseConfig/user/memberShopManage.vue'], resolve);
+    }
+  },
+  {
+    path: '/bc/user/memberShopManageDetail/:memberShopSN/:os',
+    name: 'bcmemberShopManageDetail',
+    meta: {
+      title: '会员店管理详情',
+    },
+    component(resolve) {
+      require(['pages/baseConfig/user/memberShopManageDetail.vue'], resolve);
     }
   },
 ];
-let routerM = [{ //我的钱包路由
-    path: '/myWallet/index',
-    name: 'walletIndex',
-    meta: {
-      title: '我的钱包首页',
-    },
-    component(resolve) {
-      require(['pages/myWallet/index.vue'], resolve);
-    }
-  },
-  { //我的钱包路由
-    path: '/myWallet/accountInfo',
-    name: 'accountInfo',
-    meta: {
-      title: '账户资料',
-    },
-    component(resolve) {
-      require(['pages/myWallet/accountInfo.vue'], resolve);
-    }
-  },
-  { //我的钱包安全中心
-    path: '/myWallet/safeCenter',
-    name: 'safeCenter',
-    meta: {
-      title: '安全中心',
-    },
-    component(resolve) {
-      require(['pages/myWallet/safeCenter.vue'], resolve);
-    }
-  },
-  { //我的银行卡
-    path: '/myWallet/myBank',
-    name: 'myBank',
-    meta: {
-      title: '我的銀行卡',
-    },
-    component(resolve) {
-      require(['pages/myWallet/myBank.vue'], resolve);
-    }
-  },
-  { //我的余额
-    path: '/myWallet/withdraw',
-    name: 'withdraw',
-    meta: {
-      title: '余额提现',
-    },
-    component(resolve) {
-      require(['pages/myWallet/withdraw.vue'], resolve);
-    }
-  },
-  { //我的交易记录
-    path: '/myWallet/tradingRecord',
-    name: 'tradingRecord',
-    meta: {
-      title: '交易记录',
-    },
-    component(resolve) {
-      require(['pages/myWallet/tradingRecord.vue'], resolve);
-    }
-  },
-  //2.0注冊
-  {
-    path: '/reg',
-    name: 'reg',
-    meta: {
-      title: '注冊',
-    },
-    component(resolve) {
-      require(['commonVues/elements/regTwo/eReg.vue'], resolve);
-    }
-  },
-  {
-    path: '/applyProgress',
-    name: 'applyProgress',
-    meta: {
-      title: '申请进度查询',
-    },
-    component(resolve) {
-      require(['commonVues/elements/regTwo/applyProgress.vue'], resolve);
-    }
-  },
-]
-export default [...routerHMM, ...routerJDH, ...routerB, ...routerM];
+
+export default [...routerHMM, ...routerJDH, ...routerB];

@@ -11,7 +11,7 @@ $bgGroup:'#{$bgPath}/bg-group.png';
 // @import 'base/_iconfont.scss'; //部分字体图标、引入fa样式时不引
 @import "base/_info_list.scss";
 @import 'base/_radio-check.scss'; //重写的单复选及多选中
-// @import 'base/_btn_tag.scss'; //按钮型标签
+@import 'base/_btn_tag.scss'; //按钮型标签
 // @import 'base/_arrow_down.scss'; //下拉选框，未全部完成，需配JS
 @import 'base/_switcher.scss'; //选项卡切换
 // @import 'base/_animation.scss'; //部分动画

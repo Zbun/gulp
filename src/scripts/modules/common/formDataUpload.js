@@ -4,8 +4,8 @@
  * @date   2016-05-19
  * @return {[type]}
  */
-(function() {
-  var html5Upload = function() {
+(function () {
+  var html5Upload = function () {
     var arg = arguments[0];
     var obj = typeof getTarget == 'function' ? getTarget(arg.obj) : arg.obj; //获取真实DOM节点，作用于上传按钮对象
     if (obj) {
@@ -18,7 +18,7 @@
       var callback = arg.callback || ''; //成功回调
       var errorCallback = arg.error || ''; //失败回调
       var nodeCopy = obj.cloneNode();
-      var fnRebind = function() {
+      var fnRebind = function () {
         obj.parentNode.replaceChild(nodeCopy, obj);
         html5Upload({
           obj: nodeCopy,
@@ -31,7 +31,7 @@
           errorCallback: errorCallback
         });
       };
-      obj.addEventListener('change', function() {
+      obj.addEventListener('change', function () {
         //构造加载进度HTML
         var progressBg = document.createElement('div');
         progressBg.style.cssText = 'position:fixed;left:50%;top:50%;padding:10px 40px 0;border:1px solid #666;box-shadow:inset 0 0 1px #fff;border-radius:4px;text-align:center;color:#fff;background:rgba(0,0,0,.5);z-index:1234;transform:translate(-50%,-50%);';
@@ -87,12 +87,12 @@
           formData.append(obj.files[0].name, obj.files[0]);
           var xhr = new XMLHttpRequest();
           // xhr.withCredentials = true;//发送cookie到服务器，需要服务器支持
-          xhr.onload = function() {
+          xhr.onload = function () {
             if (xhr.status === 200) {
               progressBg.parentNode && progressBg.parentNode.removeChild(progressBg);
               var data = JSON.parse(xhr.response);
 
-              //只处理服务器响应信息部分，其它忽略或修改
+              //只处理ZMM响应信息部分，其它忽略或修改
               if (data.ResponseID == -1) {
                 if (data.Message) {
                   showTips(data.Message, 'error');
@@ -119,7 +119,7 @@
             }
           };
           //加载进度事件
-          xhr.upload.onprogress = function(event) {
+          xhr.upload.onprogress = function (event) {
             if (event.lengthComputable) {
               document.body.appendChild(progressBg);
               var complete = (event.loaded / event.total * 100 | 0) + '%';

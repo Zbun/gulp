@@ -11,14 +11,19 @@ require('modules/production/fixContentTitle.js')();
 import eHome from 'vues/elements/eHome.vue'; //首页
 import eHeader from 'vues/elements/eHeader.vue'; //页头、包含了菜单
 import eLogin from 'vues/elements/eLogin.vue'; //
-import mLogin from 'vues/elements/mLogin.vue'; //会员登陆
-// import datePicker from 'vues/components/datePicker.vue'; //时间选择
-// Vue.component('datePicker', datePicker);
+
+
+import datePicker from 'vues/components/datePicker.vue'; //时间选择
+Vue.component('datePicker', datePicker);
+
+import popup from 'vues/components/popupTemplate.vue'; //弹出框外壳组件
+Vue.component('popup', popup);
 
 const store = new Vuex.Store({
   state: {
     arrAddedGoods: [],
     currentRoute: {},
+    saleList: ''
   },
   mutations: {}
 });
@@ -32,9 +37,9 @@ let router = new VueRouter({
 });
 
 //更新 页面 title方法
-var PAGETITLESUFFIX = '-慧买卖';
+var PAGETITLESUFFIX = '-慧聪云商';
 if (!document.title) {
-  document.title = '慧买卖';
+  document.title = '慧聪云商';
 }
 router.afterEach((
   to,
@@ -57,6 +62,5 @@ const APP = new Vue({
     eHome,
     eHeader,
     eLogin,
-    mLogin
   }
 });

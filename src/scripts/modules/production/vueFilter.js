@@ -7,8 +7,16 @@ Vue.filter('substr', (v, n = 20) => {
     }
     return v.substr(0, n) + '...';
   }
-
 });
+
+//格式化浮点数
+Vue.filter('floatFormat', function (value) {
+  if (!value) {
+    return 0;
+  }
+  return parseFloat(value.toFixed(10));
+});
+
 //常用过滤器
 //千位分隔小方法 zhao.liubin@zol.com.cn
 function splitThousand(num) {
@@ -29,14 +37,14 @@ function splitThousand(num) {
   }
 }
 //金额
-Vue.filter('money', function(value) {
+Vue.filter('money', function (value) {
   if (!value) {
     value = 0;
   }
   return '￥' + parseFloat(value).toFixed(2);
 });
 //格式化钱不带‘￥’,千位分隔
-Vue.filter('currency', function(value) {
+Vue.filter('currency', function (value) {
   if (!value) {
     if (value == undefined) {
       return '';
@@ -72,17 +80,6 @@ Vue.filter('numberIn', {
   }
 });
 
-//正整数双向
-Vue.filter('posNumberIn', {
-  read(value) {
-    return value;
-  },
-  write(value, oldVal) {
-    let number = parseInt(value);
-    return isNaN(number) || number < 1 ? (oldVal || 1) : number;
-  }
-});
-
 //双向浮点
 Vue.filter('floatIn', {
   read(value) {
@@ -97,18 +94,18 @@ Vue.filter('floatIn', {
 //通用处理时间戳
 function resetTimeStamp(value) {
   value = value.split('.')[0];
-  value = (value + 'Z').replace(/\//g, '-').replace(/[\u4E00-\u9FA5]/g, '').replace(/-(\d+)-(\d+)/, function(all, a, b) {
+  value = (value + 'Z').replace(/\//g, '-').replace(/[\u4E00-\u9FA5]/g, '').replace(/-(\d+)-(\d+)/, function (all, a, b) {
     /^\d$/.test(a) && (a = '0' + a);
     /^\d$/.test(b) && (b = '0' + b);
     return '-' + a + '-' + b;
-  }).replace(/(\d+):(\d+):(\d+)/, function(all, a, b, c) {
+  }).replace(/(\d+):(\d+):(\d+)/, function (all, a, b, c) {
     let arrTemp = [];
     /^\d$/.test(a) && (a = '0' + a);
     /^\d$/.test(b) && (b = '0' + b);
     /^\d$/.test(c) && (c = '0' + c);
     arrTemp.push(a, b, c);
     return arrTemp.join(':');
-  }).replace(/\d(\s+)\d/, function(all, a) {
+  }).replace(/\d(\s+)\d/, function (all, a) {
     if (/^\s+$/.test(a)) {
       return all.replace(a, 'T');
     }
@@ -136,7 +133,7 @@ function resetTimeStamp(value) {
   };
 }
 //日期过滤器： 传入 2016-07-07T10:27:13  过滤成： 2016-07-07
-Vue.filter('date', function(value) {
+Vue.filter('date', function (value) {
   if (!value) return '';
   var dt = resetTimeStamp(value);
   return dt.year + '-' + dt.month + '-' + dt.day;
@@ -145,7 +142,7 @@ Vue.filter('date', function(value) {
 
 //  2016-07-07
 //  时间过滤器完整： 传入 2016-07-07T10:27:13  过滤成： 2016-07-07 10:27:13
-Vue.filter('datetime', function(value) {
+Vue.filter('datetime', function (value) {
   if (!value) return '';
   var dt = resetTimeStamp(value);
 
@@ -154,20 +151,20 @@ Vue.filter('datetime', function(value) {
 });
 
 /**
- * 通用过滤图片src，需要服务器返回以,分隔的多张图片字符串
+ * 通用过滤图片src，需要服务器返回以,分隔的n张图片字符串
  * @date   2018-04-24
  * @author zhao.liubin@zol.com.cn
- * @param  {[type]}
- * @return {[type]}
+ * @param  {<String>}
+ * @return {<Object>}
  */
-Vue.filter('imagesLink', function(value) {
+Vue.filter('imagesLink', function (value) {
   if (!value || value.length == 0) {
     return '/dist/images/goodsDefault.jpg';
   } else {
     return value.split(',')[0];
   }
 });
-Vue.filter('imageLink', function(value) {
+Vue.filter('imageLink', function (value) { //防写错，容错
   if (!value || value.length == 0) {
     return '/dist/images/goodsDefault.jpg';
   } else {
@@ -176,6 +173,6 @@ Vue.filter('imageLink', function(value) {
 });
 
 
-for (let key in dictionary) { //以词典全部生成过滤器
+for (let key in dictionary) { //以词典为模板生成过滤器
   Vue.filter(key, (value) => dictionary[key][value]);
 }

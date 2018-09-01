@@ -5,20 +5,23 @@
  * @type {[type]}
  */
 
-var showTips = function(content, state, callback, time) {
+var showTips = function (content, state, callback, time) {
   content = content || '操作成功';
   var realTime = parseInt(time) || 1000;
   var box = document.createElement('div');
   box.className = 'popup-tips';
 
   var htmlIcon = '<i class="icon  iconfont icon-tishichenggong1"></i>';
-  if (/cancel|error/i.test(state)) { //错误提示参数:'error'||'cancel'
-    htmlIcon = '<i class="icon p-error iconfont  icon-tishicuowu1"></i>';
-    realTime = parseInt(time) || 2500;
-  } else if (/warning/i.test(state)) {
-    htmlIcon = '<i class="icon p-warning  iconfont icon-tishi"></i>';
-    realTime = parseInt(time) || 2500;
+  if (state) {
+    if (/cancel|error|e/i.test(state)) { //错误提示参数:'error'||'cancel'
+      htmlIcon = '<i class="icon p-error iconfont  icon-tishicuowu1"></i>';
+      realTime = parseInt(time) || 2500;
+    } else if (/warning|w/i.test(state)) {
+      htmlIcon = '<i class="icon p-warning  iconfont icon-tishi"></i>';
+      realTime = parseInt(time) || 2500;
+    }
   }
+
   box.innerHTML = '<div class="pop-inner">' + htmlIcon + '<div class="content">' + content + '</div></div>';
   document.body.appendChild(box);
 
@@ -33,11 +36,11 @@ var showTips = function(content, state, callback, time) {
   // }
   // requestAnimationFrame(rotateShow);
 
-  var _close = function() {
+  var _close = function () {
     document.body.removeChild(box);
   };
 
-  setTimeout(function() {
+  setTimeout(function () {
     _close();
     typeof state === 'function' ? state() : typeof callback === 'function' && callback();
   }, parseInt(realTime));

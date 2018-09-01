@@ -25,8 +25,8 @@ $bg-text-color in(bg-default, $color-bg-default, $color-bg-default-text),
 
 .bg {
   position: relative;
-  padding: 0 10px;
-  line-height: 28px;
+  padding: 4px 10px;
+  line-height: 24px;
   -webkit-border-radius: $border-radius;
   -moz-border-radius: $border-radius;
   border-radius: $border-radius;

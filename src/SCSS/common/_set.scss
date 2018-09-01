@@ -39,6 +39,11 @@
       &.area-box {
         overflow: initial;
       }
+      &.areabox {
+        select {
+          width: 104px;
+        }
+      }
     }
   }
   &.w4em {
@@ -48,7 +53,6 @@
       }
     }
   }
-
   &.text-left {
     >.item {
       >.title,
@@ -60,13 +64,12 @@
   }
   &.thin {
     >.item {
-      line-height: 20px;
-      padding: 5px 0;
+      padding: 2px 0;
     }
   }
 }
 
-@for $i from 6 to 10 {
+@for $i from 6 through 15 {
   //批量生成各种长度
   .set.w#{$i}em {
     >.item {
