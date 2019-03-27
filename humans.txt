@@ -1,37 +1,16 @@
 /* TEAM */
-  Manager: Qi jie
-  Email: qi.jie@zol.com.cn
-  From: Zhengzhou, Henan, China
 
-  Chief: Chen wei
-  Email: chen.wei1@zol.com.cn
-  From: Zhengzhou, Henan, China
-
-  Back end developer: Li Dafei
-  Email: li.dafei@zol.com.cn
-  From: Zhengzhou, Henan, China
-
+ 
   Front end developer: Zhao Liubin
   Email: zhao.liubin@zol.com.cn
   From: Zhengzhou, Henan, China
 
-  Front end developer: Li Huiping
-  Email: li.huiping@zol.com.cn
-  From: Zhengzhou, Henan, China
-
-  UI developer: Xue Xiaojia
-  Email: xue.xiaojia@zol.com.cn
-  From: Zhengzhou, Henan, China
-
-  UI developer: Wang Xiaoxi
-  Email: wang.xiaoxi@zol.com.cn
-  From: Zhengzhou, Henan, China
 
 /* THANKS */
-  ZOl
+  
 
 /* SITE */
-  Last update: 2018.04.01
+  Last update: 2018.01.01
   Language: Chinese
   Doctype: HTML5
   IDE: Sublime Text, VS Code

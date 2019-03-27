@@ -19,7 +19,10 @@
 // let _regExp = require('./regExp.js');
 let fn = require('./validatorManu.js');
 module.exports = function (el) {
-
+  if (!el) {
+    console.warn('节点传入不正确，请检查');
+    return;
+  }
   let objMsg = {
     empty: '请填写此项',
     phone: '手机号码格式有误，请检查',
@@ -112,9 +115,6 @@ module.exports = function (el) {
       } else if (attrValidate.indexOf('integer') > -1) {
         if (!fn.isEmpty(val) && !fn.isInteger(val)) {
           msg = objMsg.integer;
-          if (val > 65535) {
-            msg = '最大整数不能超过65535，请重新填写';
-          }
         }
       } else if (attrValidate.indexOf('money1') > -1) {
         if (!fn.isEmpty(val) && !fn.isMoney1(val)) {

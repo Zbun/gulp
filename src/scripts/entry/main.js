@@ -5,41 +5,24 @@ var Vuex = require('vuex');
 
 //Vue 过滤器合集
 require('modules/production/vueFilter.js');
-require('modules/production/fixContentTitle.js')();
-
-//右上顶通，菜单，页尾
-import eHome from 'vues/elements/eHome.vue'; //首页
-import eHeader from 'vues/elements/eHeader.vue'; //页头、包含了菜单
-import eLogin from 'vues/elements/eLogin.vue'; //
-
-
-import datePicker from 'vues/components/datePicker.vue'; //时间选择
-Vue.component('datePicker', datePicker);
-
-import popup from 'vues/components/popupTemplate.vue'; //弹出框外壳组件
-Vue.component('popup', popup);
 
 const store = new Vuex.Store({
   state: {
-    arrAddedGoods: [],
-    currentRoute: {},
-    saleList: ''
+    // arrAddedGoods: [],
+    // currentRoute: {},
   },
   mutations: {}
 });
 
 let router = new VueRouter({
   routes,
-  // hashbang: false,
-  // history: false,
-  // saveScrollPosition: true,
-  // transitionOnLoad: true
+
 });
 
 //更新 页面 title方法
-var PAGETITLESUFFIX = '-慧聪云商';
+var PAGETITLESUFFIX = '-';
 if (!document.title) {
-  document.title = '慧聪云商';
+  document.title = '';
 }
 router.afterEach((
   to,
@@ -58,9 +41,5 @@ const APP = new Vue({
   router,
   store,
   el: '#app',
-  components: {
-    eHome,
-    eHeader,
-    eLogin,
-  }
+  components: {}
 });

@@ -94,13 +94,13 @@ class Waiting {
 
 var exportObj = {
   entity: '',
-  select: function(container) {
+  select: function (container) {
     return new Waiting(container);
   },
-  show: function(container) {
+  show: function (container) {
     return this.entity = new Waiting(container).show();
   },
-  hide: function() {
+  hide: function () {
     this.entity && this.entity.hide();
   }
 };

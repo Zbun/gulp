@@ -152,7 +152,7 @@ function fnWebpack(callback) {
           fnConsole('webpack 结束-V' + num.webpack++);
           fnAssembleHTML(function () {
             setTimeout(function () {
-              console.log(gutil.colors.bgMagenta('可以打包上线了，还要给后台写个提示，啥都不懂。'));
+              console.log(gutil.colors.bgMagenta(`构建完成于${new Date().toLocaleTimeString()}，可以压缩打包上线了`));
             }, 10);
           });
         }
@@ -196,7 +196,7 @@ function fnBrowserSync() {
         publicPath: webpackConfig.output.publicPath,
         logLevel: 'error',
         logTime: true,
-        writeToDisk: true, //写入硬盘文件，但还是从内存访问数据^-^
+        writeToDisk: false, //不写硬盘文件了^-^
         // pretty colored output
         stats: { colors: true },
 
@@ -218,6 +218,9 @@ function fnBrowserSync() {
     ghostMode: false
   });
   watch('./src/htmls/**/*.html', fnAssembleHTML);
+  watch('./src/staticResources/**/*', function () {
+    setTimeout(copyFiles, 100);
+  });//监视静态文件变化后复制文件
   gulp.watch('./src/scss/**/*.scss', fnSass);
   gulp.watch('./dist/css/*.css', function () {
     fnConsole('SCSS编译结束-V' + num.SCSS++);
@@ -236,6 +239,14 @@ gulp.task('preBuild', fnPreBuild);
 //上线启动
 gulp.task('build', ['preBuild', 'browserSync'], function () {
   fnConsole('Builded successfully, enjoy!');
+});
+
+gulp.task('pureBuild', ['preBuild', 'sass'], function () {//纯打包模式，不开启服务器
+  copyFiles();
+  gutil.colors.bgRed('当前为生产环境，已压缩CSS及JS');
+  webpackConfig.mode = 'production';
+  delete webpackConfig.devtool;
+  fnWebpack();
 });
 
 //默认启动任务

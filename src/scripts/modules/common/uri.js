@@ -6,33 +6,32 @@
 
 module.exports = {
   query: {
-    locTop: top.window.location.href,
     loc: window.location.href,
-    get(key, top) {
+    get(key) {
+
       key = key.toLowerCase();
-      var loc = this.loc;
-      if (top === 'top') {
-        loc = this.locTop;
-      }
-      if (!key || loc.toLocaleLowerCase().indexOf(key + '=') < 0) {
+      var URISearch = window.location.search;
+      if (URLSearchParams) {
+        var searchParams = new URLSearchParams(URISearch);
+        return searchParams.get(key);
+      } else {
+        if (!URISearch || !key || URISearch.toLocaleLowerCase().indexOf(key + '=') < 0) {
+          return '';
+        }
+        var arrQuery = URISearch.split('?')[1].split('&'), l = arrQuery.length;
+        while (l > 0) {
+          var arrTemp = arrQuery[l - 1].split('=');
+          if (arrTemp[0].toLocaleLowerCase() == key) {
+            return arrTemp[1];
+          }
+          l--;
+        }
         return '';
       }
-      loc = loc.split('#')[0];
-      var arrQuery = loc.split('?')[1].split('&'), l = arrQuery.length;
-      while (l > 0) {
-        var arrTemp = arrQuery[l - 1].split('=');
-        if (arrTemp[0].toLocaleLowerCase() == key) {
-          return arrTemp[1];
-        }
-        l--;
-      }
-      return '';
+
     },
-    set(key, value, top) {
+    set(key, value) {
       var loc = this.loc;
-      if (top === 'top') {
-        loc = this.locTop;
-      }
       if (!key || !value) {
         return loc;
       }
@@ -53,20 +52,13 @@ module.exports = {
     }
   },
   hash: {
-    hashTop: top.window.location.hash,
     hash: window.location.hash,
-    get(top) {
+    get() {
       var hash = this.hash;
-      if (top === 'top') {
-        hash = this.hashTop;
-      }
       return hash.split('#')[1];
     },
-    set(value, top) {
+    set(value) {
       if (value) {
-        if (top === 'top') {
-          return top.window.location.hash = value;
-        }
         return window.location.hash = value;
       }
     }
@@ -75,7 +67,7 @@ module.exports = {
     if (location.origin) {
       return location.origin;
     } else {
-      return window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port : '');
+      return window.location.protocol + "//" + window.location.host;
     }
   }
 };

@@ -1,16 +1,7 @@
 //---------------------------------------------------------------------------------
-//字符串截取
-Vue.filter('substr', (v, n = 20) => {
-  if (v) {
-    if (v.length <= n) {
-      return v;
-    }
-    return v.substr(0, n) + '...';
-  }
-});
 
 //格式化浮点数
-Vue.filter('floatFormat', function (value) {
+Vue.filter('floatFormat', function(value) {
   if (!value) {
     return 0;
   }
@@ -37,14 +28,14 @@ function splitThousand(num) {
   }
 }
 //金额
-Vue.filter('money', function (value) {
+Vue.filter('money', function(value) {
   if (!value) {
     value = 0;
   }
   return '￥' + parseFloat(value).toFixed(2);
 });
 //格式化钱不带‘￥’,千位分隔
-Vue.filter('currency', function (value) {
+Vue.filter('currency', function(value) {
   if (!value) {
     if (value == undefined) {
       return '';
@@ -94,18 +85,18 @@ Vue.filter('floatIn', {
 //通用处理时间戳
 function resetTimeStamp(value) {
   value = value.split('.')[0];
-  value = (value + 'Z').replace(/\//g, '-').replace(/[\u4E00-\u9FA5]/g, '').replace(/-(\d+)-(\d+)/, function (all, a, b) {
+  value = (value + 'Z').replace(/\//g, '-').replace(/[\u4E00-\u9FA5]/g, '').replace(/-(\d+)-(\d+)/, function(all, a, b) {
     /^\d$/.test(a) && (a = '0' + a);
     /^\d$/.test(b) && (b = '0' + b);
     return '-' + a + '-' + b;
-  }).replace(/(\d+):(\d+):(\d+)/, function (all, a, b, c) {
+  }).replace(/(\d+):(\d+):(\d+)/, function(all, a, b, c) {
     let arrTemp = [];
     /^\d$/.test(a) && (a = '0' + a);
     /^\d$/.test(b) && (b = '0' + b);
     /^\d$/.test(c) && (c = '0' + c);
     arrTemp.push(a, b, c);
     return arrTemp.join(':');
-  }).replace(/\d(\s+)\d/, function (all, a) {
+  }).replace(/\d(\s+)\d/, function(all, a) {
     if (/^\s+$/.test(a)) {
       return all.replace(a, 'T');
     }
@@ -133,7 +124,7 @@ function resetTimeStamp(value) {
   };
 }
 //日期过滤器： 传入 2016-07-07T10:27:13  过滤成： 2016-07-07
-Vue.filter('date', function (value) {
+Vue.filter('date', function(value) {
   if (!value) return '';
   var dt = resetTimeStamp(value);
   return dt.year + '-' + dt.month + '-' + dt.day;
@@ -142,7 +133,7 @@ Vue.filter('date', function (value) {
 
 //  2016-07-07
 //  时间过滤器完整： 传入 2016-07-07T10:27:13  过滤成： 2016-07-07 10:27:13
-Vue.filter('datetime', function (value) {
+Vue.filter('datetime', function(value) {
   if (!value) return '';
   var dt = resetTimeStamp(value);
 
@@ -157,14 +148,14 @@ Vue.filter('datetime', function (value) {
  * @param  {<String>}
  * @return {<Object>}
  */
-Vue.filter('imagesLink', function (value) {
+Vue.filter('imagesLink', function(value) {
   if (!value || value.length == 0) {
     return '/dist/images/goodsDefault.jpg';
   } else {
     return value.split(',')[0];
   }
 });
-Vue.filter('imageLink', function (value) { //防写错，容错
+Vue.filter('imageLink', function(value) { //防写错，容错
   if (!value || value.length == 0) {
     return '/dist/images/goodsDefault.jpg';
   } else {

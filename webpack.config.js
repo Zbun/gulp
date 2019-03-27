@@ -23,6 +23,10 @@ module.exports = {
         cacheDirectory: true
       }
     }, {
+      test: /\.tsx?$/,
+      use: 'ts-loader',
+      exclude: /node_modules|bower_components/
+    }, {
       test: /\.vue$/,
       loader: 'vue-loader',
       include: [path.resolve('./src/scripts')],
@@ -33,7 +37,7 @@ module.exports = {
   mode: 'development',
   resolve: {
     modules: ['node_modules/', path.join(__dirname, './src/scripts')],
-    extensions: ['.vue', '.js'],
+    extensions: ['.vue', '.js', 'tsx', 'ts'],
     alias: {
       'rdist': path.join(__dirname, './'), //根相对目录
       htmls: path.join(__dirname, './src/htmls'), //htmls模块路径

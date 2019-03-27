@@ -7,6 +7,12 @@
  * @return {Function}
  */
 var fn = function (d, o) {
+  d = d.replace(/\d(\s+)\d/, function (all, a) {
+    if (/^\s+$/.test(a)) {
+      return all.replace(a, 'T');
+    }
+  }).replace(/\//g, '-');
+
   var f = {
     box: function () {
       return document.querySelector(o);
