@@ -5,7 +5,6 @@ var Vuex = require('vuex');
 
 //Vue 过滤器合集
 require('modules/production/vueFilter.js');
-
 const store = new Vuex.Store({
   state: {
     // arrAddedGoods: [],

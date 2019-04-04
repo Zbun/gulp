@@ -31,6 +31,21 @@ module.exports = {
       loader: 'vue-loader',
       include: [path.resolve('./src/scripts')],
       exclude: /(node_modules|bower_components)/
+    },
+    {
+      test: /\.scss$/,
+      use: [
+        'style-loader', // creates style nodes from JS strings
+        'css-loader',
+        'sass-loader' // compiles Sass to CSS, using Node Sass by default
+      ]
+    },
+    {
+      test: /\.css$/,
+      use: [
+        'style-loader', // creates style nodes from JS strings
+        'css-loader', // translates CSS into CommonJS
+      ]
     }]
   },
   devtool: 'cheap-module-eval-source-map',
