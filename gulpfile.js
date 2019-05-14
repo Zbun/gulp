@@ -61,8 +61,10 @@ var copyFiles = function () {
   gulp.src('./src/staticResources/scripts/**')
     .pipe(gulp.dest(opts.destPath + '/scripts/'));
 
-  gulp.src('./src/staticResources/images/**')
-    .pipe(gulp.dest(opts.destPath + '/images/'));
+  del([opts.destPath + '/images/**/*']).then(function () {
+    gulp.src('./src/staticResources/images/**')
+      .pipe(gulp.dest(opts.destPath + '/images/'));
+  });
 
   gulp.src('./src/staticResources/fonts/**')
     .pipe(gulp.dest(opts.destPath + '/fonts/'));
@@ -196,9 +198,11 @@ function fnBrowserSync() {
         publicPath: webpackConfig.output.publicPath,
         logLevel: 'error',
         logTime: true,
-        writeToDisk: false, //不写硬盘文件了^-^
+        writeToDisk: true, //写入硬盘文件，但还是从内存访问数据^-^
         // pretty colored output
-        stats: { colors: true },
+        stats: {
+          colors: true
+        },
 
         // for other settings see
         // http://webpack.github.io/docs/webpack-dev-middleware.html
@@ -212,8 +216,12 @@ function fnBrowserSync() {
   browserSync.init({
     // files: ['dist/css/*.css', 'dist/scripts/bundle/APP.bundle.js', './dist/htmls/**/*.html', '!**.scss', '!node_modules/**.*'],
     files: ['dist/css/*.css'],
-    server: { baseDir: './', middleware, },
-    port: 2019,
+    server: {
+      baseDir: './',
+      middleware,
+      // index: 'login.html'
+    },
+    port: 20046,
     // codeSync: false,
     ghostMode: false
   });
@@ -248,7 +256,6 @@ gulp.task('pureBuild', ['preBuild', 'sass'], function () {//纯打包模式，�
   delete webpackConfig.devtool;
   fnWebpack();
 });
-
 //默认启动任务
 gulp.task('default', ['browserSync'], function () {
   // gulp.start('minify','cleancss')
