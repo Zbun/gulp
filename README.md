@@ -2,4 +2,5 @@
 
 ## 命令包含
 1. 开发：gulp
-2. 上线：gulp build
+2. 纯打包上线：gulp purebuild
+2. 带验证上线：gulp build
