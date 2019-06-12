@@ -8,27 +8,20 @@ module.exports = {
   query: {
     loc: window.location.href,
     get(key) {
-
       key = key.toLowerCase();
       var URISearch = window.location.search;
-      if (URLSearchParams) {
-        var searchParams = new URLSearchParams(URISearch);
-        return searchParams.get(key);
-      } else {
-        if (!URISearch || !key || URISearch.toLocaleLowerCase().indexOf(key + '=') < 0) {
-          return '';
-        }
-        var arrQuery = URISearch.split('?')[1].split('&'), l = arrQuery.length;
-        while (l > 0) {
-          var arrTemp = arrQuery[l - 1].split('=');
-          if (arrTemp[0].toLocaleLowerCase() == key) {
-            return arrTemp[1];
-          }
-          l--;
-        }
+      if (!URISearch || !key || URISearch.toLocaleLowerCase().indexOf(key + '=') < 0) {
         return '';
       }
-
+      var arrQuery = URISearch.split('?')[1].split('&'), l = arrQuery.length;
+      while (l > 0) {
+        var arrTemp = arrQuery[l - 1].split('=');
+        if (arrTemp[0].toLocaleLowerCase() == key) {
+          return arrTemp[1];
+        }
+        l--;
+      }
+      return '';
     },
     set(key, value) {
       var loc = this.loc;

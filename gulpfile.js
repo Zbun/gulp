@@ -20,6 +20,23 @@ var webpackDevMiddleware = require('webpack-dev-middleware');
 var webpackHotMiddleware = require('webpack-hot-middleware');
 var webpackConfig = require('./webpack.config.js');
 
+
+var exec = require('child_process').exec;
+function killProcess() {//结束进程，在purebuild打包模式使用
+  console.log(gutil.colors.bgRed('2S后结束进程'));
+  var cmdPid = process.ppid;
+  setTimeout(function () {
+    exec(`taskkill /pid ${cmdPid}`, function (error, stdout, stderr) {
+      if (error) {
+        console.log(error);
+      }
+      else {
+        console.log("成功");
+      }
+    });
+  }, 2000);
+}
+
 var num = {
   webpack: 0,
   webpackError: 0,
@@ -45,6 +62,7 @@ function fnConsole(v) {
 }
 
 var isBuild = false; //是否是生产环境配置，webpack时用到
+var isPureBuild = false;//自信模式，纯打包，没做测试
 var opts = {
   srcPath: './src/', //源文件目录
   destPath: './dist/',
@@ -77,7 +95,6 @@ var copyFiles = function () {
 
   fnConsole('静态文件复制完成');
 };
-
 
 //文件添加版本号， 在HTML中写入 ** .js ? rev = @hash
 function fnRev() {
@@ -136,7 +153,9 @@ function fnAssembleHTML(callback) {
 function fnWebpack(callback) {
   fnConsoleBegin('Webapck 开始');
   var newConfig = webpackConfig;
-  newConfig.watch = true;
+  if (!isPureBuild) {
+    newConfig.watch = true;
+  }
   // [opts.destPath + '/scripts/bundle/*.*']
   del(['dist/scripts/bundle/*.*', '!dist/scripts/bundle/APP.bundle.js', '!dist/scripts/bundle/main.bundle.js']).then(function () {
     webpack(
@@ -155,6 +174,9 @@ function fnWebpack(callback) {
           fnAssembleHTML(function () {
             setTimeout(function () {
               console.log(gutil.colors.bgMagenta(`构建完成于${new Date().toLocaleTimeString()}，可以压缩打包上线了`));
+              if (isPureBuild) {
+                killProcess();
+              }
             }, 10);
           });
         }
@@ -167,6 +189,7 @@ gulp.task('webpack', function () {
     fnAssembleHTML();
   });
 });
+
 
 //根据文件类型变动，自动刷新浏览器
 function fnBrowserSync() {
@@ -198,7 +221,7 @@ function fnBrowserSync() {
         publicPath: webpackConfig.output.publicPath,
         logLevel: 'error',
         logTime: true,
-        writeToDisk: true, //写入硬盘文件，但还是从内存访问数据^-^
+        writeToDisk: false, //不写入硬盘文件，但还是从内存访问数据^-^
         // pretty colored output
         stats: {
           colors: true
@@ -242,6 +265,7 @@ gulp.task('browserSync', ['sass'], fnBrowserSync);
 function fnPreBuild() {
   cssStyle = cssStyles[0];
   isBuild = true;
+  webpackConfig.output.publicPath = 'dist/scripts/bundle/';//适合有相对目录的环境
 }
 gulp.task('preBuild', fnPreBuild);
 //上线启动
@@ -251,11 +275,13 @@ gulp.task('build', ['preBuild', 'browserSync'], function () {
 
 gulp.task('pureBuild', ['preBuild', 'sass'], function () {//纯打包模式，不开启服务器
   copyFiles();
-  gutil.colors.bgRed('当前为生产环境，已压缩CSS及JS');
+  isPureBuild = true;
+  console.log(gutil.colors.bgRed('当前为生产环境，使用自信纯打包不验证模式，并已执行压缩CSS及JS'));
   webpackConfig.mode = 'production';
   delete webpackConfig.devtool;
   fnWebpack();
 });
+gulp.task('purebuild', ['pureBuild']);
 //默认启动任务
 gulp.task('default', ['browserSync'], function () {
   // gulp.start('minify','cleancss')

@@ -7,7 +7,7 @@
 
 var showTips = function (content, state, callback, time) {
   content = content || '操作成功';
-  var realTime = parseInt(time) || 1000;
+  var realTime = parseInt(time) || 2500;
   var box = document.createElement('div');
   box.className = 'popup-tips';
 
@@ -15,10 +15,8 @@ var showTips = function (content, state, callback, time) {
   if (state) {
     if (/cancel|error|e/i.test(state)) { //错误提示参数:'error'||'cancel'
       htmlIcon = '<i class="icon p-error iconfont  icon-tishicuowu1"></i>';
-      realTime = parseInt(time) || 2500;
     } else if (/warning|w/i.test(state)) {
-      htmlIcon = '<i class="icon p-warning  iconfont icon-tishi"></i>';
-      realTime = parseInt(time) || 2500;
+      htmlIcon = '<i class="icon p-error  iconfont icon-tishi"></i>';
     }
   }
 

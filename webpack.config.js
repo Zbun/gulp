@@ -2,7 +2,7 @@ var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
-  entry: ["babel-polyfill",
+  entry: [
     './src/scripts/entry/main.js'
     // doc: './src/scripts/doc.js'
   ],
@@ -19,7 +19,7 @@ module.exports = {
       include: [path.resolve('./src/scripts')],
       exclude: /(node_modules|bower_components)/,
       options: {
-        // presets: ['es2015'],
+        presets: ['es2015'],
         cacheDirectory: true
       }
     },

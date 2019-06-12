@@ -14,7 +14,7 @@
       var type = (arg.type || '').replace('.', ''); //文件类型，jpg,gif 逗号隔开后缀名
       var rules = arg.rules || ''; //自定义规则
       // size = (size + '').replace(/k|m/i, '');
-      var url = arg.url || ''; //上传服务器
+      var url = arg.url || 'https://newvipapi.zolerp.cn/api/UploadFile/UploadImage'; //上传服务器
       var callback = arg.callback || ''; //成功回调
       var errorCallback = arg.error || ''; //失败回调
       var nodeCopy = obj.cloneNode();
@@ -132,16 +132,16 @@
             }
           };
           //加载进度事件
-          xhr.upload.onprogress = function (event) {
-            if (event.lengthComputable) {
-              document.body.appendChild(progressBg);
-              var complete = (event.loaded / event.total * 100 | 0) + '%';
-              progressBarInner.style.width = complete;
-              progressNum.innerHTML = '已完成：' + complete;
-              progressBarOuter.innerHTML = progressBarInner.outerHTML;
-              progressBg.innerHTML = progressBarOuter.outerHTML + progressNum.outerHTML;
-            }
-          };
+          // xhr.upload.onprogress = function (event) {
+          //   if (event.lengthComputable) {
+          //     document.body.appendChild(progressBg);
+          //     var complete = (event.loaded / event.total * 100 | 0) + '%';
+          //     progressBarInner.style.width = complete;
+          //     progressNum.innerHTML = '已完成：' + complete;
+          //     progressBarOuter.innerHTML = progressBarInner.outerHTML;
+          //     progressBg.innerHTML = progressBarOuter.outerHTML + progressNum.outerHTML;
+          //   }
+          // };
 
           fnUpload = function () {
             if (indexUploading >= obj.files.length) {

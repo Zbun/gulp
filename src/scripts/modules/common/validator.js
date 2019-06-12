@@ -26,7 +26,7 @@ module.exports = function (el) {
   let objMsg = {
     empty: '请填写此项',
     phone: '手机号码格式有误，请检查',
-    telnum: '电话格式有误，请检查',
+    telnum: '电话格式不正确',
     email: '邮箱格式有误，请检查',
     money: '此项要求输入数字且最多两位小数，请检查',
     money1: '此项要求输入数字且最多两位小数，请检查', //允许负值
@@ -81,6 +81,10 @@ module.exports = function (el) {
       }
       if (attrValidate.indexOf('required') > -1) {
         if (fn.isEmpty(val)) {
+          text = els[i].getAttribute('placeholder'); //判断必填时取占位符
+          if (els[i].tagName == 'SELECT') {
+            text = '请选择此项';
+          }
           msg = text || objMsg.empty;
 
           valid = false;
