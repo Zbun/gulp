@@ -242,7 +242,7 @@ function fnBrowserSync() {
     server: {
       baseDir: './',
       middleware,
-      // index: 'login.html'
+      index: 'login.html'
     },
     port: 20046,
     // codeSync: false,

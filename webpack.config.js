@@ -65,7 +65,7 @@ module.exports = {
       libs: path.join(__dirname, './src/scripts/lib/'), //通用库文件路径
       commonScripts: path.join(__dirname, './src/scripts/modules/common'), //通用JS模块路径
       commonVues: path.join(__dirname, './src/scripts/vues'), //通用vue模块路径
-      pages: path.join(__dirname, './src/scripts/SPA/pages/'), //独立的单页路径
+      views: path.join(__dirname, './src/scripts/SPA/views/'), //独立的单页路径
       mixins: path.join(__dirname, './src/scripts/modules/production/mixins/')
     }
   },
@@ -83,12 +83,12 @@ module.exports = {
       });
     },
     new webpack.ProvidePlugin({
-      dialog: path.resolve(__dirname, './src/scripts/lib/artdialog/dist/dialog-plus-min.js'), //弹窗对话框
-      showTips: path.resolve(__dirname, './src/scripts/modules/common/showTipsState.js'), //弹窗提示框
-      popup: path.resolve(__dirname, './src/scripts/modules/common/popupMobile.js'), //移动端弹窗确认框
-      validatorManu: path.resolve(__dirname, './src/scripts/modules/common/validatorManu.js'), //手动校验数据完整性
-      zmm_validator: path.resolve(__dirname, './src/scripts/modules/common/validator.js'), //数据完整性验证
-      zmm_date: path.resolve(__dirname, './src/scripts/modules/common/date.js'), //常用的日期选择
+      dialog: path.join(__dirname, './src/scripts/lib/artdialog/dist/dialog-plus-min.js'), //弹窗对话框
+      showTips: path.join(__dirname, './src/scripts/modules/common/showTipsState.js'), //弹窗提示框
+      popup: path.join(__dirname, './src/scripts/modules/common/popupMobile.js'), //移动端弹窗确认框
+      validatorManu: path.join(__dirname, './src/scripts/modules/common/validatorManu.js'), //手动校验数据完整性
+      zmm_validator: path.join(__dirname, './src/scripts/modules/common/validator.js'), //数据完整性验证
+      zmm_date: path.join(__dirname, './src/scripts/modules/common/date.js'), //常用的日期选择
       fetchData: path.join(__dirname, './src/scripts/modules/production/fetchData.js'), //获取数据
       initPage: path.join(__dirname, './src/scripts/modules/production/pagination.js'), //分页总方法
       dictionary: path.join(__dirname, './src/scripts/modules/production/SysDictionary.js'), //字典数据
