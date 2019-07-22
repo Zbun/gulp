@@ -19,8 +19,8 @@ module.exports = {
       include: [path.resolve('./src/scripts')],
       exclude: /(node_modules|bower_components)/,
       options: {
-        presets: ['es2015'],
-        cacheDirectory: true
+        presets: ['@babel/preset-react'],
+        // cacheDirectory: true
       }
     },
     {
@@ -58,15 +58,16 @@ module.exports = {
   mode: 'development',
   resolve: {
     modules: ['node_modules/', path.join(__dirname, './src/scripts')],
-    extensions: ['.vue', '.js'],
+    extensions: ['.vue', '.js', '.jsx'],
     alias: {
-      'rdist': path.join(__dirname, './'), //根相对目录
-      htmls: path.join(__dirname, './src/htmls'), //htmls模块路径
-      libs: path.join(__dirname, './src/scripts/lib/'), //通用库文件路径
-      commonScripts: path.join(__dirname, './src/scripts/modules/common'), //通用JS模块路径
-      commonVues: path.join(__dirname, './src/scripts/vues'), //通用vue模块路径
-      views: path.join(__dirname, './src/scripts/SPA/views/'), //独立的单页路径
-      mixins: path.join(__dirname, './src/scripts/modules/production/mixins/')
+      'vue$': 'vue/dist/vue.esm.js',
+      '@root': path.join(__dirname, './'), //根相对目录
+      '@htmls': path.join(__dirname, './src/htmls'), //htmls模块路径
+      '@libs': path.join(__dirname, './src/scripts/lib/'), //通用库文件路径
+      '@common': path.join(__dirname, './src/scripts/modules/common'), //通用JS模块路径
+      '@vues': path.join(__dirname, './src/scripts/vues'), //通用vue模块路径
+      '@pages': path.join(__dirname, './src/scripts/SPA/pages/'), //独立的单页路径
+      '@mixins': path.join(__dirname, './src/scripts/modules/production/mixins/')
     }
   },
   // optimization: {
