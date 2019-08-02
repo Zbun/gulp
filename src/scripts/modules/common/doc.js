@@ -91,7 +91,7 @@ module.exports = (function() {
   //操作提示，第二个参数为成功与失败，可传'error','false','warning'
   var showTips = require('showTipsState');
 
-  showTips('网络错误', 'error');
+  $showTips('网络错误', 'error');
 
   //侧滑删除、arg1=对象,arg2=回调,arg3=方向(right,up,down),arg4=偏移距离
   var slideDel = require('slideDelete');

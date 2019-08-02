@@ -9,20 +9,71 @@
   <meta name="keywords" content="">
   <link type="text/plain" rel="author" href="/humans.txt">
   <link rel="stylesheet" href="/dist/fonts/iconfont.css?rev=2355">
-  <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="/dist/css/zErp.css?rev=2366">
   <title></title>
+  <style>
+    body {
+      font: 14px "Century Gothic", Futura, sans-serif;
+      margin: 20px;
+    }
+
+    ol,
+    ul {
+      padding-left: 30px;
+    }
+
+    .board-row:after {
+      clear: both;
+      content: "";
+      display: table;
+    }
+
+    .status {
+      margin-bottom: 10px;
+    }
+
+    .square {
+      background: #fff;
+      border: 1px solid #999;
+      float: left;
+      font-size: 24px;
+      font-weight: bold;
+      line-height: 34px;
+      height: 34px;
+      margin-right: -1px;
+      margin-top: -1px;
+      padding: 0;
+      text-align: center;
+      width: 34px;
+    }
+
+    .square:focus {
+      outline: none;
+    }
+
+    .kbd-navigation .square:focus {
+      background: #ddd;
+    }
+
+    .game {
+      display: flex;
+      flex-direction: row;
+    }
+
+    .game-info {
+      margin-left: 20px;
+    }
+  </style>
 </head>
 
 <body>
   <div id="app" class="home-wrapper">
-    <e-header></e-header>
+    <!-- <e-header></e-header> -->
     <router-view></router-view>
   </div>
   <script src="/dist/scripts/lib/jQuery.min.js"></script>
-  <script src="/dist/scripts/lib/vue.min.js"></script>
+  <!-- <script src="/dist/scripts/lib/vue.min.js"></script> -->
   <script src="/webConfig.js?rev=hash"></script>
-  <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
   <script src="/dist/scripts/bundle/main.bundle.js?rev=hash"></script>
 </body>
 

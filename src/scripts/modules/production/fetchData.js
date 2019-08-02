@@ -1,4 +1,4 @@
-// import URI from 'commonScripts/uri.js';
+// import URI from '@common/uri.js';
 /**
  * 获取数据通用方法
  * @date   2016-11-28
@@ -7,7 +7,7 @@
  * @return {[type]}
  */
 
-import loading from 'commonScripts/zWaiting.js';
+import loading from '@common/zWaiting.js';
 var server = window.APISERVER || localStorage.APIServer; //临时调试接口地址，本地存储，随时修改
 localStorage.APIServer = /\/$/.test(server) ? server : server + '/';
 
@@ -36,7 +36,7 @@ function fetchData(arg) {
   var dataList = [];
   var target = arg.target || ''; //防止多次点击时，传当前点击按钮节点
   var async = true;
-  if (typeof(arg.async) != void 0) {
+  if (typeof (arg.async) != void 0) {
     async = arg.async;
   }
 
@@ -51,13 +51,13 @@ function fetchData(arg) {
   if (!hideLoading) {
     l1 = loading.show();
   }
-  var fnFinish = function() {
+  var fnFinish = function () {
     if (!hideLoading) {
       l1.hide();
     }
     (target.nodeType && target.nodeType == 1) && target.classList.remove('disabled');
   };
-  var callback = function(data) {
+  var callback = function (data) {
     fnFinish();
     var d = data;
     if (d) {
@@ -66,7 +66,7 @@ function fetchData(arg) {
           {
             if (!hideOkTips) {
               if (!hideTips && d.Message) {
-                showTips(d.Message);
+                $showTips(d.Message);
               }
             }
 
@@ -89,11 +89,11 @@ function fetchData(arg) {
         case 1:
           {
             //登录状态失效跳转至登录页
-            showTips(d.Message, 'error');
+            $showTips(d.Message, 'error');
             localStorage.token = '';
             localStorage.userName = '';
             localStorage.referrerHash = location.hash;
-            setTimeout(function() {
+            setTimeout(function () {
               top.window.location = '/login.html';
               // location.reload();
             }, 200);
@@ -102,7 +102,7 @@ function fetchData(arg) {
         default:
           {
             if (!hideTips && d.Message) {
-              showTips(d.Message, 'error');
+              $showTips(d.Message, 'error');
             }
             //处理服务器返回消息，一般用于登录页面
             if (d.Message && typeof arg.handlerMessage == 'function') {
@@ -132,7 +132,7 @@ function fetchData(arg) {
     },
     error(xhr) {
       fnFinish();
-      !hideTips && showTips('请求出错咯，状态码：' + xhr.status + '<p>若持续出现此情况，请及时联系我们，谢谢。</p>', 'error', '', 3800);
+      !hideTips && $showTips('请求出错咯，状态码：' + xhr.status + '<p>若持续出现此情况，请及时联系我们，谢谢。</p>', 'error', '', 3800);
     },
     async: async
   });

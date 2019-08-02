@@ -229,7 +229,7 @@ module.exports = function (el) {
         parent.appendChild(nodeTips);
       }
     } else {
-      showTips(msg, 'warning', function () {
+      $showTips(msg, 'warning', function () {
         curNode.focus();
       }, 1000);
     }

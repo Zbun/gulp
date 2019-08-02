@@ -5,15 +5,15 @@
   </div>
 </template>
 <script>
-import loading from 'commonScripts/zWaiting.ts';
-export default {
-  data() {
-    return {}
-  },
-  components: {},
-  methods: {},
-  created() {
-    loading.show();
+  import loading from '@common/zWaiting.ts';
+  export default {
+    data() {
+      return {}
+    },
+    components: {},
+    methods: {},
+    created() {
+      loading.show();
+    }
   }
-}
 </script>

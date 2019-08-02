@@ -5,14 +5,15 @@
  */
 
 
-let routerB = [{ //基础配置路由
+let routerB = [
+  { //基础配置路由
     path: '/building',
     name: 'building',
     meta: {
       title: '功能建设中',
     },
     component(resolve) {
-      require(['pages/building.vue'], resolve);
+      require(['@pages/building.vue'], resolve);
     }
   },
   // {
@@ -22,7 +23,7 @@ let routerB = [{ //基础配置路由
   //     title: '登录',
   //   },
   //   component(resolve) {
-  //     require(['commonVues/elements/eLogin.vue'], resolve);
+  //     require(['@vues/elements/eLogin.vue'], resolve);
   //   }
   // },
 

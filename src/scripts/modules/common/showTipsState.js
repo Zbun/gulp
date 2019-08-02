@@ -1,6 +1,6 @@
 /**
  * 操作提示，需要进一步封装为成功或失败方法，模块化
- * 使用方法：require或Webpack，单独使用时：showTips('操作成功',function(){}),showTipsState('操作失败','error',function(){})
+ * 使用方法：require或Webpack，单独使用时：$showTips('操作成功',function(){}),showTipsState('操作失败','error',function(){})
  * @author  Zhao Liubin
  * @type {[type]}
  */

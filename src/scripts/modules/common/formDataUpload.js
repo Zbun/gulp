@@ -62,7 +62,7 @@
               realSize = parseFloat(size) * 1024;
             }
             if (f0.size > realSize) {
-              showTips('文件尺寸超出限制，请检查', 'error');
+              alert('文件尺寸超出限制，请检查', 'error');
               fnUploadEnd();
               return;
             }
@@ -79,7 +79,7 @@
               }
             }
             if (!isTypeOk) {
-              showTips('文件格式要求 "' + type + '" 后缀名，请检查', 'error');
+              alert('文件格式要求 "' + type + '" 后缀名，请检查', 'error');
               fnUploadEnd();
               return;
             }
@@ -88,7 +88,7 @@
           if (rules.length > 0) {
             var regRules = new RegExp(rules);
             if (regRules.test(f0.name)) {
-              showTips('该文件不合要求，请校对', 'error');
+              alert('该文件不合要求，请校对', 'error');
               fnUploadEnd();
               return;
             }
@@ -106,7 +106,7 @@
               //只处理ZMM响应信息部分，其它忽略或修改
               if (data.ResponseID == -1) {
                 if (data.Message) {
-                  showTips(data.Message, 'error');
+                  alert(data.Message, 'error');
                   fnUploadEnd();
                   return;
                 }
@@ -125,7 +125,7 @@
               if (typeof errorCallback == 'function') {
                 errorCallback();
               } else {
-                showTips('上传失败，请稍候重试；若继续错误，请联系我们网站开发人员，感谢。', 'error', '', 5000);
+                alert('上传失败，请稍候重试；若继续错误，请联系我们网站开发人员，感谢。', 'error', '', 5000);
               }
               fnUploadEnd();
               fnResetBtnUpload();

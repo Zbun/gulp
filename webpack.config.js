@@ -19,8 +19,8 @@ module.exports = {
       include: [path.resolve('./src/scripts')],
       exclude: /(node_modules|bower_components)/,
       options: {
-        presets: ['es2015'],
-        cacheDirectory: true
+        presets: ['@babel/preset-react'],
+        // cacheDirectory: true
       }
     },
     {
@@ -58,15 +58,16 @@ module.exports = {
   mode: 'development',
   resolve: {
     modules: ['node_modules/', path.join(__dirname, './src/scripts')],
-    extensions: ['.vue', '.js'],
+    extensions: ['.vue', '.js', '.jsx'],
     alias: {
-      'rdist': path.join(__dirname, './'), //根相对目录
-      htmls: path.join(__dirname, './src/htmls'), //htmls模块路径
-      libs: path.join(__dirname, './src/scripts/lib/'), //通用库文件路径
-      commonScripts: path.join(__dirname, './src/scripts/modules/common'), //通用JS模块路径
-      commonVues: path.join(__dirname, './src/scripts/vues'), //通用vue模块路径
-      views: path.join(__dirname, './src/scripts/SPA/views/'), //独立的单页路径
-      mixins: path.join(__dirname, './src/scripts/modules/production/mixins/')
+      '@root': path.join(__dirname, './'), //根相对目录
+      '@htmls': path.join(__dirname, './src/htmls'), //htmls模块路径
+      '@libs': path.join(__dirname, './src/scripts/lib/'), //通用库文件路径
+      '@common': path.join(__dirname, './src/scripts/modules/common'), //通用JS模块路径
+      '@vues': path.join(__dirname, './src/scripts/vues'), //通用vue模块路径
+      '@scripts': path.join(__dirname, './src/scripts/'), //scripts源根目录
+      '@pages': path.join(__dirname, './src/scripts/SPA/pages/'), //独立的单页路径
+      '@mixins': path.join(__dirname, './src/scripts/modules/production/mixins/')
     }
   },
   // optimization: {
@@ -83,15 +84,15 @@ module.exports = {
       });
     },
     new webpack.ProvidePlugin({
-      dialog: path.join(__dirname, './src/scripts/lib/artdialog/dist/dialog-plus-min.js'), //弹窗对话框
-      showTips: path.join(__dirname, './src/scripts/modules/common/showTipsState.js'), //弹窗提示框
-      popup: path.join(__dirname, './src/scripts/modules/common/popupMobile.js'), //移动端弹窗确认框
-      validatorManu: path.join(__dirname, './src/scripts/modules/common/validatorManu.js'), //手动校验数据完整性
-      zmm_validator: path.join(__dirname, './src/scripts/modules/common/validator.js'), //数据完整性验证
-      zmm_date: path.join(__dirname, './src/scripts/modules/common/date.js'), //常用的日期选择
-      fetchData: path.join(__dirname, './src/scripts/modules/production/fetchData.js'), //获取数据
-      initPage: path.join(__dirname, './src/scripts/modules/production/pagination.js'), //分页总方法
-      dictionary: path.join(__dirname, './src/scripts/modules/production/SysDictionary.js'), //字典数据
+      $dialog: path.join(__dirname, './src/scripts/lib/artdialog/dist/dialog-plus-min.js'), //弹窗对话框
+      $showTips: path.join(__dirname, './src/scripts/modules/common/showTipsState.js'), //弹窗提示框
+      $popup: path.join(__dirname, './src/scripts/modules/common/popupMobile.js'), //移动端弹窗确认框
+      $validatorManu: path.join(__dirname, './src/scripts/modules/common/validatorManu.js'), //手动校验数据完整性
+      $validator: path.join(__dirname, './src/scripts/modules/common/validator.js'), //数据完整性验证
+      $date: path.join(__dirname, './src/scripts/modules/common/date.js'), //常用的日期选择
+      $fetchData: path.join(__dirname, './src/scripts/modules/production/fetchData.js'), //获取数据
+      $initPage: path.join(__dirname, './src/scripts/modules/production/pagination.js'), //分页总方法
+      $dictionary: path.join(__dirname, './src/scripts/modules/production/SysDictionary.js'), //字典数据
     })
   ],
   //

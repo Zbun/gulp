@@ -114,9 +114,9 @@
 
 //操作提示，第二个参数为成功与失败，可传'error','false','warning'
 // var showTips = require('showTipsState');
-// showTips('操作成功', 'error');
+// $showTips('操作成功', 'error');
 
-// // showTips('网络错误', 'error');
+// // $showTips('网络错误', 'error');
 
 // var showTipsO = require('showTipsO');
 
