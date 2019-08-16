@@ -79,7 +79,7 @@ var copyFiles = function () {
   gulp.src('./src/staticResources/scripts/**')
     .pipe(gulp.dest(opts.destPath + '/scripts/'));
 
-  del([opts.destPath + '/images/**/*']).then(function () {
+  del([opts.destPath + '/images/**']).then(function () {
     gulp.src('./src/staticResources/images/**')
       .pipe(gulp.dest(opts.destPath + '/images/'));
   });
@@ -249,9 +249,12 @@ function fnBrowserSync() {
     ghostMode: false
   });
   watch('./src/htmls/**/*.html', fnAssembleHTML);
-  watch('./src/staticResources/**/*', function () {
-    setTimeout(copyFiles, 100);
-  });//监视静态文件变化后复制文件
+  setTimeout(function () {
+    watch('./src/staticResources/**/*', function () {
+      fnConsole('文件变动');
+      setTimeout(copyFiles, 100);
+    });//监视静态文件变化后复制文件
+  }, 30000);
   gulp.watch('./src/scss/**/*.scss', fnSass);
   gulp.watch('./dist/css/*.css', function () {
     fnConsole('SCSS编译结束-V' + num.SCSS++);
