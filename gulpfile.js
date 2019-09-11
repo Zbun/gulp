@@ -76,23 +76,8 @@ var cssStyles = ['compressed', 'expanded'],
 
 //复制文件至目标目录
 var copyFiles = function () {
-  gulp.src('./src/staticResources/scripts/**')
-    .pipe(gulp.dest(opts.destPath + '/scripts/'));
-
-  del([opts.destPath + '/images/**']).then(function () {
-    gulp.src('./src/staticResources/images/**')
-      .pipe(gulp.dest(opts.destPath + '/images/'));
-  });
-
-  gulp.src('./src/staticResources/fonts/**')
-    .pipe(gulp.dest(opts.destPath + '/fonts/'));
-
-  gulp.src('./src/staticResources/files/**')
-    .pipe(gulp.dest(opts.destPath + '/files/'));
-
-  gulp.src('./src/staticResources/css/*.css')
-    .pipe(gulp.dest(opts.destPath + '/css/'));
-
+  gulp.src('./src/staticResources/**')
+    .pipe(gulp.dest(opts.destPath));
   fnConsole('静态文件复制完成');
 };
 
@@ -251,10 +236,9 @@ function fnBrowserSync() {
   watch('./src/htmls/**/*.html', fnAssembleHTML);
   setTimeout(function () {
     watch('./src/staticResources/**/*', function () {
-      fnConsole('文件变动');
       setTimeout(copyFiles, 100);
     });//监视静态文件变化后复制文件
-  }, 30000);
+  }, 10000);
   gulp.watch('./src/scss/**/*.scss', fnSass);
   gulp.watch('./dist/css/*.css', function () {
     fnConsole('SCSS编译结束-V' + num.SCSS++);
@@ -268,6 +252,7 @@ gulp.task('browserSync', ['sass'], fnBrowserSync);
 function fnPreBuild() {
   cssStyle = cssStyles[0];
   isBuild = true;
+  del.sync(['dist/**']);
   webpackConfig.output.publicPath = 'dist/scripts/bundle/';//适合有相对目录的环境
 }
 gulp.task('preBuild', fnPreBuild);
