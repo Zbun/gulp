@@ -49,11 +49,6 @@ module.exports = function () {
       return false;
     }).on('mouseup', function (e) {
       isDraging = false;
-      // var $t = $(this);
-      // var $p = $(this).parent();
-      // $t.unbind();
-      // openSelect();
-
       top.window.document.getElementById('context-tab-bar') && (top.window.document.getElementById('context-tab-bar').style.display = 'none'); //选项卡上下文
 
       if (!$(e.target).closest('.intelligent-match').length) {
@@ -72,13 +67,7 @@ module.exports = function () {
       if (!isDraging) return;
       var mdl = e.clientX - sml;
       var mdt = e.clientY - smt;
-      // $p.css({
-      //   left: mdl + sel,
-      //   top: mdt + set,
-      //   height: pHeight,
-      //   bottom: 'auto',
-      //   marginLeft: pWidth / 2
-      // });
+
       pNode.style.left = mdl + sel + 'px';
       pNode.style.top = mdt + set + 'px';
       pNode.style.height = pHeight + 'px';
@@ -94,15 +83,8 @@ module.exports = function () {
       if (e.keyCode == 37 || e.keyCode == 39) {
         e.stopPropagation();
       }
-    }).on('focus', '.intelligent-match input', function () { //客户下拉智能感知
-      $(this).closest('.intelligent-match').find('.list-match').show();
-    }).on('click', '.show-history .action-show', function () {
-      $('.show-history .history-price').hide();
-      $(this).closest('.show-history').find('.history-price').show();
     }).on('click', '.gototop', function () {
       window.scrollTo(0, 0);
-    }).on('click', '.details-box>.summary', function () {//通用展开折叠
-      $(this).toggleClass('on');
     });
     window.onblur = function () {
       isDraging = false;

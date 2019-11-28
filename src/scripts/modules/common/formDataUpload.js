@@ -130,7 +130,7 @@
               if (typeof errorCallback == 'function') {
                 errorCallback();
               } else {
-                alert('上传失败，请稍候重试；若继续错误，请联系我们网站开发人员，感谢。', 'error', '', 5000);
+                alert('上传失败，请稍候重试；若继续错误，请联系我们客服人员，感谢。', 'error', '', 5000);
               }
               fnUploadEnd();
               fnResetBtnUpload();

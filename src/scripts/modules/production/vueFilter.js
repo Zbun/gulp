@@ -1,13 +1,5 @@
 //---------------------------------------------------------------------------------
 
-//格式化浮点数
-Vue.filter('floatFormat', function(value) {
-  if (!value) {
-    return 0;
-  }
-  return parseFloat(value.toFixed(10));
-});
-
 //常用过滤器
 //千位分隔小方法 zhao.liubin@zol.com.cn
 function splitThousand(num) {
@@ -15,27 +7,18 @@ function splitThousand(num) {
     return 0;
   } else {
     num = (num - 0).toFixed(2);
-    let pre = '';
-    if (Math.abs(num) < 1000) {
-      return num;
-    } else if (num < -1000) {
-      num = Math.abs(num).toFixed(2);
-      pre = '-';
-    }
-    var n0 = parseInt(num / 1000);
-    var n1 = /\d{3}\.\d{2}/.exec(num)[0];
-    return pre + (n0 + '').split('').reverse().join('').replace(/(\d{3})(?=\d)/g, '$1,').split('').reverse().join('') + ',' + n1;
+    return (num + '').replace(/(?=(\B\d{3})+(\.\d{2})?$)/g, ',');
   }
 }
 //金额
-Vue.filter('money', function(value) {
+Vue.filter('money', function (value) {
   if (!value) {
     value = 0;
   }
   return '￥' + parseFloat(value).toFixed(2);
 });
 //格式化钱不带‘￥’,千位分隔
-Vue.filter('currency', function(value) {
+Vue.filter('currency', function (value) {
   if (!value) {
     if (value == undefined) {
       return '';
@@ -47,56 +30,26 @@ Vue.filter('currency', function(value) {
   }
   return splitThousand(parseFloat(value).toFixed(2));
 });
-//货币双向过滤必填
-Vue.filter('currencyIn', {
-  read(value) {
-    let number = parseFloat(value);
-    return isNaN(number) ? '' : 0 == number ? 0 : number.toFixed(2);
-  },
-  write(value, oldVal) {
-    let number = parseFloat(value);
-    return isNaN(number) ? (oldVal || '') : (/\.\d{3,}$/.test(number) ? number.toFixed(2) : number);
-  }
-});
 
-
-//整数双向
-Vue.filter('numberIn', {
-  read(value) {
-    return value;
-  },
-  write(value, oldVal) {
-    let number = parseInt(value);
-    return isNaN(number) ? (oldVal || 0) : number;
-  }
-});
-
-//双向浮点
-Vue.filter('floatIn', {
-  read(value) {
-    return value;
-  },
-  write(value, oldVal) {
-    let number = parseFloat(value);
-    return isNaN(number) ? (oldVal || 0.01) : number;
-  }
-});
+function repairZero(num) {//num不足10时，前补0
+  return num < 10 ? '0' + num : num;
+}
 
 //通用处理时间戳
 function resetTimeStamp(value) {
   value = value.split('.')[0];
-  value = (value + 'Z').replace(/\//g, '-').replace(/[\u4E00-\u9FA5]/g, '').replace(/-(\d+)-(\d+)/, function(all, a, b) {
+  value = (value + 'Z').replace(/\//g, '-').replace(/[\u4E00-\u9FA5]/g, '').replace(/-(\d+)-(\d+)/, function (all, a, b) {
     /^\d$/.test(a) && (a = '0' + a);
     /^\d$/.test(b) && (b = '0' + b);
     return '-' + a + '-' + b;
-  }).replace(/(\d+):(\d+):(\d+)/, function(all, a, b, c) {
+  }).replace(/(\d+):(\d+):(\d+)/, function (all, a, b, c) {
     let arrTemp = [];
     /^\d$/.test(a) && (a = '0' + a);
     /^\d$/.test(b) && (b = '0' + b);
     /^\d$/.test(c) && (c = '0' + c);
     arrTemp.push(a, b, c);
     return arrTemp.join(':');
-  }).replace(/\d(\s+)\d/, function(all, a) {
+  }).replace(/\d(\s+)\d/, function (all, a) {
     if (/^\s+$/.test(a)) {
       return all.replace(a, 'T');
     }
@@ -109,22 +62,23 @@ function resetTimeStamp(value) {
   var minutes = parseInt(dt.getMinutes());
   var seconds = parseInt(dt.getSeconds());
 
-  month = month < 10 ? '0' + month : month;
-  day = day < 10 ? '0' + day : day;
-  hours = hours < 10 ? '0' + hours : hours;
-  minutes = minutes < 10 ? '0' + minutes : minutes;
-  seconds = seconds < 10 ? '0' + seconds : seconds;
+  month = repairZero(month);
+  day = repairZero(day);
+  hours = repairZero(hours);
+  minutes = repairZero(minutes);
+  seconds = repairZero(seconds);
   return {
     year: year,
     month: month,
     day: day,
     hours: hours,
     minutes: minutes,
-    seconds: seconds
+    seconds: seconds,
+    fullTime: year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds
   };
 }
 //日期过滤器： 传入 2016-07-07T10:27:13  过滤成： 2016-07-07
-Vue.filter('date', function(value) {
+Vue.filter('date', function (value) {
   if (!value) return '';
   var dt = resetTimeStamp(value);
   return dt.year + '-' + dt.month + '-' + dt.day;
@@ -133,11 +87,11 @@ Vue.filter('date', function(value) {
 
 //  2016-07-07
 //  时间过滤器完整： 传入 2016-07-07T10:27:13  过滤成： 2016-07-07 10:27:13
-Vue.filter('datetime', function(value) {
+Vue.filter('datetime', function (value) {
   if (!value) return '';
   var dt = resetTimeStamp(value);
 
-  return dt.year + '-' + dt.month + '-' + dt.day + ' ' + dt.hours + ':' + dt.minutes + ':' + dt.seconds;
+  return dt.fullTime;
 
 });
 
@@ -148,22 +102,28 @@ Vue.filter('datetime', function(value) {
  * @param  {<String>}
  * @return {<Object>}
  */
-Vue.filter('imagesLink', function(value) {
+Vue.filter('imagesLink', function (value) {
   if (!value || value.length == 0) {
-    return '/dist/images/goodsDefault.jpg';
+    return 'dist/images/goodsDefault.jpg';
   } else {
+    if (Array.isArray(value)) {
+      return value[0];
+    }
     return value.split(',')[0];
   }
 });
-Vue.filter('imageLink', function(value) { //防写错，容错
+Vue.filter('imageLink', function (value) { //防写错，容错
   if (!value || value.length == 0) {
-    return '/dist/images/goodsDefault.jpg';
+    return 'dist/images/goodsDefault.jpg';
   } else {
+    if (Array.isArray(value)) {
+      return value[0];
+    }
     return value.split(',')[0];
   }
 });
 
 
-for (let key in dictionary) { //以词典为模板生成过滤器
-  Vue.filter(key, (value) => dictionary[key][value]);
+for (let key in $dictionary) { //以词典为模板生成过滤器
+  Vue.filter(key, (value) => $dictionary[key][value]);
 }

@@ -1,4 +1,4 @@
-// import URI from '@common/uri.js';
+// import URI from '@scripts/uri.js';
 /**
  * 获取数据通用方法
  * @date   2016-11-28
@@ -7,7 +7,8 @@
  * @return {[type]}
  */
 
-import loading from '@common/zWaiting.js';
+import loading from '@scripts/zWaiting.js';
+import loadingH5 from '@scripts/waiting.js';
 var server = window.APISERVER || localStorage.APIServer; //临时调试接口地址，本地存储，随时修改
 localStorage.APIServer = /\/$/.test(server) ? server : server + '/';
 
@@ -19,7 +20,7 @@ function fetchData(arg) {
   var hideTips = arg.hideTips; //隐藏弹窗提示
   var hideOkTips = arg.hideOkTips; //隐藏操作成功的提示
   api = /^\//.test(api) ? api.substr(1) : api; //过滤以'/开头的API'
-  if (!api) {
+  if (!api && !arg.url) {
     console.warn('需要传入API地址，如：API:"/p/list/"');
     return;
   }
@@ -31,8 +32,7 @@ function fetchData(arg) {
     finalUrl = finalServer + api;
   }
   var argPara = arg.para || {};
-  var para = $.extend({ token: tokenReal }, argPara);
-  para.Version = window._WEBCONFIG.Version || ''; //软件版本
+  var para = Object.assign({ token: tokenReal }, argPara);
   var dataList = [];
   var target = arg.target || ''; //防止多次点击时，传当前点击按钮节点
   var async = true;
@@ -49,7 +49,12 @@ function fetchData(arg) {
   }
   var l1 = '';
   if (!hideLoading) {
-    l1 = loading.show();
+    if (arg.isH5) {
+      l1 = loadingH5.show();
+    } else {
+
+      l1 = loading.show();
+    }
   }
   var fnFinish = function () {
     if (!hideLoading) {
@@ -61,18 +66,18 @@ function fetchData(arg) {
     fnFinish();
     var d = data;
     if (d) {
-      switch (parseInt(d.ResponseID)) {
+      switch (parseInt(d.Status)) {
         case 0:
           {
             if (!hideOkTips) {
-              if (!hideTips && d.Message) {
-                $showTips(d.Message);
+              if (!hideTips && d.Msg) {
+                $showTips(d.Msg);
               }
             }
 
             //处理服务器返回消息，一般用于登录页面
-            if (d.Message && typeof arg.handlerMessage == 'function') {
-              arg.handlerMessage(d.Message);
+            if (d.Msg && typeof arg.handlerMessage == 'function') {
+              arg.handlerMessage(d.Msg);
             }
             dataList = d.Data;
             //请求成功执行回执操作callback
@@ -89,24 +94,30 @@ function fetchData(arg) {
         case 1:
           {
             //登录状态失效跳转至登录页
-            $showTips(d.Message, 'error');
+            $showTips(d.Msg, 'error');
             localStorage.token = '';
             localStorage.userName = '';
             localStorage.referrerHash = location.hash;
             setTimeout(function () {
-              top.window.location = '/login.html';
-              // location.reload();
+              // top.window.location = '/login.html';
+              if (top == window) {
+                location.hash = 'login';
+                location.reload();
+              } else {
+                top.window.location = window.G_LOGINHREF || '/login.html';
+              }
+
             }, 200);
             break;
           }
         default:
           {
-            if (!hideTips && d.Message) {
-              $showTips(d.Message, 'error');
+            if (!hideTips && d.Msg) {
+              $showTips(d.Msg, 'error');
             }
             //处理服务器返回消息，一般用于登录页面
-            if (d.Message && typeof arg.handlerMessage == 'function') {
-              arg.handlerMessage(d.Message);
+            if (d.Msg && typeof arg.handlerMessage == 'function') {
+              arg.handlerMessage(d.Msg);
             }
             //请求成功，但可能需要处理错误时回调方法 errorCallbak
             if (typeof arg.errorCallback == 'function') {
@@ -120,10 +131,12 @@ function fetchData(arg) {
   return $.ajax({
     url: finalUrl,
     type: 'POST',
-    // beforeSend: function(request) {
-    //   request.setRequestHeader("Authority", 'authorizationToken');
-    // },
-    headers: {},
+    beforeSend: function (request) {
+      // request.setRequestHeader("ACCESS_TOKEN", tokenReal);
+    },
+    headers: {
+      // ACCESS_TOKEN: tokenReal
+    },
     data: para,
     dataType: 'json',
     success: callback,
@@ -132,7 +145,7 @@ function fetchData(arg) {
     },
     error(xhr) {
       fnFinish();
-      !hideTips && $showTips('请求出错咯，状态码：' + xhr.status + '<p>若持续出现此情况，请及时联系我们，谢谢。</p>', 'error', '', 3800);
+      !hideTips && $showTips('请求出错咯，状态码：' + xhr.status, 'error', '', 3800);
     },
     async: async
   });

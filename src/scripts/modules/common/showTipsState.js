@@ -1,13 +1,13 @@
 /**
  * 操作提示，需要进一步封装为成功或失败方法，模块化
- * 使用方法：require或Webpack，单独使用时：$showTips('操作成功',function(){}),showTipsState('操作失败','error',function(){})
+ * 使用方法：require或Webpack，单独使用时：showTips('操作成功',function(){}),showTipsState('操作失败','error',function(){})
  * @author  Zhao Liubin
  * @type {[type]}
  */
 
 var showTips = function (content, state, callback, time) {
   content = content || '操作成功';
-  var realTime = parseInt(time) || 2500;
+  var realTime = parseInt(time) || 1000;
   var box = document.createElement('div');
   box.className = 'popup-tips';
 
@@ -15,12 +15,14 @@ var showTips = function (content, state, callback, time) {
   if (state) {
     if (/cancel|error|e/i.test(state)) { //错误提示参数:'error'||'cancel'
       htmlIcon = '<i class="icon p-error iconfont  icon-tishicuowu1"></i>';
+      realTime = parseInt(time) || 2500;
     } else if (/warning|w/i.test(state)) {
       htmlIcon = '<i class="icon p-error  iconfont icon-tishi"></i>';
+      realTime = parseInt(time) || 2500;
     }
   }
 
-  box.innerHTML = '<div class="pop-inner">' + htmlIcon + '<div class="content">' + content + '</div></div>';
+  box.innerHTML = '<div class="popup-inner">' + htmlIcon + '<div class="content">' + content + '</div></div>';
   document.body.appendChild(box);
 
   // var opDef=0,deg=95;

@@ -1,4 +1,4 @@
-import 'libs/jquery.twbsPagination.js';
+import '@libs/jquery.twbsPagination.js';
 
 
 /**
@@ -39,6 +39,7 @@ module.exports = (vm, totalPages, totalRows, callback, startPage) => {
         // last: '>',
         startPage: StartPage,
         totalPages: totalPages,
+        totalRows: totalRows,
         visiblePages: 5,
         initiateStartPageClick: false,
         goVal: 'Go',

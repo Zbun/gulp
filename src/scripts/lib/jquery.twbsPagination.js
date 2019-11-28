@@ -8,7 +8,7 @@
  * Modified by zlb 2016-04-20
  * Add goto page function and split the page
  */
-var pagination = function($, window, document, undefined) {
+var pagination = function ($, window, document, undefined) {
 
   'use strict';
 
@@ -16,7 +16,7 @@ var pagination = function($, window, document, undefined) {
 
   // PROTOTYPE AND CONSTRUCTOR
 
-  var TwbsPagination = function(element, options) {
+  var TwbsPagination = function (element, options) {
     this.$element = $(element);
     this.options = $.extend({}, $.fn.twbsPagination.defaults, options);
 
@@ -65,9 +65,10 @@ var pagination = function($, window, document, undefined) {
 
 
     if (tagName !== 'UL') {
+      this.$element.append('<span class="pagination" style="vertical-align:middle">共' + this.options.totalRows + '条</span>');
       this.$element.append(this.$listContainer);
       if (this.options.goVal) {
-        this.$go.addClass(this.options.paginationClass).html('<li>到<input type="number" style="width:4em" value=1 min="1" />页<a class="btn">' + this.options.goVal + '</a></li>');
+        this.$go.addClass(this.options.paginationClass).html('<li>前往<input type="number" style="width:4em" value=1 min="1" />页<a href="javascript:;" class="btn">' + this.options.goVal + '</a></li>');
         this.$element.append(this.$go);
       }
     }
@@ -86,18 +87,18 @@ var pagination = function($, window, document, undefined) {
 
     constructor: TwbsPagination,
 
-    destroy: function() {
+    destroy: function () {
       this.$element.empty();
       this.$element.removeData('twbs-pagination');
       this.$element.off('page');
 
-      this.$element.find('input,.btn,select').each(function() {
+      this.$element.find('input,.btn,select').each(function () {
         $(this).off();
       });
       return this;
     },
 
-    show: function(page, go) {
+    show: function (page, go) {
       if (page < 1 || page > this.options.totalPages) {
         throw new Error('Page is incorrect.');
       }
@@ -109,7 +110,7 @@ var pagination = function($, window, document, undefined) {
       return this;
     },
 
-    buildListItems: function(pages, go) {
+    buildListItems: function (pages, go) {
       var listItems = [];
       var isSplitShow = this.options.totalPages > this.options.visiblePages;
       if (this.options.first) {
@@ -150,7 +151,7 @@ var pagination = function($, window, document, undefined) {
       return listItems;
     },
 
-    buildItem: function(type, page) {
+    buildItem: function (type, page) {
       var $itemContainer = $('<li></li>'),
         $itemContent = $('<a></a>'),
         itemText = null;
@@ -201,7 +202,7 @@ var pagination = function($, window, document, undefined) {
       return $itemContainer;
     },
 
-    getPages: function(currentPage) {
+    getPages: function (currentPage) {
       var pages = [];
 
       var half = Math.floor(this.options.visiblePages / 2);
@@ -227,12 +228,12 @@ var pagination = function($, window, document, undefined) {
       return { 'currentPage': currentPage, 'numeric': pages };
     },
 
-    render: function(pages, go) {
+    render: function (pages, go) {
       var _this = this;
       this.$listContainer.children().remove();
       this.$listContainer.append(this.buildListItems(pages, go));
 
-      this.$listContainer.children().each(function() {
+      this.$listContainer.children().each(function () {
         var $this = $(this),
           pageType = $this.data('page-type');
 
@@ -263,17 +264,17 @@ var pagination = function($, window, document, undefined) {
       });
     },
 
-    setupEvents: function() {
+    setupEvents: function () {
       var _this = this;
 
-      this.$listContainer.find('li').each(function() {
+      this.$listContainer.find('li').each(function () {
         var $this = $(this);
         $this.off();
         if ($this.hasClass(_this.options.disabledClass) || $this.hasClass(_this.options.activeClass)) {
           $this.on('click', false);
           return;
         }
-        $this.click(function(evt) {
+        $this.click(function (evt) {
           // Prevent click event if href is not set.
           !_this.options.href && evt.preventDefault();
 
@@ -283,10 +284,10 @@ var pagination = function($, window, document, undefined) {
 
       //Add jump method
       if (this.options.goVal) {
-        _this.$go.find('input,.btn').each(function() {
+        _this.$go.find('input,.btn').each(function () {
           $(this).off();
         });
-        this.$go.find('.btn').click(function() {
+        this.$go.find('.btn').click(function () {
           var pageGo = parseInt(_this.$go.find('input').val());
           if (pageGo > 0 && pageGo <= _this.options.totalPages) {
             _this.show(pageGo, 'go');
@@ -296,19 +297,19 @@ var pagination = function($, window, document, undefined) {
             _this.$go.find('input').addClass('error').focus();
           }
         });
-        this.$go.find('input').keydown(function(e) {
+        this.$go.find('input').keydown(function (e) {
           var $this = $(this);
           $this.removeClass('error');
           if (13 == e.keyCode) {
             _this.$go.find('.btn').click();
           }
-        }).blur(function() {
+        }).blur(function () {
           $(this).removeClass('error');
         });
       }
     },
 
-    makeHref: function(c) {
+    makeHref: function (c) {
       return this.options.href ? this.options.href.replace(this.options.hrefVariable, c) : 'javascript:;';
     }
 
@@ -316,7 +317,7 @@ var pagination = function($, window, document, undefined) {
 
   // PLUGIN DEFINITION
 
-  $.fn.twbsPagination = function(option) {
+  $.fn.twbsPagination = function (option) {
     var args = Array.prototype.slice.call(arguments, 1);
     var methodReturn;
 
@@ -338,6 +339,7 @@ var pagination = function($, window, document, undefined) {
 
   $.fn.twbsPagination.defaults = {
     totalPages: 0,
+    totalRows: 0,
     startPage: 1,
     visiblePages: 5,
     initiateStartPageClick: false,
@@ -365,7 +367,7 @@ var pagination = function($, window, document, undefined) {
 
   $.fn.twbsPagination.Constructor = TwbsPagination;
 
-  $.fn.twbsPagination.noConflict = function() {
+  $.fn.twbsPagination.noConflict = function () {
     $.fn.twbsPagination = old;
     return this;
   };

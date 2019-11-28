@@ -1,12 +1,12 @@
-/**
- * 手机端弹窗，不通用
- * @author Zhao Liubin
- * @date   2017/12/14
- * @param  {opts}
- * @return {[type]}
+/** 
+ * javascript comment 
+ * @Author: zhao.liubin@zol.com.cn 
+ * @Date: 2019-11-23 09:23:51 
+ * @Desc: 再造弹出确认框，与Vue pop 保持样式一致 
  */
-var popupMobile = function (opts) {
+var dialog = function (opts) {
   var opt = {
+    width: '300px',
     title: opts.title || '',
     content: opts.content || '', //内容
     cancelVal: opts.cancelVal || '', //取消文本
@@ -17,12 +17,12 @@ var popupMobile = function (opts) {
     theme: opts.theme || '', //主题：dark、iOS、weixin
     time: opts.time || 0, //自动关闭倒计时
     beforeShow: opts.beforeShow || '', //弹窗前执行事件
-    afterShow: opts.afterShow || '',
     closeCallback: opts.closeCallback || '' //关闭后执行
   };
 
   var _isFunction = (obj) => typeof obj == 'function' ? true : false;
   var title = opt.title,
+    width = opt.width,
     content = opt.content,
     ok = opt.ok,
     okVal = opt.okVal || _isFunction(opt.ok) ? opt.okVal ? opt.okVal : '确定' : '',
@@ -31,17 +31,7 @@ var popupMobile = function (opts) {
     cancelVal = opt.cancelVal || _isFunction(opt.cancel) ? opt.cancelVal ? opt.cancelVal : '取消' : '',
     cancel = opt.cancel,
     beforeShow = opt.beforeShow,
-    afterShow = opt.afterShow,
     closeCallback = opt.closeCallback;
-
-  // if (opt.theme == 'dark') {
-  //   mask = false;
-  // } else if (/iOS|iPhone|Apple/i.test(opt.theme)) {
-  //   //mask = false;
-  //   opt.theme = 'iOS';
-  // } else {
-  //   opt.theme = 'weixin';
-  // }
 
   var div = document.createElement('div'),
     className = 'popup ' + opt.theme;
@@ -51,7 +41,21 @@ var popupMobile = function (opts) {
   }
 
   div.className = className;
-  var html = '<div class="wrapper">' + (title ? ('<h3 class="title">' + title + '</h3>') : '') + '<a href="javascript:;" class="close">&times;</a>' + (content ? ('<div class="content">' + content + '</div>') : '') + ((okVal || cancelVal) ? ('<div class="btns">' + (cancelVal ? ('<span class="btn-wrapper"><a href="javascript:;" class="cancel btn">' + cancelVal + '</a></span>') : '') + (okVal ? ('<span class="btn-wrapper"><a href="javascript:;" class="btn ok">' + okVal + '</a></span>') : '')) : '') + '</div></div>';
+  var html = `    <div class="content">
+    <h2 class="title">
+      <a href="javascript:;" class="close" title="关闭">&times;</a>${title}</h2>
+    <div class="body">
+      <div class="content" style="width:${width};min-width:350px;min-height:80px;">
+        ${content}
+      </div>
+    </div>
+    <div class="footer text-center" >
+      <button class="btn btn-default cancel"
+        >${cancelVal}</button>
+      <button class="btn btn-primary ok" >${okVal}</button>
+    </div>
+  </div>
+`;
   div.innerHTML += html;
 
   var _remove = () => {
@@ -83,4 +87,4 @@ var popupMobile = function (opts) {
   return div;
 };
 
-typeof module == 'object' && module.exports ? module.exports = popupMobile : window.popupMobile = popupMobile;
+typeof module == 'object' && module.exports ? module.exports = dialog : window.dialog = dialog;
