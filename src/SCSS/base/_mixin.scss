@@ -60,6 +60,7 @@
   -webkit-box-flex: $r;
   -webkit-flex: $r;
   flex: $r;
+  max-width: 100%;
 }
 
 @mixin mul-line($num: 2) {
@@ -169,6 +170,7 @@
 
 @mixin PCanchor {
   color: $color-anchor;
+
   &:hover {
     text-decoration: underline;
   }
@@ -176,11 +178,13 @@
 
 @mixin mobileAnchor {
   color: #333;
+
   &:visited,
   &:hover,
   &:active {
     color: #333;
   }
+
   @at-root button,
   & {
     @include wthc();
@@ -191,9 +195,11 @@
   position: relative;
   text-align: center;
   pointer-events: none;
+
   >* {
     opacity: 0;
   }
+
   &:after {
     content: '...';
     width: 1em;
@@ -205,9 +211,11 @@
   position: relative;
   border: 0;
   color: #666;
+
   &:hover {
     background: #fff;
   }
+
   &.spinner-loadmore {
     text-indent: -2000px;
   }
@@ -219,9 +227,11 @@
     @warn "Assuming #{$px} to be in pixels, attempting to convert it into pixels for you";
     @return px2rem($px + 0px); // That may fail.
   }
+
   @else if(unit($px)==px) {
     @return ($px/$font-size)*1rem;
   }
+
   @else {
     @return $px;
   }
@@ -229,9 +239,11 @@
 
 @mixin font-dpr($font-size) {
   font-size: $font-size;
+
   [data-dpr="2"] & {
     font-size: $font-size*2;
   }
+
   [data-dpd="3"] & {
     font-size: $font-size*3;
   }

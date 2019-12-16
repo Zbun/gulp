@@ -1,60 +1,68 @@
 @import 'base/_variables';
+
 .set {
   >.item {
-    padding: 6px 0;
-    line-height: $height-input;
+
     display: flex;
+    line-height: $height-input;
+
+    &:first-child {
+      padding-top: 0;
+    }
+
     &:after {
       content: '';
       display: table;
       clear: both;
     }
+
+    &+.item {
+      margin-top: 12px;
+    }
+
     >.title,
     >.name {
       min-width: 5em;
-      margin-right: 14px;
-      color: #666;
+      margin-right: 8px;
+      // line-height: $height-input;
       font-weight: 400;
-      line-height: inherit;
-      text-align: right;
       white-space: nowrap;
     }
+
     >.content {
       position: relative;
-      flex: 1;
       line-height: inherit;
       text-align: left;
-      >.com-ipt {
-        vertical-align: top;
-      }
+      flex: 1;
+
       .ipt-large {
         min-width: 260px;
       }
+
       .ipt-small {
         min-width: 100px;
       }
-      .btn {
-        vertical-align: baseline;
-      }
+
       &.area-box {
         overflow: initial;
       }
-      &.areabox {
-        select {
-          width: 104px;
+    }
+  }
+
+  @for $i from 3 through 15 {
+    &.w#{$i}em {
+      >.item {
+        >.title {
+          min-width:#{$i}em;
         }
       }
+
     }
   }
-  &.w4em {
-    >.item {
-      >.title {
-        min-width: 4em;
-      }
-    }
-  }
+
   &.text-left {
     >.item {
+
       >.title,
       >.name {
         min-width: auto;
@@ -62,109 +70,15 @@
       }
     }
   }
+
   &.thin {
     >.item {
-      padding: 2px 0;
+      line-height: 20px;
+      padding: 5px 0;
     }
   }
 }
 
-@for $i from 6 through 15 {
-  //批量生成各种长度
-  .set.w#{$i}em {
-    >.item {
-      >.title {
-        min-width: #{$i}em;
-      }
-    }
-  }
-}
-
-.action-box {
-  position: relative;
-  display: inline-block;
-  line-height: 1;
-  font-size: inherit;
-  .com-ipt {
-    margin: 0;
-    padding-right: 24px;
-    font-size: inherit;
-    -webkit-border-radius: 0;
-    -moz-border-radius: 0;
-    border-radius: 0;
-  }
-  .add,
-  .minus {
-    position: absolute;
-    right: 1px;
-    top: 1px;
-    width: 20px;
-    height: 50%;
-    border-left: 1px solid $color-border;
-    border-bottom: 1px solid $color-border;
-    text-indent: -100px;
-    overflow: hidden;
-    &:before {
-      content: '';
-      position: absolute;
-      top: 5px;
-      right: 6px;
-      width: 0;
-      height: 0;
-      border-style: solid;
-      border-width: 0 3px 4px;
-      border-color: #999 transparent;
-    }
-    &:hover {
-      &:before {
-        border-color: #666 transparent;
-      }
-    }
-  }
-  .minus {
-    bottom: 1px;
-    top: auto;
-    border-bottom: 0;
-    &:before {
-      top: 6px;
-      border-width: 4px 3px 0;
-    }
-  }
-  &.style2 {
-    vertical-align: 2px;
-    margin-top: 6px;
-    .com-ipt {
-      padding: 0 22px;
-      line-height: 12px;
-      text-align: center;
-    }
-    .add,
-    .minus {
-      position: absolute;
-      left: 0;
-      top: 1px;
-      bottom: 1px;
-      width: 20px;
-      height: auto;
-      line-height: 16px;
-      text-align: center;
-      border: 0;
-      border-right: 1px solid $color-border;
-      text-decoration: none;
-      text-indent: 0;
-      &:before {
-        content: '';
-        border: 0;
-      }
-    }
-    .add {
-      right: 1px;
-      left: auto;
-      border: 0;
-      border-left: 1px solid $color-border;
-    }
-  }
-}
 
 //火狐HACK
 @-moz-document url-prefix() {

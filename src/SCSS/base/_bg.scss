@@ -1,5 +1,6 @@
 @import '_variables.scss';
 @import '_mixin.scss';
+
 @each $bg,
 $bg-color,
 $bg-text-color in(bg-default, $color-bg-default, $color-bg-default-text),
@@ -9,7 +10,7 @@ $bg-text-color in(bg-default, $color-bg-default, $color-bg-default-text),
 (bg-warning, $color-bg-warning, $color-bg-warning-text),
 (bg-danger, $color-bg-danger, $color-bg-danger-text) {
   .#{$bg} {
-    border: 1px solid darken($bg-color, 8%);
+    // border: 1px solid darken($bg-color, 8%);
     background-color: $bg-color;
     color: $bg-text-color;
   }
@@ -25,14 +26,18 @@ $bg-text-color in(bg-default, $color-bg-default, $color-bg-default-text),
 
 .bg {
   position: relative;
-  padding: 4px 10px;
-  line-height: 24px;
-  -webkit-border-radius: $border-radius;
-  -moz-border-radius: $border-radius;
-  border-radius: $border-radius;
+  padding: 8px 10px;
+  line-height: 20px;
+  font-size: 12px;
+  font-weight: 400;
+
+  .iconfont {
+    font-size: inherit;
+  }
 }
 
 $color-bg-warning-pure:#FFFEE7;
+
 .bg-muted {
   background: $color-bg-muted;
 }

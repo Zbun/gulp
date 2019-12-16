@@ -1,82 +1,104 @@
 @import '_variables.scss';
 @import '_mixin.scss';
-$color-tag-border:$color-input-focus-border !default;
-.tag {
-  display: inline-block;
-  padding: 0 8px;
-  margin-right: 10px;
-  margin-bottom: 10px;
-  border: 1px solid $color-tag-border;
-  color: #666;
-  line-height: 28px;
-  font-size: 12px;
-  white-space: nowrap;
-  vertical-align: baseline;
-  -webkit-border-radius: $border-radius;
-  -moz-border-radius: $border-radius;
-  border-radius: $border-radius;
-  text-decoration: none;
-  cursor: pointer;
-  .tag-del {
-    display: inline-block;
-    visibility: hidden;
-    cursor: pointer;
-    font-size: 14px;
-    color: #999;
-    margin: 0 5px;
-    -webkit-transform: scale(1.2);
-    -moz-transform: scale(1.2);
-    -ms-transform: scale(1.2);
-    -o-transform: scale(1.2);
-    transform: scale(1.2);
-  }
-  &:hover {
-    .tag-del {
-      visibility: visible;
-    }
-  }
-  &.large {
-    padding: 0 12px;
-  }
-  &.tag-primary-o {
-    color: $color;
-    background: #E4F5FD;
-  }
-  &.tag-pure {
-    cursor: pointer;
-    border-color: transparent;
-    &:hover {
-      border-color: $color-tag-border;
-    }
-  }
-  &.on {
-    color: #fff;
-    background: $color-tag-border;
-    .tag-del {
-      color: #fff;
-    }
-  }
-}
 
 .tags {
-  display: inline-block;
-  font-size: 0;
   .tag {
+    display: inline-block;
+    padding: 0 6px;
+    margin-right: 4px;
+    line-height: 18px;
     font-size: 12px;
+    white-space: nowrap;
+    background: #eee;
+    vertical-align: middle;
+    -webkit-border-radius: $border-radius;
+    -moz-border-radius: $border-radius;
+    border-radius: $border-radius;
   }
 }
 
-.tag-mini {
-  border: 1px solid $color-danger;
-  padding: 0 2px;
-  color: $color-danger;
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
-  border-radius: 2px;
-  white-space: nowrap;
+@each $tag,
+$tag-color in(tag-warning:$color-warning, tag-danger:$color-danger, tag-info:$color-info) {
+  .tags .#{$tag} {
+    background: $tag-color;
+    color: #fff;
+    border-color: darken($tag-color, 4%);
+  }
 }
 
-.tag-danger {
-  background: $color-danger;
-  color: #fff;
+@each $tag,
+$tag-color in(tag-warning-o:$color-warning, tag-danger-o:$color-danger, tag-primary-o:$color-primary, tag-info-o:$color-info, tag-muted-o:#666) {
+  .tags .#{$tag} {
+    background: #fff;
+    color: $tag-color;
+    border-color: $tag-color;
+    box-shadow: 0 0 0 1px;
+    border-radius: $border-radius;
+  }
+}
+
+.tags-action {
+
+  //@extend .tags;
+  // display: inline-block;
+  .tag {
+    position: relative;
+    display: inline-block;
+    padding: 0 .5em;
+    line-height: 20px;
+
+    .icon {
+      display: inline-block;
+      position: relative;
+      width: 1em;
+      height: 1em;
+      margin-left: .5em;
+      margin-right: -.1em;
+      line-height: 1;
+      text-align: center;
+      background: $color-danger;
+      cursor: pointer;
+      color: transparent;
+      font-family: cursive;
+      vertical-align: middle;
+
+      &:before,
+      &:after {
+        content: '';
+        position: absolute;
+        left: 2px;
+        right: 2px;
+        height: 2px;
+        background: #fff;
+        top: 50%;
+        margin-top: -1px;
+        @include trf-rotate(45deg);
+      }
+
+      &:after {
+        top: 3px;
+        bottom: 2px;
+        left: 50%;
+        width: 2px;
+        height: auto;
+        margin-left: -1px;
+      }
+    }
+  }
+
+  &.tags-o {
+    .tag {
+      border-color: #fff;
+      color: #fff;
+
+      .icon {
+        background: #fff;
+
+        &:before,
+        &:after {
+          background: $color-warning;
+        }
+      }
+    }
+  }
 }

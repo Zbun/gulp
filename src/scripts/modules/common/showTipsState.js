@@ -11,13 +11,13 @@ var showTips = function (content, state, callback, time) {
   var box = document.createElement('div');
   box.className = 'popup-tips';
 
-  var htmlIcon = '<i class="icon  iconfont icon-tishichenggong1"></i>';
+  var htmlIcon = '<i class="icon  i-ok"></i>';
   if (state) {
     if (/cancel|error|e/i.test(state)) { //错误提示参数:'error'||'cancel'
-      htmlIcon = '<i class="icon p-error iconfont  icon-tishicuowu1"></i>';
+      htmlIcon = '<i class="icon i-error  "></i>';
       realTime = parseInt(time) || 2500;
     } else if (/warning|w/i.test(state)) {
-      htmlIcon = '<i class="icon p-error  iconfont icon-tishi"></i>';
+      htmlIcon = '<i class="icon i-warning  "></i>';
       realTime = parseInt(time) || 2500;
     }
   }

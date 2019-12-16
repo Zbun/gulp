@@ -1,59 +1,67 @@
 @import '_variables.scss';
 @import '_mixin.scss';
-$color-check-border:#aaa;
+$color-check-border:#d0d7df;
+
 //单选、多选样式
 .radio {
   position: relative;
+
   >input[type=radio] {
     position: relative;
     margin: 0;
-    margin-right: 6px;
+    margin-right: 2px;
     opacity: 0;
     z-index: 2;
+
     &:checked {
       ~.icon {
-        border: 4px solid $color-radio-highlight;
+        border-color: $color-primary;
+
         &:before {
-          // visibility: visible;
+          visibility: visible;
         }
       }
     }
   }
+
   .icon {
     position: absolute;
-    top: 2px;
+    top: 0px;
     left: 0;
     width: 14px;
     height: 14px;
     padding: 3px;
     border: 1px solid $color-check-border;
-    background: 0;
     background-color: #fff;
     -webkit-border-radius: 100%;
     -moz-border-radius: 100%;
     border-radius: 100%;
+
     &:before {
       content: '';
       position: absolute;
-      left: 3px;
-      right: 3px;
-      top: 3px;
-      bottom: 3px;
-      background: $color-radio-highlight;
+      left: 2px;
+      right: 2px;
+      top: 2px;
+      bottom: 2px;
+      background: $color-primary;
       -webkit-border-radius: 100%;
       -moz-border-radius: 100%;
       border-radius: 100%;
       visibility: hidden;
     }
   }
+
   &:hover {
     .icon {
-      border-color: #777;
+      border-color: #a6b0bb;
     }
   }
+
   &+& {
     margin-left: 20px;
   }
+
   &.font-small {
     .icon {
       top: 2px;
@@ -63,6 +71,7 @@ $color-check-border:#aaa;
 
 .radio-simulate {
   padding-left: 23px;
+
   &.on {
     .icon {
       &:before {
@@ -75,9 +84,10 @@ $color-check-border:#aaa;
 .checkbox {
   display: inline-block;
   position: relative;
-  margin: 0 5px;
+  // margin: 0 5px;
   line-height: 20px;
   white-space: nowrap;
+
   .icon {
     position: absolute;
     left: 0;
@@ -85,18 +95,18 @@ $color-check-border:#aaa;
     width: 14px;
     height: 14px;
     border: 1px solid $color-check-border;
-    background: 0;
     background: #fff;
     pointer-events: none;
-    -webkit-border-radius: $border-radius;
-    -moz-border-radius: $border-radius;
-    border-radius: $border-radius;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+
     &:before {
       content: '';
       position: absolute;
       left: 2px;
       top: 2px;
-      width: 8px;
+      width: 9px;
       height: 5px;
       border: 2px solid #fff;
       border-width: 0 0 2px 2px;
@@ -104,40 +114,59 @@ $color-check-border:#aaa;
       @include trf(rotate(-45deg));
     }
   }
+
   &.right-show {
     .icon {
       margin-left: -16px;
       left: auto;
     }
   }
+
   &:hover {
     .icon {
-      border-color: #777;
+      border-color: #a6b0bb;
     }
   }
+
   input[type=checkbox] {
     position: relative;
     margin: 0;
-    margin-right: 6px;
+    margin-right: 2px;
     opacity: 0;
     z-index: 2;
+
     &:checked {
       ~.icon {
-        border-color: $color-radio-highlight;
-        background: $color-radio-highlight;
+        border-color: $color-primary;
+        background: $color-primary;
+
         &:before {
           visibility: visible;
         }
       }
     }
+
     &[disabled] {
+
       ~.text,
       ~.icon {
         opacity: .5;
         pointer-events: none;
+
         :before {
           border-color: $color-border;
         }
+      }
+    }
+  }
+
+  .icon {
+    &.on {
+      border-color: $color-primary;
+      background: $color-primary;
+
+      &:before {
+        visibility: visible;
       }
     }
   }
@@ -148,91 +177,72 @@ $color-check-border:#aaa;
 .radio-plus {
   margin-right: 8px;
   display: inline-block;
+  line-height: 24px;
   cursor: default;
+
   input[type=checkbox],
   input[type=radio] {
     display: none;
-    &:checked~.text {
-      @extend %radio-plus-chked;
-    }
-  }
-  &.big {
-    input[type=checkbox],
-    input[type=radio] {
-      &:checked {
-        ~.text {
-          &:before {
-            border-width: 18px 18px 0 0;
-          }
-          &:after {
-            bottom: 5px;
-            width: 8px;
-            height: 4px;
-          }
-        }
+
+    &:checked {
+      ~.text {
+        border-color: $color-primary;
+        color: #fff;
+        background: $color-primary;
+        // &:before {
+        //   position: absolute;
+        //   right: 0;
+        //   bottom: 0;
+        //   content: '';
+        //   border-style: solid;
+        //   border-width: 12px 12px 0 0;
+        //   border-color: transparent $color-primary;
+        // }
+
+        // &:after {
+        //   content: '';
+        //   position: absolute;
+        //   right: 0;
+        //   bottom: 3px;
+        //   width: 6px;
+        //   height: 3px;
+        //   border: 2px solid #fff;
+        //   border-width: 0 0 1px 1px;
+        //   @include trf(rotate(-45deg));
+        // }
       }
     }
   }
+
   .text {
     position: relative;
     display: inline-block;
-    padding: 0 10px;
-    line-height: 30px;
+    padding: 0 1em;
+    // line-height: 22px;
     font-size: 12px;
     color: #666;
     border: 1px solid $color-border;
-    -webkit-border-radius: $border-radius;
-    -moz-border-radius: $border-radius;
     border-radius: $border-radius;
   }
+
   &:hover {
     .text {
       border-color: #ccc;
     }
   }
-  &.on {
-    .text {
-      @extend %radio-plus-chked;
-    }
-  }
-  &+& {
-    // margin-bottom: 10px;
-  }
-}
 
-%radio-plus-chked {
-  //选中带勾选公用样式
-  color: $color-primary;
-  border-color: $color-radio-highlight;
-  &:before {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    content: '';
-    border-style: solid;
-    border-width: 14px 14px 0 0;
-    border-color: transparent $color-radio-highlight;
-  }
-  &:after {
-    content: '';
-    position: absolute;
-    right: 0;
-    bottom: 3px;
-    width: 6px;
-    height: 3px;
-    border: 2px solid #fff;
-    border-width: 0 0 1px 1px;
-    @include trf(rotate(-45deg));
+  &+& {
+    margin-bottom: 12px;
   }
 }
 
 //开关，模拟安卓等
 .switcher {
   position: relative;
-  display: inline-block;
-  width: 28px;
+
   input[type=checkbox] {
     opacity: 0;
+
     &~.icon {
       position: absolute;
       left: 0;
@@ -241,6 +251,7 @@ $color-check-border:#aaa;
       height: 26px;
       background: 0;
       @include trf-translate(0, -50%);
+
       &:before {
         content: '';
         position: absolute;
@@ -249,11 +260,12 @@ $color-check-border:#aaa;
         left: 0;
         right: 0;
         background: #ccc;
-        -webkit-border-radius: 2em;
-        -moz-border-radius: 2em;
-        border-radius: 2em;
+        -webkit-border-radius: 7px;
+        -moz-border-radius: 7px;
+        border-radius: 7px;
         @include trans(.3s);
       }
+
       &:after {
         content: '';
         position: absolute;
@@ -268,11 +280,13 @@ $color-check-border:#aaa;
         @include trans(.3s);
       }
     }
+
     &:checked {
       &~.icon {
         &:before {
-          background: $color-switcher-highlight;
+          background: $color-ok;
         }
+
         &:after {
           //left: 1rem;
           @include trf-translate(14px, 0); // background: $color-primary;

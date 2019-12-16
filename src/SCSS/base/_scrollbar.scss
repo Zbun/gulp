@@ -1,15 +1,25 @@
+$size: 4px;
+
+%scrollbar-white,
 %scrollbar {
   &::-webkit-scrollbar {
-    height: 4px;
-    width: 4px;
+    height: $size;
+    width: $size;
   }
+
   &::-webkit-scrollbar-thumb {
-    width: 4px;
-    height: 4px;
-    background: #555;
-    &:hover {
+    width: $size;
+    height: $size;
+    background: #262c32;
+    border-radius: 8em;
+
+    &:hover,
+    &:active {
+      width: 8px;
+      height: 8px;
       background: #666;
     }
+
     &:active {
       background: #777;
     }
@@ -17,53 +27,16 @@
 }
 
 %scrollbar-white {
-  &::-webkit-scrollbar {
-    height: 8px;
-    width: 8px;
-  }
   &::-webkit-scrollbar-thumb {
-    width: 8px;
-    height: 8px;
-    background: #eaeaea;
-    &:hover {
-      background: #ddd;
-    }
-    &:active {
-      background: #ccc;
-    }
-  }
-}
+    background: #ccc;
 
-%scrollbar-thin {
-  &::-webkit-scrollbar {
-    height: 4px;
-    width: 4px;
-  }
-  &::-webkit-scrollbar-thumb {
-    width: 4px;
-    height: 4px;
-    background: #ddd;
-    &:hover {
-      background: #CFD0D2;
-    }
+    &:hover,
     &:active {
       background: #bbb;
     }
-  }
-}
 
-%scrollbar-white-w {
-  &::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-  }
-  &::-webkit-scrollbar-thumb {
-    background: #ddd;
-    &:hover {
-      background: #ccc;
-    }
     &:active {
-      background: #bbb;
+      background: #aaa;
     }
   }
 }

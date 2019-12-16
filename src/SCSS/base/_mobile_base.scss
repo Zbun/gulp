@@ -177,7 +177,7 @@ select {
   -webkit-appearance: none;
   -webkit-border-radius: $border-radius;
   -moz-border-radius: $border-radius;
-  border-radius: $border-radius;
+  border-radius: $border-radius(4px);
   @include tap-highlight-color(rgba(0, 0, 0, 0));
   &:focus {
     border-color: $color-input-focus-border;

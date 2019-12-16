@@ -1,12 +1,13 @@
 @import '_variables.scss';
 @import '_mixin.scss';
+
 //align
 .text-left {
   text-align: left !important;
 }
 
 .text-right {
-  text-align: right!important;
+  text-align: right !important;
 }
 
 .text-center {
@@ -18,9 +19,8 @@
   color: $color;
 }
 
-.text-light-muted,
-.text-muted-light {
-  color: #999;
+.text-light {
+  color: #666;
 }
 
 .text-muted {
@@ -44,7 +44,7 @@
 }
 
 .text-danger {
-  color: $color-danger;
+  color: $color-danger !important;
 }
 
 //
@@ -65,25 +65,28 @@
 }
 
 //size
+.font-small,
 .text-small {
-  font-size: $size-text-small;
-  line-height: 1.5;
+  font-size: $size-font-small;
+  // line-height: 1;
 }
 
 .text-middle {
-  font-size: $size-text-middle;
+  font-size: 14px;
 }
 
-.text-large {
-  font-size: $size-text-large;
-}
+$sizeInitial:14px;
+$size-font: ("large": 16px,
+  "x-large": 18px,
+  "xx-large": 20px,
+  "xxx-large": 24px,
+  "xxxx-large": 28px, );
 
-.text-x-large {
-  font-size: $size-text-x-large;
-}
-
-.text-xx-large {
-  font-size: $size-text-xx-large;
+@each $key,
+$value in $size-font {
+  .text-#{$key} {
+    font-size: $value;
+  }
 }
 
 //weight
@@ -98,10 +101,12 @@
   color: #999;
   text-decoration: none;
   vertical-align: -2px;
+
   &:hover {
     color: $color-warning;
     text-decoration: none;
   }
+
   &:focus {
     outline: 0;
   }

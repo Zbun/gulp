@@ -25,10 +25,10 @@ var dialog = function (opts) {
     width = opt.width,
     content = opt.content,
     ok = opt.ok,
-    okVal = opt.okVal || _isFunction(opt.ok) ? opt.okVal ? opt.okVal : '确定' : '',
+    okVal = opt.okVal || (_isFunction(opt.ok) ? opt.okVal ? opt.okVal : '确定' : ''),
     mask = opt.mask;
   var time = parseInt(opt.time),
-    cancelVal = opt.cancelVal || _isFunction(opt.cancel) ? opt.cancelVal ? opt.cancelVal : '取消' : '',
+    cancelVal = opt.cancelVal || (_isFunction(opt.cancel) ? opt.cancelVal ? opt.cancelVal : '取消' : ''),
     cancel = opt.cancel,
     beforeShow = opt.beforeShow,
     closeCallback = opt.closeCallback;
@@ -49,13 +49,14 @@ var dialog = function (opts) {
         ${content}
       </div>
     </div>
-    <div class="footer text-center" >
-      <button class="btn btn-default cancel"
+    <div class="footer text-center" style="display:${okVal.length || cancelVal.length ? 'hah' : 'none'}">
+    <div></div>
+    <div class="btns">
+    <button class="btn btn-default cancel" style="display:${cancelVal.length ? 'hahaha' : 'none'}"
         >${cancelVal}</button>
-      <button class="btn btn-primary ok" >${okVal}</button>
+      <button class="btn btn-primary ok" style="display:${okVal.length ? 'hahaha' : 'none'}">${okVal}</button>
     </div>
-  </div>
-`;
+    </div></div>`;
   div.innerHTML += html;
 
   var _remove = () => {

@@ -1,226 +1,8 @@
+@import '../base/_variables';
 @import '../base/_scrollbar.scss';
-$color-bg-dialog-title:#F7F8FA;
-.ui-popup-backdrop {
-  background: #333 !important;
-  opacity: .6 !important;
-}
+$color-bg-dialog-title:rgba(250, 250, 250, 1);
 
-.ui-popup-show {
-  -webkit-animation: popup-zoom .2s ease-out;
-  animation: popup-zoom .2s ease-out; // box-shadow: 0 0 6px #666;
-  will-change: transform;
-  table {
-    border-spacing: 0;
-  }
-  .ui-dialog {
-    background: #fff;
-    font-family: $font-family;
-    -webkit-border-radius: $border-radius;
-    -moz-border-radius: $border-radius;
-    border-radius: $border-radius;
-    overflow: hidden;
-    .ui-dialog-header {
-      position: relative;
-      height: 40px;
-      padding: 0 20px;
-      line-height: 42px;
-      font-size: 14px;
-      background: $color-bg-dialog-title;
-      cursor: move;
-      .ui-dialog-title {
-        padding: 0;
-        padding-right: 28px;
-        line-height: inherit;
-        font-weight: 700;
-        color: $color;
-      }
-      .ui-dialog-close {
-        position: absolute;
-        right: 7px;
-        top: 7px;
-        top: 3px\0;
-        height: 20px;
-        width: 20px;
-        padding: 0;
-        border: 0;
-        line-height: 1;
-        font-weight: 700;
-        font-size: 24px;
-        color: #ccc;
-        background: transparent;
-        opacity: 1;
-        overflow: hidden;
-        &:active {
-          box-shadow: none;
-        }
-      }
-    }
-    .ui-dialog-body {
-      position: relative;
-      text-align: left;
-      overflow-x: hidden;
-      @extend %scrollbar-white-w;
-      .ui-dialog-content {
-        width: 400px;
-        padding: 32px 20px;
-        font-size: 16px;
-        word-break: break-all;
-        &::-webkit-scrollbar {
-          width: 6px;
-          height: 6px;
-          background: $color-border;
-          &:hover {
-            background: #ddd;
-          }
-        }
-        &::-webkit-scrollbar-thumb {
-          background: #bbb;
-          &:hover {
-            background: #999;
-          }
-          &:active {
-            background: #777;
-          }
-        }
-      }
-    }
-    .ui-dialog-footer {
-      padding-right: 10px;
-      padding-top: 0;
-      .ui-dialog-button {
-        float: none;
-        margin-bottom: 10px;
-        text-align: right;
-        direction: rtl;
-        button {
-          float: none;
-          padding: 0 16px;
-          margin: 5px;
-          margin-top: 0;
-          border: 0;
-          line-height: 30px;
-          font-size: 14px;
-          font-family: $font-family;
-          color: $color;
-          background: #f8f8f8;
-          border: 1px solid $color-border;
-          -webkit-border-radius: $border-radius;
-          -moz-border-radius: $border-radius;
-          border-radius: $border-radius;
-          &:hover {
-            background: #dcdcdc;
-          }
-        }
-        [i-id=ok],
-        .ui-dialog-autofocus {
-          color: #fff;
-          background: $color-primary;
-          border-color: $color-primary;
-          &:hover {
-            background: darken($color-primary, 12%);
-            border-color: darken($color-primary, 12%);
-          }
-        }
-      }
-    }
-    &.mini,
-    &.mini-tips {
-      .ui-dialog-header {
-        display: block !important;
-        background-color: transparent;
-      }
-      .ui-dialog-title {
-        height: 36px;
-        background: transparent;
-        text-indent: -99999px;
-        overflow: hidden;
-      }
-      .ui-dialog-content {
-        text-align: center;
-      }
-      .ui-dialog-footer {
-        .ui-dialog-button {
-          margin-bottom: 4px;
-          button {
-            margin: 6px;
-            font-size: 12px;
-            line-height: 26px;
-          }
-        }
-      }
-    }
-    &.mini-tips {}
-  }
-}
-
-@-webkit-keyframes ui-dialog-loading {
-  0% {
-    -webkit-transform: rotate(0deg);
-  }
-  100% {
-    -webkit-transform: rotate(360deg);
-  }
-}
-
-@keyframes ui-dialog-loading {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-.ui-dialog-loading {
-  position: relative;
-  display: inline-block;
-  width: 32px;
-  height: 32px;
-  overflow: hidden;
-  text-indent: -999em;
-  &:after {
-    content: '';
-    position: absolute;
-    left: 0;
-    width: 3px;
-    height: 3px;
-    margin: 14.5px 0 0 14.5px;
-    border-radius: 100%;
-    box-shadow: 0 -10px 0 1px #ccc, 10px 0px #ccc, 0 10px #ccc, -10px 0 #ccc, -7px -7px 0 0.5px #ccc, 7px -7px 0 1.5px #ccc, 7px 7px #ccc, -7px 7px #ccc;
-    -webkit-transform: rotate(360deg);
-    -webkit-animation: ui-dialog-loading 1.5s infinite linear;
-    transform: rotate(360deg);
-    animation: ui-dialog-loading 1.5s infinite linear;
-  }
-}
-
-@-webkit-keyframes popup-zoom {
-  from {
-    opacity: 0;
-    -webkit-transform: translate(0, -10px);
-    transform: translate(0, -10px);
-  }
-  to {
-    -webkit-transform: translate(0, 0);
-    transform: translate(0, 0);
-    opacity: 1;
-  }
-}
-
-@keyframes popup-zoom {
-  from {
-    opacity: 0;
-    -webkit-transform: translate(0, -10px);
-    transform: translate(0, -10px);
-  }
-  to {
-    -webkit-transform: translate(0, 0);
-    transform: translate(0, 0);
-    opacity: 1;
-  }
-}
-
-//页面内弹窗样式，非dialog构造型对话框
+//页面内对话框弹窗样式，非dialog构造型对话框
 .popup {
   position: fixed;
   left: 0;
@@ -229,18 +11,16 @@ $color-bg-dialog-title:#F7F8FA;
   bottom: 0;
   padding: 40px;
   z-index: 1003;
-  background: rgba(50, 50, 50, .6); // display: table-cell;
+  background: rgba(50, 50, 50, .4);
   display: flex;
   align-items: center;
   justify-content: center;
   max-height: 100%;
+
   >.content {
     position: absolute;
     top: 5%;
     bottom: 10%; // left: 50%;
-    // top: 5%;
-    // bottom: 10%;
-    // margin-left: -20px;
     max-width: 1500px;
     z-index: 150;
     @include dis-flex();
@@ -250,74 +30,83 @@ $color-bg-dialog-title:#F7F8FA;
     -webkit-animation: popup-zoom2 .2s ease-out;
     animation: popup-zoom2 .2s ease-out;
     will-change: transform;
+
     >.title {
       position: relative;
-      padding: 0 20px;
+      padding: 0 15px;
       font-weight: 700;
       font-size: 14px;
       background: $color-bg-dialog-title;
-      line-height: 40px;
+      line-height: 38px;
       cursor: move;
       width: 100%;
-      -webkit-border-radius: $border-radius $border-radius 0 0;
-      -moz-border-radius: $border-radius $border-radius 0 0;
       border-radius: $border-radius $border-radius 0 0;
+
       .close {
         float: right;
-        padding: 7px;
-        margin-right: -15px;
+        padding: 10px;
+        width: 22px;
+        height: 22px;
+        margin-top: 8px;
+        margin-right: -8px;
         line-height: 1;
-        font-size: 24px;
-        font-weight: 700;
-        color: #bbb;
+        font-size: 0;
+        font-weight: 400;
+        color: transparent;
         text-decoration: none;
+        background-image: url($bgGroup);
+        background-repeat: no-repeat;
         overflow: hidden;
+        background-position: -98px -386px;
+
         &:hover {
           -ms-background-position-y: -407px;
           background-position-y: -407px;
         }
       }
     }
+
     >.body {
       width: 100%;
       max-height: 100%;
-      min-height: 130px;
+      // min-height: 280px;
       min-width: 320px;
       background: #fff;
       overflow-x: hidden;
-      -webkit-border-radius: 0 0 $border-radius $border-radius;
-      border-radius: 0 0 $border-radius $border-radius;
-      @extend %scrollbar-white-w;
+      @extend %scrollbar-white;
+
       &.mini {
         min-height: 0;
       }
+
       >.content {
-        padding: 14px 20px;
-        padding-bottom: 5px;
+        padding: 12px 20px;
         max-height: 100%;
         overflow-x: hidden;
-        @extend %scrollbar-white-w;
+        @extend %scrollbar-white;
       }
     }
+
     >.footer {
       position: relative;
-      display: table;
+      height: 54px;
+      flex: none;
+      // border-top: 1px solid #eee; 
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       width: 100%;
-      padding: 14px;
-      margin-top: -3px;
+      padding: 0 10px; // margin-top: -1px;
       text-align: right;
-      background: #fff;
-      -webkit-border-radius: 0 0 $border-radius $border-radius;
-      -moz-border-radius: 0 0 $border-radius $border-radius;
+      background: $color-bg-dialog-title;
       border-radius: 0 0 $border-radius $border-radius;
-      .btn {
-        margin-right: 5px;
-      }
+
       &.style-divider {
         padding: 16px 20px;
         border-top: 1px solid $color-border;
       }
     }
+
     input,
     select {
       vertical-align: middle;
@@ -331,6 +120,7 @@ $color-bg-dialog-title:#F7F8FA;
     -webkit-transform: translate(0, -10px);
     transform: translate(0, -10px);
   }
+
   to {
     -webkit-transform: translate(0, 0);
     transform: translate(0, 0);
@@ -340,13 +130,178 @@ $color-bg-dialog-title:#F7F8FA;
 
 @keyframes popup-zoom2 {
   from {
+    opacity: 0;
+    opacity: 0;
     -webkit-transform: translate(0, -10px);
     transform: translate(0, -10px);
-    opacity: 0;
   }
+
   to {
     -webkit-transform: translate(0, 0);
     transform: translate(0, 0);
     opacity: 1;
+  }
+}
+
+//提示框样式
+.popup-tips {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 300px;
+  height: 200px;
+  margin-left: -150px;
+  margin-top: -100px;
+  text-align: center;
+  font-size: 18px;
+  line-height: 1.5;
+  font-weight: 700;
+  color: #333;
+  z-index: 10028;
+  text-align: center;
+  transition: .35s;
+  // -webkit-transform: translate(-50%, -50%);
+  // transform: translate(-50%, -50%);
+  -webkit-animation: popuptips 0.05s linear;
+  animation: popuptips 0.05s linear;
+
+  >.popup-inner {
+    background: #fff;
+    display: inline-block;
+    min-width: 240px;
+    padding: 34px 50px;
+    border-radius: 4px;
+    box-shadow: 0px 0px 7px 0px rgba(156, 156, 156, 0.3);
+  }
+
+  .icon {
+    position: relative;
+    display: inline-block;
+    font-family: "iconfont";
+    margin-bottom: 12px;
+    width: 50px;
+    height: 50px;
+    font-size: 50px;
+    line-height: 1;
+    -webkit-border-radius: 100%;
+    border-radius: 100%;
+    text-align: center;
+    color: $color-primary;
+
+    &:after {
+      content: '';
+      position: absolute;
+      left: 3px;
+      bottom: -4px;
+      width: 43px;
+      height: 10px;
+      border-radius: 50%;
+      background: #F6F6F6;
+    }
+
+    &:before {
+      position: relative;
+      content: '\e6c3';
+      z-index: 2;
+    }
+
+    &.i-error {
+      color: $color-danger;
+
+      &:before {
+        content: '\e6c2';
+      }
+    }
+
+    &.i-warning {
+      color: $color-warning;
+
+      &:before {
+        content: '\e6c1';
+      }
+    }
+  }
+
+  .content {}
+}
+
+@-webkit-keyframes popuptips {
+  from {
+    transform: rotateX(50deg);
+    opacity: 0;
+  }
+
+  to {
+    transform: rotateX(0);
+    opacity: .9;
+  }
+}
+
+@keyframes popuptips {
+  from {
+    transform: rotateX(50deg);
+    opacity: 0;
+  }
+
+  to {
+    transform: rotateX(0);
+    opacity: .9;
+  }
+}
+
+
+.PCwaiting {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  width: 60px;
+  height: 60px;
+  margin-left: -30px;
+  margin-top: -50px;
+  z-index: 8888;
+
+  .circle-box {
+    position: absolute;
+    -webkit-transform: rotate(136deg);
+    transform: rotate(136deg);
+
+    .svg {
+      -webkit-animation: am-waiting 0.7s linear infinite;
+      animation: am-waiting 0.7s linear infinite;
+
+      .circle {
+        stroke: $color-primary !important;
+      }
+    }
+
+    &.inner {
+      left: 12px;
+      top: 12px;
+      -webkit-transform: rotate(-45deg);
+      transform: rotate(-45deg);
+
+      .svg {
+        -webkit-animation-name: am-waiting-2;
+        animation-name: am-waiting-2;
+      }
+    }
+  }
+}
+
+@-webkit-keyframes am-waiting {
+  from {}
+
+  to {
+    -webkit-transform: rotate(-1turn);
+    transform: rotate(-1turn);
+  }
+}
+
+@keyframes am-waiting {
+  from {}
+
+  to {
+    -webkit-transform: rotate(-1turn);
+    transform: rotate(-1turn);
   }
 }
