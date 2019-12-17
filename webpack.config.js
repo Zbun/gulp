@@ -44,6 +44,10 @@ module.exports = {
         }
       },
     }, {
+      test: /\.tsx?$/,
+      use: 'ts-loader',
+      exclude: /node_modules|bower_components/
+    }, {
       test: /\.css$/,
       // loader: 'css-loader',
       use: ['style-loader', 'css-loader']
@@ -54,7 +58,7 @@ module.exports = {
   mode: 'development',
   resolve: {
     modules: ['node_modules/', path.join(__dirname, './src/scripts')],
-    extensions: ['.vue', '.js'],
+    extensions: ['.vue', '.js', '.tsx', '.ts'],
     alias: {
       '@root': path.join(__dirname, './'), //根相对目录
       '@src': path.join(__dirname, './src/'), //资源根目录
