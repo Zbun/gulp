@@ -7,8 +7,8 @@
  * @return {[type]}
  */
 
-import loading from '@scripts/zWaiting.js';
-import loadingH5 from '@scripts/waiting.js';
+import loading from '@scripts/loading.js';
+import loadingH5 from '@scripts/mLoading.js';
 var server = window.APISERVER || localStorage.APIServer; //临时调试接口地址，本地存储，随时修改
 localStorage.APIServer = /\/$/.test(server) ? server : server + '/';
 
@@ -65,8 +65,9 @@ function fetchData(arg) {
   var callback = function (data) {
     fnFinish();
     var d = data;
+    let resStatus = d.ResponseID !== undefined ? d.ResponseID : d.Status;
     if (d) {
-      switch (parseInt(d.Status)) {
+      switch (parseInt(resStatus)) {
         case 0:
           {
             if (!hideOkTips) {
@@ -104,7 +105,7 @@ function fetchData(arg) {
                 location.hash = 'login';
                 location.reload();
               } else {
-                top.window.location = window.G_LOGINHREF || '/login.html';
+                top.window.location = window.G_LOGINHREF || '/#/login';
               }
 
             }, 200);

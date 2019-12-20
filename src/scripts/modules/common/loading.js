@@ -1,40 +1,108 @@
 /**
- * 右上角加载提示，loading.show('可选内容',可选回调方法)，结束时loading.hide();
+ * 操作等待旋转提示，非全屏，可加参数
+ * 使用说明：require或webpack,单独使用时显示：waiting.show('可先容器字符串')，去除：waiting.hide();
+ * 若修改源码时去掉className :local，变为全屏遮罩
  * @author Zhao Liubin
- * @date   2016-06-03
- * @return {[type]}
  */
-;
-(function(window, document) {
+// function Waiting(container) {
+//   this.init(container);
+//   return this;
+// }
 
-  function Constructor(content, callback) {
-    var content1 = typeof content === 'string' ? content : '数据加载中，请稍等...';
+// Waiting.prototype.init = function(container) {
+//   container = document.querySelector(container) || document.body;
+//   // var box = container.querySelector('.PCwaiting');
+//   // if (!box) {
+//   var box = document.createElement('div');
+//   box.className = 'PCwaiting local';
+//   if (!container) {
+//     box.style.position = 'fixed';
+//   }
+//   box.innerHTML = `
+//       <div class="circle-box outer">
+//       <svg class="svg" width="60" height="60">
+//       <circle class="circle" cx="30" cy="30" r="26" stroke-width="5" stroke="#179c6a" fill="none" stroke-dasharray="122 164"></circle>
+//         </svg></div>
+//       <div class="circle-box inner">
+//       <svg class="svg" width="42" height="42">
+//       <circle class="circle"  cx="21" cy="21" r="16" stroke-width="3" stroke="#179c6a" fill="none" stroke-dasharray="75 101"></circle>
+//         </svg>
+//       </div>`;
+//   // box.innerHTML = '<style>.PCwaiting{position:absolute;top:0;bottom:0;left:0;right:0;background:rgba(0,0,0,.5);z-index:8888}.PCwaiting.local{left:50%;top:40%;width:52px;height:50px;margin:-25px -26px;border-radius:3px;}.PCwaiting:after {content: ""; position: absolute; top: 50%; left: 50%; width: 3px; height: 3px; margin-top: -2px; margin-left: -2px; text-align: center; -webkit-border-radius: 100%; border-radius: 100%; box-shadow:0 0 3px; -webkit-transition: all, 0.3s, linear; transition: all, 0.3s, linear; -webkit-animation: am-wait 1.2s linear infinite; animation: am-wait 1.2s linear infinite;box-shadow:0 -10px 0 1px #eee, 10px 0px #eee, 0 10px #eee, -10px 0 #eee, -7px -7px 0 0.5px #eee, 7px -7px 0 0.5px #eee, 7px 7px #eee, -7px 7px #eee }@-webkit-keyframes am-wait {100% {-webkit-transform: rotate(1turn);transform: rotate(1turn);}}@keyframes am-wait {100% {-webkit-transform: rotate(1turn);transform: rotate(1turn);}</style>'
+//   // }
+//   this.waitingContainer = container;
+//   if (container.tagName === 'BODY') {
+//     box.style.position = 'fixed';
+//   }
+//   this.waitingBox = box;
+// };
+// Waiting.prototype.show = function() {
+//   this.waitingContainer.appendChild(this.waitingBox);
+//   return this;
+// };
+// Waiting.prototype.hide = function() {
+//   this.waitingBox.parentNode == this.waitingContainer && this.remove();
+//   return this;
+// };
+// Waiting.prototype.remove = function() {
+//   this.waitingContainer.removeChild(this.waitingBox);
+// };
+
+
+class Waiting {
+  constructor(container) {
+    container = document.querySelector(container) || document.body;
+    // var box = container.querySelector('.PCwaiting');
+    // if (!box) {
     var box = document.createElement('div');
-    box.innerHTML = content1;
-    box.style.cssText = 'position:fixed;right:0;top:0;padding:3px;line-height:1;color:#fff;background-color:rgba(50,50,50,.5);z-index:5;font-size:12px';
-    document.body.appendChild(box);
-    this.loadingBox = box;
-    this.loadingEndCallback = typeof content === 'function' ? content : callback;
-  }
-  Constructor.prototype.hide = function() {
-    // document.body.removeChild(this.loadingBox);
-    this.loadingBox.parentNode.removeChild(this.loadingBox);
-    typeof this.loadingEndCallback === 'function' && this.loadingEndCallback();
-  };
-
-  var exportObj = {
-    entity: '',
-    show: function(content, callback) {
-      this.entity = new Constructor(content, callback);
-      return this;
-    },
-    hide: function() {
-      this.entity.hide();
+    box.className = 'PCwaiting local';
+    if (!container) {
+      box.style.position = 'fixed';
     }
-  };
+    box.innerHTML = `
+      <div class="circle-box outer">
+      <svg class="svg" width="60" height="60">
+      <circle class="circle" cx="30" cy="30" r="26" stroke-width="5" stroke="#23A8F5" fill="none" stroke-dasharray="122 164"></circle>
+        </svg></div>
+      <div class="circle-box inner">
+      <svg class="svg" width="42" height="42">
+      <circle class="circle"  cx="21" cy="21" r="16" stroke-width="3" stroke="#23A8F5" fill="none" stroke-dasharray="75 101"></circle>
+        </svg>
+      </div>`;
+    // box.innerHTML = '<style>.PCwaiting{position:absolute;top:0;bottom:0;left:0;right:0;background:rgba(0,0,0,.5);z-index:8888}.PCwaiting.local{left:50%;top:40%;width:52px;height:50px;margin:-25px -26px;border-radius:3px;}.PCwaiting:after {content: ""; position: absolute; top: 50%; left: 50%; width: 3px; height: 3px; margin-top: -2px; margin-left: -2px; text-align: center; -webkit-border-radius: 100%; border-radius: 100%; box-shadow:0 0 3px; -webkit-transition: all, 0.3s, linear; transition: all, 0.3s, linear; -webkit-animation: am-wait 1.2s linear infinite; animation: am-wait 1.2s linear infinite;box-shadow:0 -10px 0 1px #eee, 10px 0px #eee, 0 10px #eee, -10px 0 #eee, -7px -7px 0 0.5px #eee, 7px -7px 0 0.5px #eee, 7px 7px #eee, -7px 7px #eee }@-webkit-keyframes am-wait {100% {-webkit-transform: rotate(1turn);transform: rotate(1turn);}}@keyframes am-wait {100% {-webkit-transform: rotate(1turn);transform: rotate(1turn);}</style>'
+    // }
+    this.waitingContainer = container;
+    if (container.tagName === 'BODY') {
+      box.style.position = 'fixed';
+    }
+    this.waitingBox = box;
+  }
 
-  typeof module === 'object' && module.exports ? module.exports = exportObj : typeof define === 'function' && define.amd ? define(function() {
-    return exportObj;
-  }) : window.loading = exportObj;
+  show() {
+    this.waitingContainer.appendChild(this.waitingBox);
+    return this;
+  }
 
-})(window, document);
+  hide() {
+    this.waitingBox.parentNode == this.waitingContainer && this.remove();
+    return this;
+  }
+  remove() {
+    this.waitingContainer.removeChild(this.waitingBox);
+  }
+}
+
+var exportObj = {
+  entity: '',
+  select: function(container) {
+    return new Waiting(container);
+  },
+  show: function(container) {
+    return this.entity = new Waiting(container).show();
+  },
+  hide: function() {
+    this.entity && this.entity.hide();
+  }
+};
+
+module.exports = exportObj;

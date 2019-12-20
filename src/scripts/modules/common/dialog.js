@@ -57,7 +57,8 @@ var dialog = function (opts) {
       <button class="btn btn-primary ok" style="display:${okVal.length ? 'hahaha' : 'none'}">${okVal}</button>
     </div>
     </div></div>`;
-  div.innerHTML += html;
+  html = html.replace('<script>', '&lt;script&gt;');
+  div.innerHTML = html;
 
   var _remove = () => {
     div.parentNode.removeChild(div);

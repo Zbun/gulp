@@ -89,7 +89,7 @@ module.exports = {
     // getType: path.join(__dirname, './src/scripts/modules/common/getType.js'),
     // typeOf: path.join(__dirname, './src/scripts/modules/common/typeOf.js'), //获取变量typeOF
     // dialog: path.resolve(__dirname, './src/scripts/modules/common/zpopupMobile.js'), //手机弹窗
-    $showTips: path.resolve(__dirname, './src/scripts/modules/common/showTipsState.js'), //弹窗提示框
+    $showTips: path.resolve(__dirname, './src/scripts/modules/common/showTips.js'), //弹窗提示框
     $dialog: path.resolve(__dirname, './src/scripts/modules/common/dialog.js'), //弹窗对话框
     $validatorManu: path.resolve(__dirname, './src/scripts/modules/common/validatorManu.js'), //手动校验数据完整性
     $validator: path.resolve(__dirname, './src/scripts/modules/common/validator.js'), //数据完整性验证
